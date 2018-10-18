@@ -1,0 +1,120 @@
+/*=============================== Expandable resource bars ===========================*/
+.taskBar-min{
+	background-color:#6cb9d2;
+	margin:10px;
+	text-align: left;
+	border-radius:2px 2px 2px 2px;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);	
+	cursor: pointer;
+}
+
+.taskBar-min p{
+	color:white;
+	padding:8px 8px 8px 8px;
+	font-weight: bold;	
+	font-size:1.25em;
+}
+.taskBar-expand{
+	background-color:white;
+	margin:10px;
+	text-align: left;
+	border-radius:3px 3px 3px 3px;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);	
+}
+
+.taskBar-expand p{
+	color:black;
+	padding:8px 8px 8px 8px;
+}
+
+.taskBar-expand table tr{
+	display: table-row;
+}
+
+.taskBar-expand table tr td{
+	display: table-cell;   
+}
+
+.taskBar-expand table tr td p{
+	padding:0;
+	margin:5px;  
+}
+
+
+/*==========================Add player to Plus=============================*/
+#addToPlus {	
+	border-radius:5px;
+	width:50%;
+	margin: 10px;
+	padding:10px;
+	height:100%;
+	text-align:center;
+	font-weight:bold;
+}
+
+.header{
+	backgroud-color:#4ABDAC;
+	color:white;
+	width:100%;
+	margin-top:0px;
+	padding: 5px 0px;
+}
+
+/*==========================Troops table of the Defense tasks=============================*/
+.defTrpTbl{
+	width:80%; 
+	padding:20px; 
+	margin:auto; 
+	background-color:#dbeef4;
+	border-radius:5px; 
+	border-collapse: collapse;	
+}
+
+.defTrpTbl tr{
+	border: 1px solid black;
+}
+
+.defTrpTbl tr td{
+	width:60px; 
+	text-align:center;
+	border: 1px solid black;
+}
+
+/*===================================== Task Status Content =================================*/
+.taskStatus{
+	background-color:white;
+	margin:10px;
+	text-align: left;
+	border-radius:5px 5px 5px 5px;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);	
+}
+
+.taskHeader{
+	background-color:#6cb9d2;		
+	padding: 5px 0px;
+	text-align: center;
+	width:100%;
+	border-radius:5px 5px 0px 0px;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);	
+	font-weight: bold;	
+	font-size:1.25em;
+	color:white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

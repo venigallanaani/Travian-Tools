@@ -1,0 +1,45 @@
+/* =========================== login/register card ======================= */
+#login-register{ 
+	background-color:#DBEEF4;
+	width:40%;
+	height:100%;
+	margin-top:1%;
+	margin-left:30%;
+	margin-right:30%;
+	margin-bottom:0.7%;
+	padding: 0px 0px 0px 0px;
+	font-size:1.1em;
+	border-radius:5px;
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
+    text-align: center;
+}
+#login-register p{
+	color: #4ABDAC;
+	font-weight:bold;
+	
+}
+
+#login-register p a{
+	text-decoration:none;
+	font-size:14px;
+	text-shadow: 0 0 #add9e7;
+}
+
+#login-register table tr td{
+	color: white;
+	font-weight:bold;
+	text-shadow:-1px 0 #4ABDAC, 0 1px #4ABDAC, 1px 0 #4ABDAC, 0 -1px #4ABDAC;
+}
+
+#login-register .error{
+	color: red;
+	font-size: 10px;
+	text-shadow:0 0 red, 0 0 red, 0 0 red, 0 0 red;
+}
+
+#login-register .text{
+	color: black;
+	font-size: 14px;
+	font-weight: normal;
+	text-shadow:0 0 black, 0 0 black, 0 0 black, 0 0 black;
+}

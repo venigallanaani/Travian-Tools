@@ -1,0 +1,71 @@
+/* ============================ Planner header with fixed height to place the Plan details and save buttons ================================ */
+#planner-header{
+	background-color:#4ABDAC; 
+	height:75px; 
+	color:white; 
+	border-radius:5px; 
+	font-weight:bold;
+	padding:0;	
+}
+/* ======================= fixed on scroll to top bin to hold the target village details and waves =============== */ 
+#target-bin{
+	 
+	border-radius:5px;
+	padding:3px;
+	margin-top:2px;	
+	box-shadow: inset 2px 2px 2px 2px rgba(0.2,0.2,0.2,0.2);
+}
+#target-bin.fixed {
+    display: block;
+    position: fixed;
+    background-color:#6CB9D2;
+    top: 2px; 
+   	margin-right:7.5%;		
+}
+.target{
+	float:left;
+	background-color:white;
+	border-radius:2px;
+	box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.2);
+	height:35px;
+	width:150px;
+	margin:2px;	
+	cursor: pointer;
+}
+/* ============================= target structure to display the elements==================================================== */
+.target table{
+	table-layout:fixed;
+	padding:0;
+	font-size:0.75em;
+	margin:auto;
+}
+.target table td{
+	width:50%;
+	overflow:hidden;
+	text-align:center;
+}
+
+/* =========================== CSS for the hammer bin and the hammer details================================= */
+#hammer-bin{	
+	clear:both;
+	background-color:white;
+	width:100%;
+	border-radius:5px;
+	border-color:#4ABDAC; 
+	padding:5px;	
+}
+.hammer{
+	float:left;
+	background-color:#dbeef4;
+	box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.2);
+	height:300px;
+	width:300px;
+	margin:5px;	
+}
+/* =================================== CSS for the hammer basket to store the target details ============================== */
+.hammerBasket{
+	width:55%;
+	background-color:white;
+	overflow-y: scroll;
+}
+

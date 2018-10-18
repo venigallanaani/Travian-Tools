@@ -1,0 +1,48 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" type="text/css" href="CSS/style.css" />
+<link rel="stylesheet" type="text/css" href="CSS/planner.css" />
+
+<script type="text/javascript" src="js/jQuery331.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<!-- Script to keep the targets list fixed on the top of the page while scrolling -->
+<script>
+	$(document).ready(function() {
+	    $(window).scroll(function() {
+	        var distanceFromTop = $(document).scrollTop();
+	        if (distanceFromTop >= $('#planner-header').height())
+	        {
+	            $('#target-bin').addClass('fixed');
+	        }
+	        else
+	        {
+	            $('#target-bin').removeClass('fixed');
+	        }
+	    });
+	});
+</script>
+
+<!-- Script to make the target div draggable -->
+<script>
+$(function()
+{
+	$('.target').draggable({
+	  revert: "invalid",
+	  stack: ".target",
+	  helper: 'clone'
+	});
+	$('.hammer').droppable({
+	  accept: ".target",
+	  drop: function(event, ui) {
+	    var droppable = $(this);
+	    var draggable = ui.draggable;
+	    // Move draggable into droppable
+	    draggable.clone().appendTo(droppable);
+	    draggable.css({float:'left'});
+	  }
+	});
+});
+</script>
