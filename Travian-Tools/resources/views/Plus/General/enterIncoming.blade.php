@@ -88,7 +88,7 @@
 			
 	<div class="col-md-12 mt-5 mx-auto text-center">
 		<p class="h4 text-dark py-2 my-0 bg-warning"><strong>Your Incomings</strong></p>
-		<table class="table small mx-auto col-md-11 table-hover">
+		<table class="table small mx-auto col-md-11 table-hover table-sm">
 			<thead class="thead-inverse">
 				<tr>
 					<th class="col-md-1">Attacker</th>
@@ -98,7 +98,6 @@
 					<th class="col-md-1">Timer</th>
 					<th class="col-md-1">Hero</th>
 					<th class="col-md-1">Action</th>
-					<th class="col-md-2">Comments</th>
 				</tr>
 			</thead>
 			<tr class="table-danger">
@@ -107,9 +106,8 @@
 				<td>4</td>
 				<td>18/11/2018 00:00:00</td>
 				<td>11:00:00</td>
-				<td>Not Changed</td>
+				<td>No Change</td>
 				<td><strong>Real</strong></td>
-				<td>Defend, 10K defense</td>
 			</tr>
 			<tr class="table-white">
 				<td>player2 (village)</td>
@@ -119,7 +117,6 @@
 				<td>11:00:00</td>
 				<td>Changed</td>
 				<td>Fake</td>
-				<td></td>
 			</tr>
 		</table>			
 	</div>

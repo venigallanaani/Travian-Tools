@@ -1,5 +1,5 @@
 /* units classes */
-.units{
+img.units{
 	width:16px;	height:16px;
 	background-size:200px 16px;
 	background-repeat:no-repeat;
@@ -24,9 +24,10 @@
 .a10, .e10, .g10, .h10, .n10, .r10, .t10 { background-position: -180px 0;}
 
 /* resources classes */
-.res{
-	width:16px; height:16px;
-	background-image:url("{{asset('images/resources.png')}}");
+img.res{
+	width:16px; height:20px;
+	background-image:url("../images/resources.png");
+	background-repeat:no-repeat;
 }
 .wood {background-position: center 0;}
 .clay {background-position: center -20px;}

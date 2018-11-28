@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class unitsSeeder extends Seeder
+class UnitsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -81,7 +81,7 @@ class unitsSeeder extends Seeder
             array('id'=>'h07','tribe'=>'Hun','tribe_id'=>'7','name'=>'Ram','type'=>'6','upkeep'=>'3','carry'=>'90','speed'=>'4','offense'=>'65','offense_max'=>'93.9','defense_inf'=>'30','defense_inf_max'=>'53.6','defense_cav'=>'90','defense_cav_max'=>'122.6','cost'=>'1820','cost_wood'=>'1060','cost_clay'=>'330','cost_iron'=>'360','cost_crop'=>'70','time'=>'0','image'=>'h07'),
             array('id'=>'h08','tribe'=>'Hun','tribe_id'=>'7','name'=>'Catapult','type'=>'6','upkeep'=>'6','carry'=>'10','speed'=>'3','offense'=>'45','offense_max'=>'90','defense_inf'=>'55','defense_inf_max'=>'101.5','defense_cav'=>'10','defense_cav_max'=>'49.7','cost'=>'2910','cost_wood'=>'950','cost_clay'=>'1280','cost_iron'=>'620','cost_crop'=>'60','time'=>'0','image'=>'h08'),
             array('id'=>'h09','tribe'=>'Hun','tribe_id'=>'7','name'=>'Logades','type'=>'8','upkeep'=>'4','carry'=>'50','speed'=>'5','offense'=>'40','offense_max'=>'40','defense_inf'=>'50','defense_inf_max'=>'50','defense_cav'=>'50','defense_cav_max'=>'50','cost'=>'117600','cost_wood'=>'37200','cost_clay'=>'27600','cost_iron'=>'25200','cost_crop'=>'27600','time'=>'0','image'=>'h09'),
-            array('id'=>'h10','tribe'=>'Hun','tribe_id'=>'7','name'=>'Settler','type'=>'8','upkeep'=>'1','carry'=>'80','speed'=>'5','offense'=>'0','offense_max'=>'0','defense_inf'=>'80','defense_inf_max'=>'80','defense_cav'=>'80','defense_cav_max'=>'80','cost'=>'20900','cost_wood'=>'6100','cost_clay'=>'4600','cost_iron'=>'4800','cost_crop'=>'5400','time'=>'0','image'=>'h10')            
+            array('id'=>'h10','tribe'=>'Hun','tribe_id'=>'7','name'=>'Settler','type'=>'8','upkeep'=>'1','carry'=>'80','speed'=>'5','offense'=>'0','offense_max'=>'0','defense_inf'=>'80','defense_inf_max'=>'80','defense_cav'=>'80','defense_cav_max'=>'80','cost'=>'20900','cost_wood'=>'6100','cost_clay'=>'4600','cost_iron'=>'4800','cost_crop'=>'5400','time'=>'0','image'=>'h10')
         );
         DB::table('units')->insert($data);
     }

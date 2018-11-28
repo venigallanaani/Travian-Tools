@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
@@ -10,6 +9,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/images.css') }}" rel="stylesheet">
         <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         
@@ -94,7 +94,7 @@
         @yield('content')
 
         
-        <div class="footer bg-secondary">
+        <!-- div class="footer bg-secondary">
             <div class="container py-0">
                 <table>
                     <tr class="font-weight-bold">
@@ -104,7 +104,7 @@
                     </tr>
                 </table>
             </div>
-        </div>
+        </div -->
         
 <!-- == Bootstrap additions == -->
         <script src="{{ asset('js/script.js')}}"></script>

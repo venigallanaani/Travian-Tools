@@ -28,17 +28,29 @@
 									<div class="input-group py-1">
 										<label for="landTime" class="input-group-prepend"><span class="input-group-text">Resources Needed:</span></label>
 											<input type="text" required class="form-control col-md-3" placeholder="" aria-label="" aria-describedby="basic-addon1">
-									</div>
-									<div class="input-group py-1">
-										<label for="resType" class="input-group-prepend"><span class="input-group-text">Resource Preference:</span></label>
-											<select class="form-control col-md-3" aria-label="" aria-describedby="basic-addon1">
-												<option value="">Any</option>
-												<option value="">Wood</option>
-												<option value="">Clay</option>
-												<option value="">Iron</option>
-												<option value="">Crop</option>
-											</select>
-									</div>
+									</div>									
+									<div class="custom-control custom-radio custom-control-inline">
+                                    	<input type="radio" id="customRadioInline1" name="resType" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadioInline1"><img alt="wo" src="" class="res all"></label>
+                                    </div>
+									<div class="custom-control custom-radio custom-control-inline">
+                                    	<input type="radio" id="customRadioInline2" name="resType" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadioInline2"><img alt="wo" src="" class="res wood"></label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                    	<input type="radio" id="customRadioInline3" name="resType" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadioInline3"><img alt="wo" src="" class="res clay"></label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                    	<input type="radio" id="customRadioInline4" name="resType" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadioInline4"><img alt="wo" src="" class="res iron"></label>
+                                    </div> 
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                    	<input type="radio" id="customRadioInline5" name="resType" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadioInline5"><img alt="wo" src="" class="res crop"></label>
+                                    </div>
+									
+									
 									<div class="input-group py-1">
 										<label for="targetTime" class="input-group-prepend"><span class="input-group-text">Target Time:</span></label>
 											<input type="text" required class="form-control col-md-3" placeholder="" aria-label="" aria-describedby="basic-addon1">

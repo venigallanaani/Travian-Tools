@@ -5,12 +5,15 @@
         <div class="container">
             <p class="h3 font-weight-bold d-inline-block">Finders</p>
             <div class="float-right">
-            <div class="btn btn-light dropdown d-inline-block">
-                <a class="dropdown-toggle" data-toggle="dropdown">Server Name </a>
-                <div class="dropdown-menu">
-                    <a href="servers.php" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
-                </div>              
-            </div>
+                <div class="btn btn-light dropdown d-inline-block">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+    					<?php if(isset($_SESSION['SERVER'])){ echo $_SESSION['SERVER']['URL'];}
+    					       else { echo " Select Server ";}?>
+    				</a>
+                    <div class="dropdown-menu">
+                        <a href="servers.php" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
+                    </div>              
+                </div>
             <p class="h6 d-inline-block px-2"><span id="clock"></span></p>
             </div>
         </div>
@@ -28,6 +31,14 @@
             </div>                      
         </div>
         <div class="float-md-left col-md-9 mt-1 p-0">
+    	<?php if(!isset($_SESSION['SERVER'])){?>
+            <div class="alert alert-warning text-center my-1" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                You have not selected a server, <a href="servers.php" class="text-weight-bold"><strong>Select Server</strong></a>
+            </div>
+        <?php }?>
         @yield('body')
         </div>
     </div>

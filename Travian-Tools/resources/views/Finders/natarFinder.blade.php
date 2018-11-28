@@ -7,7 +7,8 @@
             <strong>Natar Finder</strong>
         </div>
         <div class="card-text mx-auto text-center">
-            <form>
+            <form action="/finder/natar" method="POST">
+            	{{ csrf_field() }}
                 <table class="table table-borderless my-2">
                     <tr>
                         <td class="col-md-5">

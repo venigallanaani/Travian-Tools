@@ -8,7 +8,8 @@
             <strong>Neighbour Finder</strong>
         </div>
         <div class="card-text mx-auto text-center">
-            <form>
+            <form action="/finder/neighbour" method="POST">
+            	{{ csrf_field() }}
                 <table class="table table-borderless mt-2">
                     <tr>
                         <td class="col-md-5">

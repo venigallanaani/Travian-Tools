@@ -10,7 +10,7 @@ class PlusController extends Controller
     public function index(){
 
     	session(['title'=>'Plus']);
-    	return view('Plus.overview');
+    	return view('Plus.General.overview');
 
     }
 
@@ -20,32 +20,32 @@ class PlusController extends Controller
         
         if($task=='member'){
             if($id!=null){
-                return view('Plus.member');                     // Displays the contact details of the selected member
+                return view('Plus.General.member');                     // Displays the contact details of the selected member
             }else{
-                return view('Plus.memberDetails');              //Displays the member details
+                return view('Plus.General.memberDetails');              //Displays the member details
             }    		
     	}elseif($task=='incoming'){
-    		return view('Plus.Defense.enterIncoming');          //Displays the incoming tasks
+    		return view('Plus.General.enterIncoming');          //Displays the incoming tasks
     	}elseif($task=='defense'){
             if($id!=null){
-                return view('Plus.Defense.displayTask');       //Displays the selected task
+                return view('Plus.General.defenseTask');       //Displays the selected task
             }else{
-                return view('Plus.Defense.displayTaskList');       //Displays the defense tasks list
+                return view('Plus.General.defenseTaskList');       //Displays the defense tasks list
             }    		 
     	}elseif($task=='offense'){
             if($id!=null){
-                return view('Plus.Offense.displayTask');       // Displays the selected offense plan
+                return view('Plus.General.offenseTask');       // Displays the selected offense plan
             }else{
-                return view('Plus.Offense.displayTaskList');       // Displays the offense tasks List
+                return view('Plus.General.offenseTaskList');       // Displays the offense tasks List
             }    		
     	}elseif($task=='resource'){
             if($id!=null){
-                return view('Plus.Resources.displayTask');      // Displays the selected resource tasks
+                return view('Plus.General.resourceTask');      // Displays the selected resource tasks
             }else{
-                return view('Plus.Resources.displayTaskList');      // Displays the resource tasks List
+                return view('Plus.General.resourceTaskList');      // Displays the resource tasks List
             }    		
     	}else{
-    		return view('Plus.overview');               // Diplays the Plus Meny Overview
+    		return view('Plus.General.overview');               // Diplays the Plus Meny Overview
     	}
     }
 
