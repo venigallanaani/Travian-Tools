@@ -14,7 +14,7 @@ class CreateAccountsTable extends Migration
     public function up()
     {
         Schema::create('accounts', function (Blueprint $table) {
-            $table->increments('account_id');            
+            $table->increments('account_id');
             $table->string('uid');
             $table->string('account_name');
             $table->string('user_id');
@@ -24,7 +24,7 @@ class CreateAccountsTable extends Migration
             $table->string('sitter1');
             $table->string('sitter2');
             $table->timestamps();
-                     
+            
             $table->foreign('server_id')->references('id')->on('servers');
         });
     }
