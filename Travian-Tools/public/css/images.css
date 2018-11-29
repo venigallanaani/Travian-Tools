@@ -25,40 +25,20 @@ img.units{
 
 
 /* Resources */
-img.res{
-	background-repeat:no-repeat;
-}
-.wood {
-	width:16px; height:12px;
-	background-image:url("../images/wood.png");
+img.res{ 
+	background-repeat:no-repeat;	
 	}
-.clay {
-	width:16px; height:12px;
-	background-image:url("../images/clay.png");
-	}
-.iron {
-	width:16px; height:12px;
-	background-image:url("../images/iron.png");
-	}
-.crop {
-	width:16px; height:16px;
-	background-image:url("../images/crop.png");
-	}
-.upkeep {
-	width:16px; height:16px;
-	background-image:url("../images/upkeep.png");
-	}
-.all {
-	width:18px; height:12px;
-	background-image:url("../images/resAll.png");
-	}
-.clock {
-	width:16px; height:12px;
-	background-image:url("../images/clock.png");
-	}
+.wood {	width:16px; height:12px; background-image:url("../images/wood.png");	}
+.clay {	width:16px; height:12px; background-image:url("../images/clay.png");	}
+.iron {	width:16px; height:12px; background-image:url("../images/iron.png");	}
+.crop {	width:16px; height:16px; background-image:url("../images/crop.png");	}
+.upkeep { width:16px; height:16px; background-image:url("../images/upkeep.png");	}
+.all { width:18px; height:12px;	background-image:url("../images/resAll.png");	}
+.clock { width:16px; height:12px; background-image:url("../images/clock.png");	}
+
 
 /* Races */
-.race{
+img.race{
 	width:22px; height:22px;
 	background-image:url("../images/races.png");
 	background-repeat:no-repeat;
@@ -71,9 +51,45 @@ img.res{
 .hun {background-position:center -110px; }
 
 
-
-.stats{
-	width:20px; height:20px;
+/* Buildings */
+img.build{
+	width:25px; height:25px;
+	background-image:url("../images/buildings.png");
 	background-repeat:no-repeat;
-	background-image:url("/stats.png");
 }
+.tsq{	background-position: -50px -25px;	}
+
+
+/* Statistics */
+img.stats{
+	width:25px; height:25px;
+	background-image:url("../images/stats.png");
+	background-repeat:no-repeat;
+}
+.off{	background-position:0 0;	}
+.def{	background-position:-75px 0px;	}
+.dinf{	background-position:-100px 0px;	}
+.dcav{	background-position:-125px 0px;	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

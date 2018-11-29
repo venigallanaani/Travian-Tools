@@ -4,7 +4,7 @@
 	
     <header id="main-header" class="py-1 bg-warning text-white">
         <div class="container">
-            <p class="h3 font-weight-bold d-inline-block">Contact</p>
+            <p class="h3 font-weight-bold d-inline-block">About</p>
             <div class="float-right">
                 <div class="btn btn-light dropdown d-inline-block">
                     <a class="dropdown-toggle" data-toggle="dropdown">

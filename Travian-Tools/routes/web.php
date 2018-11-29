@@ -31,12 +31,26 @@ Route::get('/plus/{task}/{id?}','PlusController@show');			// Shows different opt
 /* --------------- Controller for Plus leader menu --------------- */
 Route::get('/leader/{task?}','LeaderController@leader');	
 
-/* --------------- Controller for Plus Resource leader menu --------------- */
+/* --------------- Plus Resource leader menu --------------- */
 Route::get('/resource/{task?}','ResourceController@resource');	
+Route::post('/resource/{task?}','ResourceController@processResourceTask');	
+
+/* --------------- Plus Resource leader menu --------------- */
+Route::get('/defense/incoming','DefenseController@incoming');
+Route::post('/defense/incoming','DefenseController@processIncoming');
+
+Route::get('/defense/cfd','DefenseController@cfdList');
+Route::post('/defense/cfd','DefenseController@createCfd');
+Route::get('/defense/cfd/{id}','DefenseController@cfdDetail');
+Route::post('/defense/cfd/{id}','DefenseController@processCfd');
+
+Route::get('/defense/search','DefenseController@search');
+Route::post('/defense/search','DefenseController@processSearch');
+
 
 /* --------------- Controller for the Report Page ----------- */
 Route::get('/report','ReportController@index');				// Displays the Report Page
 Route::post('/report','ReportController@process');			// Creates the Defect / bug in the Database
 
 /* --------------- Controller for the Contact Page ------------ */
-Route::get('/contact','ContactController@index');			//Displays the contact page
+Route::get('/about','AboutController@index');			//Displays the contact page

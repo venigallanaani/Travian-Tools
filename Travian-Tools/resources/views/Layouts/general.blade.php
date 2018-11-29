@@ -98,7 +98,7 @@
             <div class="container py-0">
                 <table>
                     <tr class="font-weight-bold">
-                        <td class="col-md-3"><a href="/contact" class="text-white">Contact</a></td>
+                        <td class="col-md-3"><a href="/about" class="text-white">About</a></td>
                         <td class="col-md-3"><a href="/help" class="text-white">Help</a></td>
                         <td class="col-md-3"><a href="/report" class="text-white">Suggestions</a></td>
                     </tr>
