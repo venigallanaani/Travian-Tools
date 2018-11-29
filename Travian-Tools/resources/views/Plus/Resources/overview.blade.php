@@ -18,7 +18,8 @@
 								<button class="close" data-dismiss="modal">&times;</button>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form action="/resource" method="post">
+									{{ csrf_field() }}
 									<div class="input-group py-1">
 										<label for="xCor" class="input-group-prepend"><span class="input-group-text">X:</span></label>
 											<input type="text" class="form-control col-md-2" placeholder="" aria-label="" aria-describedby="basic-addon1"> | 
@@ -31,23 +32,23 @@
 									</div>									
 									<div class="custom-control custom-radio custom-control-inline">
                                     	<input type="radio" id="customRadioInline1" name="resType" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline1"><img alt="wo" src="" class="res all"></label>
+                                        <label class="custom-control-label" for="customRadioInline1"><img alt="all" src="/images/x.gif" class="res all"></label>
                                     </div>
 									<div class="custom-control custom-radio custom-control-inline">
                                     	<input type="radio" id="customRadioInline2" name="resType" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline2"><img alt="wo" src="" class="res wood"></label>
+                                        <label class="custom-control-label" for="customRadioInline2"><img alt="wood" src="/images/x.gif" class="res wood"></label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
                                     	<input type="radio" id="customRadioInline3" name="resType" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline3"><img alt="wo" src="" class="res clay"></label>
+                                        <label class="custom-control-label" for="customRadioInline3"><img alt="clay" src="/images/x.gif" class="res clay"></label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
                                     	<input type="radio" id="customRadioInline4" name="resType" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline4"><img alt="wo" src="" class="res iron"></label>
+                                        <label class="custom-control-label" for="customRadioInline4"><img alt="iron" src="/images/x.gif" class="res iron"></label>
                                     </div> 
                                     <div class="custom-control custom-radio custom-control-inline">
                                     	<input type="radio" id="customRadioInline5" name="resType" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline5"><img alt="wo" src="" class="res crop"></label>
+                                        <label class="custom-control-label" for="customRadioInline5"><img alt="crop" src="/images/x.gif" class="res crop"></label>
                                     </div>
 									
 									

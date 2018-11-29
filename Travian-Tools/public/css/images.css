@@ -4,13 +4,13 @@ img.units{
 	background-size:200px 16px;
 	background-repeat:no-repeat;
 }
-.a01, .a02, .a03, .a04, .a05, .a06, .a07, .a08, .a09, .a10 { background-image:url("/nature.png"); }
-.e01, .e02, .e03, .e04, .e05, .e06, .e07, .e08, .e09, .e10 { background-image:url("/egyptians.png"); }
-.g01, .g02, .g03, .g04, .g05, .g06, .g07, .g08, .g09, .g10 { background-image:url("/gauls.png"); }
-.h01, .h02, .h03, .h04, .h05, .h06, .h07, .h08, .h09, .h10 { background-image:url("/huns.png"); }
-.n01, .n02, .n03, .n04, .n05, .n06, .n07, .n08, .n09, .n10 { background-image:url("/natars.png"); }
-.r01, .r02, .r03, .r04, .r05, .r06, .r07, .r08, .r09, .r10 { background-image:url("/romans.png"); }
-.t01, .t02, .t03, .t04, .t05, .t06, .t07, .t08, .t09, .t10 { background-image:url("/teutons.png"); }
+.a01, .a02, .a03, .a04, .a05, .a06, .a07, .a08, .a09, .a10 { background-image:url("../images/nature.png"); }
+.e01, .e02, .e03, .e04, .e05, .e06, .e07, .e08, .e09, .e10 { background-image:url("../images/egyptians.png"); }
+.g01, .g02, .g03, .g04, .g05, .g06, .g07, .g08, .g09, .g10 { background-image:url("../images/gauls.png"); }
+.h01, .h02, .h03, .h04, .h05, .h06, .h07, .h08, .h09, .h10 { background-image:url("../images/huns.png"); }
+.n01, .n02, .n03, .n04, .n05, .n06, .n07, .n08, .n09, .n10 { background-image:url("../images/natars.png"); }
+.r01, .r02, .r03, .r04, .r05, .r06, .r07, .r08, .r09, .r10 { background-image:url("../images/romans.png"); }
+.t01, .t02, .t03, .t04, .t05, .t06, .t07, .t08, .t09, .t10 { background-image:url("../images/teutons.png"); }
 
 .a01, .e01, .g01, .h01, .n01, .r01, .t01 { background-position: 0 0;}
 .a02, .e02, .g02, .h02, .n02, .r02, .t02 { background-position: -20px 0;}
@@ -23,19 +23,54 @@ img.units{
 .a09, .e09, .g09, .h09, .n09, .r09, .t09 { background-position: -160px 0;}
 .a10, .e10, .g10, .h10, .n10, .r10, .t10 { background-position: -180px 0;}
 
-/* resources classes */
+
+/* Resources */
 img.res{
-	width:16px; height:20px;
-	background-image:url("../images/resources.png");
 	background-repeat:no-repeat;
 }
-.wood {background-position: center 0;}
-.clay {background-position: center -20px;}
-.iron {background-position: center -40px;}
-.crop {background-position: center -60px;}
-.upkeep {background-position: center -80px;}
-.all {background-position: center -100px;}
-.time {background-position: center -120px;}
+.wood {
+	width:16px; height:12px;
+	background-image:url("../images/wood.png");
+	}
+.clay {
+	width:16px; height:12px;
+	background-image:url("../images/clay.png");
+	}
+.iron {
+	width:16px; height:12px;
+	background-image:url("../images/iron.png");
+	}
+.crop {
+	width:16px; height:16px;
+	background-image:url("../images/crop.png");
+	}
+.upkeep {
+	width:16px; height:16px;
+	background-image:url("../images/upkeep.png");
+	}
+.all {
+	width:18px; height:12px;
+	background-image:url("../images/resAll.png");
+	}
+.clock {
+	width:16px; height:12px;
+	background-image:url("../images/clock.png");
+	}
+
+/* Races */
+.race{
+	width:22px; height:22px;
+	background-image:url("../images/races.png");
+	background-repeat:no-repeat;
+}
+.roman {background-position:center 0; }
+.teuton {background-position:center -22px; }
+.gaul {background-position:center -44px; }
+.natar {background-position:center -66px; }
+.egypt {background-position:center -88px; }
+.hun {background-position:center -110px; }
+
+
 
 .stats{
 	width:20px; height:20px;

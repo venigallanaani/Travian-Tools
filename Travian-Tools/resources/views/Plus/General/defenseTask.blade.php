@@ -26,7 +26,7 @@
 							<td><strong>Land Time:</strong> 15/11/2018 00:00:00</td>
 						</tr>
 						<tr>
-							<td><strong>Defense </strong><small>(in crop)</small>: 10,000</td>
+							<td><strong>Defense </strong>(<img alt="upkeep" src="/images/x.gif" class="res upkeep">): 10,000</td>
 							<td><strong>Time Left: <span class="text-info">12:44:00</span></strong></td>
 						</tr>
 					</table>

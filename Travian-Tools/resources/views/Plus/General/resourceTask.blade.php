@@ -6,9 +6,9 @@
 			<div class="card-header h4 py-2 bg-info text-white"><strong>Resource Push for Player (village)</strong></div>
 			<div class="card-text">
     <!-- ==================================== List of tasks is progress ======================================= -->		
-				                <div class="text-center col-md-11 mx-auto my-2 p-0">    
-                    <p class="h5 py-2"><strong>Task Details:</strong></p>               
-                    <form>
+                <div class="text-center col-md-11 mx-auto my-2 p-0">                                  
+                    <form method="POST" action="/plus/resource/id">
+                    	{{ csrf_field() }}
                         <table class="table col-md-10 table-borderless mx-auto text-left">
                             <tr>
                                 <td class="py-1 col-md-5"><strong>Village: </strong><a href="" target="_blank">Player(village)</a></td>

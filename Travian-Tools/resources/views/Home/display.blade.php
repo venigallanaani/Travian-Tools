@@ -13,18 +13,21 @@
         </div>
     <?php unset($_SESSION['ALERT']); }?>
 
-	<?php if(!isset($_SESSION['SERVER'])){?>
+    	@if(!Session::has('server'))
+    		@alert(['type'=>'danger'])
+    			You have not selected a server, <a href="/servers" class="text-weight-bold"><strong>Select Server</strong></a> 
+    		@endalert	
+    	@endif
         <div class="alert alert-warning text-center my-1" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>You have not selected a server, <a href="servers.php" class="text-weight-bold"><strong>Select Server</strong></a>            
         </div>
-    <?php }?>
         
         <div class="card-columns">
             <div class="card shadow">
                 <div class="card-body">
-                    <p><img alt="wo" src="" class="res crop"> Home welcome sdasd asd asd adadadasdasd ad adasd asd asdas asd asd  qwedsasd awds sdfsd fsdf wef sfd wewef e eee faf</p>
+                    <p><img alt="wo" src="/images/x.gif" class="res clock"> Home welcome sdasd asd asd adadadasdasd ad adasd asd asdas asd asd  qwedsasd awds sdfsd fsdf wef sfd wewef e eee faf</p>
                 </div>
             </div>
             <div class="card shadow">

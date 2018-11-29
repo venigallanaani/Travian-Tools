@@ -10,16 +10,16 @@
 					<table class="table table-bordered col-md-12 p-0 mw-100 table-sm">
 						<tr class="text-primary font-weight-bold h5">
 							<td class="pr-0 py-1">Village</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Clubswinger">t01</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Spearman">t02</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Axeman">t03</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Scout">t04</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Paladin">t05</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Teutonic Knight">t06</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Ram">t07</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Catapult">t08</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Cheif">t09</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Settler">t10</td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Clubswinger"><img alt="" src="/images/x.gif" class="units t01"></td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Spearman"><img alt="" src="/images/x.gif" class="units t02"></td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Axeman"><img alt="" src="/images/x.gif" class="units t03"></td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Scout"><img alt="" src="/images/x.gif" class="units t04"></td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Paladin"><img alt="" src="/images/x.gif" class="units t05"></td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Teutonic Knight"><img alt="" src="/images/x.gif" class="units t06"></td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Ram"><img alt="" src="/images/x.gif" class="units t07"></td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="" src="/images/x.gif" class="units t08"></td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Cheif"><img alt="" src="/images/x.gif" class="units t09"></td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Settler"><img alt="" src="/images/x.gif" class="units t10"></td>
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Total Units">#</td> 
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Tournament Square">Tsq</td>
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Village Type">Type</td>
@@ -59,7 +59,7 @@
 							<td>Offense</td>
 							<td></td>
 						</tr>
-						<tr class="font-weight-bold">
+						<tr class="font-weight-bold small">
 							<td>Total</td>
 							<td>2000</td>
 							<td>2000</td>
