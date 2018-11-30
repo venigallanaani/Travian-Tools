@@ -16,37 +16,19 @@ class FindersController extends Controller
     	return view('finders.overview');
 
     }
-
-
-    public function show($id){    	
-
-    	session(['title'=>'Finders']);
-
-    	if($id=='player'){
-    		return view('finders.playerFinder');          //Displays the player finder
-    	}elseif($id=='alliance'){
-    		return view('finders.allianceFinder');        //Displays the alliance finder
-    	}elseif($id=='natar'){
-    		return view('finders.natarFinder');           //Displays the natar finder
-    	}elseif($id=='inactive'){
-    		return view('finders.inactiveFinder');        //Displays the inactive finder 
-    	}elseif($id=='neighbour'){
-    		return view('finders.neighbourFinder');       // Displays the neighbour finder
-    	}else{
-    		return view('finders.overview');
-    	}		
-    }   
     
     public function player($name=null,$id=null){
         // displays the Player finder
         if($id==null && $name==null){
-            return view('finders.playerFinder');
+            return view('finders.Player.playerFinder');
+        }elseif($id==null && $name!=null){
+            return view('finders.Player.manyPlayers');
         }else{
-            return view('finders.playerFinder');
+            return view('finders.Player.onePlayer');
         }        
     }
     
-    public function processPlayerForm(){
+    public function processPlayer(){
         // converts the player finder post into get call
         $name  = Input::get('plrNm') ;
         return Redirect::to('/finder/player/'.$name) ;
@@ -55,13 +37,15 @@ class FindersController extends Controller
     public function alliance($name=null,$id=null){
         //Displays the alliance finder
         if($id==null && $name==null){
-            return view('finders.allianceFinder');
+            return view('finders.Alliance.allianceFinder');
+        }elseif($id==null && $name!=null){
+            return view('finders.Alliance.manyAlliances');
         }else{
-            return view('finders.allianceFinder');
+            return view('finders.Alliance.oneAlliance');
         }
     }
     
-    public function processAllianceForm(){
+    public function processAlliance(){
         // converts the alliance finder post call into get
         $name  = Input::get('allyNm') ;
         return Redirect::to('/finder/alliance/'.$name) ;
@@ -69,19 +53,31 @@ class FindersController extends Controller
     
     public function natar(){ 
         //Displays the natar finder
-        return view('finders.natarFinder');
-            
+        return view('finders.Natar.natarFinder');            
+    }
+    
+    public function processNatar(Request $request){
+        //Displays the natar finder
+        return view('finders.Natar.natarList');        
     }
     
     public function inactive(){
         //Displays the inactive finder
-        return view('finders.inactiveFinder');
-
+        return view('finders.Inactive.inactiveFinder');
+    }
+    
+    public function processInactive(Request $request){
+        //Displays the inactive finder
+        return view('finders.Inactive.inactiveList');
     }
     
     public function neighbour(){        
         //Displays the neighbour finder
-        return view('finders.neighbourFinder');
-
+        return view('finders.Neighbour.neighbourFinder');
+    }
+    
+    public function processNeighbour(Request $request){
+        //Displays the neighbour finder
+        return view('finders.Neighbour.neighbourslist');
     }
 }

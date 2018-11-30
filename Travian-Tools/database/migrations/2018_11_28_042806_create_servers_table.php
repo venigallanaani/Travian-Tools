@@ -17,7 +17,7 @@ class CreateServersTable extends Migration
             $table->string('id')->unique();
             $table->string('url');
             $table->string('country');
-            $table->string('status');
+            $table->enum('status',['ACTIVE','COMPLETE']);
             $table->time('start_date');
             $table->integer('days');
             $table->string('maps_table');

@@ -98,49 +98,49 @@
 							<td>Barca1</td>
 							<td>Admin1</td>
 							<td>Alliance1</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
+							<td><input type="checkbox" name="leader" checked></td>
+							<td><input type="checkbox" name="defense" checked></td>
+							<td><input type="checkbox" name="offense" checked></td>
+							<td><input type="checkbox" name="leader" checked></td>
+							<td><input type="checkbox" name="resource" checked></td>
+							<td><input type="checkbox" name="artifact" checked></td>
+							<td><input type="checkbox" name="wonder" checked></td>
 						</tr>
 						<tr class="">
 							<td>Barca2</td>
 							<td>Admin2</td>
 							<td>Alliance2</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
+							<td><input type="checkbox" name="leader" checked></td>
+							<td><input type="checkbox" name="defense" checked></td>
+							<td><input type="checkbox" name="offense" checked></td>
+							<td><input type="checkbox" name="leader" checked></td>
+							<td><input type="checkbox" name="resource" checked></td>
+							<td><input type="checkbox" name="artifact" checked></td>
+							<td><input type="checkbox" name="wonder" checked></td>
 						</tr>
 						<tr class="">
 							<td>Barca3</td>
 							<td>Admin3</td>
 							<td>Alliance3</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
+							<td><input type="checkbox" name="leader" checked></td>
+							<td><input type="checkbox" name="defense" checked></td>
+							<td><input type="checkbox" name="offense" checked></td>
+							<td><input type="checkbox" name="leader" checked></td>
+							<td><input type="checkbox" name="resource" checked></td>
+							<td><input type="checkbox" name="artifact" checked></td>
+							<td><input type="checkbox" name="wonder" checked></td>
 						</tr>
 						<tr>
 							<td>Barca3</td>							
 							<td>Admin3</td>
 							<td>Alliance3</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
-							<td>X</td>
+							<td><input type="checkbox" name="leader" checked></td>
+							<td><input type="checkbox" name="defense" checked></td>
+							<td><input type="checkbox" name="offense" checked></td>
+							<td><input type="checkbox" name="leader" checked></td>
+							<td><input type="checkbox" name="resource" checked></td>
+							<td><input type="checkbox" name="artifact" checked></td>
+							<td><input type="checkbox" name="wonder" checked></td>
 						</tr>
 					</table>
 				</div>			

@@ -8,7 +8,7 @@
 			<div class="card-text">
     <!-- ==================================== List of tasks is progress ======================================= -->		
 				<div class="text-center col-md-11 my-2 p-0">
-					<table class="table align-middle small col-md-9  mx-auto">
+					<table class="table align-middle small col-md-9 mx-auto">
 						<thead class="thead-inverse">
     						<tr>
     							<th class="col-md-1">Target</th>
@@ -24,7 +24,7 @@
 								<strong>player (village)</strong></a>
 							</td>
 							<td>10000</td>
-							<td>All</td>							
+							<td data-toggle="tooltip" data-placement="top" title="Clay"><img alt="all" src="/images/x.gif" class="res clay"></td>							
 							<td>0%</td>
 							<td>16/10/2018 00:00:00</td>
 							<td><a class="btn btn-outline-secondary" href="/plus/resource/1234">
@@ -36,7 +36,7 @@
 								<strong>player (village)</strong></a>
 							</td>
 							<td>10000</td>
-							<td>All</td>							
+							<td data-toggle="tooltip" data-placement="top" title="Lumber"><img alt="all" src="/images/x.gif" class="res wood"></td>							
 							<td>0%</td>
 							<td>16/10/2018 00:00:00</td>
 							<td><a class="btn btn-outline-secondary" href="/plus/resource/1234">
@@ -48,7 +48,7 @@
 								<strong>player (village)</strong></a>
 							</td>
 							<td>10000</td>
-							<td>All</td>							
+							<td data-toggle="tooltip" data-placement="top" title="Any Resource"><img alt="all" src="/images/x.gif" class="res all"></td>							
 							<td>0%</td>
 							<td>16/10/2018 00:00:00</td>
 							<td><a class="btn btn-outline-secondary" href="/plus/resource/1234">

@@ -22,58 +22,53 @@
         			</div>
         			
         			<!-- ===============Defense task details =========================== -->
-					<table class="table mx-auto col-md-11 table-borderless text-center small rounded" style="background-color:#dbeef4;">
+					<table class="table mx-auto col-md-11 table-bordered text-center small" style="background-color:#dbeef4;">
 						<form action="/defense/cfd/12345" method="POST">
-    						<tr>
-    							<td class="pt-1 pb-0"><strong>Created By:</strong> Account Name</td>
-    							<td class="pt-1 pb-0"><strong>Last Updated By:</strong> Account Name</td>
-    						</tr>
-    						<tr>
-    							<td class="pt-1 pb-0"><strong>Defense Needed:</strong> <input type="text" name="defNeed" size="5" value="10000"/></td>
-    							<td class="pt-1 pb-0"><strong>Defense Received: </strong>5000</td>
-    						</tr>
-    						<tr>
-    							<td class="pt-1 pb-0"><strong>Land Time:</strong> <input type="text" name="defNeed" size="15" value="15/11/2018 00:00:00"/></td>
-    							<td class="pt-1 pb-0"><strong>Defense Remaining: </strong>5000</td>
-    						</tr>
-    						<tr>
-    							<td class="pt-1 pb-0"><strong>Defense Priority:</strong> 
-    								<select>
-    									<option>High</option>
-    									<option>Medium</option>
-    									<option>Low</option>
-    								</select>
-    							</td>
-    							<td class="pt-1 pb-0"><strong>Infantry Defense: </strong>5000</td>
-    						</tr>
-    						<tr>
-    							<td class="pt-1 pb-0"><strong>Defense Type:</strong> 
-    								<select>
-    									<option>Defend</option>
-    									<option>Snipe</option>
-    									<option>Scout</option>
-    									<option>Other</option>
-    								</select>
-    							</td>
-    							<td class="pt-1 pb-0"><strong>Cavalry Defense: </strong>5000</td>
-    						</tr>
-    						<tr>
-    							<td class="pt-1 pb-0"><strong>Remaining Time: <span class="text-primary">10:12:00</span></strong></td>
-    							<td class="pt-1 pb-0"><strong>Resources: </strong>5000</td>
-    						</tr>
-    						<tr>
-    							<td colspan="2">
-    								<button class="btn btn-primary px-5" name="update">Update Task</button>
-    								<button class="btn btn-success px-5" name="complete">Mark as Complete</button>
-    								<button class="btn btn-warning px-5" name="delete">Delete Task</button>
-    							</td>
-    						</tr>
+							{{ csrf_field() }}
+							<tr>
+								<td class="py-2">
+									<p class="py-0"><strong>Defense Needed:</strong> <input type="text" name="defNeed" size="5" value="10000"/></p>
+									<p class="py-0"><strong>Land Time:</strong> <input type="text" name="defNeed" size="15" value="15/11/2018 00:00:00"/></p>
+									<p class="py-0"><strong>Defense Priority:</strong> 
+    													<select>
+    														<option>High</option>
+    														<option>Medium</option>
+    														<option>Low</option>
+    													</select></p>
+	    							<p class="py-0"><strong>Defense Type:</strong> 
+    													<select>
+    														<option>Defend</option>
+    														<option>Snipe</option>
+    														<option>Scout</option>
+    														<option>Other</option>
+    													</select></p>								
+								</td>
+								<td class="py-2">
+									<p class="py-0"><strong>Remaining Time: <span class="text-primary">10:12:00</span></strong></p>
+									<p class="py-0 my-1"><button class="btn btn-primary px-5" name="update">Update Task</button></p>
+									<p class="py-0 my-1"><button class="btn btn-success px-5" name="complete">Mark as Complete</button></p>
+									<p class="py-0 my-1"><button class="btn btn-warning px-5" name="complete">Delete Task</button></p>
+								</td>
+							</tr>
 						</form>
+					  	<tr class="py-2">
+							<td class="py-0">
+								<p class="py-0 my-1"><strong>Created By:</strong> Account Name</p>
+								<p class="py-0 my-1"><strong>Defense Received(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>5000</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Total Defense"><img alt="" src="/images/x.gif" class="stats def">: 5000</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Infantry Defense"><img alt="" src="/images/x.gif" class="stats dinf">: 5000</p>
+							</td>
+							<td class="py-0">
+								<p class="py-0 my-1"><strong>Last Updated By:</strong> Account Name</p>
+								<p class="py-0 my-1"><strong>Defense Remaining(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>5000</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Resources"><img alt="" src="/images/x.gif" class="res all"> : 5000</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Cavalry Defense"><img alt="" src="/images/x.gif" class="stats dcav">: 5000</p>
+							</td>
+						</tr>					
 					</table>
-
-					<!-- ===================== Displays the incoming troops and types ============================================ -->
+	<!-- ===================== Displays the incoming troops and types ============================================ -->
 					<div class="my-5">
-						<p class="h5 text-info"><strong>Incoming Defense</strong></p>
+						<p class="h5 text-info"><strong>Incoming Troops</strong></p>
 						<table class="table table-bordered table-hover small col-md-10 mx-auto">
 							<tr>	
 								<th rowspan="2">Teuton</th>

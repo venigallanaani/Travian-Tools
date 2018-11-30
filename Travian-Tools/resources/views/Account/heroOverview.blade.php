@@ -13,9 +13,9 @@
     			<strong>Hero data is successfully updated.</strong>
     		</div>
     		<div class="col-md-12 mx-auto m-5">
-    			<table class="p-0 m-0 col-md-12">
+    			<table class="p-0 m-0 col-md-10 mx-auto">
     				<tr>
-    					<td class="col-md-5">
+    					<td class="col-md-6">
     						<table class="mx-auto">
         						<tr>
         							<td class="p-0 text-primary"><strong>Name</strong></td><td>: Barca</td>
@@ -40,7 +40,7 @@
         						</tr>
         					</table>
     					</td>
-    					<td class="col-md-7 bg-secondary m-2">
+    					<td class="col-md-6 bg-secondary">
     		        		<div class="">
                     			<p>Hero Points Pie Chart here</p>
                     		</div>

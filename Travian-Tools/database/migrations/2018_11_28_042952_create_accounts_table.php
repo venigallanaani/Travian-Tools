@@ -21,6 +21,7 @@ class CreateAccountsTable extends Migration
             $table->string('user_name');
             $table->string('server_id');
             $table->string('tribe');
+            $table->enum('status',['PRIMARY','DUAL']);
             $table->string('sitter1');
             $table->string('sitter2');
             $table->timestamps();

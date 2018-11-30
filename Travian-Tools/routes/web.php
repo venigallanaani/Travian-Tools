@@ -8,16 +8,21 @@ Route::get('/home', 'HomeController@index');				// Displays home page on selecti
 Route::get('/finder','FindersController@index');			// Finders main page
 
 Route::get('/finder/player','FindersController@player');		    // Displays the different type of finders
-Route::post('/finder/player','FindersController@processPlayerForm');		// Displays the different type of finders
+Route::post('/finder/player','FindersController@processPlayer');		// Displays the different type of finders
 Route::get('/finder/player/{name}/{id?}','FindersController@player');		    // Displays the different type of finders
 
 Route::get('/finder/alliance','FindersController@alliance');		// Displays the different type of finders
-Route::post('/finder/alliance','FindersController@processAllianceForm');	// Displays the different type of finders
+Route::post('/finder/alliance','FindersController@processAlliance');	// Displays the different type of finders
 Route::get('/finder/alliance/{name}/{id?}','FindersController@alliance');	// Displays the different type of finders
 
 Route::get('/finder/inactive','FindersController@inactive');		// Displays the different type of finders
+Route::post('/finder/inactive','FindersController@processInactive');		// Displays the result of the inactive finders
+
 Route::get('/finder/natar','FindersController@natar');		        // Displays the different type of finders
+Route::post('/finder/natar','FindersController@processNatar');		// Displays the result of the Natar finders
+
 Route::get('/finder/neighbour','FindersController@neighbour');		// Displays the different type of finders
+Route::post('/finder/neighbour','FindersController@processNeighbour');		// Displays the result of the neighbour finders
 
 
 /* --------------- Controller for Account Page -------------- */

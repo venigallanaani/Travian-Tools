@@ -29,7 +29,8 @@
                                 <td class="py-1 col-md-7"><strong>Resources Remaining:</strong> 5000</td>
                             </tr>
                             <tr>
-                                <td class="py-1 col-md-5"><strong>Resource Preference:</strong> ANY</td>
+                                <td class="py-1 col-md-5"><strong>Resource Preference:</strong> 
+                                	<span data-toggle="tooltip" data-placement="top" title="Clay"><img alt="all" src="/images/x.gif" class="res clay"></span></td>
                                 <td class="py-1 col-md-7 text-success"><strong>Your Contribution:</strong> 1000</td>
                             </tr>
                             <tr>
