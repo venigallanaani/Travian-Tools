@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Map extends Model
 {
-    protected $table='plus';
+    protected $table='Maps';
     
     protected $fillable = [
-        'server_id','worldid','x','y','id','vid','village','uid','player','aid','alliance','population','table_id','updatetime'
+        'map_id','server_id','status','created_at','updated_at'
     ];
     
 }

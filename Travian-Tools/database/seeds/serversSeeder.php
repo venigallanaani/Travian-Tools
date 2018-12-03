@@ -12,8 +12,7 @@ class serversSeeder extends Seeder
     public function run()
     {
         $data=array(
-            array('server_id'=>'t6angr1','url'=>'ts6.angolosphere.travian.com','country'=>'com','status'=>'ACTIVE','start_date'=>'2018-10-27','days'=>'35','maps_table'=>'maps_details','diff_table'=>'diff_details','timezone'=>'GMT','table_id'=>''),
-            
+            array('server_id'=>'t6angr1','url'=>'ts6.anglosphere.travian.com','country'=>'com','status'=>'ACTIVE','start_date'=>'2018-10-27','days'=>'35','maps_table'=>'maps_details','diff_table'=>'diff_details','timezone'=>'GMT','table_id'=>''),
             );       
         
         DB::table('servers')->insert($data);
