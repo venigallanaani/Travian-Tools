@@ -26,7 +26,7 @@ class CreateAccountsTable extends Migration
             $table->string('sitter2');
             $table->timestamps();
             
-            $table->foreign('server_id')->references('id')->on('servers');
+            $table->foreign('server_id')->references('server_id')->on('servers');
         });
     }
 

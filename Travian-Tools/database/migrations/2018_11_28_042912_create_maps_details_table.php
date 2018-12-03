@@ -29,7 +29,7 @@ class CreateMapsDetailsTable extends Migration
             $table->string('table_id');
             $table->time('updatetime');
             
-            $table->foreign('server_id')->references('id')->on('servers');
+            $table->foreign('server_id')->references('server_id')->on('servers');
         });
     }
 

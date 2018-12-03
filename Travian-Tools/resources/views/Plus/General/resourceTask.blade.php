@@ -11,7 +11,7 @@
                     	{{ csrf_field() }}
                         <table class="table col-md-10 table-borderless mx-auto text-left">
                             <tr>
-                                <td class="py-1 col-md-5"><strong>Village: </strong><a href="" target="_blank">Player(village)</a></td>
+                                <td class="py-1 col-md-5"><strong>Village: <a href="" target="_blank">Player(village)</a></strong></td>
                                 <td class="py-1 col-md-7"><strong>Resource Target:</strong> 10000</td>
                             </tr>
                             <tr>
@@ -31,7 +31,7 @@
                             <tr>
                                 <td class="py-1 col-md-5"><strong>Resource Preference:</strong> 
                                 	<span data-toggle="tooltip" data-placement="top" title="Clay"><img alt="all" src="/images/x.gif" class="res clay"></span></td>
-                                <td class="py-1 col-md-7 text-success"><strong>Your Contribution:</strong> 1000</td>
+                                <td class="py-1 col-md-7 text-info"><strong>Your Contribution:</strong> 1000</td>
                             </tr>
                             <tr>
                                 <td><button class="btn btn-warning px-5">Submit</button></td>

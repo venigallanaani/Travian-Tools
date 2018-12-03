@@ -14,11 +14,11 @@ class CreateServersTable extends Migration
     public function up()
     {
         Schema::create('servers', function (Blueprint $table) {
-            $table->string('id')->unique();
+            $table->string('server_id')->unique();
             $table->string('url');
             $table->string('country');
             $table->enum('status',['ACTIVE','COMPLETE']);
-            $table->time('start_date');
+            $table->date('start_date');
             $table->integer('days');
             $table->string('maps_table');
             $table->string('diff_table');

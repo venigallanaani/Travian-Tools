@@ -9,10 +9,10 @@ class Servers extends Model
     protected $table='servers';
     
     protected $guarded = [
-        'id',
+        'server_id','url','country','status','start_date','maps_table','diff_table','timezone',
     ];
     
     protected $fillable = [
-        'url','country','status','start_date','days','maps_table','diff_table','timezone','table_id'
+        'days','table_id'
     ];
 }

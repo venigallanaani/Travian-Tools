@@ -1,5 +1,6 @@
 <?php
 
+
 /* ---------------- Home page --------------- */
 Route::get('/', 'HomeController@index');					// Displays home page on login
 Route::get('/home', 'HomeController@index');				// Displays home page on selection

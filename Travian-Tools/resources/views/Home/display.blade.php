@@ -13,11 +13,6 @@
         </div>
     <?php unset($_SESSION['ALERT']); }?>
 
-    	@if(!Session::has('server'))
-    		@alert(['type'=>'danger'])
-    			You have not selected a server, <a href="/servers" class="text-weight-bold"><strong>Select Server</strong></a> 
-    		@endalert	
-    	@endif
         <div class="alert alert-warning text-center my-1" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

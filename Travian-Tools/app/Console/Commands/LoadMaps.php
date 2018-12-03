@@ -3,13 +3,15 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Servers;
+use Carbon\Carbon;
 
 class LoadMaps extends Command
 {
 
-    protected $signature = 'command:LoadMaps';
+    protected $signature = 'Load:Maps';
 
-    protected $description = 'Command description';
+    protected $description = 'Loads map.sql file into maps_details table with table_id';
 
     public function __construct()
     {
@@ -18,6 +20,15 @@ class LoadMaps extends Command
 
     public function handle()
     {
-        echo 'Loading Maps Now';
+        
+        $servers=Servers::where('status','=','ACTIVE')->get();
+        $dateStmp=Carbon::now()->format('Ymd');
+        
+        foreach($servers as $server){
+            $mapsUrl='http://'.$server->url.'/map.sql';
+            $tableId = $server->server_id.'-'.$dateStmp;
+            echo $tableId;
+        }
+        
     }
 }

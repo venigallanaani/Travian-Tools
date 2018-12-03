@@ -28,7 +28,7 @@ class CreatePlusTable extends Migration
             $table->boolean('wonder')->default(FALSE);
             $table->timestamps();
             
-            $table->foreign('server_id')->references('id')->on('servers');
+            $table->foreign('server_id')->references('server_id')->on('servers');
             $table->foreign('user')->references('name')->on('users');
         });
     }

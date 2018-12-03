@@ -14,9 +14,10 @@ class Kernel extends ConsoleKernel
     
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->call(new LoadServers)->hourlyAt(5);  //loads the map.sql file into table for all the partners in Servers table into Maps table
-        
-        $schedule->command('command:LoadMaps')->everyFiveMinutes();
+       
+        $schedule->command('Load:Maps')
+            ->everyMinute()
+            ->appendOutputTo(storage_path('logs/loadMaps.log'));
         
     }
     
