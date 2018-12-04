@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 
+use App\MapData;
+
 class FindersController extends Controller
 {
     // this process will display the Finders page
@@ -17,22 +19,32 @@ class FindersController extends Controller
 
     }
     
-    public function player($name=null,$id=null){
-        // displays the Player finder
-        if($id==null && $name==null){
-            return view('finders.Player.playerFinder');
-        }elseif($id==null && $name!=null){
-            return view('finders.Player.manyPlayers');
-        }else{
-            return view('finders.Player.onePlayer');
-        }        
-    }
-    
     public function processPlayer(){
         // converts the player finder post into get call
         $name  = Input::get('plrNm') ;
         return Redirect::to('/finder/player/'.$name) ;
     }
+    
+    public function player($name=null,$id=null){
+        // displays the Player finder
+        if($id==null && $name==null){
+            return view('finders.Player.playerFinder');
+        }elseif($id==null && $name!=null){
+            
+            $maps=MapData::where('player','like','%'.$name.'%')
+                ->where('table_id','t6angr1_20181204')
+                ->orderBy('population','desc')->get();
+            
+            if(count($maps)==0){
+                return view('Finders.Player.noPlayers')->with('player',$name);
+            }else{
+                return view('finders.Player.manyPlayers');
+            }           
+            
+        }else{
+            return view('finders.Player.onePlayer');
+        }  
+    }   
     
     public function alliance($name=null,$id=null){
         //Displays the alliance finder

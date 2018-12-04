@@ -12,7 +12,7 @@
     					       else { echo " Select Server ";}?>
     				</a>
                     <div class="dropdown-menu">
-                        <a href="servers.php" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
+                        <a href="/servers" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
             	<p class="h6 d-inline-block px-2"><span id="clock"></span></p>

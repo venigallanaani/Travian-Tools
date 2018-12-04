@@ -4,20 +4,23 @@
         
     <!-- ============================================ home page body starts here ============================================ -->
     <div class="container mt-1">
-	<?php if(isset($_SESSION['ALERT'])){?>
-        <div class="alert alert-<?php echo $_SESSION['ALERT']['TYPE']; ?> text-center my-1" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <?php echo $_SESSION['ALERT']['MESSAGE']; ?> <a href="login.php"><strong>Sign In</strong></a>
-        </div>
-    <?php unset($_SESSION['ALERT']); }?>
-
-        <div class="alert alert-warning text-center my-1" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>You have not selected a server, <a href="servers.php" class="text-weight-bold"><strong>Select Server</strong></a>            
-        </div>
+		@foreach(['danger','success'] as $msg)
+			@if(Session::has($msg))
+	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>{{ Session::get($msg) }}
+                </div>
+            @endif
+        @endforeach
+		
+		@if(!Session::has('server'))
+            <div class="alert alert-warning text-center my-1" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>You have not selected a server, <a href="/servers" class="text-weight-bold"><strong>Select Server</strong></a>            
+            </div>
+    	@endif
         
         <div class="card-columns">
             <div class="card shadow">

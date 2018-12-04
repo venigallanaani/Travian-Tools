@@ -25,7 +25,6 @@ Route::post('/finder/natar','FindersController@processNatar');		// Displays the 
 Route::get('/finder/neighbour','FindersController@neighbour');		// Displays the different type of finders
 Route::post('/finder/neighbour','FindersController@processNeighbour');		// Displays the result of the neighbour finders
 
-
 /* --------------- Controller for Account Page -------------- */
 Route::get('/account','AccountController@index');			// Account main page
 Route::get('/account/{task}','AccountController@show');		// Displays the different options in the account page
@@ -60,3 +59,9 @@ Route::post('/report','ReportController@process');			// Creates the Defect / bug
 
 /* --------------- Controller for the Contact Page ------------ */
 Route::get('/about','AboutController@index');			//Displays the contact page
+
+/* ---------------- Servers page controllers ------------------- */
+Route::get('/servers','ServersController@index');
+Route::post('/servers','ServersController@process');
+
+
