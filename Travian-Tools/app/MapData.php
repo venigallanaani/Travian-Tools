@@ -9,4 +9,6 @@ class MapData extends Model
     protected $table='maps_details';
         
     protected $fillable = ['*'];
+    
+    public $timestamps=true;
 }

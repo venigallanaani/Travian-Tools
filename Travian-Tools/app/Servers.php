@@ -15,4 +15,6 @@ class Servers extends Model
     protected $fillable = [
         'days','table_id'
     ];
+    
+    public $timestamps=true;
 }

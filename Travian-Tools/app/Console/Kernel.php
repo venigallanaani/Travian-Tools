@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     
     protected function schedule(Schedule $schedule)
     {
-       
+       // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Load:Maps')
             ->everyMinute()
             ->appendOutputTo(storage_path('logs/loadMaps.log'));
