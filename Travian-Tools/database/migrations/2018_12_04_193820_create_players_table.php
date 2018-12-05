@@ -17,13 +17,14 @@ class CreatePlayersTable extends Migration
             $table->string('server_id');
             $table->integer('uid');
             $table->string('player');
-            $table->integer('rank');
+            $table->integer('rank')->nullable();
             $table->string('tribe');
             $table->integer('villages');
             $table->integer('population');
             $table->integer('diffpop');
-            $table->integer('aid');
-            $table->string('alliance');           
+            $table->integer('aid')->nullable();
+            $table->string('alliance')->nullable(); 
+            $table->string('table_id');
             $table->timestamps();
         });
     }

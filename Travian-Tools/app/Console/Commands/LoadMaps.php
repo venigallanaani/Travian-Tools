@@ -23,17 +23,15 @@ class LoadMaps extends Command
     }
 
     public function handle()
-    {
-        
+    {        
         $servers=Servers::where('status','=','ACTIVE')->get();
         $dateStmp=Carbon::now()->format('Ymd');
         
+        echo "\n".'**********************************LOAD MAPS PROCESS***************************************'."\n";
         foreach($servers as $server){
-            echo "\n".'**************************************************************'."\n";
+            echo "\n".'***********************Server: '.$server->url.'***************************'."\n";
             echo "New load servers job started at ".Carbon::now()."\n";
-            echo "Server: ".$server->url."\n";
-            
-            
+           
             $mapsUrl='https://'.$server->url.'/map.sql';
             $tableId = $server->server_id.'_'.$dateStmp;             
             $contents=file_get_contents($mapsUrl);
@@ -82,9 +80,8 @@ class LoadMaps extends Command
             }
             fclose($fileData);
             
-            echo "Load servers job completed at ".Carbon::now()."\n";
-            echo "\n".'**************************************************************'."\n";
+            echo "Load servers job completed at ".Carbon::now()."\n";            
         }
-        
+        echo "\n".'*************************************************************************************************'."\n";
     }
 }
