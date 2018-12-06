@@ -14,20 +14,14 @@
                     <th>Distance</th>
                     <th>Village</th>
                     <th>Population</th>
-                    <th>+/- 7 Days</th>
                 </tr>
-                <tr>
-                    <td class="py-0">1.0</td>
-                    <td class="py-0"><a href="">Natars 01</td>
-                    <td class="py-0">200</td>
-                    <td class="py-0">+5</td>
-                </tr>
-                <tr>
-                    <td class="py-0">5.0</td>
-                    <td class="py-0"><a href="">Natars 02</td>
-                    <td class="py-0">200</td>
-                    <td class="py-0">+5</td>
-                </tr>
+                @foreach($natars as $natar)
+                    <tr>
+                        <td class="py-0">1.0</td>
+                        <td class="py-0"><a href="">{{$natar['village']}}</td>
+                        <td class="py-0">{{$natar['population']}}</td>
+                    </tr>
+                @endforeach
             </table>
         </div>
     </div>

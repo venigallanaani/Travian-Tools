@@ -15,27 +15,28 @@
                             <table class="table table-borderless text-left">
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Profile Name</span></strong></td>
-                                    <td class="py-1">: Barca</td>
+                                    <td class="py-1">: {{ $player['player'] }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Tribe</span></strong></td>
-                                    <td class="py-1">: Teuton</td>
+                                    <td class="py-1">: {{ $player['tribe'] }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Alliance</span></strong></td>
-                                    <td class="py-1">: <a href="">1812</a></td>
+                                    <td class="py-1">: <a href="/finders/alliance/{{ $player['alliance'] }}/1">{{ $player['alliance'] }}</a></td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Rank</span></strong></td>
-                                    <td class="py-1">: 100</td>
+                                    <td class="py-1">: {{ $player['rank'] }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Population</span></strong></td>
-                                    <td class="py-1">: 1234</td>
+                                    <td class="py-1">: {{ $player['population'] }} <span class="small text-@if($player['diffpop'] >0 ){{'success'}}@else{{'danger'}}@endif"
+                                    			>({{ $player['diffpop'] }})</span></td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Villages</span></strong></td>
-                                    <td class="py-1">: 10</td>
+                                    <td class="py-1">: {{ $player['villages'] }}</td>
                                 </tr>
                             </table>
                         </td>
@@ -75,24 +76,15 @@
                             <th class="col-md-1">Coordinates</th>
                         </tr>
                     </thead>
-                    <tr>
-                        <td>1</td>
-                        <td class="text-left">01 thunderbolt</td>
-                        <td>168</td>
-                        <td><a href="">1|-46</a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td class="text-left">02 Barcelona</td>
-                        <td>168</td>
-                        <td><a href="">1|-46</a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td class="text-left">03 Alps</td>
-                        <td>168</td>
-                        <td><a href="">1|-46</a></td>
-                    </tr>
+                    @foreach($villages as $index => $village)
+                        <tr>
+                            <td>{{ $index+1 }}</td>
+                            <td class="text-left">{{ $village['village']}}</td>
+                            <td>{{$village['population']}} <span class="small text-@if($village['diffPop'] >0 ){{'success'}}@else{{'danger'}}@endif"
+                                    			>({{ $village['diffPop'] }})</span></td>
+                            <td><a href="">{{$village['x']}}|{{$village['y']}}</a></td>
+                        </tr>                
+                    @endforeach
                 </table>
             </div>
                 

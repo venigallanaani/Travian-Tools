@@ -38,17 +38,17 @@ img.res{
 
 
 /* Races */
-img.race{
+img.tribe{
 	width:22px; height:22px;
 	background-image:url("../images/races.png");
 	background-repeat:no-repeat;
 }
-.roman {background-position:center 0; }
-.teuton {background-position:center -22px; }
-.gaul {background-position:center -44px; }
-.natar {background-position:center -66px; }
-.egypt {background-position:center -88px; }
-.hun {background-position:center -110px; }
+.Roman {background-position:center 0; }
+.Teuton {background-position:center -22px; }
+.Gaul {background-position:center -44px; }
+.Natar {background-position:center -66px; }
+.Egyptian {background-position:center -88px; }
+.Hun {background-position:center -110px; }
 
 
 /* Buildings */

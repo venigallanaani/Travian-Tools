@@ -47,12 +47,14 @@ class processPlayers extends Command
                             ->where('table_id', '=', $server->table_id)->get();              
                 
                 $population = 0; $diffPop = 0;
-                
-                foreach($details as $detail){
+                $status = 'Inactive';
+                foreach($details as $detail){                    
                     
                     $population+=$detail->population;
                     $diffPop+=$detail->diffpop;
-                    
+                    if($detail->diffpop > 0){
+                        $status='Active';
+                    }                    
                 }
                     if($details[0]->id==1){ $tribe = 'Roman';}
                     elseif($details[0]->id==2){ $tribe = 'Teuton';}
@@ -76,9 +78,7 @@ class processPlayers extends Command
                         'table_id'=>$server->table_id
                     ]);
                     
-                    if($diffPop == 0){ $status = 'Inactive'; }
-                    elseif($diffPop > 1){ $status = 'Active';}
-                    else{ $status = 'Under Attack';}
+                    if($status=='Active' && $diffPop<0){ $status='Under Attack'; } 
                     
                     Diff::where('uid',$uid)
                         ->where('table_id',$server->table_id)

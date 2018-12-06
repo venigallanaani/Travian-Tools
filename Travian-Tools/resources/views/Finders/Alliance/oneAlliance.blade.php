@@ -14,23 +14,23 @@
                             <table class="mx-auto px-0">
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Alliance</span></strong></td>
-                                    <td class="py-1">: <a href="">1812</a></td>
+                                    <td class="py-1">: <strong>{{$alliance['alliance']}}</strong></td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Rank</span></strong></td>
-                                    <td class="py-1">: 100</td>
+                                    <td class="py-1">: {{$alliance['rank']}}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Players</span></strong></td>
-                                    <td class="py-1">: 50</td>
+                                    <td class="py-1">: {{$alliance['players']}}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Population</span></strong></td>
-                                    <td class="py-1">: 12340</td>
+                                    <td class="py-1">: {{$alliance['population']}}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Villages</span></strong></td>
-                                    <td class="py-1">: 1000</td>
+                                    <td class="py-1">: {{$alliance['villages']}}</td>
                                 </tr>
                             </table>
                         </td>
@@ -60,34 +60,16 @@
                             <th class="col-md-1">Villages</th>
                         </tr>
                     </thead>
-                    <tr>
-                        <td class="py-0">1</td>
-                        <td class="py-0"><a href=""><strong>Neo</strong></a></td>
-                        <td class="py-0">10</td>
-                        <td class="py-0">12345</td>
-                        <td class="py-0">20</td>
-                    </tr>
-                    <tr>
-                        <td class="py-0">2</td>
-                        <td class="py-0"><a href=""><strong>Neo</strong></a></td>
-                        <td class="py-0">10</td>
-                        <td class="py-0">12345</td>
-                        <td class="py-0">20</td>
-                    </tr>                    
-                    <tr>
-                        <td class="py-0">3</td>
-                        <td class="py-0"><a href=""><strong>Neo</strong></a></td>
-                        <td class="py-0">10</td>
-                        <td class="py-0">12345</td>
-                        <td class="py-0">20</td>
-                    </tr>                    
-                    <tr>
-                        <td class="py-0">4</td>
-                        <td class="py-0"><a href=""><strong>Neo</strong></a></td>
-                        <td class="py-0">10</td>
-                        <td class="py-0">12345</td>
-                        <td class="py-0">20</td>
-                    </tr>
+                    @foreach($players as $index=>$player)
+                        <tr>
+                            <td class="py-0">{{ $index+1 }}</td>
+                            <td class="py-0"><a href="/finder/player/{{$player['player']}}/1"><strong>{{$player['player']}}</strong></a></td>
+                            <td class="py-0">{{$player['rank']}}</td>
+                            <td class="py-0">{{$player['population']}} <span class="small text-@if($player['diffpop'] >0 ){{'success'}}@else{{'danger'}}@endif"
+                                    			>({{ $player['diffpop'] }})</span></td>
+                            <td class="py-0">{{$player['villages']}}</td>
+                        </tr> 
+                    @endforeach                    
                 </table>
             </div>         
         </div>

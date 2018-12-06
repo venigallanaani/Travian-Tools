@@ -6,6 +6,6 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        Alliance not found.</a>
+        Alliance <strong>{{ $alliance }}</strong> not found.</a>
     </div>
 @endsection

@@ -7,29 +7,27 @@
         <div class="card-header h4 py-2 bg-success text-white">
             <strong>Search Results</strong>
         </div>
-        <div class="card-text mx-auto text-center">
-            <table class="table table-border-success">
+        <div class="card-text mx-auto text-center col-md-10">
+            <table class="table table-border-success small table-sm">
                 <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>Alliance</th>                    
-                    <th>Population</th>
-                    <th>Villages</th>
+                    <th class="col-md-1">Rank</th>
+                    <th class="col-md-1">Tribe</th>
+                    <th class="col-md-2">Name</th>
+                    <th class="col-md-2">Alliance</th>                    
+                    <th class="col-md-1">Population</th>
+                    <th class="col-md-1">Villages</th>
                 </tr>
-                <tr>
-                    <td>10</td>
-                    <td><a href="/finder/player/Neo/1"><strong>Neo</strong></a></td>
-                    <td><a href="/finder/alliance/1823/1"><strong>1823</strong></a></td>
-                    <td>1200</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>100</td>
-                    <td><a href="/finder/player/Neon/1"><strong>Neon</strong></a></td>
-                    <td><a href="/finder/alliance/123456/1"><strong>123456</strong></a></td>
-                    <td>120</td>
-                    <td>1</td>
-                </tr>
+                @foreach($players as $player)
+                    <tr>
+                        <td>{{ $player['rank'] }}</td>
+                        <td data-toggle="tooltip" data-placement="top" title="{{ $player['tribe'] }}"><img alt="wo" src="/images/x.gif" class="tribe {{ $player['tribe'] }}"></td>
+                        <td><a href="/finder/player/{{ $player['player'] }}/1"><strong>{{ $player['player'] }}</strong></a></td>
+                        <td><a href="/finder/alliance/{{ $player['alliance'] }}/1"><strong>{{ $player['alliance'] }}</strong></a></td>
+                        <td>{{ $player['population'] }} <span class="small text-@if($player['diffpop'] >0 ){{'success'}}@else{{'danger'}}@endif">
+                        	({{ $player['diffpop'] }})</span></td>
+                        <td>{{ $player['villages'] }}</td>
+                    </tr>                
+                @endforeach
             </table>
         </div>
     </div>
