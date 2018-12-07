@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
 
 use App\Diff;
 use App\Players;
@@ -128,7 +129,8 @@ class FindersController extends Controller
         if(count($natars)==0){
             return view('finders.Natar.noNatar');
         }else{
-            return view('finders.Natar.natarList')->with(['natars'=>$natars]);
+            return view('finders.Natar.natarList')->with(['natars'=>$natars])
+                    ->with(['x'=>$xCor])->with(['y'=>$yCor])->with(['dist'=>$dist]);
         }                
     }
     
@@ -138,8 +140,26 @@ class FindersController extends Controller
     }
     
     public function processInactive(Request $request){
-        //Displays the inactive finder
-        return view('finders.Inactive.inactiveList');
+        //Displays the inactive finder        
+        $xCor=Input::get('xCor');
+        $yCor=Input::get('yCor');
+        $dist = Input::get('dist');
+        $pop=Input::get('pop');
+        
+        
+        $sqlStr = "SELECT a.* FROM diff_details a, servers b WHERE a.table_id = b.table_id AND b.server_id='".'t6angr1'."' AND".
+            " ((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) <= ".$dist."*".$dist.
+            " AND a.population <=".$pop." AND a.status <> 'Active'".
+            " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
+        
+        $villages= DB::select(DB::raw($sqlStr));
+        //dd($natars);
+        if(count($villages)==0){
+            return view('finders.Inactive.noInactive');
+        }else{
+            return view('finders.Inactive.inactivelist')->with(['villages'=>$villages])
+            ->with(['x'=>$xCor])->with(['y'=>$yCor])->with(['dist'=>$dist]);
+        }
     }
     
     public function neighbour(){        
@@ -148,7 +168,24 @@ class FindersController extends Controller
     }
     
     public function processNeighbour(Request $request){
-        //Displays the neighbour finder
-        return view('finders.Neighbour.neighbourslist');
+        //Process the Neighbour finder form
+        
+        $xCor=Input::get('xCor');
+        $yCor=Input::get('yCor');
+        $dist = Input::get('dist');      
+        
+        
+        $sqlStr = "SELECT a.* FROM maps_details a, servers b WHERE a.table_id = b.table_id AND b.server_id='".'t6angr1'."' and".
+            " ((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) <= ".$dist."*".$dist.
+            " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
+        
+        $villages= DB::select(DB::raw($sqlStr));
+        //dd($natars);
+        if(count($villages)==0){
+            return view('finders.Neighbour.noNeighbours');
+        }else{
+            return view('finders.Neighbour.neighbourslist')->with(['villages'=>$villages])
+            ->with(['x'=>$xCor])->with(['y'=>$yCor])->with(['dist'=>$dist]);
+        }           
     }
 }

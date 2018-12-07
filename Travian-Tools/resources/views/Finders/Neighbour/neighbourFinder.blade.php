@@ -18,10 +18,10 @@
                             </div>
                             <div class="p-2"><strong>Distance: </strong><input type="number" name="dist" required value="100"/></div>
                             <div class="p-2"><strong>Population: </strong>
-								<input type="range" class="custom-range col-md-6" min="2" max="2000" step="2" id="range1" name="dist">
+								<input type="range" class="custom-range col-md-6" min="2" max="2000" step="2" id="range1" name="pop">
 							</div>
                             <div  class="p-2">
-                                <button class="btn btn-outline-warning px-5" type="submit"><strong>Search Inactives</strong></button>
+                                <button class="btn btn-outline-warning px-5" type="submit"><strong>Scan Neighbourhood</strong></button>
                             </div>
                         </td>
                         <td class="col-md-7 mx-2 font-italic align-middle">

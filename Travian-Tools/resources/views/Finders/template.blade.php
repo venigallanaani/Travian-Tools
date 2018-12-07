@@ -7,8 +7,10 @@
             <div class="float-right">
                 <div class="btn btn-light dropdown d-inline-block">
                     <a class="dropdown-toggle" data-toggle="dropdown">
-    					<?php if(isset($_SESSION['SERVER'])){ echo $_SESSION['SERVER']['URL'];}
-    					       else { echo " Select Server ";}?>
+                    	@if(Session::has('server'))
+                    		{{ Session::get('server.url')}}
+                    	@else 	{{ ' Select Server '}}
+                    	@endif
     				</a>
                     <div class="dropdown-menu">
                         <a href="/servers" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
@@ -42,5 +44,5 @@
         @yield('body')
         </div>
     </div>
-
+	@stack('scripts')
 @endsection

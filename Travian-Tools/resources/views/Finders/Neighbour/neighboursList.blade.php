@@ -10,31 +10,69 @@
             <strong>Neighbourhood Scan</strong>
         </div>
         <div class="card-text mx-auto text-center col-md-10 ">
-            <table class="table table-hover table-sm small">
+            <table class="table table-hover table-sm small" id="sortableTable">
                 <tr class="h6">
-                    <th>Distance</th>
-                    <th>Village</th>
-                    <th>Player</th>
-                    <th>Alliance</th>
-                    <th>Pop<small>(+/- 7 Days)</small></th>
+                    <th onclick="sortTable(1)">Distance</th>
+                    <th onclick="sortTable(2)">Village</th>
+                    <th>Coordinates</th>
+                    <th onclick="sortTable(3)">Player</th>
+                    <th onclick="sortTable(4)">Alliance</th>
+                    <th onclick="sortTable(5)">Population</th>
                 </tr>
-                <tr>
-                    <td class="py-0">1.0</td>
-                    <td class="py-0"><a href="">Village 01</td>
-                    <td class="py-0"><a href="">Player 01</td>
-                    <td class="py-0"><a href="">Alliance 01</td>
-                    <td class="py-0">200<span class="text-success">(+5)</span></td>
-                </tr>
-                <tr>
-                    <td class="py-0">2.0</td>
-                    <td class="py-0"><a href="">Village 02</td>
-                    <td class="py-0"><a href="">Player 02</td>
-                    <td class="py-0"><a href="">Alliance 02</td>
-                    <td class="py-0">300<span class="text-danger">(-5)</span></td>
-                </tr>
+                @foreach($villages as $village)
+                    <tr>
+                        <td class="py-0">{{round(sqrt(pow(($x-$village->x),2)+pow(($y-$village->y),2)),2)}}</td>
+                        <td class="py-0">{{$village->village}}</td>
+                        <td class="py-0"><a href="">{{$village->x}}|{{$village->x}}</a></td>
+                        <td class="py-0"><a href="/finder/player/{{$village->player}}/1">{{$village->player}}</td>
+                        <td class="py-0"><a href="/finder/alliance/{{$village->alliance}}/1">{{$village->alliance}}</td>
+                        <td class="py-0">{{$village->population}}</td>
+                    </tr>
+                @endforeach
             </table>
         </div>
     </div>
 
 
 @endsection
+
+@push('scripts')
+<script>
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("sortableTable");
+    switching = true;
+    dir = "asc"; 
+    while (switching) {
+      	switching = false;
+      	rows = table.rows;
+      	for (i = 1; i < (rows.length - 1); i++) {
+        	shouldSwitch = false;
+        	x = rows[i].getElementsByTagName("TD")[n];
+        	y = rows[i + 1].getElementsByTagName("TD")[n];
+        	if (dir == "asc") {
+          		if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            		shouldSwitch= true;
+            		break;
+         		}
+        	} else if (dir == "desc") {
+          		if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            		shouldSwitch = true;
+            		break;
+          		}
+    		}
+      	}
+      	if (shouldSwitch) {
+        	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        	switching = true;
+        	switchcount ++;      
+      	} else {
+        	if (switchcount == 0 && dir == "asc") {
+          		dir = "desc";
+          		switching = true;
+        	}
+      	}
+	}
+}
+</script>
+@endpush
