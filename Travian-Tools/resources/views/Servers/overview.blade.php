@@ -21,7 +21,15 @@
             </div>
         </div>
     </header>
-
+	@foreach(['danger','success','warning','info'] as $msg)
+		@if(Session::has($msg))
+        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>{{ Session::get($msg) }}
+            </div>
+        @endif
+    @endforeach
     <div class="container">
     	<p class="h4 py-2">Select Server</p>
     	<form action="\servers" method="POST">

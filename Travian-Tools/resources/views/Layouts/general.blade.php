@@ -36,19 +36,8 @@
                             <a href="/plus" class="nav-link">Plus</a>
                         </li>
                     </ul>                    
-            <?php if(isset($_SESSION['PLAYER'])){?>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown mr-3">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> User</a>
-                            <div class="dropdown-menu">
-                                <a href="/profile" class="dropdown-item"><i class="fa fa-user-circle"></i> Profile</a>
-                                <a href="/profile" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
-                                <a href="/logout" class="dropdown-item"><i class="fa fa-user-times"></i> Log Out</a>
-                            </div>
-                        </li>
-                    </ul>
-            <?php }else{ ?>
-                    <div class="navbar-nav ml-auto">
+            @if(!Session::has('user'))
+                    '<div class="navbar-nav ml-auto">
                         <div class="nav-item">
                             <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal"><i class="fas fa-sign-in-alt"></i> Login</a>
                         </div>                  
@@ -65,7 +54,8 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form action="/login" method="POST">
+                                    	{{@csrf_field()}}
                                         <div class="form-group">
                                             <label for="userName" class="form-control-label" class="form-control">User Name</label>
                                             <input type="text" class="form-control">
@@ -84,9 +74,20 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>'
+            @else
+                    '<ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown mr-3">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> User</a>
+                            <div class="dropdown-menu">
+                                <a href="/profile" class="dropdown-item"><i class="fa fa-user-circle"></i> Profile</a>
+                                <a href="/profile" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                                <a href="/logout" class="dropdown-item"><i class="fa fa-user-times"></i> Log Out</a>
+                            </div>
+                        </li>
+                    </ul>'
 
-            <?php } ?>
+            @endif
                 </div>
             </div>
         </nav>

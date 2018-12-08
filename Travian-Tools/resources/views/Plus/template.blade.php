@@ -3,8 +3,8 @@
 
 @section('content')
     <?php 
-        $_SESSION['PLUS']='Yes';
-        unset($_SESSION['PLUS']);
+        $_SESSION['plus']='Yes';
+        unset($_SESSION['plus']);
     ?>
     
     <header id="main-header" class="py-1 bg-info text-white">
@@ -26,9 +26,26 @@
             </div>
         </div>
     </header>
-
+	@if(Session::has('plus'))
+		<div class="container">
+			<div class="card shadow my-1">
+				<div class="py-5 mx-auto">
+    				<p class="h5 py-1">You are not associated with any Plus group.</p>
+    				<p class="h6 py-1"><a href="/plus/creategroup" class="text-info"><strong>Click here</strong></a> to proceed to create a Plus group</p>
+				</div>
+			</div>		
+		</div>
+	@else
+	@if(Session::has('plus') and Session::get('plus.access')!=1)
+		<div class="container">
+			<div class="card shadow my-1">
+				<div class="py-5 mx-auto">
+    				<p class="h5 py-1">Access denied to Plus group, please contact the group leader.</p>    				
+				</div>
+			</div>		
+		</div>
+	@endif
     <div class="container">
-
         <div class="d-inline float-md-left col-md-3">
             <!-- ======================================= Finders Side menu =================================== -->
             <div class="list-group text-center text-white mt-1">
@@ -39,14 +56,14 @@
                 <a href="/plus/defense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Defense Tasks</a>
                 <a href="/plus/offense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Offense Tasks</a>
                 <a href="/plus/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Resource Tasks</a>
-            </div>   
-        
+            </div>       
         
             <!-- =================================== Plus Leader/Owner menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Leader Menu</a>
                 <a href="/leader/access" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Access</a>
                 <a href="/leader/subscription" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Subscription</a>
+                <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a>
             </div>
                 
             <!-- =================================== Defense menu ================================== -->
@@ -69,12 +86,21 @@
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Resource Menu</a>                
                 <a href="/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Push Status</a>
-            </div>
-        
+            </div>        
         </div>
+		@foreach(['danger','success','warning','info'] as $msg)
+			@if(Session::has($msg))
+	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>{{ Session::get($msg) }}
+                </div>
+            @endif
+        @endforeach
 
         @yield('body')
 
     </div>
-
+    @endif
+    
 @endsection

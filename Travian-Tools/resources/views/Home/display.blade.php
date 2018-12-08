@@ -4,7 +4,7 @@
         
     <!-- ============================================ home page body starts here ============================================ -->
     <div class="container mt-1">
-		@foreach(['danger','success'] as $msg)
+		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
 	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -25,7 +25,7 @@
         <div class="card-columns">
             <div class="card shadow">
                 <div class="card-body">
-                    <p><img alt="wo" src="/images/x.gif" class="res clock"> Home welcome sdasd asd asd adadadasdasd ad adasd asd asdas asd asd  qwedsasd awds sdfsd fsdf wef sfd wewef e eee faf</p>
+                    <p class="h5">Welcome to Travian Tools, </p>
                 </div>
             </div>
             <div class="card shadow">
@@ -44,8 +44,12 @@
             <div class="card shadow">
                 <p class="card-header h4 text-info font-weight-bold">Plus</p>
                 <div class="card-body">
-                    <p><a href="login.php"><strong>Sign In</strong></a> to access the Plus group</p>
-                    <p>You are not associated with any plus group, <a href="/plus"><strong>Create one</strong></a></p>
+                   	@if(!Session::has('user'))
+                    	<p><a href="login.php"><strong>Sign In</strong></a> to access the Plus group</p>
+                    @endif
+                    @if(!Session::has('plus'))                    
+                    	<p>You are not associated with any plus group, <a href="/plus"><strong>Create one</strong></a></p>
+                    @endif
                     <p> Plus menu offers different options and tasks for the group to work efficiently.</p>
                     <table>
                         <tr><td><a href="/plus/member" class="text-info font-weight-bold">Member Details</a></td></tr>
@@ -59,7 +63,9 @@
             <div class="card shadow">
                 <p class="card-header h4 text-warning font-weight-bold">Account</p>
                 <div class="card-body">
-                    <p><a href="login.php"><strong>Sign In</strong></a> to access you account details.</p>
+                	@if(!Session::has('user'))
+                    	<p><a href="login.php"><strong>Sign In</strong></a> to access you account details.</p>
+                    @endif
                     <p>Account Details can be displayed here.</p>
                     <table>
                         <tr><td><a href="/account" class="text-warning font-weight-bold">Account Overview</a></td></tr>

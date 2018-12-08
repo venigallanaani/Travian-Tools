@@ -32,8 +32,16 @@
 				<a href="/profile/settings" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Settings</a>
   			</div>	
 	    </div> 
-	
-		@yield('body')	 
-               
+		@foreach(['danger','success','warning','info'] as $msg)
+			@if(Session::has($msg))
+	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>{{ Session::get($msg) }}
+                </div>
+            @endif
+        @endforeach
+                
+		@yield('body')               
     </div>
 @endsection

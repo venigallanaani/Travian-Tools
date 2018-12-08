@@ -7,7 +7,7 @@
         <div class="card-header h4 py-2 bg-info text-white">
             <strong>Plus Overview</strong>
         </div>
-        <div class="card-text">
+        <div class="card-text py-3">
             <p>Plus Overview</p>
         </div>
     </div>
