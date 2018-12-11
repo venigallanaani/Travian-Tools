@@ -52,12 +52,13 @@ class processAlliances extends Command
                     $population+=$player->population;
                     $diffPop+=$player->diffpop;
                     $villages+=$player->villages;
+                    $alliance=$player->alliance;
                 }
                                 
                 Alliances::updateOrCreate([
                     'server_id'=>$server->server_id,
                     'aid'=>$aid,
-                    'alliance'=>$players[0]->alliance,
+                    'alliance'=>$alliance,
                     'players'=>count($players),
                     'villages'=>$villages,
                     'population'=>$population,
@@ -66,13 +67,14 @@ class processAlliances extends Command
                 ]);                
             }
             echo 'Updated the Alliance table'."\n";
+            
             $alliances=Alliances::where('table_id','=',$server->table_id)
                             ->orderBy('population','desc')
-                            ->pluck('aid');
-            
+                            ->pluck('aid');            
+                            
             $i=1;
-            foreach($alliances as $alliance){
-                Alliances::where('aid',$alliance)
+            foreach($alliances as $aid){
+                Alliances::where('aid',$aid)
                     ->where('table_id',$server->table_id)
                     ->update(['rank'=>$i]);
                 $i++;

@@ -13,10 +13,10 @@
                     <tr>
                         <td class="col-md-5">
                             <div class="px-2 py-1">
-                                <strong>Coordinates : </strong><input type="text" size="5" name="xCor" required value="0"/> | <input type="text" size="5" name="yCor" required value="0"/>
+                                <strong>Coordinates : </strong><input type="text" size="5" name="xCor" required value="{{old('xCor')}}"/> | <input type="text" size="5" name="yCor" required value="{{old('yCor') or '0'}}"/>
                             </div>
-                            <div class="px-2 py-1"><strong>Distance : </strong><input type="number" name="dist" required value="100"/></div>
-                            <div class="px-2 py-1"><strong>Population : </strong><input type="number" name="pop" required value="100"/></div>
+                            <div class="px-2 py-1"><strong>Distance : </strong><input type="number" min=0 name="dist" required value="{{old('dist') or '100'}}"/></div>
+                            <div class="px-2 py-1"><strong>Population : </strong><input type="number" min=0 name="pop" required value="{{old('pop')}}"/></div>
                             <div class="px-2 py-1">
                                 <button class="btn btn-outline-warning px-5" type="submit"><strong>Search Inactives</strong></button>
                             </div>

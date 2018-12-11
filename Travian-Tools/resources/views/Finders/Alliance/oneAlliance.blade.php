@@ -50,12 +50,13 @@
                 <table class="table table-bordered table-hover table-sm">
                     <thead class="thead">
                         <tr>
-                            <th colspan="5" class="h5 text-white bg-success"><strong>Players</strong></th>
+                            <th colspan="6" class="h5 text-white bg-success"><strong>Players</strong></th>
                         </tr>
                         <tr>
                             <th class="col-md-1">#</th>
                             <th class="col-md-3">Player</th>
                             <th class="col-md-1">Rank</th>
+                            <th class="col-md-1">Tribe</th>                            
                             <th class="col-md-2">Population</th>
                             <th class="col-md-1">Villages</th>
                         </tr>
@@ -65,6 +66,7 @@
                             <td class="py-0">{{ $index+1 }}</td>
                             <td class="py-0"><a href="/finder/player/{{$player['player']}}/1"><strong>{{$player['player']}}</strong></a></td>
                             <td class="py-0">{{$player['rank']}}</td>
+                            <td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$player->tribe}}"><img alt="" src="/images/x.gif" class="tribe {{$player->tribe}}"></td>
                             <td class="py-0">{{$player['population']}} <span class="small text-@if($player['diffpop'] >0 ){{'success'}}@else{{'danger'}}@endif"
                                     			>({{ $player['diffpop'] }})</span></td>
                             <td class="py-0">{{$player['villages']}}</td>

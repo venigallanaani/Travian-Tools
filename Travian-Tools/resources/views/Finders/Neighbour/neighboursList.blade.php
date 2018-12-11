@@ -16,15 +16,27 @@
                     <th onclick="sortTable(2)">Village</th>
                     <th>Coordinates</th>
                     <th onclick="sortTable(3)">Player</th>
+                    <th>Tribe</th>
                     <th onclick="sortTable(4)">Alliance</th>
                     <th onclick="sortTable(5)">Population</th>
                 </tr>
                 @foreach($villages as $village)
+                    @php 
+                    	if($village->id === 1){	$tribe='Roman'; }
+                		elseif($village->id===2){	$tribe='Teuton';	}
+            			elseif($village->id===3){	$tribe='Gaul';	}
+            			elseif($village->id===4){	$tribe='Nature';	}
+            			elseif($village->id===5){	$tribe='Natar';	}
+            			elseif($village->id===6){	$tribe='Egyptian';	}
+            			elseif($village->id===7){	$tribe='Hun';	}
+            			else {	$tribe='Natar';	}
+        			@endphp
                     <tr>
                         <td class="py-0">{{round(sqrt(pow(($x-$village->x),2)+pow(($y-$village->y),2)),2)}}</td>
                         <td class="py-0">{{$village->village}}</td>
                         <td class="py-0"><a href="">{{$village->x}}|{{$village->x}}</a></td>
                         <td class="py-0"><a href="/finder/player/{{$village->player}}/1">{{$village->player}}</td>
+                        <td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$tribe}}"><img alt="" src="/images/x.gif" class="tribe {{$tribe}}"></td>
                         <td class="py-0"><a href="/finder/alliance/{{$village->alliance}}/1">{{$village->alliance}}</td>
                         <td class="py-0">{{$village->population}}</td>
                     </tr>

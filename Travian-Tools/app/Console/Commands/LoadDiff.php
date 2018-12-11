@@ -30,50 +30,47 @@ class LoadDiff extends Command
         foreach($servers as $server){
             echo "\n".'***********************Server: '.$server->url.'***************************'."\n";
             echo "New load Diff table job started at ".Carbon::now()."\n";
-            
-            $maps=Map::where('server_id','=',$server->server_id)
-                    ->where('status','=','ACTIVE')
-                    ->orderBy('created_at','desc')->get();
-            $i=1;
-            foreach($maps as $map){
-                $table_id=$map->map_id;
-                if($i==2){  break 1;   }
-                $i++;
-            }                    
-            
-            echo "Updating the pop changes for last one week"."\n";
-            $sqlStr="update diff_details set pop7=pop6, pop6=pop5, pop5=pop4, pop4=pop3, pop3=pop2, pop2=pop1, pop1 = population where table_id='".$table_id."'";            
-            DB::update(DB::raw($sqlStr));
-            
-            echo "fetching latest data from maps_details table"."\n";
+                       
+            echo "fetching latest data from maps_details table-".$server->table_id."\n";
             
             $villages = MapData::where('table_id','=',$server->table_id)
-                            ->where('uid','<>',1)->get();
+                            ->where('uid','<>',1)
+                            ->orderBy('vid','asc')->get();
                         
             echo "Updating the diff table with latest maps data"."\n";
             
             foreach($villages as $village){                
           
-                Diff::updateOrCreate(
-                    [   'server_id'=>$village->server_id,
+                $diff=Diff::firstOrCreate(
+					['server_id'=>$village->server_id,
                         'x'=>$village->x,
                         'y'=>$village->y,
                         'id'=>$village->id,
                         'vid'=>$village->vid,
                         'uid'=>$village->uid,
-                        'player'=>$village->player                        
+                        'player'=>$village->player],
+					[	'table_id'=>$server->table_id,
+						'village'=>$village->village,
+						'aid'=>$village->aid,
+						'alliance'=>$village->alliance,
+						'population'=>$village->population
                     ]);
-                
-                $sqlStr = "update diff_details set table_id='".$server->table_id.
+                                
+                $sqlStr = "update diff_details set pop7=pop6, pop6=pop5, pop5=pop4, pop4=pop3, 
+                                                pop3=pop2, pop2=pop1,  
+                                                table_id='".$server->table_id.
                                                 "',village='".$village->village.
                                                 "',aid=".$village->aid.
                                                 ",alliance='".$village->alliance.
-                                                "',population=".$village->population.
-                                                ", diffPop = population-pop7                             
-                                where x=".$village->x." and y=".$village->y." and server_id='".$server->server_id."'";                
+                                                "',population=".$village->population. 
+                                                ", pop1=population".
+                                " where vid=".$diff->vid." and server_id='".$server->server_id."'";                
                 DB::update(DB::raw($sqlStr)); 
-                
             }
+            echo "Updated the pop changes for last one week"."\n";
+			
+			$sqlStr="update diff_details set diffPop=population-pop7 where table_id='".$server->table_id."'";            
+            DB::update(DB::raw($sqlStr));
             
             echo "load Diff table job completed at ".Carbon::now()."\n";            
         }

@@ -28,13 +28,13 @@ class CreateDiffDetailsTable extends Migration
             $table->string('status')->nullable();
             $table->string('table_id')->nullable();
             $table->integer('diffPop')->nullable();
-            $table->integer('pop1')->nullable();
-            $table->integer('pop2')->nullable();
-            $table->integer('pop3')->nullable();
-            $table->integer('pop4')->nullable();
-            $table->integer('pop5')->nullable();
-            $table->integer('pop6')->nullable();
-            $table->integer('pop7')->nullable();
+            $table->integer('pop1')->default(0);
+            $table->integer('pop2')->default(0);
+            $table->integer('pop3')->default(0);
+            $table->integer('pop4')->default(0);
+            $table->integer('pop5')->default(0);
+            $table->integer('pop6')->default(0);
+            $table->integer('pop7')->default(0);
             $table->timestamps();
         });
     }

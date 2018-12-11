@@ -42,7 +42,7 @@ class processPlayers extends Command
             foreach($uIds as $uid){
                 
                 $details = DB::table('diff_details')
-                            ->select('player','id','aid','alliance','village','population', 'diffpop')
+                            ->select('player','id','aid','alliance','village','population', 'diffPop')
                             ->where('uid', '=', $uid)
                             ->where('table_id', '=', $server->table_id)->get();              
                 
@@ -51,8 +51,8 @@ class processPlayers extends Command
                 foreach($details as $detail){                    
                     
                     $population+=$detail->population;
-                    $diffPop+=$detail->diffpop;
-                    if($detail->diffpop > 0){
+                    $diffPop+=$detail->diffPop;
+                    if($detail->diffPop > 0){
                         $status='Active';
                     }                    
                 }

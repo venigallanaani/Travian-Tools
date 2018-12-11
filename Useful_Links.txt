@@ -6,7 +6,7 @@ Drag and Droppable Div -- https://stackoverflow.com/questions/32711222/keep-a-co
 
 
 
-
+Sortable_table = http://jsfiddle.net/spetnik/gFzCk/1953/
 
 Defense leader filtering --- https://codepen.io/wmg481/pen/RRRKdm/
 
