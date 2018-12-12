@@ -14,7 +14,7 @@
                     <tr>
                         <td class="col-md-5">
                             <div class="p-2">
-                                <strong>Player Name: </strong><input type="text" size="15" name="plrNm" required/>
+                                <strong>Player Name: </strong><input type="text" size="15" name="plrNm" value="{{old('plrNm')}}" required/>
                             </div>
                             <div  class="p-2">
                                 <button class="btn btn-outline-warning px-5" type="submit"><strong>Search Player</strong></button>

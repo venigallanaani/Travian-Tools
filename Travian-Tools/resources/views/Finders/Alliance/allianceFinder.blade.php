@@ -14,7 +14,7 @@
                     <tr>
                         <td class="col-md-5">
                             <div class="p-2">
-                                <strong>Alliance Name: </strong><input type="text" size="15" name="allyNm" required/>
+                                <strong>Alliance Name: </strong><input type="text" size="15" name="allyNm" value="{{old('allyNm')}}" required/>
                             </div>
                             <div  class="p-2">
                                 <button class="btn btn-outline-warning px-5" type="submit"><strong>Search Alliance</strong></button>

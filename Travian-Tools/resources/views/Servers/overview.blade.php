@@ -14,7 +14,7 @@
                     	@endif
     				</a>
                     <div class="dropdown-menu">
-                        <a href="/servers" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
+                        <a href="{{route('server')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
             	<p class="h6 d-inline-block px-2"><span id="clock"></span></p>
@@ -32,38 +32,26 @@
     @endforeach
     <div class="container">
     	<p class="h4 py-2">Select Server</p>
-    	<form action="\servers" method="POST">
+    	<form action="/servers" method="POST">
     		{{ csrf_field() }}
-    		<div class="py-2">
-        		<div class="card card-header py-0">
-            		<p class="collapsed" data-toggle="collapse" href="#Com" aria-expanded="false" aria-controls="Com">
-                			<img alt="wo" src="/images/x.gif" class="res wood"> COM Servers</p>
+    		@foreach($servers as $index=>$country)
+        		<div class="py-2">
+            		<div class="card card-header my-0 h5">
+                		<p class="collapsed" data-toggle="collapse" href="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
+                    		<span class="text-uppercase">{{$index}}</span> Servers <small><i class="fa fa-angle-double-down"></i></small>
+        			 	</p>
+            		</div>
+            		<div class="collapse" id="{{$index}}" style="">
+              			<div class="card card-body">
+                			<p class="my-0 py-0">
+                				@foreach($country as $server)
+                					<button class="btn btn-warning" type="submit" name="server" value="{{$server->server_id}}"><strong>{{$server->url}} <small>({{$server->days}} days)</small></strong></button>                				
+                				@endforeach
+            				</p>
+              			</div>
+            		</div>	
         		</div>
-        		<div class="collapse" id="Com" style="">
-          			<div class="card card-body">
-            			<p class="my-0 py-0">
-            				<button class="btn btn-warning" type="submit" name="server" value="ts6angr1"><strong>ts6.anglosphere.travian.com</strong></button>
-            				<button class="btn btn-warning" type="submit" name="server" value="ts1comr5"><strong>ts1.travian.com</strong></button>
-        				</p>
-          			</div>
-        		</div>	
-    		</div>
-
-    		<div class="py-2">
-        		<div class="card card-header py-0">
-            		<p class="collapsed" data-toggle="collapse" href="#US" aria-expanded="false" aria-controls="US">
-                			<img alt="wo" src="/images/x.gif" class="res clay"> US Servers</p>
-        		</div>
-        		<div class="collapse" id="US" style="">
-          			<div class="card card-body">
-            			<p class="my-0 py-0">
-            				<button class="btn btn-warning" type="submit" name="server" value="ts2usr9"><strong>ts2.travian.us</strong></button>
-            				<button class="btn btn-warning" type="submit" name="server" value="ts1usr7"><strong>ts1.travian.us</strong></button>
-        				</p>
-          			</div>
-        		</div>	
-    		</div>
-    		
+    		@endforeach
     	</form>   
     </div>
 @endsection

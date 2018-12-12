@@ -7,21 +7,49 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 
+use App\Servers;
+use App\Plus;
+
 class ServersController extends Controller
 {
     public function index(){
         
         session(['title'=>'Servers']);
-        return view('Servers.overview');
         
+        $servers=Servers::where('status','ACTIVE')->get();
+        
+        $serverList = array();
+        
+        foreach($servers as $server){
+            $serverList[$server->country][]=$server;            
+        }         
+        return view('Servers.overview')->with(['servers'=>$serverList]);        
     }
     
-    public function process(){
-        
-        session(['title'=>'Servers']);
-        
+    public function process(Request $request){
+              
         $server_id = Input::get('server');
-        Session::flash('success','Server: '.$server_id.' is loaded');
+        
+        $server=Servers::where('server_id',$server_id)->first();
+        
+        $request->session()->forget('server');
+        
+        $request->session()->put('server.id',$server_id);
+        $request->session()->put('server.url',$server->url);
+        $request->session()->put('server.tmz',$server->timezone);
+        
+        $plus=Plus::where('server_id',$server_id)->first();
+        
+        if($plus!=null){       
+            $request->session()->put('plus',$plus);           
+        }else{
+            echo 'No Plus Found';
+            if($request->session()->has('plus')){
+                $request->session()->forget('plus');
+            }
+        }        
+                
+        Session::flash('success',$server->url.' is loaded');
         return Redirect::to('/home') ;        
     }
     

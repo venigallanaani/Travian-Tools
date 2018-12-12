@@ -18,10 +18,14 @@
             <div class="alert alert-warning text-center my-1" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>You have not selected a server, <a href="/servers" class="text-weight-bold"><strong>Select Server</strong></a>            
+                </button>You have not selected a server, <a href="{{route('server')}}" class="text-weight-bold"><strong>Select Server</strong></a>            
             </div>
     	@endif
         
+        @if(Session::has('plus'))
+			{{Session::get('plus')}}
+        @endif
+
         <div class="card-columns">
             <div class="card shadow">
                 <div class="card-body">

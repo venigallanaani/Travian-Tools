@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Plus;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class PlusController extends Controller
@@ -37,12 +38,6 @@ class PlusController extends Controller
                 return view('Plus.General.offenseTask');       // Displays the selected offense plan
             }else{
                 return view('Plus.General.offenseTaskList');       // Displays the offense tasks List
-            }    		
-    	}elseif($task=='resource'){
-            if($id!=null){
-                return view('Plus.General.resourceTask');      // Displays the selected resource tasks
-            }else{
-                return view('Plus.General.resourceTaskList');      // Displays the resource tasks List
             }    		
     	}else{
     		return view('Plus.General.overview');               // Diplays the Plus Meny Overview

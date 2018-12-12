@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccountsTable extends Migration
+class CreateResourceupdateTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,13 @@ class CreateAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('accounts', function (Blueprint $table) {
-            $table->increments('account_id');
-            $table->string('uid');
-            $table->string('account_name');
-            $table->string('user_id');
-            $table->string('user_name');
+        Schema::create('resourceupdates', function (Blueprint $table) {
+            $table->integer('task_id');
             $table->string('server_id');
-            $table->string('tribe');
-            $table->enum('status',['PRIMARY','DUAL']);
-            $table->string('sitter1');
-            $table->string('sitter2');
+            $table->string('plus_id');
+            $table->string('player');
+            $table->integer('resources')->default(0);
+            $table->integer('percent')->default(0);
             $table->timestamps();
             
             $table->foreign('server_id')->references('server_id')->on('servers');
@@ -37,6 +33,6 @@ class CreateAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('resourceupdates');
     }
 }

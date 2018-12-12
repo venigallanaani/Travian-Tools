@@ -19,14 +19,14 @@
                     	@endif
     				</a>
                     <div class="dropdown-menu">
-                        <a href="/servers" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
+                        <a href="{{route('server')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
             	<p class="h6 d-inline-block px-2"><span id="clock"></span></p>
             </div>
         </div>
     </header>
-	@if(Session::has('plus'))
+	@if(!Session::has('plus'))
 		<div class="container">
 			<div class="card shadow my-1">
 				<div class="py-5 mx-auto">
@@ -36,7 +36,7 @@
 			</div>		
 		</div>
 	@else
-	@if(Session::has('plus') and Session::get('plus.access')!=1)
+	@if(Session::get('plus.plus')!=1)
 		<div class="container">
 			<div class="card shadow my-1">
 				<div class="py-5 mx-auto">
@@ -44,7 +44,7 @@
 				</div>
 			</div>		
 		</div>
-	@endif
+	@else
     <div class="container">
         <div class="d-inline float-md-left col-md-3">
             <!-- ======================================= Finders Side menu =================================== -->
@@ -57,7 +57,7 @@
                 <a href="/plus/offense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Offense Tasks</a>
                 <a href="/plus/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Resource Tasks</a>
             </div>       
-        
+        @if(Session::get('plus.leader')==1)
             <!-- =================================== Plus Leader/Owner menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Leader Menu</a>
@@ -65,7 +65,8 @@
                 <a href="/leader/subscription" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Subscription</a>
                 <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a>
             </div>
-                
+        @endif   
+        @if(Session::get('plus.defense')==1) 
             <!-- =================================== Defense menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Defense Menu</a>
@@ -73,7 +74,8 @@
                 <a href="/defense/cfd" class="list-group-item py-1 list-group-item-action bg-info text-white h5">CFD Status</a>
                 <a href="/defense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Defense</a>
             </div>
-  
+  		@endif
+  		@if(Session::get('plus.offense')==1)
             <!-- =================================== Offense menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Offense Menu</a>                 
@@ -81,12 +83,14 @@
                 <a href="/offense/troops" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Troops Details</a>
                 <a href="/offense/archive" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Archive</a>                  
             </div>
-
+        @endif
+		@if(Session::get('plus.resources')==1)
             <!-- =================================== Resource menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Resource Menu</a>                
                 <a href="/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Push Status</a>
-            </div>        
+            </div> 
+        @endif
         </div>
 		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
@@ -101,6 +105,7 @@
         @yield('body')
 
     </div>
+    @endif
     @endif
     
 @endsection

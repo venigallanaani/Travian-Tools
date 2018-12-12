@@ -13,9 +13,9 @@
                     <tr>
                         <td class="col-md-5">
                             <div class="p-2">
-                                <strong>Coordinates: </strong><input type="text" size="5" name="xCor" required value="0"/> | <input type="text" size="5" name="yCor" required value="0"/>
+                                <strong>Coordinates: </strong><input type="text" size="5" name="xCor" required value="{{old('xCor') ?? '0'}}"/> | <input type="text" size="5" name="yCor" required value="{{old('yCor') ?? '0'}}"/>
                             </div>
-                            <div><strong>Distance: </strong><input type="number" size="5" name="dist" required value="100"/></div>
+                            <div><strong>Distance: </strong><input type="number" size="5" name="dist" required value="{{old('dist') ?? '25'}}"/></div>
                             <div  class="p-2">
                                 <button class="btn btn-outline-warning px-5" type="submit"><strong>Search Natars</strong></button>
                             </div>

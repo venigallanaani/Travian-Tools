@@ -24,20 +24,20 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item px-2">
-                            <a href="/home" class="nav-link">Home</a>
+                            <a href="{{ route('home') }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a href="/finder" class="nav-link">Finders</a>
+                            <a href="{{ route('finder') }}" class="nav-link">Finders</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a href="/account" class="nav-link">Account</a>
+                            <a href="{{ route('account') }}" class="nav-link">Account</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a href="/plus" class="nav-link">Plus</a>
+                            <a href="{{ route('plus') }}" class="nav-link">Plus</a>
                         </li>
                     </ul>                    
-            @if(!Session::has('user'))
-                    '<div class="navbar-nav ml-auto">
+            @if(!Auth::user())
+                    <div class="navbar-nav ml-auto">
                         <div class="nav-item">
                             <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal"><i class="fas fa-sign-in-alt"></i> Login</a>
                         </div>                  
@@ -70,22 +70,22 @@
                                 </div>
                                 <div class="modal-footer">                              
                                     <p><a type="button" class="btn btn-success mx-2" href="/forgetpassword">Forgot Password ?</a>
-                                        <a type="button" class="btn btn-primary text-white mx-2" href="/register">Sign Up</a></p>
+                                        <a type="button" class="btn btn-primary text-white mx-2" href="{{ route('register') }}">Sign Up</a></p>
                                 </div>
                             </div>
                         </div>
-                    </div>'
+                    </div>
             @else
-                    '<ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown mr-3">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> User</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{Auth::user()->name}}</a>
                             <div class="dropdown-menu">
                                 <a href="/profile" class="dropdown-item"><i class="fa fa-user-circle"></i> Profile</a>
-                                <a href="/profile" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                                <a href="/profile/settings" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
                                 <a href="/logout" class="dropdown-item"><i class="fa fa-user-times"></i> Log Out</a>
                             </div>
                         </li>
-                    </ul>'
+                    </ul>
 
             @endif
                 </div>

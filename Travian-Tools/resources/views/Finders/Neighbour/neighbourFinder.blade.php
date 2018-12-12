@@ -14,12 +14,10 @@
                     <tr>
                         <td class="col-md-5">
                             <div class="p-2">
-                                <strong>Coordinates: </strong><input type="text" size="5" name="xCor" required value="0"/> | <input type="text" size="5" name="yCor" required value="0"/>
+                                <strong>Coordinates: </strong><input type="text" size="5" name="xCor" required value="{{old('xCor') ?? '2'}}"/> | <input type="text" size="5" name="yCor" required value="{{old('yCor') ?? '2'}}"/>
                             </div>
-                            <div class="p-2"><strong>Distance: </strong><input type="number" name="dist" required value="100"/></div>
-                            <div class="p-2"><strong>Population: </strong>
-								<input type="range" class="custom-range col-md-6" min="2" max="2000" step="2" id="range1" name="pop">
-							</div>
+                            <div class="p-2"><strong>Distance: </strong><input type="number" name="dist" required value="{{old('dist') ?? '25'}}"/></div>
+                            <div class="p-2"><strong>Population : </strong><input type="number" min=2 name="pop" required value="{{old('pop') ?? '2'}}"/></div>
                             <div  class="p-2">
                                 <button class="btn btn-outline-warning px-5" type="submit"><strong>Scan Neighbourhood</strong></button>
                             </div>
