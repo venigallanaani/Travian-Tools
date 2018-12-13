@@ -37,9 +37,9 @@
                         <td>
                             <table class="align-center">
                                 <tr><td class="py-1 text-success h5"><strong>Ingame Links</strong></td></tr>
-                                <tr><td class="py-1"><a href=""><strong>Travian Profile</strong></a></td></tr>
-                                <tr><td class="py-1"><a href=""><strong>Attack Points</strong></a></td></tr>
-                                <tr><td class="py-1"><a href=""><strong>Defense Points</strong></a></td></tr>
+                                <tr><td class="py-1"><a href="https://{{Session::get('server.url')}}/allianz.php?aid={{$alliance['aid']}}" target="_blank"><strong>Travian Profile</strong></a></td></tr>
+                                <tr><td class="py-1"><a href="https://{{Session::get('server.url')}}/statistiken.php?id=1&idSub=1&name={{$alliance['alliance']}}" target="_blank"><strong>Attack Points</strong></a></td></tr>
+                                <tr><td class="py-1"><a href="https://{{Session::get('server.url')}}/statistiken.php?id=1&idSub=2&name={{$alliance['aid']}}" target="_blank"><strong>Defense Points</strong></a></td></tr>
                             </table>
                         </td>
                     </tr>

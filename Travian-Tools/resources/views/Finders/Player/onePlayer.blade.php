@@ -23,7 +23,7 @@
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Alliance</span></strong></td>
-                                    <td class="py-1">: <a href="/finders/alliance/{{ $player['alliance'] }}/1">{{ $player['alliance'] }}</a></td>
+                                    <td class="py-1">: <a href="/finder/alliance/{{ $player['alliance'] }}/1">{{ $player['alliance'] }}</a></td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-success">Rank</span></strong></td>
@@ -55,12 +55,12 @@
                         <td colspan="2" class="h5 text-white bg-success"><strong>Ingame Links</strong></td>
                     </tr>
                     <tr>                            
-                        <td class=""><a href="">Travian Profile</a></td>
-                        <td class=""><a href="">Hero XP</a></td>
+                        <td class=""><a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$player['uid']}}" target="_blank">Travian Profile</a></td>
+                        <td class=""><a href="https://{{Session::get('server.url')}}/statistiken.php?id=3&name={{$player['player']}}" target="_blank">Hero XP</a></td>
                     </tr>
                     <tr>                            
-                        <td class=""><a href="">Attack Points</a></td>
-                        <td class=""><a href="">Defense Points</a></td>
+                        <td class=""><a href="https://{{Session::get('server.url')}}/statistiken.php?id=0&idSub=1&name={{$player['player']}}" target="_blank">Attack Points</a></td>
+                        <td class=""><a href="https://{{Session::get('server.url')}}/statistiken.php?id=0&idSub=2&name={{$player['player']}}" target="_blank">Defense Points</a></td>
                     </tr>
                 </table>                
 

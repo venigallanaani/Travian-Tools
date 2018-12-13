@@ -32,7 +32,7 @@ class PlayerFinderController extends Controller
             if($id==null){
                 $players=Players::where('player','like','%'.$name.'%')
                     ->where('server_id','t6angr1')
-                    ->orderBy('rank','asc')->get();
+                    ->orderBy('rank','asc')->paginate(50);
             }else{
                 $players=Players::where('player','=',$name)
                     ->where('server_id','t6angr1')->get();

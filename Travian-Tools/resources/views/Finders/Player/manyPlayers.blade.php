@@ -29,6 +29,7 @@
                     </tr>                
                 @endforeach
             </table>
+            <small>{{ $players->links() }}</small>
         </div>
     </div>
     

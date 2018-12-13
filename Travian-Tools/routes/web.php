@@ -59,7 +59,7 @@ Route::get('/plus/resource/{id}','Plus\Resources\ResourceController@showTask');
 Route::post('/plus/resource/{id}','Plus\Resources\ResourceController@updateTask');
 
 Route::get('/resource','Plus\Resources\LeaderResourceController@resourceTaskList');
-Route::post('/resource','Plus\Resources\LeaderResourceController@createResourceTask');
+Route::post('/resource/create','Plus\Resources\LeaderResourceController@createResourceTask');
 Route::get('/resource/{id}','Plus\Resources\LeaderResourceController@resourceTask');
 Route::post('/resource/{id}','Plus\Resources\LeaderResourceController@processResourceTask');	
 

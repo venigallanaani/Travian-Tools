@@ -17,8 +17,8 @@
                 </tr>
                 @foreach($natars as $natar)
                     <tr>
-                        <td class="py-0">{{round(sqrt(pow(($x-$natar->x),2)+pow(($y-$natar->y),2)),2)}}</td>
-                        <td class="py-0"><a href="">{{$natar->village}}</td>
+                        <td class="py-0">{{round(sqrt(pow(($x-$natar->x),2)+pow(($y-$natar->y),2)),1)}}</td>
+                        <td class="py-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$natar->x}}&y={{$natar->y}}" target="_blank">{{$natar->village}}</td>
                         <td class="py-0">{{$natar->population}}</td>
                     </tr>
                 @endforeach

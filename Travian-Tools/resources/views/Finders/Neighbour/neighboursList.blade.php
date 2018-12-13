@@ -12,13 +12,13 @@
         <div class="card-text mx-auto text-center col-md-10 ">
             <table class="table table-hover table-sm small" id="sortableTable">
                 <tr class="h6">
-                    <th onclick="sortTable(1)">Distance</th>
-                    <th onclick="sortTable(2)">Village</th>
+                    <th>Distance</th>
+                    <th>Village</th>
                     <th>Coordinates</th>
-                    <th onclick="sortTable(3)">Player</th>
+                    <th>Player</th>
                     <th>Tribe</th>
-                    <th onclick="sortTable(4)">Alliance</th>
-                    <th onclick="sortTable(5)">Population</th>
+                    <th>Alliance</th>
+                    <th>Population</th>
                 </tr>
                 @foreach($villages as $village)
                     @php 
@@ -32,16 +32,16 @@
             			else {	$tribe='Natar';	}
         			@endphp
                     <tr>
-                        <td class="py-0">{{round(sqrt(pow(($x-$village->x),2)+pow(($y-$village->y),2)),2)}}</td>
+                        <td class="py-0">{{round(sqrt(pow(($x-$village->x),2)+pow(($y-$village->y),2)),1)}}</td>
                         <td class="py-0">{{$village->village}}</td>
-                        <td class="py-0"><a href="">{{$village->x}}|{{$village->x}}</a></td>
-                        <td class="py-0"><a href="/finder/player/{{$village->player}}/1">{{$village->player}}</td>
+                        <td class="py-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$village->x}}&y={{$village->y}}" target="_blank">{{$village->x}}|{{$village->x}}</a></td>
+                        <td class="py-0"><a href="/finder/player/{{$village->player}}/1">{{$village->player}}</a></td>
                         <td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$tribe}}"><img alt="" src="/images/x.gif" class="tribe {{$tribe}}"></td>
-                        <td class="py-0"><a href="/finder/alliance/{{$village->alliance}}/1">{{$village->alliance}}</td>
+                        <td class="py-0"><a href="/finder/alliance/{{$village->alliance}}/1">{{$village->alliance}}</a></td>
                         <td class="py-0">{{$village->population}}</td>
                     </tr>
                 @endforeach
-            </table>
+            </table>      
         </div>
     </div>
 
@@ -50,41 +50,6 @@
 
 @push('scripts')
 <script>
-function sortTable(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("sortableTable");
-    switching = true;
-    dir = "asc"; 
-    while (switching) {
-      	switching = false;
-      	rows = table.rows;
-      	for (i = 1; i < (rows.length - 1); i++) {
-        	shouldSwitch = false;
-        	x = rows[i].getElementsByTagName("TD")[n];
-        	y = rows[i + 1].getElementsByTagName("TD")[n];
-        	if (dir == "asc") {
-          		if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            		shouldSwitch= true;
-            		break;
-         		}
-        	} else if (dir == "desc") {
-          		if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            		shouldSwitch = true;
-            		break;
-          		}
-    		}
-      	}
-      	if (shouldSwitch) {
-        	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        	switching = true;
-        	switchcount ++;      
-      	} else {
-        	if (switchcount == 0 && dir == "asc") {
-          		dir = "desc";
-          		switching = true;
-        	}
-      	}
-	}
-}
+
 </script>
 @endpush

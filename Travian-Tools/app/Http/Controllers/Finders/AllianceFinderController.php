@@ -25,7 +25,7 @@ class AllianceFinderController extends Controller
             if($id==null){
                 $alliances=Alliances::where('alliance','like','%'.$name.'%')
                                 ->where('server_id','t6angr1')
-                                ->orderBy('rank','asc')->get();
+                                ->orderBy('rank','asc')->paginate(5);
             }else{
                 $alliances=Alliances::where('alliance','=',$name)
                                 ->where('server_id','t6angr1')->get();

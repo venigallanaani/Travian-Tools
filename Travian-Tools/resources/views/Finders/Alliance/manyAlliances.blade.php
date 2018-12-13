@@ -15,7 +15,7 @@
                     <th>Players</th>                    
                     <th>Population</th>
                     <th>Villages</th>
-                </tr>
+                </tr>                
                 @foreach($alliances as $alliance)
                     <tr>
                         <td>{{$alliance['rank']}}</td>                    
@@ -26,6 +26,7 @@
                     </tr>                
                 @endforeach
             </table>
+            <small>{{ $alliances->links() }}</small>
         </div>
     </div>
 @endsection

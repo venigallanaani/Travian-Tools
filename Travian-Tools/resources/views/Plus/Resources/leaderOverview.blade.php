@@ -6,71 +6,47 @@
 			<div class="card-header h4 py-2 bg-info text-white"><strong>Resource Status</strong></div>
 			<div class="card-text">
 		<!-- ========================== Create CFD Options ============================== -->
-				<div class="m-3">
-					<a href="#" class="btn btn-warning btn-block p-3" data-toggle="modal" data-target="#createCFDModal">
-						<i class="fa fa-plus"></i> <strong>Create New Resource Push</strong></a>
-				</div>	
-				<div class="modal fade" id="createCFDModal">
-					<div class="modal-dialog modal-dialog-centered">
-						<div class="modal-content">
-							<div class="modal-header bg-warning">
-								<h5 class="modal-title" id="createCFDModalLabel">Resource Push Details</h5>
-								<button class="close" data-dismiss="modal">&times;</button>
-							</div>
-							<form action="/resource" method="POST">
-								<div class="modal-body">
-									{{ csrf_field() }}
-									<div class="input-group py-1">
-										<label for="xCor" class="input-group-prepend"><span class="input-group-text">X:</span></label>
-											<input type="text" class="form-control col-md-2" required placeholder="" aria-label="" aria-describedby="basic-addon1"> | 
-										<label for="yCor" class="input-group-prepend"><span class="input-group-text">Y:</span></label>
-											<input type="text" class="form-control col-md-2" required placeholder="" aria-label="" aria-describedby="basic-addon1">
-									</div>
-									<div class="input-group py-1">
-										<label for="landTime" class="input-group-prepend"><span class="input-group-text">Resources Needed:</span></label>
-											<input type="text" required class="form-control col-md-3" required placeholder="" aria-label="" aria-describedby="basic-addon1">
-									</div>									
-									<div class="custom-control custom-radio custom-control-inline">
-                                    	<input type="radio" id="customRadioInline1" name="resType" selected class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline1"><img alt="all" src="/images/x.gif" class="res all"></label>
-                                    </div>
-									<div class="custom-control custom-radio custom-control-inline">
-                                    	<input type="radio" id="customRadioInline2" name="resType" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline2"><img alt="wood" src="/images/x.gif" class="res wood"></label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                    	<input type="radio" id="customRadioInline3" name="resType" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline3"><img alt="clay" src="/images/x.gif" class="res clay"></label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                    	<input type="radio" id="customRadioInline4" name="resType" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline4"><img alt="iron" src="/images/x.gif" class="res iron"></label>
-                                    </div> 
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                    	<input type="radio" id="customRadioInline5" name="resType" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline5"><img alt="crop" src="/images/x.gif" class="res crop"></label>
-                                    </div>
-									
-									
-									<div class="input-group py-1">
-										<label for="targetTime" class="input-group-prepend"><span class="input-group-text">Target Time:</span></label>
-											<input type="text" required class="form-control col-md-3" placeholder="" aria-label="" aria-describedby="basic-addon1">
-									</div>
-									<div class="input-group py-1">
-										<label for="comments" class="input-group-prepend"><span class="input-group-text">Comments:</span></label>
-											<textarea class="form-control" rows="5"></textarea>
-									</div>								
-								</div>
-								<div class="modal-footer">
-									<button class="btn btn-primary px-5" data-dismiss="modal" type="submit">Create Task</button>
-								</div>
-							</form>
-						</div>
-					</div>				
-				</div>
+        		<div class="m-3">
+            		<div class="card card-header text-center h6 btn btn-block collapsed bg-warning" data-toggle="collapse" href="#task" aria-expanded="false" aria-controls="task">
+                		<p class="p-0 m-0">
+                    		<i class="fa fa-plus"></i> <span class=""><strong>Create New Resource Push</strong></span>
+        			 	</p>
+            		</div>
+            		<div class="collapse" id="task" style="">
+              			<div class="card card-body">
+    						<form action="/resource/create" method="POST" class="col-md-8 mx-auto text-center">
+        						{{ csrf_field() }}
+        						<p class="my-2">
+        							<strong>X: <input type="text" name="xCor" size="5" required> | Y: <input type="text" name="yCor" size="5" required></strong>
+        						</p>
+        						<p class="my-2">
+        							<strong>Resources Needed: <input type="text" name="resNeed" size="8" required></strong>
+        						</p>
+        						<p class="my-2">
+        							<strong>Land Time: <input type="text" name="targetTime" size="10"></strong>
+        						</p>
+    						    <p class="my-2 col-md-12">
+        							<strong>Resource Type: </strong>
+        								<input type="radio" name="resType" value="ANY" checked> <img alt="all" src="/images/x.gif" class="res all"> 
+        								<input type="radio" name="resType" value="WOOD"> <img alt="wood" src="/images/x.gif" class="res wood"> 
+        								<input type="radio" name="resType" value="CLAY"> <img alt="clay" src="/images/x.gif" class="res clay"> 
+        								<input type="radio" name="resType" value="IRON"> <img alt="iron" src="/images/x.gif" class="res iron"> 
+        								<input type="radio" name="resType" value="CROP"> <img alt="crop" src="/images/x.gif" class="res crop">
+        						</p>
+        						<p class="my-2">
+        							<strong>Comments:</strong><textarea name="comments" class="form-control" rows="5"></textarea>
+        						</p>
+        						<p class="my-2">
+        							<button class="btn btn-info px-5" name="createResTask"><strong>Create Task</strong></button>
+        						</p> 						
+    						</form>
+              			</div>
+            		</div>	
+        		</div>				
+			</div>
 		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
-	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+	        	<div class="alert alert-{{ $msg }} text-center my-1 mx-auto col-md-11" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>{{ Session::get($msg) }}
@@ -114,21 +90,31 @@
 				</div>
 			</div>
 		</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @endsection
+
+@push('scripts')
+
+<script>
+$(document).ready(function() {
+    $('#modalSubmit').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{{ url('/resource/create') }}",
+            data: {
+                x: jQuery('#xCor').val(),
+                y: jQuery('#yCor').val(),
+                res: jQuery('#resNeed').val(),
+                time: jQuery('#targetTime').val(),
+                comment: jQuery('#comments').val()
+            },
+            success: function(result) {
+  	      		setTimeout(function(){// wait for 5 secs(2)
+       	           location.reload(); // then reload the page.(3)
+       	      	}, 5000); 
+            }
+        });
+    });
+});
+</script>
+@endpush
