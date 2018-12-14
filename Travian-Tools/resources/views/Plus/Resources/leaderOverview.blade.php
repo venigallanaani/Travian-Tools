@@ -7,13 +7,13 @@
 			<div class="card-text">
 		<!-- ========================== Create CFD Options ============================== -->
         		<div class="m-3">
-            		<div class="card card-header text-center h6 btn btn-block collapsed bg-warning" data-toggle="collapse" href="#task" aria-expanded="false" aria-controls="task">
+            		<div class="card card-header text-center h6 btn btn-block collapsed bg-warning shadow" data-toggle="collapse" href="#task" aria-expanded="false" aria-controls="task">
                 		<p class="p-0 m-0">
                     		<i class="fa fa-plus"></i> <span class=""><strong>Create New Resource Push</strong></span>
         			 	</p>
             		</div>
             		<div class="collapse" id="task" style="">
-              			<div class="card card-body">
+              			<div class="card card-body shadow">
     						<form action="/resource/create" method="POST" class="col-md-8 mx-auto text-center">
         						{{ csrf_field() }}
         						<p class="my-2">
@@ -27,7 +27,7 @@
         						</p>
     						    <p class="my-2 col-md-12">
         							<strong>Resource Type: </strong>
-        								<input type="radio" name="resType" value="ANY" checked> <img alt="all" src="/images/x.gif" class="res all"> 
+        								<input type="radio" name="resType" value="ALL" checked> <img alt="all" src="/images/x.gif" class="res all"> 
         								<input type="radio" name="resType" value="WOOD"> <img alt="wood" src="/images/x.gif" class="res wood"> 
         								<input type="radio" name="resType" value="CLAY"> <img alt="clay" src="/images/x.gif" class="res clay"> 
         								<input type="radio" name="resType" value="IRON"> <img alt="iron" src="/images/x.gif" class="res iron"> 
@@ -74,7 +74,7 @@
 							@foreach($tasks as $task)
     						<tr>
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
-    								<strong>{{$task->player }}({{$task->village}})</strong></a>
+    								<strong>{{$task->player }} ({{$task->village}})</strong></a>
     							</td>
     							<td>{{$task->res_total}}</td>
     							<td data-toggle="tooltip" data-placement="top" title="{{$task->type}}"><img alt="all" src="/images/x.gif" class="res {{$task->type}}"></td>							
@@ -91,30 +91,3 @@
 			</div>
 		</div>
 @endsection
-
-@push('scripts')
-
-<script>
-$(document).ready(function() {
-    $('#modalSubmit').on('submit', function (e) {
-        e.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: "{{ url('/resource/create') }}",
-            data: {
-                x: jQuery('#xCor').val(),
-                y: jQuery('#yCor').val(),
-                res: jQuery('#resNeed').val(),
-                time: jQuery('#targetTime').val(),
-                comment: jQuery('#comments').val()
-            },
-            success: function(result) {
-  	      		setTimeout(function(){// wait for 5 secs(2)
-       	           location.reload(); // then reload the page.(3)
-       	      	}, 5000); 
-            }
-        });
-    });
-});
-</script>
-@endpush

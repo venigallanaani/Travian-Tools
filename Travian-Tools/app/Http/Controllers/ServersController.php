@@ -43,7 +43,7 @@ class ServersController extends Controller
         if($plus!=null){       
             $request->session()->put('plus',$plus);           
         }else{
-            echo 'No Plus Found';
+            //echo 'No Plus Found';
             if($request->session()->has('plus')){
                 $request->session()->forget('plus');
             }

@@ -15,6 +15,7 @@ class CreatePlusTable extends Migration
     {
         Schema::create('plus', function (Blueprint $table) {
             $table->string('id');
+            $table->string('plus_id');
             $table->string('name');
             $table->string('server_id');
             $table->string('user');

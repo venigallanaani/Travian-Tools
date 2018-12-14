@@ -59,18 +59,22 @@ Route::get('/plus/resource/{id}','Plus\Resources\ResourceController@showTask');
 Route::post('/plus/resource/{id}','Plus\Resources\ResourceController@updateTask');
 
 Route::get('/resource','Plus\Resources\LeaderResourceController@resourceTaskList');
-Route::post('/resource/create','Plus\Resources\LeaderResourceController@createResourceTask');
 Route::get('/resource/{id}','Plus\Resources\LeaderResourceController@resourceTask');
-Route::post('/resource/{id}','Plus\Resources\LeaderResourceController@processResourceTask');	
+Route::post('/resource/create','Plus\Resources\LeaderResourceController@createResourceTask');
+Route::post('/resource/update','Plus\Resources\LeaderResourceController@processResourceTask');	
 
 /* --------------- Plus defense leader menu --------------- */
+
+Route::get('/plus/defense','Plus\Defense\CFD\CFDController@cfdList');
+Route::get('/plus/defense/{id}','Plus\Defense\CFD\CFDController@cfdDetail');
+Route::post('/plus/defense/{id}','Plus\Defense\CFD\CFDController@updateCFD');
+
+
+
+
+
 Route::get('/defense/incoming','DefenseController@incoming');
 Route::post('/defense/incoming','DefenseController@processIncoming');
-
-Route::get('/defense/cfd','DefenseController@cfdList');
-Route::post('/defense/cfd','DefenseController@createCfd');
-Route::get('/defense/cfd/{id}','DefenseController@cfdDetail');
-Route::post('/defense/cfd/{id}','DefenseController@processCfd');
 
 Route::get('/defense/search','DefenseController@search');
 Route::post('/defense/search','DefenseController@processSearch');

@@ -17,6 +17,7 @@ class CreateResourceupdateTable extends Migration
             $table->integer('task_id');
             $table->string('server_id');
             $table->string('plus_id');
+            $table->string('player_id');
             $table->string('player');
             $table->integer('resources')->default(0);
             $table->integer('percent')->default(0);
