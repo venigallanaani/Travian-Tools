@@ -50,10 +50,10 @@ Route::get('/account/{task}','AccountController@show');		// Displays the differe
 /*----------------------------------------------------------------------------------*/
 Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu main page	
 
-/* --------------- Controller for Plus leader menu --------------- */
+/* --------------- Controller for Plus leader routes --------------- */
 Route::get('/leader/{task?}','LeaderController@leader');	
 
-/* --------------- Plus Resource leader menu --------------- */
+/* --------------- Plus Resource routes  --------------- */
 Route::get('/plus/resource','Plus\Resources\ResourceController@showTaskList');
 Route::get('/plus/resource/{id}','Plus\Resources\ResourceController@showTask');
 Route::post('/plus/resource/{id}','Plus\Resources\ResourceController@updateTask');
@@ -63,14 +63,16 @@ Route::get('/resource/{id}','Plus\Resources\LeaderResourceController@resourceTas
 Route::post('/resource/create','Plus\Resources\LeaderResourceController@createResourceTask');
 Route::post('/resource/update','Plus\Resources\LeaderResourceController@processResourceTask');	
 
-/* --------------- Plus defense leader menu --------------- */
+/* --------------- Plus defense CFD   --------------- */
 
-Route::get('/plus/defense','Plus\Defense\CFD\CFDController@cfdList');
-Route::get('/plus/defense/{id}','Plus\Defense\CFD\CFDController@cfdDetail');
-Route::post('/plus/defense/{id}','Plus\Defense\CFD\CFDController@updateCFD');
+Route::get('/plus/defense','Plus\Defense\CFD\CFDController@defenseTaskList');
+Route::get('/plus/defense/{id}','Plus\Defense\CFD\CFDController@defenseTask');
+Route::post('/plus/defense/{id}','Plus\Defense\CFD\CFDController@updateDefenseTask');
 
-
-
+Route::get('/defense/cfd','Plus\Defense\CFD\LeaderCFDController@CFDList');
+Route::get('/defense/cfd/{id}','Plus\Defense\CFD\LeaderCFDController@CFDDetail');
+Route::post('/defense/cfd/create','Plus\Defense\CFD\LeaderCFDController@createCFD');
+Route::post('/defense/cfd/update','Plus\Defense\CFD\LeaderCFDController@processCFD');	
 
 
 Route::get('/defense/incoming','DefenseController@incoming');

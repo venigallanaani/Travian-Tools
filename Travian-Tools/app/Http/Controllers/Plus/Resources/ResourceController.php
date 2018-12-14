@@ -15,7 +15,7 @@ class ResourceController extends Controller
 {
     public function showTaskList(Request $request){
         
-        session(['title'=>'Resources']);      
+        session(['title'=>'Plus']);
         
         $tasks = ResTask::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -29,7 +29,7 @@ class ResourceController extends Controller
     
     public function showTask(Request $request, $id){
         
-        session(['title'=>'Resources']);
+        session(['title'=>'Plus']);
         
         $task = ResTask::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
