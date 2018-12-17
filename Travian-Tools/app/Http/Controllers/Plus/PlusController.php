@@ -25,6 +25,27 @@ class PlusController extends Controller
        }    	
     	return view('Plus.General.overview');
     }
+    
+    
+    public function members(Request $request){
+        
+        session(['title'=>'Plus']);
+        
+        $members=Plus::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->orderby('account','asc')->get();
+        
+        return view('Plus.General.members')->with(['members'=>$members]);
+        
+    }
+    
+    public function member(Request $request){
+        
+        session(['title'=>'Plus']);
+        
+        return view('Plus.General.member');
+        
+    }
 
 }
 

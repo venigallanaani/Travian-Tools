@@ -51,7 +51,7 @@
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Plus Menu</a>
                 <a href="/plus" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>
-                <a href="/plus/member" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Member Details</a>
+                <a href="/plus/members" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Member Details</a>
                 <a href="/plus/incoming" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Report Incomings</a>
                 <a href="/plus/defense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Defense Tasks</a>
                 <a href="/plus/offense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Offense Tasks</a>

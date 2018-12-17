@@ -20,33 +20,18 @@
     							<th class="col-md-2">Last Login Date</th>
     						</tr>
 						</thead>
-						<tr class="">
-							<td><a href="player finder link inside travian tools" target="_blank">Barca1</a></td>
-							<td><a href="/plus/member/123">Admin1</a></td>
-							<td>Alliance1</td>
-							<td>Hanner</td>
-							<td>Nocturne</td>
-							<td>20-11-2018</td>							
-						</tr>
-						<tr class="">
-							<td>Barca1</td>
-							<td>Admin1</td>
-							<td>Alliance1</td>
-							<td>Hanner</td>
-							<td>Nocturne</td>
-							<td>20-11-2018</td>							
-						</tr>
-						<tr class="">
-							<td>Barca1</td>
-							<td>Admin1</td>
-							<td>Alliance1</td>
-							<td>Hanner</td>
-							<td>Nocturne</td>
-							<td>20-11-2018</td>							
-						</tr>
+						@foreach($members as $member)
+    						<tr class="">
+    							<td><a href="/finder/player/{{$member->account}}/1" target="_blank">{{$member->account}}</a></td>
+    							<td><a href="/plus/member/{{$member->id}}">{{$member->user}}</a></td>
+    							<td>Alliance1</td>
+    							<td>sitter 1</td>
+    							<td>sitter 2</td>
+    							<td>20-11-2018</td>							
+    						</tr>
+						@endforeach
 					</table>
 				</div>
         </div>
     </div>
-
 @endsection

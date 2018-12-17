@@ -47,8 +47,9 @@ class CFDController extends Controller
                     ->where('player_id',$request->session()->get('plus.id'))
                     ->where('task_id',$id)->get();
         
+        //dd($troops);                    
         return view("Plus.Defense.CFD.defenseTask")->with(['task'=>$task])
-                        ->with(['villages'=>$villages])->with(['units'=>$units])->with(['troops'=>$troops]);
+                       ->with(['villages'=>$villages])->with(['units'=>$units])->with(['troops'=>$troops]);
         
     }
     
@@ -67,17 +68,17 @@ class CFDController extends Controller
         
         if($village){
             
-            $res=(Input::has('res')?Input::get('res'):0);
-            $unit01=(Input::has('unit01') ? Input::get('unit01'):0);
-            $unit02=(Input::has('unit02') ? Input::get('unit02'):0);
-            $unit03=(Input::has('unit03') ? Input::get('unit03'):0);
-            $unit04=(Input::has('unit04') ? Input::get('unit04'):0);
-            $unit05=(Input::has('unit05') ? Input::get('unit05'):0);
-            $unit06=(Input::has('unit06') ? Input::get('unit06'):0);
-            $unit07=(Input::has('unit07') ? Input::get('unit07'):0);
-            $unit08=(Input::has('unit08') ? Input::get('unit08'):0);
-            $unit09=(Input::has('unit09') ? Input::get('unit09'):0);
-            $unit10=(Input::has('unit10') ? Input::get('unit10'):0);
+            $res=(Input::get('res')!=null ? Input::get('res'):0);
+            $unit01=(Input::get('unit01')!=null ? Input::get('unit01'):0);
+            $unit02=(Input::get('unit02')!=null ? Input::get('unit02'):0);
+            $unit03=(Input::get('unit03')!=null ? Input::get('unit03'):0);
+            $unit04=(Input::get('unit04')!=null ? Input::get('unit04'):0);
+            $unit05=(Input::get('unit05')!=null ? Input::get('unit05'):0);
+            $unit06=(Input::get('unit06')!=null ? Input::get('unit06'):0);
+            $unit07=(Input::get('unit07')!=null ? Input::get('unit07'):0);
+            $unit08=(Input::get('unit08')!=null ? Input::get('unit08'):0);
+            $unit09=(Input::get('unit09')!=null ? Input::get('unit09'):0);
+            $unit10=(Input::get('unit10')!=null ? Input::get('unit10'):0);
             
             $units = Units::where('tribe_id',$village->id)
                         ->orderBy('id','asc')->get();
@@ -114,7 +115,10 @@ class CFDController extends Controller
                 ->update(['def_received'=>$defReceived,
                             'def_remain'=>$defRemain,
                             'def_percent'=>$defPercent,
-                            'status'=>$status
+                            'status'=>$status,
+                            'def_inf'=>$task->def_inf+$defInf,
+                            'def_cav'=>$task->def_cav+$defCav,
+                            'resources'=>$task->resources+$res
                         ]);
             
             //Updating the CFD update table with player details
@@ -123,27 +127,14 @@ class CFDController extends Controller
                         ->where('player_id',$request->session()->get('plus.id'))
                         ->where('task_id',$id)->where('vid',$village->vid)->get();
                 
-            if($player){                
-                CFDUpd::where('server_id',$request->session()->get('server.id'))
-                        ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('player_id',$request->session()->get('plus.id'))
-                        ->where('task_id',$id)->where('vid',$village->vid)
-                        ->update([
-                            'resources'=>$player->resources+$res,
-                            'unit01'=>$player->unit01+$unit01,      'unit02'=>$player->unit02+$unit02,
-                            'unit03'=>$player->unit03+$unit03,      'unit04'=>$player->unit04+$unit04,
-                            'unit05'=>$player->unit05+$unit05,      'unit06'=>$player->unit06+$unit06,
-                            'unit07'=>$player->unit07+$unit07,      'unit08'=>$player->unit08+$unit08,
-                            'unit09'=>$player->unit09+$unit09,      'unit10'=>$player->unit10+$unit10,
-                            'upkeep'=>$player->upkeep+$upkeep,      'def_inf'=>$player->def_inf+$defInf,
-                            'def_cav'=>$player->def_cav+$defCav
-                        ]);                
-            }else{
+            if($player!=null){                
                 $cfd = new CFDUpd;
                 
                 $cfd->server_id = $request->session()->get('server.id');
                 $cfd->plus_id = $request->session()->get('plus.plus_id');
-                $cfd->player_id = $village->uid;
+                $cfd->task_id = $id;
+                $cfd->player_id = $request->session()->get('plus.id');
+                $cfd->uid = $village->uid;
                 $cfd->player = $village->player;
                 $cfd->vid = $village->vid;
                 $cfd->village = $village->village;
@@ -156,6 +147,21 @@ class CFDController extends Controller
                 $cfd->upkeep = $upkeep;     $cfd->def_inf = $defInf;    $cfd->def_cav=$defCav;
                 
                 $cfd->save();
+            }else{
+                CFDUpd::where('server_id',$request->session()->get('server.id'))
+                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                ->where('player_id',$request->session()->get('plus.id'))
+                ->where('task_id',$id)->where('vid',$village->vid)
+                ->update([
+                    'resources'=>$player->resources+$res,
+                    'unit01'=>$player->unit01+$unit01,      'unit02'=>$player->unit02+$unit02,
+                    'unit03'=>$player->unit03+$unit03,      'unit04'=>$player->unit04+$unit04,
+                    'unit05'=>$player->unit05+$unit05,      'unit06'=>$player->unit06+$unit06,
+                    'unit07'=>$player->unit07+$unit07,      'unit08'=>$player->unit08+$unit08,
+                    'unit09'=>$player->unit09+$unit09,      'unit10'=>$player->unit10+$unit10,
+                    'upkeep'=>$player->upkeep+$upkeep,      'def_inf'=>$player->def_inf+$defInf,
+                    'def_cav'=>$player->def_cav+$defCav
+                ]);                
             }
             Session::flash('success','Defense task is successfully updated.');
             

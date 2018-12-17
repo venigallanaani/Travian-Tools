@@ -20,8 +20,7 @@ class LeaderResourceController extends Controller
         session(['title'=>'Resources']);
         
         $tasks = ResTask::where('server_id',$request->session()->get('server.id'))
-                    ->where('plus_id',$request->session()->get('plus.plus_id'))
-                    ->where('status','ACTIVE')->get();
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))->get();
         
         // displays the list of resource tasks details
         return view('Plus.Resources.leaderOverview')->with(['tasks'=>$tasks]);
@@ -67,7 +66,7 @@ class LeaderResourceController extends Controller
             
             $task->server_id=$request->session()->get('server.id');
             $task->plus_id=$request->session()->get('plus.plus_id');
-            $task->status='ACTIVE';
+            $task->status='ACTIVE';     $task->res_remain=$res;
             $task->type=$type;          $task->res_total=$res;
             $task->x=$x;                $task->y=$y;
             $task->target_time=$time;   $task->comments=$comments;

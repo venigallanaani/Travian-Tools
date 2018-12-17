@@ -9,8 +9,6 @@ Route::get('/', 'HomeController@index')->name('home');					// Displays home page
 Route::get('/home', 'HomeController@index')->name('home');				// Displays home page on selection
 
 
-
-
 /*----------------------------------------------------------------------------------*/
 /* --------------------------------- Finders page ---------------------------------- */
 /*----------------------------------------------------------------------------------*/
@@ -48,7 +46,11 @@ Route::get('/account/{task}','AccountController@show');		// Displays the differe
 /*----------------------------------------------------------------------------------*/
 /* ----------------------- Plus Page -- General Options --------------------------- */
 /*----------------------------------------------------------------------------------*/
-Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu main page	
+Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu main page
+
+/*-------------------------- Plus overview routes ----------------------------*/
+Route::get('/plus/members','Plus\PlusController@members');
+Route::get('/plus/member/{id}','Plus\PlusController@member');
 
 /* --------------- Controller for Plus leader routes --------------- */
 Route::get('/leader/{task?}','LeaderController@leader');	
@@ -71,15 +73,20 @@ Route::post('/plus/defense/{id}','Plus\Defense\CFD\CFDController@updateDefenseTa
 
 Route::get('/defense/cfd','Plus\Defense\CFD\LeaderCFDController@CFDList');
 Route::get('/defense/cfd/{id}','Plus\Defense\CFD\LeaderCFDController@CFDDetail');
+Route::get('/defense/cfd/troops/{id}/{uid}','Plus\Defense\CFD\LeaderCFDController@CFDTroops');
 Route::post('/defense/cfd/create','Plus\Defense\CFD\LeaderCFDController@createCFD');
-Route::post('/defense/cfd/update','Plus\Defense\CFD\LeaderCFDController@processCFD');	
+Route::post('/defense/cfd/update','Plus\Defense\CFD\LeaderCFDController@processCFD');
+
 
 
 Route::get('/defense/incoming','DefenseController@incoming');
 Route::post('/defense/incoming','DefenseController@processIncoming');
 
-Route::get('/defense/search','DefenseController@search');
-Route::post('/defense/search','DefenseController@processSearch');
+
+
+/* -------------------- Plus Search Defense -----------------------*/
+Route::get('/defense/search','Plus\Defense\Search\DefenseController@show');
+Route::post('/defense/search','Plus\Defense\Search\DefenseController@process');
 
 
 

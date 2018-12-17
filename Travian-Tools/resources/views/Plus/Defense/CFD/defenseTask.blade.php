@@ -79,7 +79,7 @@
 					<div class="my-3">
 					@if(count($troops)>0)
 						<p class="h5"><strong>Your Contributions</strong></p>
-						<table class="table table-bordered table-hover small col-md-10 mx-auto">
+						<table class="table table-bordered table-hover col-md-10 mx-auto">
 							<tr>	
 								<th class="p-0">Village</th>
 								<th class="p-0" data-toggle="tooltip" data-placement="top" title="{{$units[0]['name']}}"><img alt="" src="/images/x.gif" class="units {{$units[0]['image']}}"></th>
@@ -101,9 +101,9 @@
     								$upkeep+=$troop->upkeep;
     								$defInf+=$troop->def_inf;
     								$defCav+=$troop->def_cav;
-    								$res+=$troops->resources;
+    								$res+=$troop->resources;
 								@endphp
-    							<tr>
+    							<tr class="small">
     								<td class="py-1">{{$troop->village}}</td>
     								<td class="py-1">{{$troop->unit01}}</td>
     								<td class="py-1">{{$troop->unit02}}</td>
