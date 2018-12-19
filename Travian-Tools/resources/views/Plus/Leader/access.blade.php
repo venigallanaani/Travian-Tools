@@ -6,74 +6,36 @@
 			<div class="card-header h4 py-2 bg-info text-white"><strong>Leader Access</strong></div>
 			<div class="card-text">
 <!-- ==========================Add player and add alliance options ============================== -->
-				<div class="row m-3">
-					<div class="col-md-6">
-						<a href="#" class="btn btn-outline-warning btn-block p-3" data-toggle="modal" data-target="#addPlayerModal">
-							<i class="fa fa-plus"></i> <strong>Add Player</strong></a>
-					</div>
-					<div class="col-md-6">
-						<a href="#" class="btn btn-outline-primary btn-block p-3" data-toggle="modal" data-target="#addAllianceModal">
-							<i class="fa fa-plus"></i> Add Alliance</a>
-					</div>
-				</div>	
-				<div class="modal fade" id="addPlayerModal">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header bg-warning">
-								<h5 class="modal-title" id="addPlayerModalLabel">Add Player</h5>
-								<button class="close" data-dismiss="modal">&times;</button>
-							</div>
-							<div class="modal-body">
-								<form>
-									<div class="form-group">
-										<label for="player" class="form-control-label">Player Name:</label>
-										<input type="text" class="form-control">
-									</div>
-								</form>
-							</div>
-							<div class="modal-footer">
-								<button class="btn btn-outline-primary" data-dismiss="modal">Add to Group</button>
-							</div>
-						</div>
-					</div>				
-				</div>		
-				<div class="modal fade" id="addAllianceModal">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header bg-primary">
-								<h5 class="modal-title" id="addAllianceModalLabel">Add Alliance</h5>
-								<button class="close" data-dismiss="modal">&times;</button>
-							</div>
-							<div class="modal-body">
-								<form>
-									<div class="form-group">
-										<label for="alliance" class="form-control-label">Alliance Name:</label>
-										<input type="text" class="form-control">
-									</div>
-								</form>
-							</div>
-							<div class="modal-footer">
-								<button class="btn btn-outline-warning" data-dismiss="modal">Add to Group</button>
-							</div>
-						</div>
-					</div>				
-				</div>
+				<div class="m-3">
+					<div class="card card-header text-center h6 btn btn-block collapsed bg-warning shadow" data-toggle="collapse" href="#task" aria-expanded="false" aria-controls="task">
+                		<p class="p-0 m-0">
+                    		<i class="fa fa-plus"></i> <span class=""><strong>Add Player to Group</strong></span>
+        			 	</p>
+            		</div>
+            		<div class="collapse" id="task" style="">
+              			<div class="card card-body shadow">
+    						<form action="/defense/cfd/create" method="POST" class="col-md-10 mx-auto text-center">
+        						{{ csrf_field() }}        						
+        						<p class="my-2">
+        							<strong>Player Name <input type="text" name="player" size="15" required></strong>
+        						</p>        						
+        						<p class="my-2">
+        							<button class="btn btn-info px-5" name="addPlayer"><strong>Add Player</strong></button>
+        						</p> 						
+    						</form>
+              			</div>
+            		</div>	
+				</div>				
 		<!-- ============================ Add success/failure notifications ============================== -->
-				<div class="alert alert-success text-center my-1 mx-5" role="alert">
-	  				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-  					</button>Successfully added to the group. 
-				</div>
-				<div class="alert alert-danger text-center my-1 mx-5" role="alert">
-	  				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-  					</button>Error encountered while adding the player to the group. 
-				</div>
-				<div class="alert alert-warning text-center my-1 mx-5" role="alert">
-	  				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-  					</button>Player or Alliance not found. 
-				</div>
+		@foreach(['danger','success','warning','info'] as $msg)
+			@if(Session::has($msg))
+	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>{{ Session::get($msg) }}
+                </div>
+            @endif
+        @endforeach
 		<!-- =========================== leadership Options control panel ================================ -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
 					<table class="table table-hover table-sm table-bordered align-middle small">

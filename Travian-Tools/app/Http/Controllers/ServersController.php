@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 use App\Servers;
 use App\Plus;
@@ -38,7 +39,8 @@ class ServersController extends Controller
         $request->session()->put('server.url',$server->url);
         $request->session()->put('server.tmz',$server->timezone);
         
-        $plus=Plus::where('server_id',$server_id)->first();
+        $plus=Plus::where('server_id',$server_id)
+                ->where('id',Auth::user()->id)->first();
         
         if($plus!=null){       
             $request->session()->put('plus',$plus);           

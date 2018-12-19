@@ -29,55 +29,55 @@
 					<td class="col-md-3 p-1 m-0 text-danger"><strong>Attacker</strong></td>
 					<td class="col-md-6 small p-1 m-0">
 						<a href="">Hero XP: </a><input name="hxp" type="text" size='5'/>
-						<a href="">Off points: </a><input name="off" type="text" size='5'/>
-						<a href="">Def points: </a><input name="def" type="text" size='5'/>
+						<a href="http://travian.kirilloid.ru/items.php" target="_blank"><strong> Hero Equipment Details <i class="fas fa-external-link-alt"></i></strong></a>
 					</td>
 					<td class="col-md-3 p-1 m-0 text-success"><strong>Defender</strong></td>
 				</tr>    
 				<tr>
 					<td class="col-md-3 small p-1 m-0"><a href=""><strong>Player(village)</strong></a></td>
-					<td class="col-md-6 small p-1 m-0"><a href=""><strong>Hero Equipment Details</strong></a></td>
-					<td class="col-md-3 small p-1 m-0"><a href=""><strong>Player(village)</strong></a></td>
-				</tr> 
-				<tr>
-					<td class="col-md-3 small p-1 m-0"><strong>Waves: </strong>4</td>
 					<td class="col-md-6 small p-1 m-0">
-						<select>
+						<select name="helm">
 							<option value="">--Select Helm--</option>
 							<option value="">T1 helm</option>
 							<option value="">T2 helm</option>
 							<option value="">T3 helm</option>
 						</select>
-						<select>
+						<select name="chest">
 							<option value="">--Select Chest--</option>
 							<option value="">T1 Chest</option>
 							<option value="">T2 Chest</option>
 							<option value="">T3 Chest</option>
 						</select>
-						<select>
+						<select	name="boot">
 							<option value="">--Select Boots--</option>
 							<option value="">T1 Boots</option>
 							<option value="">T2 Boots</option>
 							<option value="">T3 Boots</option>
 						</select>
 					</td>
-					<td class="col-md-3 small p-1 m-0"><strong>Noticed Time</strong></td>
+					<td class="col-md-3 small p-1 m-0"><a href=""><strong>Player(village)</strong></a></td>
 				</tr> 
 				<tr>
-					<td class="col-md-3 small p-1 m-0"><strong>Start Time</strong></td>
+					<td class="col-md-3 small p-1 m-0"><strong>Waves: </strong>4</td>
 					<td class="col-md-6 small p-1 m-0">
-						<select>
+						<select	name="right">
 							<option value="">--Select Right hand--</option>
 							<option value="">T1 weapon</option>
 							<option value="">T2 weapon</option>
 							<option value="">T3 weapon</option>
 						</select>
-						<select>
+						<select name="left">
 							<option value="">--Select Left hand--</option>
 							<option value="">T1 sheild</option>
 							<option value="">T2 sheild</option>
 							<option value="">T3 sheild</option>
 						</select>
+					</td>
+					<td class="col-md-3 small p-1 m-0"><strong>Noticed Time</strong></td>
+				</tr> 
+				<tr>
+					<td class="col-md-3 small p-1 m-0"><strong>Start Time</strong></td>
+					<td class="col-md-6 small p-1 m-0">Comments: <input name="comments" type="text" size="30">
 						<button class="btn btn-primary py-0">Enter</button>
 					</td>
 					<td class="col-md-3  small p-1 m-0"><strong>Land Time</strong></td>

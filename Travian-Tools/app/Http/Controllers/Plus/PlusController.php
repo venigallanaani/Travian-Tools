@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Plus;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Plus;
 
@@ -15,7 +16,7 @@ class PlusController extends Controller
     	session(['title'=>'Plus']);
     	
     	$plus=Plus::where('server_id',$request->session()->get('server.id'))
-    	           ->where('id','2')->first();
+    	           ->where('id',Auth::user()->id)->first();
        
        if($request->session()->has('plus')){
            $request->session()->forget('plus');
@@ -23,7 +24,7 @@ class PlusController extends Controller
        if($plus!=null){
            $request->session()->put('plus',$plus);
        }    	
-    	return view('Plus.General.overview');
+    return view('Plus.General.overview');
     }
     
     

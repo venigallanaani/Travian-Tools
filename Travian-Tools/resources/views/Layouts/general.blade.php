@@ -36,44 +36,11 @@
                             <a href="{{ route('plus') }}" class="nav-link">Plus</a>
                         </li>
                     </ul>                    
-            @if(!Auth::user())
+            @if(!Auth::check())
                     <div class="navbar-nav ml-auto">
                         <div class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            <a href="/login" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
                         </div>                  
-                    </div>
-                    
-                    <!-- Login Modal -->
-                    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header  bg-info text-white">
-                                    <h4 class="modal-title" id="loginModalLabel">Log In</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="/login" method="POST">
-                                    	{{@csrf_field()}}
-                                        <div class="form-group">
-                                            <label for="userName" class="form-control-label" class="form-control">User Name</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Password" class="form-control-label" class="form-control">Password</label>
-                                            <input type="password" class="form-control">
-                                        </div>
-                                        <p><button type="button" class="btn btn-info"><span class="mx-5 h6">Login</span></button></p>
-                                    </form>
-
-                                </div>
-                                <div class="modal-footer">                              
-                                    <p><a type="button" class="btn btn-success mx-2" href="/forgetpassword">Forgot Password ?</a>
-                                        <a type="button" class="btn btn-primary text-white mx-2" href="{{ route('register') }}">Sign Up</a></p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
             @else
                     <ul class="navbar-nav ml-auto">
@@ -86,7 +53,6 @@
                             </div>
                         </li>
                     </ul>
-
             @endif
                 </div>
             </div>
