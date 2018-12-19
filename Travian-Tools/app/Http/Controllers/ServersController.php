@@ -39,18 +39,19 @@ class ServersController extends Controller
         $request->session()->put('server.url',$server->url);
         $request->session()->put('server.tmz',$server->timezone);
         
-        $plus=Plus::where('server_id',$server_id)
-                ->where('id',Auth::user()->id)->first();
-        
-        if($plus!=null){       
-            $request->session()->put('plus',$plus);           
-        }else{
-            //echo 'No Plus Found';
-            if($request->session()->has('plus')){
-                $request->session()->forget('plus');
-            }
+        if(Auth::check()){
+            $plus=Plus::where('server_id',$server_id)
+                    ->where('id',Auth::user()->id)->first();
+            
+            if($plus!=null){       
+                $request->session()->put('plus',$plus);           
+            }else{
+                //echo 'No Plus Found';
+                if($request->session()->has('plus')){
+                    $request->session()->forget('plus');
+                }
+            }        
         }        
-                
         Session::flash('success',$server->url.' is loaded');
         return Redirect::to('/home') ;        
     }

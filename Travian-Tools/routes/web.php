@@ -92,16 +92,17 @@ Route::post('/plus/offense','Plus\Offense\OffenseController@updateOffenseTask');
 
 
 /* --------------- Controller for the Report Page ----------- */
-Route::get('/report','ReportController@index');				// Displays the Report Page
-Route::post('/report','ReportController@process');			// Creates the Defect / bug in the Database
+Route::get('/support','supportController@index');				// Displays the Report Page
+Route::post('/support','supportController@process');			// Creates the Defect / bug in the Database
 
 
+/* ------------------ Profile Controller Page -------------- */
+Route::get('/profile','Profile\profileController@overview');
+Route::get('/profile/servers','Profile\profileController@servers');
 
 
 /* --------------- Controller for the Contact Page ------------ */
 Route::get('/about','AboutController@index');			//Displays the contact page
-
-
 
 
 

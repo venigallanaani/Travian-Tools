@@ -28,7 +28,7 @@
     							<th class="col-md-1">Defense</th>
     							<th class="col-md-1">Type</th>
     							<th class="col-md-1">Priority</th>
-    							<th class="col-md-1">land time</th>
+    							<th class="col-md-2">Land Time</th>
     							<th class="col-md-1">Time left</th>
     							<th class="col-md-1"></th>    							
     						</tr>
@@ -36,8 +36,8 @@
 						@foreach($tasks as $task)
 							@php
 								if($task->priority=='high'){$color='text-danger';}
-								elseif($task->priority=='medium'){$color='text-danger';}
-								elseif($task->priority=='low'){$color='text-danger';}
+								elseif($task->priority=='medium'){$color='text-warning';}
+								elseif($task->priority=='low'){$color='text-info';}
 								else{$color="";}
 							@endphp
     						<tr>

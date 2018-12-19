@@ -36,22 +36,25 @@
     		{{ csrf_field() }}
     		@foreach($servers as $index=>$country)
         		<div class="py-2">
-            		<div class="card card-header my-0 h5">
-                		<p class="collapsed" data-toggle="collapse" href="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
+                	<div class="card card-header text-center btn btn-block bg-warning collapsed shadow text-dark my-2" data-toggle="collapse" href="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
+                		<p class="p-1 m-0 h5 font-weight-bold">
                     		<span class="text-uppercase">{{$index}}</span> Servers <small><i class="fa fa-angle-double-down"></i></small>
-        			 	</p>
+            		 	</p>
             		</div>
             		<div class="collapse" id="{{$index}}" style="">
               			<div class="card card-body">
-                			<p class="my-0 py-0">
-                				@foreach($country as $server)
-                					<button class="btn btn-warning" type="submit" name="server" value="{{$server->server_id}}"><strong>{{$server->url}} <small>({{$server->days}} days)</small></strong></button>                				
-                				@endforeach
+                			<p class="my-0 p-2">
+            				@foreach($country as $server)
+				  				<button class="btn btn-outline-warning text-dark" type="submit" name="server" value="{{$server->server_id}}">
+                  					<strong>{{$server->url}} <small>({{$server->days}} days)</small></strong>
+                				</button>                				
+            				@endforeach
             				</p>
               			</div>
             		</div>	
         		</div>
     		@endforeach
-    	</form>   
+    	</form>
+		
     </div>
 @endsection

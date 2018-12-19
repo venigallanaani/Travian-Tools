@@ -8,7 +8,7 @@
             <div class="float-right">
                 <div class="btn btn-light dropdown d-inline-block">
                     <a class="dropdown-toggle" data-toggle="dropdown">
-                    	@if(Session::has->('server')
+                    	@if(Session::has('server'))
                     		{{ Session::get('server.url')}}
                     	@else 	{{ ' Select Server '}}
                     	@endif
@@ -23,12 +23,12 @@
     </header>
 
     <div class="container">
+@auth
       <div class="d-inline">
           <!-- ======================================= Account Side menu =================================== -->
   			<div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
 				<a class="list-group-item py-1 bg-dark h4">Profile Menu</a>
 				<a href="/profile" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
-				<a href="/profile/contact" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Contact</a>
 				<a href="/profile/settings" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Settings</a>
   			</div>	
 	    </div> 
@@ -42,6 +42,15 @@
             @endif
         @endforeach
                 
-		@yield('body')               
+		@yield('body')   
+@endauth
+
+@guest
+        <div class="alert alert-warning text-center my-1" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>You are not logged into Travian Tools, <a href="{{route('login')}}" class="text-weight-bold"><strong>Sign In</strong></a>            
+        </div>
+@endguest            
     </div>
 @endsection

@@ -48,7 +48,7 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{Auth::user()->name}}</a>
                             <div class="dropdown-menu">
                                 <a href="/profile" class="dropdown-item"><i class="fa fa-user-circle"></i> Profile</a>
-                                <a href="/profile/settings" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                                <a href="/profile/servers" class="dropdown-item"><i class="fas fa-cog"></i> Server Settings</a>
                                 <a href="/logout" class="dropdown-item"><i class="fa fa-user-times"></i> Log Out</a>
                             </div>
                         </li>
@@ -67,7 +67,7 @@
                     <tr class="font-weight-bold">
                         <td class="col-md-3"><a href="/about" class="text-white">About</a></td>
                         <td class="col-md-3"><a href="/help" class="text-white">Help</a></td>
-                        <td class="col-md-3"><a href="/report" class="text-white">Suggestions</a></td>
+                        <td class="col-md-3"><a href="/support" class="text-white">Suggestions</a></td>
                     </tr>
                 </table>
             </div>

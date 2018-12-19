@@ -4,27 +4,42 @@ namespace App\Http\Controllers\Plus;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use App\Plus;
+use App\ResTask;
+use App\CFDTask;
 
 class PlusController extends Controller
 {
     //Displays the Plus Home page
     public function index(Request $request){
-
+        
     	session(['title'=>'Plus']);
-    	
-    	$plus=Plus::where('server_id',$request->session()->get('server.id'))
+    	$counts=array();
+    	if(Auth::check()){
+    	    $plus=Plus::where('server_id',$request->session()->get('server.id'))
     	           ->where('id',Auth::user()->id)->first();
-       
-       if($request->session()->has('plus')){
-           $request->session()->forget('plus');
-       }
-       if($plus!=null){
-           $request->session()->put('plus',$plus);
-       }    	
-    return view('Plus.General.overview');
+            if($request->session()->has('plus')){
+               $request->session()->forget('plus');
+            }
+            if($plus!=null){
+               $request->session()->put('plus',$plus);
+                
+               $res = ResTask::where('plus_id',$plus->plus_id)
+                        ->where('status','ACTIVE')->get();
+               $def = CFDTask::where('plus_id',$plus->plus_id)
+                        ->where('status','ACTIVE')->get();               
+
+               $counts=array(
+                   'res'=>count($res),
+                   'def'=>count($def),
+                   'off'=>0 
+               );              
+            }       
+    	}
+    	return view('Plus.General.overview')->with(['counts'=>$counts]);
     }
     
     

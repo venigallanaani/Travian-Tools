@@ -48,9 +48,9 @@
             <div class="card shadow">
                 <p class="card-header h4 text-info font-weight-bold">Plus</p>
                 <div class="card-body">
-                   	@if(!Session::has('user'))
+                   	@guest
                     	<p><a href="login.php"><strong>Sign In</strong></a> to access the Plus group</p>
-                    @endif
+                    @endguest
                     @if(!Session::has('plus'))                    
                     	<p>You are not associated with any plus group, <a href="/plus"><strong>Create one</strong></a></p>
                     @endif
@@ -67,9 +67,9 @@
             <div class="card shadow">
                 <p class="card-header h4 text-warning font-weight-bold">Account</p>
                 <div class="card-body">
-                	@if(!Session::has('user'))
+                	@guest
                     	<p><a href="login.php"><strong>Sign In</strong></a> to access you account details.</p>
-                    @endif
+                    @endguest
                     <p>Account Details can be displayed here.</p>
                     <table>
                         <tr><td><a href="/account" class="text-warning font-weight-bold">Account Overview</a></td></tr>

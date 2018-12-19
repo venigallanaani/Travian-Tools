@@ -17,18 +17,18 @@ use App\MapData;
 class AllianceFinderController extends Controller
 {
 
-    public function alliance($name=null,$id=null){
+    public function alliance($name=null,$id=null,Request $request){
         //Displays the alliance finder
         if($id==null && $name==null){
             return view('finders.Alliance.allianceFinder');
         }else{
             if($id==null){
                 $alliances=Alliances::where('alliance','like','%'.$name.'%')
-                                ->where('server_id','t6angr1')
-                                ->orderBy('rank','asc')->paginate(5);
+                            ->where('server_id',$request->session()->get('server.id'))
+                            ->orderBy('rank','asc')->paginate(5);
             }else{
                 $alliances=Alliances::where('alliance','=',$name)
-                                ->where('server_id','t6angr1')->get();
+                            ->where('server_id',$request->session()->get('server.id'))->get();
             }
             
             if(count($alliances)==0){

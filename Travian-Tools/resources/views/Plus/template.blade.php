@@ -26,7 +26,8 @@
             </div>
         </div>
     </header>
-	@if(!Session::has('plus'))
+@auth
+@if(!Session::has('plus'))
 		<div class="container">
 			<div class="card shadow my-1">
 				<div class="py-5 mx-auto">
@@ -97,6 +98,15 @@
 
     </div>
     @endif
-    @endif
-    
+@endif
+@endauth
+
+@guest
+    <div class="alert alert-warning text-center my-1" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>You are not logged into Travian Tools, <a href="{{route('login')}}" class="text-weight-bold"><strong>Sign In</strong></a>            
+    </div>
+@endguest
+
 @endsection

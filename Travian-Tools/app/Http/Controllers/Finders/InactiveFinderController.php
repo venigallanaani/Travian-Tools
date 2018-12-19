@@ -30,15 +30,21 @@ class InactiveFinderController extends Controller
         $pop=Input::get('pop');
         
         
-        $sqlStr = "SELECT a.* FROM diff_details a, servers b WHERE a.table_id = b.table_id AND b.server_id='".'t6angr1'."' AND".
+        $sqlStr = "SELECT a.* FROM diff_details a, servers b WHERE a.table_id = b.table_id AND b.server_id='".$request->session()->get('server.id')."' AND".
             " ((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) <= ".$dist."*".$dist.
-            " AND a.population <=".$pop." AND a.status <> 'Active'".
+            " AND a.population >=".$pop." AND a.status <> 'Active'".
             " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
         
-        $villages= DB::select(DB::raw($sqlStr));
+        $villages= DB::select(DB::raw($sqlStr)); 
         
-        $request->flash();
+        /* $villages = DB::table('diff_details')
+                        ->join('servers','servers.table_id','=','diff_details.table_id')
+                        ->where('servers.server_id',$request->session()->get('server.id'))
+                        ->where('diff_details.population','>=',$pop)
+                        ->where('diff_details.status','<>','Active')
+                        ->paginate(50); */
         
+                
         if(count($villages)==0){
             return view('finders.Inactive.noInactive');
         }else{

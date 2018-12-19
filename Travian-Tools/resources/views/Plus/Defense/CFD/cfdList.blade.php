@@ -84,8 +84,8 @@
 						@foreach($tasks as $task)
 							@php
 								if($task->priority=='high'){$color='text-danger';}
-								elseif($task->priority=='medium'){$color='text-danger';}
-								elseif($task->priority=='low'){$color='text-danger';}
+								elseif($task->priority=='medium'){$color='text-warning';}
+								elseif($task->priority=='low'){$color='text-info';}
 								else{$color="";}
 								
 								if($task->status=='COMPLETE'){$status="table-secondary";}

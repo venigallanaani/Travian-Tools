@@ -29,7 +29,7 @@ class NatarFinderController extends Controller
         $yCor=Input::get('yCor');
         $dist = Input::get('dist');
         
-        $sqlStr = "SELECT a.* FROM maps_details a, servers b WHERE a.table_id = b.table_id AND b.server_id='".'t6angr1'."' and".
+        $sqlStr = "SELECT a.* FROM maps_details a, servers b WHERE a.table_id = b.table_id AND b.server_id='".$request->session()->get('server.id')."' and".
             " ((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) <= ".$dist."*".$dist." AND uid=1 ".
             " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
                 

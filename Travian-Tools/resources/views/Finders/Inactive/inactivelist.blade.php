@@ -28,6 +28,9 @@
             			elseif($village->id===6){	$tribe='Egyptian';	}
             			elseif($village->id===7){	$tribe='Hun';	}
             			else {	$tribe='Natar';	}
+            			
+            			if($village->status=='Inactive'){	$status='text-dark';	}
+            			else{	$status='text-danger';	}
         			@endphp
                     <tr>
                         <td class="py-0">{{round(sqrt(pow(($x-$village->x),2)+pow(($y-$village->y),2)),1)}}</td>
@@ -36,10 +39,11 @@
                     	<td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$tribe}}"><img alt="" src="/images/x.gif" class="tribe {{$tribe}}"></td>
                         <td class="py-0"><a href="/finder/alliance/{{$village->alliance}}/1">{{$village->alliance}}</a></td>                        
                         <td class="py-0">{{$village->population}}({{$village->diffPop}})</td>
-                        <td class="text-dark py-0">{{$village->status}}</td>
+                        <td class="{{$status}} py-0">{{$village->status}}</td>
                     </tr>                
                 @endforeach                
             </table>
+            {{$villages->links()}}
         </div>
     </div>
 

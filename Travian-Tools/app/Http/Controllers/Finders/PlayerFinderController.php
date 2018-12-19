@@ -23,7 +23,7 @@ class PlayerFinderController extends Controller
         return Redirect::to('/finder/player/'.$name) ;
     }
     
-    public function player($name=null,$id=null){
+    public function player($name=null,$id=null, Request $request){
         // displays the Player finder
         if($id==null && $name==null){
             // displays player finder form
@@ -31,11 +31,11 @@ class PlayerFinderController extends Controller
         }else{            
             if($id==null){
                 $players=Players::where('player','like','%'.$name.'%')
-                    ->where('server_id','t6angr1')
+                    ->where('server_id',$request->session()->get('server.id'))
                     ->orderBy('rank','asc')->paginate(50);
             }else{
                 $players=Players::where('player','=',$name)
-                    ->where('server_id','t6angr1')->get();
+                    ->where('server_id',$request->session()->get('server.id'))->get();
             }
             
             if(count($players)==0){
