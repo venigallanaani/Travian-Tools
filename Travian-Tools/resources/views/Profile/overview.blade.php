@@ -23,20 +23,46 @@
 				<div class="card-text">
 					<table class="table table-hover col-md-12 text-center">
 						<tr>
-							<td class="text-right">Skype :</td>
-							<td contenteditable="true" class="text-left">Chandra.v87</td>
+							<td class="text-right col-md-6">Skype :</td>
+							<td contenteditable="true" class="text-left col-md-6" id="skypeEdit">{{ $contact['skype'] }}</td>
 						</tr>
 						<tr>
-							<td class="text-right">Discord :</td>
-							<td contenteditable="true" class="text-left">Jag#3306</td>
+							<td class="text-right col-md-6">Discord :</td>
+							<td contenteditable="true" class="text-left col-md-6" id="discordEdit">{{ $contact['discord'] }}</td>
 						</tr>
 						<tr>
-							<td class="text-right">Phno :</td>
-							<td contenteditable="true" class="text-left">XXXXXXXX</td>
+							<td class="text-right col-md-6">Phone :</td>
+							<td contenteditable="true" class="text-left col-md-6" id="phoneEdit">{{ $contact['phone'] }}</td>
 						</tr>
 					</table>
+					<form id="form" action="/profile/contact" method="POST" onsubmit="return getContent()" class="text-center pb-3">
+						{{ csrf_field() }}
+						<input id="skype" name="skype" style="display:none">
+						<input id="discord" name="discord" style="display:none">
+						<input id="phone" name="phone" style="display:none">
+						<button class="btn btn-warning btn-lg px-5" type="submit">Save</button>						
+					</form>					
 				</div>			
 			</div>
 		</div>
 	</div>
 @endsection
+
+@push('scripts')
+        <script>
+            function getContent() {
+    			skype=document.getElementById("skypeEdit").innerHTML;
+    			if(skype=='<br>'){ skype='';}
+                document.getElementById("skype").value = skype;
+                
+                discord=document.getElementById("discordEdit").innerHTML;
+                if(discord=='<br>'){ discord='';}
+                document.getElementById("discord").value = discord;
+
+                phone=document.getElementById("phoneEdit").innerHTML;
+                if(phone=='<br>'){ phone='';}
+                document.getElementById("phone").value = phone;                
+            }
+    	</script>
+@endpush
+

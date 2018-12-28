@@ -12,22 +12,21 @@
     		<table>
     			<tr>
     				<td class="text-left text-info py-2 font-weight-bold">Travian Profile </td>
-    				<td class="text-left">: Barca</td>
+    				<td class="text-left">: {{$name}}</td>
     			</tr>
     			<tr>
     				<td class="text-left py-2 text-info font-weight-bold">TT Account Name </td>
-    				<td class="text-left">: Admin</td>
+    				<td class="text-left">: {{Auth::user()->name ? ''}}</td>
     			</tr>
     			<tr>
     				<td class="text-left py-2 text-info font-weight-bold">Skype </td>
-    				<td class="text-left">: Skype1</td>
+    				<td class="text-left">: {{$contact->skype ? ''}}</td>
     			</tr>
     			<tr>
     				<td class="text-left py-2 text-info font-weight-bold">Discord </td>
-    				<td class="text-left">: Discord1</td>
+    				<td class="text-left">: {{$contact->discord ? ''}}</td>
     			</tr>
 			</table>
         </div>
-
 
 @endsection

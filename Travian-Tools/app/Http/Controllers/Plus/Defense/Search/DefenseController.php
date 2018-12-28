@@ -23,7 +23,7 @@ class DefenseController extends Controller
         $def=Input::get('defNeed');
         $time=Input::get('targetTime');
         
-        return view("Plus.Defense.Search.display");
+        return view("Plus.Defense.Search.results");
         
     }
 }

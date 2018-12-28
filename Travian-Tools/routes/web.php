@@ -35,7 +35,9 @@ Route::post('/finder/neighbour','Finders\NeighbourFinderController@processNeighb
 /*----------------------------------------------------------------------------------*/
 /* -------------------------- Controller for Account Page -------------------------- */
 /*----------------------------------------------------------------------------------*/
-Route::get('/account','Account\AccountController@displayOverview')->name('account');			// Account main page
+Route::get('/account','Account\AccountController@overview')->name('account');			// Account main page
+Route::post('/account/add','Account\AccountController@addAccount');
+
 Route::get('/account/troops','Account\TroopsController@troopsOverview');
 Route::post('/account/troops','Account\TroopsController@processTroops');
 Route::get('/account/hero','Account\HeroController@heroOverview');
@@ -98,6 +100,7 @@ Route::post('/support','supportController@process');			// Creates the Defect / b
 
 /* ------------------ Profile Controller Page -------------- */
 Route::get('/profile','Profile\profileController@overview');
+Route::post('/profile/contact','Profile\profileController@updateContact');
 Route::get('/profile/servers','Profile\profileController@servers');
 
 

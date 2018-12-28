@@ -113,7 +113,12 @@ class ResourceController extends Controller
         
         Session::flash('success','Resource Task is successfully updated.');
         
-        return Redirect::to('/plus/resource/'.$id); 
+        if($status=="COMPLETE"){
+            return Redirect::to('/plus/resource');
+        }else{
+            return Redirect::to('/plus/resource/'.$id); 
+        }        
+       
     }
     
 }

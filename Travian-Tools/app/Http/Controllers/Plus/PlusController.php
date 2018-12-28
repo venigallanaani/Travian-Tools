@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Plus;
 use App\ResTask;
 use App\CFDTask;
+use App\Contacts;
 
 class PlusController extends Controller
 {
@@ -59,7 +60,14 @@ class PlusController extends Controller
         
         session(['title'=>'Plus']);
         
-        return view('Plus.General.member');
+        $contact=Contacts::where('id',Auth::user()->id)->first();
+        
+        $name=Plus::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->pluck('account');
+        
+        return view('Plus.General.member')->with(['contact'=>$contact])
+                    ->with(['account'=>$name]);
         
     }
 

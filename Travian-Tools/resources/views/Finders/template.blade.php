@@ -44,6 +44,7 @@
         @endforeach
         
         @yield('body')
+        
         </div>
     </div>
 	@stack('scripts')

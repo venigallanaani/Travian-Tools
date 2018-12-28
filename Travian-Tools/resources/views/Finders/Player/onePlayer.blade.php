@@ -82,7 +82,8 @@
                             <td class="text-left">{{ $village['village']}}</td>
                             <td>{{$village['population']}} <span class="small text-@if($village['diffPop'] >0 ){{'success'}}@else{{'danger'}}@endif"
                                     			>({{ $village['diffPop'] }})</span></td>
-                            <td><a href="">{{$village['x']}}|{{$village['y']}}</a></td>
+                            <td><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village['x']}}&y={{$village['y']}}" target="_blank">
+                            	<strong>{{$village['x']}}|{{$village['y']}}</strong></a></td>
                         </tr>                
                     @endforeach
                 </table>

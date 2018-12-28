@@ -29,8 +29,7 @@ class ServersController extends Controller
     
     public function process(Request $request){
               
-        $server_id = Input::get('server');
-        
+        $server_id = Input::get('server');        
         $server=Servers::where('server_id',$server_id)->first();
         
         $request->session()->forget('server');

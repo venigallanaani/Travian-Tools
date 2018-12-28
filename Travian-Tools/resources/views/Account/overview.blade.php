@@ -8,25 +8,25 @@
 			</div>
 			<div class="card-text">
         		<div>
-        			<table class="table table-borderless col-md-8 mx-auto mt-3">
+        			<table class="table table-borderless col-md-10 mx-auto mt-3">
         				<tr>
         					<td>
         						<table class="table table-borderless mx-3 text-left">
         							<tr>
         								<td class="py-1"><strong><span class="text-warning">Profile Name</span></strong></td>
-        								<td class="py-1">: <a href="">Barca</a></td>
+        								<td class="py-1">: <a href="/finder/player/{{$account->name}}/1" target="_blank"><strong>{{$player->player}}</strong></a> <small>({{$account->status}})</small></td>
         							</tr>
         							<tr>
         								<td class="py-1"><strong><span class="text-warning">Rank</span></strong></td>
-        								<td class="py-1">: 100</td>
+        								<td class="py-1">: {{$player->rank}}</td>
         							</tr>
         							<tr>
         								<td class="py-1"><strong><span class="text-warning">Population</span></strong></td>
-        								<td class="py-1">: 1234</td>
+        								<td class="py-1">: {{$player->population}} <small>({{$player->diffpop}})</small></td>
         							</tr>
         							<tr>
         								<td class="py-1"><strong><span class="text-warning">Villages</span></strong></td>
-        								<td class="py-1">: 10</td>
+        								<td class="py-1">: {{$player->villages}}</td>
         							</tr>
         						</table>
         					</td>
@@ -34,19 +34,19 @@
         						<table class="table table-borderless mx-3 text-left">
         							<tr>
         								<td class="py-1"><strong><span class="text-warning">Tribe</span></strong></td>
-        								<td class="py-1">: Teuton</td>
+        								<td class="py-1">: {{$account->tribe}}</td>
         							</tr>
         							<tr>
         								<td class="py-1"><strong><span class="text-warning">Alliance Name</span></strong></td>
-        								<td class="py-1">: <a href="">1812</a></td>
+        								<td class="py-1">: <a href="/finder/alliance/{{$player->alliance}}/1" target="_blank"><strong>{{$player->alliance}}</strong></a></td>
         							</tr>
         							<tr>
         								<td class="py-1"><strong><span class="text-warning">Dual Password</span></strong></td>
-        								<td class="py-1">: ASDFG</td>
+        								<td class="py-1">: {{$account->token}}</td>
         							</tr>
         							<tr>
         								<td class="py-1"><strong><span class="text-warning">Plus Group</span></strong></td>
-        								<td class="py-1">: <a href="">Group1</a></td>
+        								<td class="py-1">: {{$account->plus}}</td>
         							</tr>
         						</table>
     						</td>
@@ -60,8 +60,10 @@
         					<td colspan="2" class="h4 text-white bg-warning"><strong>Ingame Links</strong></td>
         				</tr>
         				<tr>        					
-        					<td class="h5"><a href=""><strong>Attack Points</strong></a></td>
-        					<td class="h5"><a href=""><strong>Defense Points</strong></a></td>
+        					<td class="h5"><a href="https://{{Session::get('server.url')}}/statistiken.php?id=0&idSub=1&name={{$player->player}}" target="_blank">
+        						<strong>Attack Points</strong></a></td>
+        					<td class="h5"><a href="https://{{Session::get('server.url')}}/statistiken.php?id=0&idSub=2&name={{$player->player}}" target="_blank">
+        						<strong>Defense Points</strong></a></td>
         				</tr>
         			</table>        		
 
@@ -77,24 +79,15 @@
         						<th class="col-md-1">Coordinates</th>
         					</tr>
         				</thead>
-        				<tr>
-        					<td>1</td>
-        					<td class="text-left">01 thunderbolt</td>
-        					<td>168</td>
-        					<td><a href="">1|-46</a></td>
-    					</tr>
-    					<tr>
-        					<td>2</td>
-        					<td class="text-left">02 Barcelona</td>
-        					<td>168</td>
-        					<td><a href="">1|-46</a></td>
-    					</tr>
-    					<tr>
-        					<td>3</td>
-        					<td class="text-left">03 Alps</td>
-        					<td>168</td>
-        					<td><a href="">1|-46</a></td>
-    					</tr>
+        				@foreach($villages as $index=>$village)
+            				<tr>
+            					<td>{{$index+1}}</td>
+            					<td class="text-left">{{$village->village}}</td>
+            					<td>{{$village->population}} <small>({{$village->diffPop}})</small></td>
+            					<td><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village->x}}&y={{$village->y}}" target="_blank">
+            						{{$village->x}}|{{$village->y}}</a></td>
+        					</tr>
+    					@endforeach
         			</table>
         		</div>
         		
