@@ -2,10 +2,6 @@
 
 
 @section('content')
-    <?php 
-        $_SESSION['plus']='Yes';
-        unset($_SESSION['plus']);
-    ?>
     
     <header id="main-header" class="py-1 bg-info text-white">
         <div class="container">
@@ -26,6 +22,17 @@
             </div>
         </div>
     </header>
+    
+@guest
+	<div class="container">
+        <div class="alert alert-warning text-center my-1" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>Please <a href="{{route('login')}}" class="text-weight-bold"><strong>Login</strong></a> to access your account           
+        </div>
+    </div> 
+@endguest
+
 @auth
 @if(!Session::has('plus'))
 		<div class="container">
@@ -36,7 +43,7 @@
 				</div>
 			</div>		
 		</div>
-	@else
+@else
 	@if(Session::get('plus.plus')!=1)
 		<div class="container">
 			<div class="card shadow my-1">
@@ -99,14 +106,7 @@
     </div>
     @endif
 @endif
-@endauth
 
-@guest
-    <div class="alert alert-warning text-center my-1" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>You are not logged into Travian Tools, <a href="{{route('login')}}" class="text-weight-bold"><strong>Sign In</strong></a>            
-    </div>
-@endguest
+@endauth
 
 @endsection

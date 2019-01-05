@@ -21,31 +21,34 @@
             </div>
         </div>
     </header>
-
+	@guest
+	<div class="container">
+        <div class="alert alert-warning text-center my-1" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>Please <a href="{{route('login')}}" class="text-weight-bold"><strong>Login</strong></a> to access your account           
+        </div>
+    </div>    	
+	@endguest
+    	
+	@auth
     <div class="container">
       <div class="d-inline">
+      
+
           <!-- ======================================= Account Side menu =================================== -->
   			<div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
-    				<a class="list-group-item py-1 bg-dark h4">Account Menu</a>
-    				<a href="/account" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
-    				<a href="/account/troops" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Details</a>
-    				<a href="/account/hero" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Hero Details</a>
-    				<a href="/account/alliance" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Alliance</a>
+				<a class="list-group-item py-1 bg-dark h4">Account Menu</a>
+				<a href="/account" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
+				<a href="/account/support" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Sitters & Duals</a>
+				<a href="/account/troops" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Details</a>
+				<a href="/account/hero" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Hero Details</a>
+				<a href="/account/alliance" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Alliance</a>
   			</div>	
 	    </div> 
-	    
-	    <div class="float-md-left col-md-9">
-	    	@guest
-            <div class="alert alert-warning text-center my-1" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>Please <a href="{{route('login')}}" class="text-weight-bold"><strong>Login</strong></a> to access your account           
-            </div>
 	    	
-	    	@endguest
-	    </div>
-	
 		@yield('body')	 
                
     </div>
+    @endauth
 @endsection

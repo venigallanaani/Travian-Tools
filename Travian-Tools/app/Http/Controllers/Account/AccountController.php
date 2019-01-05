@@ -38,7 +38,7 @@ class AccountController extends Controller
     	    }else{
     	        Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));
     	        return view('Account.addAccount');
-    	    }  	
+    	    }
     	    
     	}else{
     	       Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));

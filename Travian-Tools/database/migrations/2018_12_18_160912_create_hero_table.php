@@ -17,14 +17,11 @@ class CreateHeroTable extends Migration
             $table->string('account_id');
             $table->string('plus_id')->nullable();
             $table->string('server_id');
-            $table->string('vid');
-            $table->string('village');
-            $table->integer('x');
-            $table->integer('y');
             $table->string('name');
             $table->integer('level');
             $table->integer('exp');
             $table->integer('fs');
+            $table->integer('fp');
             $table->integer('off');
             $table->integer('def');
             $table->integer('res');

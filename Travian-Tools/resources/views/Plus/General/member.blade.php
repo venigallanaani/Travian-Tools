@@ -16,15 +16,15 @@
     			</tr>
     			<tr>
     				<td class="text-left py-2 text-info font-weight-bold">TT Account Name </td>
-    				<td class="text-left">: {{Auth::user()->name ? ''}}</td>
+    				<td class="text-left">: {{Auth::user()->name}}</td>
     			</tr>
     			<tr>
     				<td class="text-left py-2 text-info font-weight-bold">Skype </td>
-    				<td class="text-left">: {{$contact->skype ? ''}}</td>
+    				<td class="text-left">: {{$contact->skype}}</td>
     			</tr>
     			<tr>
     				<td class="text-left py-2 text-info font-weight-bold">Discord </td>
-    				<td class="text-left">: {{$contact->discord ? ''}}</td>
+    				<td class="text-left">: {{$contact->discord}}</td>
     			</tr>
 			</table>
         </div>

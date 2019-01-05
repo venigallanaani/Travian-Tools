@@ -2,6 +2,8 @@
 
 Auth::routes();
 
+$this->get('logout', 'Auth\LoginController@logout')->name('logout');
+
 /*----------------------------------------------------------------------------------*/
 /* ----------------------------------- Home page ----------------------------------- */
 /*----------------------------------------------------------------------------------*/
@@ -39,10 +41,15 @@ Route::get('/account','Account\AccountController@overview')->name('account');			
 Route::post('/account/add','Account\AccountController@addAccount');
 
 Route::get('/account/troops','Account\TroopsController@troopsOverview');
-Route::post('/account/troops','Account\TroopsController@processTroops');
+Route::post('/account/troops/update','Account\TroopsController@processTroops');
+
 Route::get('/account/hero','Account\HeroController@heroOverview');
-Route::post('/account/hero','Account\HeroController@processHero');
-Route::get('/account/alliance','Account\HeroController@allianceOverview');
+Route::post('/account/hero/update','Account\HeroController@processHero');
+
+Route::get('/account/alliance','Account\AllianceController@allianceOverview');
+
+Route::get('/account/support','Account\SupportController@overview');
+Route::post('/account/sitter/update', 'Account\SupportController@updateSitters');
 
 /*----------------------------------------------------------------------------------*/
 /* ----------------------- Plus Page Routes --------------------------- */

@@ -22,10 +22,6 @@
             </div>
     	@endif
         
-        @if(Session::has('plus'))
-			{{Session::get('plus')}}
-        @endif
-
         <div class="card-columns">
             <div class="card shadow">
                 <div class="card-body">
@@ -51,12 +47,9 @@
                    	@guest
                     	<p><a href="login.php"><strong>Sign In</strong></a> to access the Plus group</p>
                     @endguest
-                    @if(!Session::has('plus'))                    
-                    	<p>You are not associated with any plus group, <a href="/plus"><strong>Create one</strong></a></p>
-                    @endif
                     <p> Plus menu offers different options and tasks for the group to work efficiently.</p>
                     <table>
-                        <tr><td><a href="/plus/member" class="text-info font-weight-bold">Member Details</a></td></tr>
+                        <tr><td><a href="/plus/members" class="text-info font-weight-bold">Member Details</a></td></tr>
                         <tr><td><a href="/plus/incoming" class="text-info font-weight-bold">Enter Incomings</a></td></tr>
                         <tr><td><a href="/plus/defense" class="text-info font-weight-bold">Defense Tasks</a></td></tr>
                         <tr><td><a href="/plus/offense" class="text-info font-weight-bold">Offense Tasks</a></td></tr>

@@ -6,108 +6,110 @@
 				<strong>Troops Details</strong>
 			</div>
 			<div class="card-text">
-        		<div class="text-center mx-2 my-4">
-					<table class="table table-bordered col-md-12 p-0 mw-100 table-sm">
-						<tr class="text-primary font-weight-bold h5">
-							<td class="pr-0 py-1">Village</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Clubswinger"><img alt="" src="/images/x.gif" class="units h01"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Spearman"><img alt="" src="/images/x.gif" class="units h02"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Axeman"><img alt="" src="/images/x.gif" class="units h03"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Scout"><img alt="" src="/images/x.gif" class="units h04"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Paladin"><img alt="" src="/images/x.gif" class="units h05"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Teutonic Knight"><img alt="" src="/images/x.gif" class="units h06"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Ram"><img alt="" src="/images/x.gif" class="units h07"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="" src="/images/x.gif" class="units n08"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Cheif"><img alt="" src="/images/x.gif" class="units n09"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Settler"><img alt="" src="/images/x.gif" class="units n10"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Total Units"><img alt="" src="/images/x.gif" class="res upkeep"></td> 
+    	@foreach(['danger','success','warning','info'] as $msg)
+    		@if(Session::has($msg))
+    			<div class="col-md-10 mx-auto">
+                	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>{{ Session::get($msg) }}
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    			<div class="col-md-8 mx-auto my-4 rounded" style="background-color:#dbeef4;">
+    				<p class="h4 text-center text-primary"><strong>Summary</strong></p>
+        			<table class="table table-borderless">					
+        				<tr>
+        					<td class="py-1"><strong>Total Troops : </strong>20000</td>
+        					<td class="py-1"></td>
+        				</tr>
+        				<tr>
+        					<td class="py-1"><strong>Offense Troops : </strong>10000 (50%)</td>
+        					<td class="py-1"><strong>Defense Troops : </strong>10000 (50%)</td>
+        				</tr>
+        			</table>
+    			</div>
+
+        		<div class="text-center mx-2 ">
+					<table class="table table-bordered col-md-10 p-0 table-sm small mx-auto">
+						<tr class="text-warning font-weight-bold h6">
+							<td class="px-0 py-1">Village</td>
+							@foreach($units as $unit)
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="{{$unit->name}}"><img alt="" src="/images/x.gif" class="units {{$unit->image}}"></td>
+							@endforeach
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></td> 
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Tournament Square"><img alt="" src="/images/x.gif" class="build tsq"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Village Type">Type</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Icons">Edit</td>
+							<!-- <td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Village Type">Type</td>
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Icons"></td>  -->
 						</tr>
-						<tr class="small">
-							<td>01 Thunderbolt</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>10000</td>
-							<td>10</td>
-							<td>Offense</td>
-							<td></td>
+					@foreach($troops as $index=>$troop)
+						<tr class="">
+							<td class="p-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$troop['x']}}&y={{$troop['y']}}" target="_blank">
+								{{$troop['village']}}</a></td>
+							<td class="p-0">{{$troop['unit01']}}</td>
+							<td class="p-0">{{$troop['unit02']}}</td>
+							<td class="p-0">{{$troop['unit03']}}</td>
+							<td class="p-0">{{$troop['unit04']}}</td>
+							<td class="p-0">{{$troop['unit05']}}</td>
+							<td class="p-0">{{$troop['unit06']}}</td>
+							<td class="p-0">{{$troop['unit07']}}</td>
+							<td class="p-0">{{$troop['unit08']}}</td>
+							<td class="p-0">{{$troop['unit09']}}</td>
+							<td class="p-0">{{$troop['unit10']}}</td>
+							<td class="p-0">{{$troop['upkeep']}}</td>
+							<td class="p-0">{{$troop['Tsq']}}</td>
+							<!-- <td class="py-0">{{$troop['type']}}</td>
+							<td class="py-0 px-0">
+								<form>
+									{{ csrf_field() }}
+									<input id="skype" name="skype" style="display:none">
+									<button class="btn p-0 m-0" type="submit" value=""><i class="far fa-save"></i></button>
+								</form>
+							</td>  -->
 						</tr>
-						<tr class="small">
-							<td>02 Barca</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>1000</td>
-							<td>10000</td>
-							<td>10</td>
-							<td>Offense</td>
-							<td></td>
-						</tr>
-						<tr class="font-weight-bold small">
-							<td>Total</td>
-							<td>2000</td>
-							<td>2000</td>
-							<td>2000</td>
-							<td>2000</td>
-							<td>2000</td>
-							<td>2000</td>
-							<td>2000</td>
-							<td>2000</td>
-							<td>2000</td>
-							<td>2000</td>
-							<td colspan="2" class="text-left">120000</td>
-							<td></td>
-							<td></td>
+					@endforeach
+						<tr class="font-weight-bold">
+							<td class="px-0">Total</td>
+							<td class="px-0">{{$stats['unit01']}}</td>
+							<td class="px-0">{{$stats['unit02']}}</td>
+							<td class="px-0">{{$stats['unit03']}}</td>
+							<td class="px-0">{{$stats['unit04']}}</td>
+							<td class="px-0">{{$stats['unit05']}}</td>
+							<td class="px-0">{{$stats['unit06']}}</td>
+							<td class="px-0">{{$stats['unit07']}}</td>
+							<td class="px-0">{{$stats['unit08']}}</td>
+							<td class="px-0">{{$stats['unit09']}}</td>
+							<td class="px-0">{{$stats['unit10']}}</td>
+							<td class="px-0"colspan="2" class="">{{$stats['upkeep']}}</td>
+							<!-- <td></td>
+							<td></td>  -->
 						</tr>
         			</table>
         		</div>        		
 			</div>	
-			<div class="col-md-8 mx-auto mb-3 rounded" style="background-color:#dbeef4;">
-				<p class="h4 text-center text-primary"><strong>Summary</strong></p>
-    			<table class="table table-borderless">					
-    				<tr>
-    					<td class="py-1"><strong>Total Troops : </strong>20000</td>
-    					<td class="py-1"></td>
-    				</tr>
-    				<tr>
-    					<td class="py-1"><strong>Offense Troops : </strong>10000 (50%)</td>
-    					<td class="py-1"><strong>Defense Troops : </strong>10000 (50%)</td>
-    				</tr>
-    			</table>
-			</div>	
+
 			<div class="col-md-8 mx-auto rounded mb-5 pt-2" style="background-color:#dbeef4;">
-				<table>
-					<tr>
-						<td colspan="2"><p class="h4 text-primary text-center"><strong>Input Troops Details</strong></p></td>
-					</tr>
-					<tr>
-						<td class="align-middle px-2">
-							<form>								
-								<p><textarea rows="5" cols="25"></textarea>
-								<p><button class="btn btn-primary">Update Troops</button></p>
-							</form>
-						</td>
-						<td class="small font-italic align-middle px-2">
-							<p>Enter the Troops page data here</p>
-						</td>
-					</tr>			
+				<form method="post" action="/account/troops/update">	
+					{{ csrf_field() }}
+    				<table>
+    					<tr>
+    						<td colspan="2"><p class="h4 text-primary text-center"><strong>Input Troops Details</strong></p></td>
+    					</tr>
+    					<tr>
+    						<td class="align-middle px-2">							
+								<p><textarea rows="3" cols="25" required name="troopStr"></textarea>														
+    						</td>
+    						<td class="small font-italic align-middle px-2">
+    							<p>Enter the Troops page data here</p>
+    							
+    						</td>
+    					</tr>
+    					<tr>
+    						<td colspan="2" class="text-center"><p><button class="btn btn-primary"><strong>Update Troops</strong></button></p></td>	
+						</tr>			
 				</table>
+				</form>
 			</div>				
 		</div>
 

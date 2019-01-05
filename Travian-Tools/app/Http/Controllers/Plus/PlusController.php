@@ -11,6 +11,8 @@ use App\Plus;
 use App\ResTask;
 use App\CFDTask;
 use App\Contacts;
+use App\Account;
+use App\Players;
 
 class PlusController extends Controller
 {
@@ -48,10 +50,27 @@ class PlusController extends Controller
         
         session(['title'=>'Plus']);
         
-        $members=Plus::where('server_id',$request->session()->get('server.id'))
+        $rows=Plus::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->orderby('account','asc')->get();
-        
+        $members = array();
+        $i=0;
+        foreach($rows as $row){
+            $account=Account::where('user_id',$row->id)
+                        ->where('server_id',$row->server_id)->first();
+            $alliance=Players::where('server_id',$row->server_id)
+                        ->where('uid',$account->uid)
+                        ->pluck('alliance')->first();
+            $members[$i]=array(
+                'player'=>$row->account,
+                'account'=>$row->user,
+                'alliance'=>$alliance,
+                'sitter1'=>$account->sitter1,
+                'sitter2'=>$account->sitter2
+            );
+            $i++;
+        }
+        //dd($members);
         return view('Plus.General.members')->with(['members'=>$members]);
         
     }
@@ -64,10 +83,10 @@ class PlusController extends Controller
         
         $name=Plus::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
-                    ->pluck('account');
+                    ->pluck('account')->first();
         
         return view('Plus.General.member')->with(['contact'=>$contact])
-                    ->with(['account'=>$name]);
+                    ->with(['name'=>$name]);
         
     }
 

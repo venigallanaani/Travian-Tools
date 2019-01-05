@@ -16,18 +16,16 @@
     							<th class="col-md-2">TT Account</th>
     							<th class="col-md-2">Alliance</th>
     							<th class="col-md-2">Sitter 1</th>
-    							<th class="col-md-2">Sitter 2</th>
-    							<th class="col-md-2">Last Login Date</th>
+    							<th class="col-md-2">Sitter 2</th>    							
     						</tr>
 						</thead>
 						@foreach($members as $member)
     						<tr class="">
-    							<td><a href="/finder/player/{{$member->account}}/1" target="_blank">{{$member->account}}</a></td>
-    							<td><a href="/plus/member/{{$member->id}}">{{$member->user}}</a></td>
-    							<td>Alliance1</td>
-    							<td>sitter 1</td>
-    							<td>sitter 2</td>
-    							<td>20-11-2018</td>							
+    							<td><a href="/finder/player/{{$member['player']}}/1" target="_blank">{{$member['player']}}</a></td>
+    							<td><a href="/plus/member/{{$member['account']}}">{{$member['account']}}</a></td>
+    							<td><a href="/finder/alliance/{{$member['alliance']}}/1" target="_blank">{{$member['alliance']}}</a></td>
+    							<td><a href="/finder/player/{{$member['sitter1']}}/1" target="_blank">{{$member['sitter1']}}</a></td>
+    							<td><a href="/finder/player/{{$member['sitter2']}}/1" target="_blank">{{$member['sitter2']}}</a></td>    														
     						</tr>
 						@endforeach
 					</table>
