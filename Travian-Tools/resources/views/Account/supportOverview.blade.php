@@ -2,7 +2,7 @@
 
 @section('body')
 <!-- =================================== Account Overview screen================================== -->
-		<div class="card float-md-left col-md-9 mt-1 p-0">
+		<div class="float-md-left col-md-9 mt-1 p-0">
 			<div class="card-text">
 		@foreach(['danger','success','warning','info'] as $msg)
     		@if(Session::has($msg))
@@ -34,7 +34,7 @@
     						{{ csrf_field() }}
     						<input id="sitter1" name="sitter1" style="display:none">
     						<input id="sitter2" name="sitter2" style="display:none">    						
-    						<button class="btn btn-warning btn-lg px-5" type="submit">Save</button>						
+    						<button class="btn btn-warning btn-lg px-5" type="submit"><strong>Save</strong></button>						
     					</form>					
     				</div>			
     			</div> 
@@ -45,13 +45,42 @@
     				</div>  
     				<div class="card-text">
     					<div class="col-md-8 mx-auto text-center py-2">
-    						<p>Dual Passcode:	{{$account->token}}</p>
+    						<p>Dual Passcode:	<strong>{{$account->token}}</strong></p>
+    					</div>
+    					<div class="text-center col-md-8 mx-auto rounded p-2 mb-2" style="background-color:#dbeef4">
+    						<p>Enter Dual Passcode to link the Travian profiles</p>
+    						<form action="/account/dual/update" method="post">
+    							{{csrf_field()}}
+    							<p><input name="dualpass" type="text" required>
+    								<button class="btn btn-warning btn-sm" type="submit" name="dualUpdate"><strong>Update</strong></button></p>
+								<p class="col-md-8 mx-auto"><small>(Note: Entering the dual passcode will make this account dual of the passcode owner's account)</small></p>
+    						</form>
     					</div>
     					<table class="table table-hover table-sm table-bordered col-md-8 text-center mx-auto">
+    						<thead class="bg-warning">
+    							<tr>
+        							<th class="text-center">TT Account Name</th>
+        							<th class="text-center">Account Type</th>
+    							@if($account->status=="PRIMARY")
+        							<th class="text-center">Options</th>
+    							@endif
+    							</tr>
+    						</thead>
+						@foreach($duals as $dual)
     						<tr>
-    							<td class="text-right col-md-6">Dual Passcode:</td>
-    							<td class="text-left col-md-6">{{$account->token}}</td>
+    							<td>{{$dual->user_name}}</td>
+    							<td>{{$dual->status}}</td>
+							@if($account->status=="PRIMARY" && $account->user_id==$dual->user_id)
+    							<td>
+    								<form action="/account/dual/update" method="post">
+    									{{csrf_field()}}
+    									<button class="btn btn-sm btn-primary" value="{{$dual->user_id}}" name="delDual">Delete</button> 
+    									<button class="btn btn-sm btn-primary" value="{{$dual->user_id}}" name="setPrimary">Set as Primary</button>
+    								</form>
+								</td>
+							@endif
     						</tr>
+						@endforeach
     					</table>
     				</div>  			
     			</div>

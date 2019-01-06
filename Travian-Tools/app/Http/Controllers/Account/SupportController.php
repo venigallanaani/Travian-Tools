@@ -22,7 +22,12 @@ class SupportController extends Controller
         $account=Account::where('server_id',$request->session()->get('server.id'))
                     ->where('user_id',Auth::user()->id)->first();
         
-        return view('Account.supportOverview')->with(['account'=>$account]);
+        $duals=Account::where('server_id',$request->session()->get('server.id'))
+                    ->where('account_id',$account->account_id)
+                    ->orderBy('status','desc')->get();
+                    
+        return view('Account.supportOverview')->with(['account'=>$account])
+                        ->with(['duals'=>$duals]);
     }
 
     public function updateSitters(Request $request){
@@ -53,5 +58,27 @@ class SupportController extends Controller
         Session::flash('success','Sitter Info successfully updated');
         return Redirect::to('/account/support');
     }   
+    
+    public function updateDuals(Request $request){
+        
+        $account=Account::where('user_id',Auth::user()->id)
+                    ->where('server_id',$request->session()->get('server.id'))->first();                    
+        
+        if(Input::has('dualUpdate')){
+            
+            
+            
+            
+            Session::flash('success','Successfully added as dual');
+        }
+        if(Input::has('delDual')){
+            echo 'Delete Dual';
+        }
+        if(Input::has('setPrimary')){
+            echo 'Set Dual as Primary';
+        }
+        
+        return Redirect::to('/account/support');
+    }
     
 }

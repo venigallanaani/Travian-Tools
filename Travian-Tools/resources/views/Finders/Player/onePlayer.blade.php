@@ -9,47 +9,36 @@
         </div>
         <div class="card-text mx-auto text-center">
             <div class="col-md-12">
-                <table class="table table-borderless mx-auto mt-3">
+                <table class="table table-borderless mx-auto mt-3 text-left">                    
                     <tr>
-                        <td>
-                            <table class="table table-borderless text-left">
-                                <tr>
-                                    <td class="py-1"><strong><span class="text-success">Profile Name</span></strong></td>
-                                    <td class="py-1">: {{ $player['player'] }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1"><strong><span class="text-success">Tribe</span></strong></td>
-                                    <td class="py-1">: {{ $player['tribe'] }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1"><strong><span class="text-success">Alliance</span></strong></td>
-                                    <td class="py-1">: <a href="/finder/alliance/{{ $player['alliance'] }}/1">{{ $player['alliance'] }}</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1"><strong><span class="text-success">Rank</span></strong></td>
-                                    <td class="py-1">: {{ $player['rank'] }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1"><strong><span class="text-success">Population</span></strong></td>
-                                    <td class="py-1">: {{ $player['population'] }} <span class="small text-@if($player['diffpop'] >0 ){{'success'}}@else{{'danger'}}@endif"
-                                    			>({{ $player['diffpop'] }})</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1"><strong><span class="text-success">Villages</span></strong></td>
-                                    <td class="py-1">: {{ $player['villages'] }}</td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td>                                
-                            <div class="bg-secondary float-md-left rounded h-100">
-                                <p>Tribe Image -- tribe.png</p>
-                            </div>
-                        </td>
+                        <td class="py-1"><strong><span class="text-success">Profile Name</span></strong></td>
+                        <td class="py-1">: {{ $player['player'] }}</td>
                     </tr>
+                    <tr>
+                        <td class="py-1"><strong><span class="text-success">Tribe</span></strong></td>
+                        <td class="py-1">: {{ $player['tribe'] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-1"><strong><span class="text-success">Alliance</span></strong></td>
+                        <td class="py-1">: <a href="/finder/alliance/{{ $player['alliance'] }}/1">{{ $player['alliance'] }}</a></td>
+                    </tr>
+                    <tr>
+                        <td class="py-1"><strong><span class="text-success">Rank</span></strong></td>
+                        <td class="py-1">: {{ $player['rank'] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-1"><strong><span class="text-success">Population</span></strong></td>
+                        <td class="py-1">: {{ $player['population'] }} <span class="small text-@if($player['diffpop'] >0 ){{'success'}}@else{{'danger'}}@endif"
+                        			>({{ $player['diffpop'] }})</span></td>
+                    </tr>
+                    <tr>
+                        <td class="py-1"><strong><span class="text-success">Villages</span></strong></td>
+                        <td class="py-1">: {{ $player['villages'] }}</td>
+                    </tr>                            
                 </table>
             </div>
                 
-            <div class="col-md-12 text-center mt-1 float-md-left">
+            <div class="col-md-12 text-center mt-1">
                 <table class="table table-bordered text-center table-sm">
                     <tr>                            
                         <td colspan="2" class="h5 text-white bg-success"><strong>Ingame Links</strong></td>
@@ -64,16 +53,16 @@
                     </tr>
                 </table>                
 
-                <table class="table table-bordered table-hover table-sm">
+                <table class="table table-bordered table-hover table-sm col-md-12">
                     <thead class="thead">
                         <tr>
                             <th colspan="4" class="h5 text-white bg-success"><strong>Villages</strong></th>
                         </tr>
                         <tr>
                             <th class="col-md-1">#</th>
-                            <th class="col-md-4">Village Name</th>
-                            <th class="col-md-1">Population</th>
-                            <th class="col-md-1">Coordinates</th>
+                            <th class="col-md-6">Village Name</th>
+                            <th class="col-md-2">Population</th>
+                            <th class="col-md-2">Coordinates</th>
                         </tr>
                     </thead>
                     @foreach($villages as $index => $village)
@@ -88,8 +77,6 @@
                     @endforeach
                 </table>
             </div>
-                
-
-            </div>          
-        </div>
+        </div>          
+    </div>
 @endsection

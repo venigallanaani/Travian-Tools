@@ -50,6 +50,7 @@ Route::get('/account/alliance','Account\AllianceController@allianceOverview');
 
 Route::get('/account/support','Account\SupportController@overview');
 Route::post('/account/sitter/update', 'Account\SupportController@updateSitters');
+Route::post('/account/dual/update', 'Account\SupportController@updateDuals');
 
 /*----------------------------------------------------------------------------------*/
 /* ----------------------- Plus Page Routes --------------------------- */

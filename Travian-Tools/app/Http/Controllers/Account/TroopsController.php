@@ -81,8 +81,8 @@ class TroopsController extends Controller
                     'type'=>$row->type,
                 );
                 $unit01+=$row->unit01;  $unit02+=$row->unit02;  $unit03+=$row->unit03;
-                $unit04+=$row->unit04;  $unit01+=$row->unit05;  $unit01+=$row->unit06;
-                $unit07+=$row->unit07;  $unit01+=$row->unit08;  $unit01+=$row->unit09;
+                $unit04+=$row->unit04;  $unit05+=$row->unit05;  $unit06+=$row->unit06;
+                $unit07+=$row->unit07;  $unit08+=$row->unit08;  $unit09+=$row->unit09;
                 $unit10+=$row->unit10;  $upkeep+=$row->upkeep;
             }
             $i++;
@@ -127,10 +127,10 @@ class TroopsController extends Controller
             for($i=0;$i<count($troopsData);$i++){
                 
                 $upkeep = $troopsData[$i]['UNITS'][0]*$units[0]['upkeep'] + $troopsData[$i]['UNITS'][1]*$units[1]['upkeep'] +
-                $troopsData[$i]['UNITS'][2]*$units[2]['upkeep'] + $troopsData[$i]['UNITS'][3]*$units[3]['upkeep'] +
-                $troopsData[$i]['UNITS'][3]*$units[4]['upkeep'] + $troopsData[$i]['UNITS'][5]*$units[5]['upkeep'] +
-                $troopsData[$i]['UNITS'][6]*$units[6]['upkeep'] + $troopsData[$i]['UNITS'][7]*$units[7]['upkeep'] +
-                $troopsData[$i]['UNITS'][8]*$units[8]['upkeep'] + $troopsData[$i]['UNITS'][9]*$units[9]['upkeep'];
+                        $troopsData[$i]['UNITS'][2]*$units[2]['upkeep'] + $troopsData[$i]['UNITS'][3]*$units[3]['upkeep'] +
+                        $troopsData[$i]['UNITS'][3]*$units[4]['upkeep'] + $troopsData[$i]['UNITS'][5]*$units[5]['upkeep'] +
+                        $troopsData[$i]['UNITS'][6]*$units[6]['upkeep'] + $troopsData[$i]['UNITS'][7]*$units[7]['upkeep'] +
+                        $troopsData[$i]['UNITS'][8]*$units[8]['upkeep'] + $troopsData[$i]['UNITS'][9]*$units[9]['upkeep'];
                 
                 foreach($villages as $village){
                     
