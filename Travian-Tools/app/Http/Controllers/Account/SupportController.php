@@ -66,16 +66,61 @@ class SupportController extends Controller
         
         if(Input::has('dualUpdate')){
             
+            $primary = Account::where('server_id',$request->session()->get('server.id'))
+                            ->where('uid',$account->uid)->where('status','PRIMARY')
+                            ->where('token',Input::get('dualpass'))->first();
             
+            Account::where('server_id',$request->session()->get('server.id'))
+                            ->where('account_id',$account->account_id)
+                            ->update(['account_id'=>$primary->account_id,
+                                'token'=>$primary->token,
+                                'status'=>'DUAL',
+                                'sitter1'=>$primary->sitter1,
+                                'sitter2'=>$primary->sitter2,
+                                'plus'=>$primary->plus
+                            ]);
             
+            /* $duals = Account::where('server_id',$request->session()->get('server.id'))
+                            ->where('account_id',$account->account_id)->get();
+            
+            foreach($duals as $dual){                
+                       
+                
+            }     */                       
             
             Session::flash('success','Successfully added as dual');
         }
         if(Input::has('delDual')){
-            echo 'Delete Dual';
+            
+            Account::where('server_id',$request->session()->get('server.id'))
+                        ->where('user_id',Input::get('delDual'))
+                        ->update(['account_id'=>$account->uid.Input::get('delDual'),
+                                    'token'=>str_random(5),
+                                    'plus'=>''                            
+                        ]);
+            
+            Session::flash('success','Successfully deleted a dual');
         }
         if(Input::has('setPrimary')){
-            echo 'Set Dual as Primary';
+            
+            $account_id = $account->uid.Input::get('setPrimary');
+            $token = str_random(5);
+            
+            Account::where('server_id',$request->session()->get('server.id'))
+                        ->where('user_id',Input::get('setPrimary'))
+                        ->update(['account_id'=>$account_id,
+                            'token'=>$token,
+                            'status'=>'PRIMARY'
+                        ]);
+                        
+            Account::where('server_id',$request->session()->get('server.id'))
+                        ->where('account_id',$account->account_id)
+                        ->update(['account_id'=>$account_id,                            
+                            'status'=>'DUAL',
+                            'token'=>$token
+                        ]);            
+            
+            Session::flash('success','Successfully changed the Primary account of the Travian profile');
         }
         
         return Redirect::to('/account/support');

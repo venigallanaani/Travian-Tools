@@ -34,8 +34,6 @@
 	@auth
     <div class="container">
       <div class="d-inline">
-      
-
           <!-- ======================================= Account Side menu =================================== -->
   			<div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
 				<a class="list-group-item py-1 bg-dark h4">Account Menu</a>

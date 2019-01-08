@@ -21,12 +21,12 @@
     				<p class="h4 text-center text-primary"><strong>Summary</strong></p>
         			<table class="table table-borderless">					
         				<tr>
-        					<td class="py-1"><strong>Total Troops : </strong>20000</td>
-        					<td class="py-1"></td>
+        					<td class="py-1"><strong>Total Troops : </strong>{{$stats['upkeep']}}</td>
+        					<td class="py-1"><strong>Troop/Pop Ratio : </strong>{{round($stats['upkeep']/$stats['pop'],1)}} : 1</td>
         				</tr>
         				<tr>
-        					<td class="py-1"><strong>Offense Troops : </strong>10000 (50%)</td>
-        					<td class="py-1"><strong>Defense Troops : </strong>10000 (50%)</td>
+        					<td class="py-1"><strong>Offense Troops : </strong>{{$stats['offense']}} ({{round(($stats['offense']/$stats['upkeep'])*100,2)}}%)</td>
+        					<td class="py-1"><strong>Defense Troops : </strong>{{$stats['defense']}} ({{round(($stats['defense']/$stats['upkeep'])*100,2)}}%)</td>
         				</tr>
         			</table>
     			</div>

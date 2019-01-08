@@ -1,8 +1,6 @@
 @extends('layouts.general')
 
-
-@section('content')
-    
+@section('content')    
     <header id="main-header" class="py-1 bg-info text-white">
         <div class="container">
             <p class="h3 font-weight-bold d-inline-block">Plus</p>
@@ -35,23 +33,23 @@
 
 @auth
 @if(!Session::has('plus'))
-		<div class="container">
-			<div class="card shadow my-1">
-				<div class="py-5 mx-auto">
-    				<p class="h5 py-1">You are not associated with any Plus group.</p>
-    				<p class="h6 py-1"><a href="/plus/creategroup" class="text-info"><strong>Click here</strong></a> to proceed to create a Plus group</p>
-				</div>
-			</div>		
-		</div>
+	<div class="container">
+		<div class="card shadow my-1">
+			<div class="py-5 mx-auto">
+				<p class="h5 py-1">You are not associated with any Plus group.</p>
+				<p class="h6 py-1"><a href="/plus/creategroup" class="text-info"><strong>Click here</strong></a> to proceed to create a Plus group</p>
+			</div>
+		</div>		
+	</div>
 @else
 	@if(Session::get('plus.plus')!=1)
-		<div class="container">
-			<div class="card shadow my-1">
-				<div class="py-5 mx-auto">
-    				<p class="h5 py-1">Access denied to Plus group, please contact the group leader.</p>    				
-				</div>
-			</div>		
-		</div>
+	<div class="container">
+		<div class="card shadow my-1">
+			<div class="py-5 mx-auto">
+				<p class="h5 py-1">Access denied to Plus group, please contact the group leader.</p>    				
+			</div>
+		</div>		
+	</div>
 	@else
     <div class="container">
         <div class="d-inline float-md-left col-md-3">
@@ -100,13 +98,12 @@
             </div> 
         @endif
         </div>
-
+        
         @yield('body')
 
     </div>
     @endif
 @endif
-
 @endauth
 
 @endsection

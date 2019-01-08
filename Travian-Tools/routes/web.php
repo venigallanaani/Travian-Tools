@@ -64,6 +64,7 @@ Route::get('/plus/member/{id}','Plus\PlusController@member');
 /* --------------- Controller for Plus leader routes --------------- */
 Route::get('/leader/access','Plus\Leader\LeaderController@access');	
 Route::post('/leader/access','Plus\Leader\LeaderController@addAccess');	
+Route::get('/ajax/updatePlus/{id}/{sts}','Plus\Leader\LeaderController@updateAccess');
 
 /* --------------- Plus Member Resource routes  --------------- */
 Route::get('/plus/resource','Plus\Resources\ResourceController@showTaskList');

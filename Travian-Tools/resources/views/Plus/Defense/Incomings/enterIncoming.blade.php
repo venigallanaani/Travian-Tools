@@ -3,24 +3,36 @@
 @section('body')
 <div class="card float-md-left col-md-9 mt-1 p-0 shadow">
 	<div class="card-header h4 py-2 bg-info text-white"><strong>Enter Incomings</strong></div>
-	<div class="card-text">
-		<div class="col-md-10 mx-auto rounded my-3 pt-2" style="background-color:#dbeef4;">
-			<table>
-				<tr>
-					<td colspan="2"><p class="h4 text-primary text-center"><strong>Input Incoming Details</strong></p></td>
-				</tr>
-				<tr>
-					<td class="align-middle px-2">
-						<form>								
-							<p><textarea rows="3" cols="40"></textarea>
-							<p><button class="btn btn-primary">Enter Incomings</button></p>
-						</form>
-					</td>
-					<td class="align-middle px-2 small font-italic">
-						<p>Enter the Troops page data here</p>
-					</td>
-				</tr>			
-			</table>
+@foreach(['danger','success','warning','info'] as $msg)
+	@if(Session::has($msg))
+    	<div class="alert alert-{{ $msg }} text-center my-1 mx-5" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>{{ Session::get($msg) }}
+        </div>
+    @endif
+@endforeach
+	<div class="card-text my-3">
+		<div class="col-md-10 mx-auto rounded pt-2 mb-2" style="background-color:#dbeef4;">
+			<form method="post" action="/plus/incoming">
+				{{csrf_field()}}
+    			<table>
+    				<tr>
+    					<td colspan="2"><p class="h4 text-primary text-center"><strong>Input Incoming Details</strong></p></td>
+    				</tr>
+    				<tr>
+    					<td class="align-middle px-2">
+    						<form>								
+    							<p><textarea rows="3" cols="40" name="incStr" required></textarea>
+    							<p class="text-center"><button class="btn btn-primary" type="submit">Enter Incomings</button></p>
+    						</form>
+    					</td>
+    					<td class="align-top px-2 small font-italic">
+    						<p>Enter the Rally point page data here</p>
+    					</td>
+    				</tr>			
+    			</table>
+			</form>
 		</div>
     			
 		<div class="border border-info p-0 my-1 col-md-11 mx-auto">
