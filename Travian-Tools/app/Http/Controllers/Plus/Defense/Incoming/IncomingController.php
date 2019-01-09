@@ -22,17 +22,23 @@ class IncomingController extends Controller
         $account=Account::where('server_id',$request->session()->get('server.id'))
                         ->where('user_id',Auth::user()->id)->first();
         
-        $saves=Incomings::where('server_id',$request->session()->get('server.id'))
-                            ->where('plus_id',$request->session()->get('plus.plus_id'))
-                            ->where('uid',$account->uid)
-                            ->where('deleteTime','>',strtotime(Carbon::now()))
-                            ->where('status','SAVED')->get();
+        $uid=$account->uid;
+        $account_id=$account->account_id;
         
         $drafts=Incomings::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
-                            ->where('uid',$account->uid)
+                            ->where(function($query) use ($account_id, $uid){
+                                        $query->where('uid','=',$account_id)
+                                            ->orWhere('def_uid','=',$uid);
+                            })                                
                             ->where('deleteTime','>',strtotime(Carbon::now()))
-                            ->where('status','DRAFT')->get();
+                            ->where('status','DRAFT')->orderBy('landTime','asc')->get();
+        
+        $saves=Incomings::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('def_uid',$account->uid)
+                            ->where('deleteTime','>',strtotime(Carbon::now()))
+                            ->where('status','SAVED')->orderBy('landTime','asc')->get();
                             
         return view("Plus.Defense.Incomings.enterIncoming")->with(['drafts'=>$drafts])
                             ->with(['saves'=>$saves]);
@@ -51,6 +57,10 @@ class IncomingController extends Controller
         }else{
         // Data is retrived from the string.
             foreach($incList as $inc){
+                
+                $uid = Account::where('server_id',$request->session()->get('server.id'))
+                                ->where('user_id',Auth::user()->id)
+                                ->pluck('account_id')->first();
                 
                 $att = Diff::where('server_id',$request->session()->get('server.id'))
                                 ->where('x',$inc['a_x'])->where('y',$inc['a_y'])->first();
@@ -83,7 +93,8 @@ class IncomingController extends Controller
                     $wave->incid=$incId;
                     $wave->server_id=$request->session()->get('server.id');
                     $wave->plus_id=$request->session()->get('plus.plus_id');
-                    $wave->uid=$def->uid;
+                    $wave->uid=$uid;
+                    $wave->def_uid=$def->uid;
                     $wave->def_player=$def->player;
                     $wave->def_village=$def->village;
                     $wave->def_x=$def->x;
@@ -111,7 +122,8 @@ class IncomingController extends Controller
                         $wave->incid=$incId;
                         $wave->server_id=$request->session()->get('server.id');
                         $wave->plus_id=$request->session()->get('plus.plus_id');
-                        $wave->uid=$def->uid;
+                        $wave->uid=$uid;
+                        $wave->def_uid=$def->uid;
                         $wave->def_player=$def->player;
                         $wave->def_village=$def->village;
                         $wave->def_x=$def->x;
@@ -137,20 +149,34 @@ class IncomingController extends Controller
                 
             }
             Session::flash('success','Incoming Attacks successfully updated');            
-        }
-            $saves=Incomings::where('server_id',$request->session()->get('server.id'))
-                        ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('uid',$account->uid)
-                        ->where('deleteTime','>',strtotime(Carbon::now()))
-                        ->where('status','SAVED')->get();
-            
-            $drafts=Incomings::where('server_id',$request->session()->get('server.id'))
-                        ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('uid',$account->uid)
-                        ->where('deleteTime','>',strtotime(Carbon::now()))
-                        ->where('status','DRAFT')->get();
-            
-            return view("Plus.Defense.Incomings.enterIncoming")->with(['drafts'=>$drafts])
-                                    ->with(['saves'=>$saves]);
+        }                        
+            return Redirect::To('/plus/incoming');           
     }
+    
+    public function updateIncoming(Request $request){
+        
+        $incId=Input::get('incId');
+        
+        $account_id=Account::where('server_id',$request->session()->get('server.id'))
+                        ->where('user_id',Auth::user()->id)->pluck('account_id')->first();
+        
+        $incoming=Incomings::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('incid',$incId)->where('status','DRAFT')->first();
+        
+        $incoming->uid=$account_id;
+        $incoming->hero_xp=Input::get('hxp');
+        $incoming->hero_helm=Input::get('helm');
+        $incoming->hero_chest=Input::get('chest');
+        $incoming->hero_boots=Input::get('boot');
+        $incoming->hero_right=Input::get('right');
+        $incoming->hero_left=Input::get('left');
+        $incoming->comments=Input::get('comments');
+        $incoming->status='SAVED';
+        
+        $incoming->save(); 
+        
+        return Redirect::To('/plus/incoming');
+    }
+    
 }

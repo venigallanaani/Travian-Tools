@@ -177,8 +177,8 @@ class TroopsController extends Controller
                 
                 foreach($villages as $village){
                     
-                    if(preg_replace('/[^ \w]/', '', $village->x)==$troopsData[$i]['XCOR'] &&
-                        preg_replace('/[^ \w]/', '', $village->y)==$troopsData[$i]['YCOR']){
+                    if($village->x==$troopsData[$i]['XCOR'] &&
+                        $village->y==$troopsData[$i]['YCOR']){
                         
                         $troops = Troops::where('account_id',$account->account_id)
                                     ->where('server_id',$request->session()->get('server.id'))

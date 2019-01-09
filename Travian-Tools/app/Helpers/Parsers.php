@@ -199,37 +199,40 @@ if(!function_exists('ParseIncoming')){
                 }
             }
         } 
-        $j=0;
-        for($i=0;$i<count($incomings);$i++){
-            
-            if($i==0){
-                $result[$j]=$incomings[$i];
-            }else{
-                if($result[$j]['a_x']==$incomings[$i]['a_x']  && $result[$j]['a_y']==$incomings[$i]['a_y']  &&                    
-                    $result[$j]['type']==$incomings[$i]['type']  &&
-                    $result[$j]['restTime']==$incomings[$i]['restTime']  && $result[$j]['landTime']==$incomings[$i]['landTime']  &&
-                    $result[$j]['troops']['unit01']==$incomings[$i]['troops']['unit01']  &&
-                    $result[$j]['troops']['unit02']==$incomings[$i]['troops']['unit02']  &&
-                    $result[$j]['troops']['unit03']==$incomings[$i]['troops']['unit03']  &&
-                    $result[$j]['troops']['unit04']==$incomings[$i]['troops']['unit04']  &&
-                    $result[$j]['troops']['unit05']==$incomings[$i]['troops']['unit05']  &&
-                    $result[$j]['troops']['unit06']==$incomings[$i]['troops']['unit06']  &&
-                    $result[$j]['troops']['unit07']==$incomings[$i]['troops']['unit07']  &&
-                    $result[$j]['troops']['unit08']==$incomings[$i]['troops']['unit08']  &&
-                    $result[$j]['troops']['unit09']==$incomings[$i]['troops']['unit09']  &&
-                    $result[$j]['troops']['unit10']==$incomings[$i]['troops']['unit10']
-                ){
-                    $result[$j]['wave']=$result[$j]['wave']+1;
-                }else{
-                    $j++;
+        if($incomings==null){
+            $result=null;
+        }else{
+            $j=0;
+            for($i=0;$i<count($incomings);$i++){                
+                if($i==0){
                     $result[$j]=$incomings[$i];
-                }                
-                
+                }else{
+                    if($result[$j]['a_x']==$incomings[$i]['a_x']  && $result[$j]['a_y']==$incomings[$i]['a_y']  &&
+                        $result[$j]['type']==$incomings[$i]['type']  &&
+                        $result[$j]['restTime']==$incomings[$i]['restTime']  && $result[$j]['landTime']==$incomings[$i]['landTime']  &&
+                        $result[$j]['troops']['unit01']==$incomings[$i]['troops']['unit01']  &&
+                        $result[$j]['troops']['unit02']==$incomings[$i]['troops']['unit02']  &&
+                        $result[$j]['troops']['unit03']==$incomings[$i]['troops']['unit03']  &&
+                        $result[$j]['troops']['unit04']==$incomings[$i]['troops']['unit04']  &&
+                        $result[$j]['troops']['unit05']==$incomings[$i]['troops']['unit05']  &&
+                        $result[$j]['troops']['unit06']==$incomings[$i]['troops']['unit06']  &&
+                        $result[$j]['troops']['unit07']==$incomings[$i]['troops']['unit07']  &&
+                        $result[$j]['troops']['unit08']==$incomings[$i]['troops']['unit08']  &&
+                        $result[$j]['troops']['unit09']==$incomings[$i]['troops']['unit09']  &&
+                        $result[$j]['troops']['unit10']==$incomings[$i]['troops']['unit10']
+                        ){
+                            $result[$j]['wave']=$result[$j]['wave']+1;
+                    }else{
+                        $j++;
+                        $result[$j]=$incomings[$i];
+                    }                    
+                }
+                $result[$j]['d_vill']=$d_vill;
+                $result[$j]['d_x']=$d_xCor;
+                $result[$j]['d_y']=$d_yCor;
             }
-            $result[$j]['d_vill']=$d_vill;
-            $result[$j]['d_x']=$d_xCor;
-            $result[$j]['d_y']=$d_yCor;
         }
+        
         
         return $result;
     }

@@ -14,11 +14,13 @@ class CreateIncomingsTable extends Migration
     public function up()
     {
         Schema::create('incomings', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('incid');
             $table->string('server_id');
             $table->string('plus_id');
             $table->string('uid');
             
+            $table->string('def_uid');
             $table->string('def_player');
             $table->string('def_village');
             $table->string('def_x');

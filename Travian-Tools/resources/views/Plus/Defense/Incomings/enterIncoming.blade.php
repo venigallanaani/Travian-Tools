@@ -34,72 +34,79 @@
     			</table>
 			</form>
 		</div>
-    			
-		<div class="border border-info p-0 my-1 col-md-11 mx-auto">
-			<table class="table table-borderless p-0 m-0 text-center">
-				<tr>
-					<td class="col-md-3 p-1 m-0 text-danger"><strong>Attacker</strong></td>
-					<td class="col-md-6 small p-1 m-0">
-						<a href="">Hero XP: </a><input name="hxp" type="text" size='5'/>
-						<a href="http://travian.kirilloid.ru/items.php" target="_blank"><strong> Hero Equipment Details <i class="fas fa-external-link-alt"></i></strong></a>
-					</td>
-					<td class="col-md-3 p-1 m-0 text-success"><strong>Defender</strong></td>
-				</tr>    
-				<tr>
-					<td class="col-md-3 small p-1 m-0"><a href=""><strong>Player(village)</strong></a></td>
-					<td class="col-md-6 small p-1 m-0">
-						<select name="helm">
-							<option value="">--Select Helm--</option>
-							<option value="">T1 helm</option>
-							<option value="">T2 helm</option>
-							<option value="">T3 helm</option>
-						</select>
-						<select name="chest">
-							<option value="">--Select Chest--</option>
-							<option value="">T1 Chest</option>
-							<option value="">T2 Chest</option>
-							<option value="">T3 Chest</option>
-						</select>
-						<select	name="boot">
-							<option value="">--Select Boots--</option>
-							<option value="">T1 Boots</option>
-							<option value="">T2 Boots</option>
-							<option value="">T3 Boots</option>
-						</select>
-					</td>
-					<td class="col-md-3 small p-1 m-0"><a href=""><strong>Player(village)</strong></a></td>
-				</tr> 
-				<tr>
-					<td class="col-md-3 small p-1 m-0"><strong>Waves: </strong>4</td>
-					<td class="col-md-6 small p-1 m-0">
-						<select	name="right">
-							<option value="">--Select Right hand--</option>
-							<option value="">T1 weapon</option>
-							<option value="">T2 weapon</option>
-							<option value="">T3 weapon</option>
-						</select>
-						<select name="left">
-							<option value="">--Select Left hand--</option>
-							<option value="">T1 sheild</option>
-							<option value="">T2 sheild</option>
-							<option value="">T3 sheild</option>
-						</select>
-					</td>
-					<td class="col-md-3 small p-1 m-0"><strong>Noticed Time</strong></td>
-				</tr> 
-				<tr>
-					<td class="col-md-3 small p-1 m-0"><strong>Start Time</strong></td>
-					<td class="col-md-6 small p-1 m-0">Comments: <input name="comments" type="text" size="30">
-						<button class="btn btn-primary py-0">Enter</button>
-					</td>
-					<td class="col-md-3  small p-1 m-0"><strong>Land Time</strong></td>
-				</tr> 		    			
-			</table>
-		</div>    			    			
+    	<div class="my-2">
+    		@foreach($drafts as $draft)		
+    		<form class="border border-info p-0 my-1 col-md-11 mx-auto" action="/plus/incoming/update" method="post">
+    			{{csrf_field()}}
+    			<table class="table table-borderless p-0 m-0 text-center">
+    				<tr>
+    					<td class="col-md-3 p-1 m-0 text-danger"><strong>Attacker</strong></td>
+    					<td class="col-md-6 small p-1 m-0">
+    						<a href="">Hero XP: </a><input name="hxp" type="text" size='5'/>
+    						<a href="http://travian.kirilloid.ru/items.php" target="_blank"><strong> Hero Equipment Details <i class="fas fa-external-link-alt"></i></strong></a>
+    					</td>
+    					<td class="col-md-3 p-1 m-0 text-success"><strong>Defender</strong></td>
+    				</tr>    
+    				<tr>
+    					<td class="col-md-3 small p-1 m-0"><a href=""><strong>{{$draft->att_player}} ({{$draft->att_village}})</strong></a></td>
+    					<td class="col-md-6 small p-1 m-0">
+    						<select name="helm">
+    							<option value="">--Select Helm--</option>
+    							<option value="">T1 helm</option>
+    							<option value="">T2 helm</option>
+    							<option value="">T3 helm</option>
+    						</select>
+    						<select name="chest">
+    							<option value="">--Select Chest--</option>
+    							<option value="">T1 Chest</option>
+    							<option value="">T2 Chest</option>
+    							<option value="">T3 Chest</option>
+    						</select>
+    						<select	name="boot">
+    							<option value="">--Select Boots--</option>
+    							<option value="">T1 Boots</option>
+    							<option value="">T2 Boots</option>
+    							<option value="">T3 Boots</option>
+    						</select>
+    					</td>
+    					<td class="col-md-3 small p-1 m-0"><a href=""><strong>{{$draft->def_player}} ({{$draft->def_village}})</strong></a></td>
+    				</tr> 
+    				<tr>
+    					<td class="col-md-3 small p-1 m-0"><strong>Waves: </strong>{{$draft->waves}}</td>
+    					<td class="col-md-6 small p-1 m-0">
+    						<select	name="right">
+    							<option value="">--Select Right hand--</option>
+    							<option value="">T1 weapon</option>
+    							<option value="">T2 weapon</option>
+    							<option value="">T3 weapon</option>
+    						</select>
+    						<select name="left">
+    							<option value="">--Select Left hand--</option>
+    							<option value="">T1 sheild</option>
+    							<option value="">T2 sheild</option>
+    							<option value="">T3 sheild</option>
+    						</select>
+    					</td>
+    					<td class="col-md-3 small p-1 m-0"><strong>Land Time</strong></td>
+    				</tr> 
+    				<tr>
+    					<td class="col-md-3 small p-1 m-0"></td>
+    					<td class="col-md-6 small p-1 m-0">Comments: <input name="comments" type="text" size="30">
+    						<button class="btn btn-primary py-0" type="submit" name="incId" value="{{$draft->incid}}">Enter</button>
+    					</td>
+    					<td class="col-md-3  small p-1 m-0">{{$draft->landTime}}</td>
+    				</tr> 		    			
+    			</table>
+    		</form> 
+    		@endforeach
+		</div>   			    			
 	</div>
 			
-	<div class="col-md-12 mt-5 mx-auto text-center">
+	<div class="col-md-12 mt-2 mx-auto text-center">
 		<p class="h4 text-dark py-2 my-0 bg-warning"><strong>Your Incomings</strong></p>
+		@if(count($saves)==0)			
+		<p class="h5 pb-5 pt-2"> No incoming attacks saved for this profile</p>			
+		@else			
 		<table class="table small mx-auto col-md-11 table-hover table-sm">
 			<thead class="thead-inverse">
 				<tr>
@@ -112,25 +119,26 @@
 					<th class="col-md-1">Action</th>
 				</tr>
 			</thead>
-			<tr class="table-danger">
-				<td><a href=""><strong>player1 (village)</strong></a></td>
-				<td><a href=""><strong>Defender (village)</strong></a></td>
-				<td>4</td>
-				<td>18/11/2018 00:00:00</td>
-				<td>11:00:00</td>
-				<td>No Change</td>
-				<td><strong>Real</strong></td>
-			</tr>
-			<tr class="table-white">
-				<td>player2 (village)</td>
-				<td>Defender (village)</td>
-				<td>4</td>
-				<td>18/11/2018 00:00:00</td>
-				<td>11:00:00</td>
-				<td>Changed</td>
-				<td>Fake</td>
-			</tr>
-		</table>			
+			@foreach($saves as $save)
+				@php
+					if($save->ldr_sts=='Attack'){ $color = 'table-danger';	}
+					elseif($save->ldr_sts=='Fake'){$color='table-primary';}
+					elseif($save->ldr_sts=='Thinking'){$color='table-warning';}					
+					else{$color='table-white';}					
+				@endphp				
+						
+    			<tr class="{{$color}}">
+    				<td><a href="/finder/player/{{$save->att_player}}/1"><strong>{{$save->att_player}} ({{$save->att_village}})</strong></a></td>
+    				<td><a href="/finder/player/{{$save->def_player}}/1"><strong>{{$save->def_player}} ({{$save->def_village}})</strong></a></td>
+    				<td>{{$save->waves}}</td>
+    				<td>{{$save->landTime}}</td>
+    				<td>11:00:00</td>
+    				<td>{{$save->hero}}</td>
+    				<td>{{$save->ldr_sts}}</td>
+    			</tr>
+			@endforeach			
+		</table>
+		@endif			
 	</div>
 </div>			
 

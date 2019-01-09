@@ -96,11 +96,21 @@ Route::post('/defense/search','Plus\Defense\Search\DefenseController@process');
 /* -------------------- Plus member incoming Options -----------------------*/
 Route::get('/plus/incoming','Plus\Defense\Incoming\IncomingController@enterIncoming');
 Route::post('/plus/incoming','Plus\Defense\Incoming\IncomingController@processIncoming');
+Route::post('/plus/incoming/update','Plus\Defense\Incoming\IncomingController@updateIncoming');
+
+/* -------------------- Plus Leader incoming Options -----------------------*/
+Route::get('/defense/incoming','Plus\Defense\Incoming\LeaderIncomingController@IncomingList');
 
 /* -------------------- Plus member Offense Options -----------------------*/
 Route::get('/plus/offense','Plus\Offense\OffenseController@offenseTaskList');
 Route::post('/plus/offense','Plus\Offense\OffenseController@updateOffenseTask');
 
+/* -------------------- Plus Leader Offense Options -----------------------*/
+Route::get('/offense/status','Plus\Offense\LeaderOffenseController@offensePlanList');
+Route::get('/offense/status/{id}','Plus\Offense\LeaderOffenseController@offensePlanStatus');
+Route::get('/offense/troops','Plus\Offense\LeaderOffenseController@troopsList');
+Route::get('/offense/archive','Plus\Offense\LeaderOffenseController@offenseArchive');
+Route::get('/offense/archive/{id}','Plus\Offense\LeaderOffenseController@archivePlan');
 
 /* --------------- Controller for the Report Page ----------- */
 Route::get('/support','supportController@index');				// Displays the Report Page
