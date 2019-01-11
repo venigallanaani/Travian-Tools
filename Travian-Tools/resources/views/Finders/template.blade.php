@@ -20,6 +20,7 @@
             </div>
         </div>
     </header>
+    
     <div class="container">
         <div class="d-inline">
             <!-- ======================================= Finders Side menu =================================== -->
@@ -33,6 +34,13 @@
             </div>                      
         </div>
         <div class="float-md-left col-md-9 mt-1 p-0">
+        @if(!Session::has('server'))
+            <div class="alert alert-warning text-center my-1" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>You have not selected a server, <a href="{{route('server')}}" class="text-weight-bold"><strong>Select Server</strong></a>            
+            </div>
+		@endif
 		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
 	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">

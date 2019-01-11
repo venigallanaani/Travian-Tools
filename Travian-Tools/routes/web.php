@@ -61,6 +61,9 @@ Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu 
 Route::get('/plus/members','Plus\PlusController@members');
 Route::get('/plus/member/{id}','Plus\PlusController@member');
 
+/* ------------------ Plus player display of rankings ------------------------ */
+Route::get('/plus/rankings','Plus\PlusController@rankings');
+
 /* --------------- Controller for Plus leader routes --------------- */
 Route::get('/leader/access','Plus\Leader\LeaderController@access');	
 Route::post('/leader/access','Plus\Leader\LeaderController@addAccess');	
@@ -107,15 +110,25 @@ Route::post('/plus/offense','Plus\Offense\OffenseController@updateOffenseTask');
 
 /* -------------------- Plus Leader Offense Options -----------------------*/
 Route::get('/offense/status','Plus\Offense\LeaderOffenseController@offensePlanList');
-Route::get('/offense/status/{id}','Plus\Offense\LeaderOffenseController@offensePlanStatus');
+Route::post('/offense/create','Plus\Offense\LeaderOffenseController@createOffensePlan');
+
+Route::get('/offense/status/{id}','Plus\Offense\LeaderOffenseController@displayOffensePlan');
+Route::post('/offense/status/update','Plus\Offense\LeaderOffenseController@updateOffensePlan');
+
 Route::get('/offense/troops','Plus\Offense\LeaderOffenseController@troopsList');
-Route::get('/offense/archive','Plus\Offense\LeaderOffenseController@offenseArchive');
-Route::get('/offense/archive/{id}','Plus\Offense\LeaderOffenseController@archivePlan');
+
+/* ----------------------- Plus Leader Offense make and edit plan ------------------------ */
+Route::get('/offense/plan/edit/{id}','Plus\Offense\MakeOffensePlanController@showPlanLayout');
+Route::post('/offense/plan/update','Plus\Offense\MakeOffensePlanController@updatePlan');
+
+/* ----------------------- Plus Leader Offense archive plan options ------------------------ */
+Route::get('/offense/archive','Plus\Offense\offenseArchiveController@archiveList');
+Route::get('/offense/archive/{id}','Plus\Offense\offenseArchiveController@displayArchivePlan');
+Route::post('/offense/archive/update','Plus\Offense\offenseArchiveController@updateArchivePlan');
 
 /* --------------- Controller for the Report Page ----------- */
 Route::get('/support','supportController@index');				// Displays the Report Page
 Route::post('/support','supportController@process');			// Creates the Defect / bug in the Database
-
 
 /* ------------------ Profile Controller Page -------------- */
 Route::get('/profile','Profile\profileController@overview');

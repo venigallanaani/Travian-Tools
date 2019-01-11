@@ -25,8 +25,8 @@
         					<td class="py-1"><strong>Troop/Pop Ratio : </strong>{{round($stats['upkeep']/$stats['pop'],1)}} : 1</td>
         				</tr>
         				<tr>
-        					<td class="py-1"><strong>Offense Troops : </strong>{{$stats['offense']}} ({{round(($stats['offense']/$stats['upkeep'])*100,2)}}%)</td>
-        					<td class="py-1"><strong>Defense Troops : </strong>{{$stats['defense']}} ({{round(($stats['defense']/$stats['upkeep'])*100,2)}}%)</td>
+        					<td class="py-1"><strong>Offense Troops : </strong>{{$stats['offense']}} ({{$stats['offratio']}}%)</td>
+        					<td class="py-1"><strong>Defense Troops : </strong>{{$stats['defense']}} ({{$stats['defratio']}}%)</td>
         				</tr>
         			</table>
     			</div>
@@ -40,8 +40,8 @@
 							@endforeach
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></td> 
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Tournament Square"><img alt="" src="/images/x.gif" class="build tsq"></td>
-							<!-- <td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Village Type">Type</td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Icons"></td>  -->
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Village Type">Type</td>
+							<!-- <td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Icons"></td>  -->
 						</tr>
 					@foreach($troops as $index=>$troop)
 						<tr class="">
@@ -59,8 +59,8 @@
 							<td class="p-0">{{$troop['unit10']}}</td>
 							<td class="p-0">{{$troop['upkeep']}}</td>
 							<td class="p-0">{{$troop['Tsq']}}</td>
-							<!-- <td class="py-0">{{$troop['type']}}</td>
-							<td class="py-0 px-0">
+							<td class="py-0">{{$troop['type']}}</td>
+							<!-- <td class="py-0 px-0">
 								<form>
 									{{ csrf_field() }}
 									<input id="skype" name="skype" style="display:none">

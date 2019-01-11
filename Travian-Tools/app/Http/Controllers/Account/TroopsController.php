@@ -63,7 +63,7 @@ class TroopsController extends Controller
                     'unit10'=>0,
                     'upkeep'=>0,
                     'Tsq'=>0,
-                    'type'=>'',
+                    'type'=>'None',
                 );
             }else{
                 $list[$i]=array(
@@ -127,6 +127,14 @@ class TroopsController extends Controller
             }
             $i++;
         }
+        if($upkeep!=0){ 
+            $off_ratio = round(($off/$upkeep)*100,2); 
+            $def_ratio = round(($def/$upkeep)*100,2);
+        }else{ 
+            $off_ratio=0; 
+            $def_ratio=0; 
+        }
+        
         $stats=array(            
             'unit01'=> $unit01,
             'unit02'=> $unit02,
@@ -140,6 +148,8 @@ class TroopsController extends Controller
             'unit10'=> $unit10,
             'upkeep'=>$upkeep,
             'offense'=>$off,
+            'offratio'=>$off_ratio,
+            'defratio'=>$def_ratio,
             'defense'=>$def,
             'pop'=>$pop
         );
@@ -177,6 +187,8 @@ class TroopsController extends Controller
                 
                 foreach($villages as $village){
                     
+                    $offense=0; $defense=0; $support=0; $type='NONE';
+                    
                     if($village->x==$troopsData[$i]['XCOR'] &&
                         $village->y==$troopsData[$i]['YCOR']){
                         
@@ -189,7 +201,49 @@ class TroopsController extends Controller
                         }else{
                             $plus_id='';
                         }
-                                    
+                        
+                        if($units[0]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][0]*$units[0]['upkeep'];}
+                            elseif($units[0]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][0]*$units[0]['upkeep'];}
+                            else{$support+=$troopsData[$i]['UNITS'][0]*$units[0]['upkeep'];}                            
+                        if($units[1]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][1]*$units[1]['upkeep'];}
+                            elseif($units[1]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][1]*$units[1]['upkeep'];}
+                            else{$support+=$troopsData[$i]['UNITS'][0]*$units[1]['upkeep'];}                            
+                        if($units[2]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][2]*$units[2]['upkeep'];}
+                            elseif($units[2]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][2]*$units[2]['upkeep'];}
+                            else{$support+=$troopsData[$i]['UNITS'][2]*$units[2]['upkeep'];}                            
+                        if($units[3]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][3]*$units[3]['upkeep'];}
+                            elseif($units[3]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][3]*$units[3]['upkeep'];}
+                            else{$support+=$troopsData[$i]['UNITS'][3]*$units[3]['upkeep'];}                            
+                        if($units[4]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][4]*$units[4]['upkeep'];}
+                            elseif($units[4]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][4]*$units[4]['upkeep'];}
+                            else{$support+=$troopsData[$i]['UNITS'][4]*$units[4]['upkeep'];}                            
+                        if($units[5]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][5]*$units[5]['upkeep'];}
+                            elseif($units[5]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][5]*$units[5]['upkeep'];}
+                            else{$support+=$troopsData[$i]['UNITS'][5]*$units[5]['upkeep'];}                            
+                        if($units[6]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][6]*$units[6]['upkeep'];}
+                            elseif($units[6]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][6]*$units[6]['upkeep'];}
+                            else{$support+=$troopsData[$i]['UNITS'][6]*$units[6]['upkeep'];}                            
+                        if($units[7]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][7]*$units[7]['upkeep'];}
+                            elseif($units[7]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][7]*$units[7]['upkeep'];}
+                            else{$support+=$troopsData[$i]['UNITS'][7]*$units[7]['upkeep'];}                            
+                        if($units[8]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][8]*$units[8]['upkeep'];}
+                            elseif($units[8]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][8]*$units[8]['upkeep'];}
+                            else{$support+=$troopsData[$i]['UNITS'][8]*$units[8]['upkeep'];}                            
+                        if($units[9]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][9]*$units[9]['upkeep'];}
+                            elseif($units[9]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][9]*$units[9]['upkeep'];}
+                            else{$support+=$troopsData[$i]['UNITS'][9]*$units[9]['upkeep'];}                        
+                        
+                        if($upkeep==0){
+                            $type='None';
+                        }elseif($offense>$defense){
+                            $type='Offense';
+                        }else{
+                            $type='Defense';
+                            if($defense<$support){
+                                $type='Support';
+                            }                            
+                        }
+                        
                         if(empty($troops)){                                
                             $troops = new Troops;
                             
@@ -212,10 +266,11 @@ class TroopsController extends Controller
                             $troops->unit10=$troopsData[$i]['UNITS'][9];
                             $troops->upkeep=$upkeep;
                             $troops->Tsq=0;
-                            $troops->type='NONE';
+                            $troops->type=$type;
                             
                             $troops->save();
-                        }else{
+                        }else{            
+                            
                             Troops::where('account_id',$account->account_id)
                                     ->where('server_id',$request->session()->get('server.id'))
                                     ->where('x',$village->x)->where('y',$village->y)
@@ -232,7 +287,8 @@ class TroopsController extends Controller
                                         'unit08'=>$troopsData[$i]['UNITS'][7],
                                         'unit09'=>$troopsData[$i]['UNITS'][8],
                                         'unit10'=>$troopsData[$i]['UNITS'][9],
-                                        'upkeep'=>$upkeep
+                                        'upkeep'=>$upkeep,
+                                        'type'=>$type
                                     ]);                                                      
                         }                             
                     }                       

@@ -20,12 +20,13 @@
     				<p class="h5 py-1"><strong>X: <input name="xCor" type="text" size="5" required value="0"> | 
 							Y: <input name="xCor" type="text" size="5" required value="0"></strong></p>
     				<p class="h5 py-1"><strong>Defense (<img alt="" src="/images/x.gif" class="res upkeep">): 
-    						<input name="defNeed" type="text" size="10" required value="1000"></strong></p>
-    				<p class="h5 py-1"><strong>Target Time: <input name="targetTime" type="text" size="15" required></strong></p>
+    						<input name="defNeed" type="text" size="10" required value="0"></strong></p>
+    				<p class="h5 py-1"><strong>Target Time: <input name="targetTime" type="text" size="15"></strong></p>
     				<button class="btn btn-info btn-lg" name="search" type="submit">Search Defense</button>
     			</form>	
 			</div>	
 		</div>
+		<p class="text-danger text-center">Not implemented the time calculation yet</p>
 	</div>
 	
 	@yield('results')

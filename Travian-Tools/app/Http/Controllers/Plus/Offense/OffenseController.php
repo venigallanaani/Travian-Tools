@@ -9,7 +9,7 @@ class OffenseController extends Controller
 {
     public function offenseTaskList(Request $request){
         
-        return view('Plus.Offense.offenseTaskList');
+        return view('Plus.Offense.offenseTasks');
         
     }
 }

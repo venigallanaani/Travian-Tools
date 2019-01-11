@@ -40,9 +40,12 @@ class PlusController extends Controller
                    'def'=>count($def),
                    'off'=>0 
                );              
-            }       
+            }
+            return view('Plus.General.overview')->with(['counts'=>$counts]);
+    	}else{    	    
+    	    return view('Plus.template');
     	}
-    	return view('Plus.General.overview')->with(['counts'=>$counts]);
+    	
     }
     
     
@@ -90,5 +93,75 @@ class PlusController extends Controller
         
     }
 
+    public function rankings(Request $request){
+        
+        session(['title'=>'Plus']);
+        
+        $account=Account::where('server_id',$request->session()->get('server.id'))
+                        ->where('user_id',$request->session()->get('plus.id'))->first();
+        
+        $sqlStr = 'SELECT rank, value FROM (
+                        SELECT  @rank := @rank + 1 rank, s.* FROM (
+                            SELECT account_id, sum(upkeep) as value  FROM troops
+                                WHERE type="offense"
+                                GROUP BY account_id
+                                ORDER BY sum(upkeep) DESC
+                            ) s, (SELECT @rank := 0) init  
+                        ) r WHERE account_id='.$account->account_id;       
+        $offense = DB::select(DB::raw($sqlStr));
+        
+        $sqlStr = 'SELECT rank, value FROM (
+                        SELECT  @rank := @rank + 1 rank, s.* FROM (
+                            SELECT account_id, sum(upkeep) as value  FROM troops
+                                WHERE type="defense"
+                                GROUP BY account_id
+                                ORDER BY sum(upkeep) DESC
+                            ) s, (SELECT @rank := 0) init
+                        ) r WHERE account_id='.$account->account_id;        
+        $defense = DB::select(DB::raw($sqlStr));
+        
+        $sqlStr = 'SELECT rank, value FROM (
+                        SELECT  @rank := @rank + 1 rank, s.* FROM (
+                            SELECT account_id, sum(upkeep) as value  FROM troops                                
+                                GROUP BY account_id
+                                ORDER BY sum(upkeep) DESC
+                            ) s, (SELECT @rank := 0) init
+                        ) r WHERE account_id='.$account->account_id;        
+        $total = DB::select(DB::raw($sqlStr));
+        
+        $sqlStr = 'SELECT rank, level, exp FROM (
+                        SELECT  @rank := @rank + 1 rank, s.* FROM (
+                            SELECT account_id, level, exp  FROM hero                                
+                                ORDER BY exp DESC
+                            ) s, (SELECT @rank := 0) init
+                        ) r WHERE account_id='.$account->account_id;
+        $hero = DB::select(DB::raw($sqlStr));
+        
+        $sqlStr = "SELECT rank, value FROM (
+                    	SELECT  @rank := @rank + 1 rank, s.* FROM (
+                    		SELECT a.uid as uid, sum(a.population) as value  FROM players a, accounts b, plus c
+                    			WHERE a.uid=b.uid
+                                AND a.server_id = b.server_id
+                                AND b.server_id = c.server_id
+                                AND c.plus_id = '".$request->session()->get('plus.plus_id')."'
+                                AND b.user_id = c.id
+                    			GROUP BY a.uid
+                    			ORDER BY sum(population) DESC
+                    		) s, (SELECT @rank := 0) init
+                    	) r WHERE uid=".$account->uid;
+        $pop = DB::select(DB::raw($sqlStr));
+        
+        $ranking=array(
+            "off"=>$offense,
+            "def"=>$defense,
+            "total"=>$total,
+            "hero"=>$hero,
+            "pop"=>$pop
+        );
+        
+        //dd($ranking);
+        return view('Plus.General.rankings')->with(['ranking'=>$ranking]);        
+    }
+    
 }
 
