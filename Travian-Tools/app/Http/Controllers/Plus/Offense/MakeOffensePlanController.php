@@ -49,8 +49,7 @@ class MakeOffensePlanController extends Controller
                     "TYPE"=>$color
                 );            
                 
-            }           
-            
+            }            
         }        
         return view('Plus.Offense.Plan.display')
                 ->with(['plan'=>$plan])->with(['waves'=>$waves])

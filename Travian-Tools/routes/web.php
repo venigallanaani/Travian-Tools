@@ -66,8 +66,9 @@ Route::get('/plus/rankings','Plus\PlusController@rankings');
 
 /* --------------- Controller for Plus leader routes --------------- */
 Route::get('/leader/access','Plus\Leader\LeaderController@access');	
-Route::post('/leader/access','Plus\Leader\LeaderController@addAccess');	
-Route::get('/ajax/updatePlus/{id}/{sts}','Plus\Leader\LeaderController@updateAccess');
+Route::post('/leader/access/add','Plus\Leader\LeaderController@addAccess');	
+//Route::post('/leader/access/update','Plus\Leader\LeaderController@postUpdateAccess');
+Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@updateAccess');
 
 /* --------------- Plus Member Resource routes  --------------- */
 Route::get('/plus/resource','Plus\Resources\ResourceController@showTaskList');

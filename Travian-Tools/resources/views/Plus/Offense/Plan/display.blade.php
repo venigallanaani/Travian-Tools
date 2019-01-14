@@ -34,13 +34,13 @@
 		</div>	
 	</div>
 	@if(count($waves)==0)
-	<div class="container">
+	<div class="d-inline float-md-left col-md-12 mx-auto text-center shadow mt-2 rounded">
 		
 		<p>No attacks added yet.</p>
 	
 	</div>	
 	@else
-	<div class="col-md-12 mx-auto text-center shadow">
+	<div class="d-inline float-md-left col-md-12 mx-auto text-center shadow rounded mt-2">
 		<table class="table table-hover table-sm small table-striped m-1">
 			<tr class="bg-info text-white">
 				<th class="col-md-2">Attacker</th>
@@ -73,9 +73,7 @@
 				<td>{{$wave->landtime}}</td>
 				<td  class="text-left">{{$wave->comments}}</td>
 				<td></td>
-			</tr>			
-		
-		
+			</tr>	
 		@endforeach	
 		</table>
 	</div>		

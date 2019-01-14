@@ -14,7 +14,7 @@
             		</div>
             		<div class="collapse" id="task" style="">
               			<div class="card card-body shadow">
-    						<form action="/defense/cfd/create" method="POST" class="col-md-10 mx-auto text-center">
+    						<form action="/leader/access/add" method="POST" class="col-md-10 mx-auto text-center">
         						{{ csrf_field() }}        						
         						<p class="my-2">
         							<strong>Player Name <input type="text" name="player" size="15" required></strong>
@@ -29,10 +29,12 @@
 		<!-- ============================ Add success/failure notifications ============================== -->
 		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
-	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>{{ Session::get($msg) }}
+				<div class="container">
+    	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>{{ Session::get($msg) }}
+                    </div>
                 </div>
             @endif
         @endforeach
@@ -46,23 +48,33 @@
     							<th class="col-md-2" rowspan="2">Account</th>
     							<th class="col-md-2" rowspan="2">Account</th>
     							<th class="col-md-1" rowspan="2">Plus</th>
-    							<th colspan="4">Leadership Options</th>
+    							<th colspan="6">Leadership Options</th>
     						</tr>
     						<tr class="">
     							<th class="col-md-1">Leader</th>
     							<th class="col-md-1">Defense</th>
     							<th class="col-md-1">Offense</th>
     							<th class="col-md-1">Resources</th>
-    							<!-- th class="col-md-1">Artifacts</th>
-    							<th class="col-md-1">Wonder</th -->
+    							<th class="col-md-1">Artifacts</th>
+    							<th class="col-md-1">Wonder</th>
     						</tr>
 						</thead>
 					@foreach($players as $player)
-						<tr class="">
+						<tr>
 							<td><a href="/finder/player/{{$player['account']}}/1">{{$player['account']}}</a></td>
 							<td><a href="/plus/member/{{$player['user']}}">{{$player['user']}}</a></td>
 							<td><a href="/finder/alliance/{{$player['alliance']}}/1">{{$player['alliance']}}</a></td>
-							<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'plus')">
+							<td id="plus"><input type="checkbox" @if($player['plus']==1) checked @endif/></td>
+            				<td id="leader"><input type="checkbox" @if($player['leader']==1) checked @endif/></td>
+            				<td id="defense"><input type="checkbox" @if($player['defense']==1) checked @endif/></td>
+            				<td id="offense"><input type="checkbox" @if($player['offense']==1) checked @endif/></td>
+            				<td id="resources"><input type="checkbox" @if($player['resources']==1) checked @endif/></td>
+            				<td id="artifact"><input type="checkbox" @if($player['artifact']==1) checked @endif/></td>
+            				<td id="wonder"><input type="checkbox" @if($player['wonder']==1) checked @endif/></td>            									
+
+					
+						<!-- 
+            				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'plus')">
             							<input type="checkbox" @if($player['plus']==1) checked @endif/></a></td>
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'leader')">
             							<input type="checkbox" @if($player['leader']==1) checked @endif/></a></td>
@@ -72,33 +84,39 @@
             							<input type="checkbox" @if($player['offense']==1) checked @endif/></a></td>
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'resources')">
             							<input type="checkbox" @if($player['resources']==1) checked @endif/></a></td>
-            				<!-- td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'artifact')">
+            				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'artifact')">
             							<input type="checkbox" @if($player['artifact']==1) checked @endif/></a></td>
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'wonder')">
-            							<input type="checkbox" @if($player['wonder']==1) checked @endif/></a></td  -->							
-						</tr>	
+            							<input type="checkbox" @if($player['wonder']==1) checked @endif/></a></td>	
+						 -->				
+            			</tr>
 					@endforeach					
 					</table>
 				</div>	
 		@endif		
 			</div>
+		</div>
 @endsection
 
-@push('extensions')
+
+@push('scripts')
 
 <script>
-	function updPlus(id,sts)
-	{   
-	    var xmlhttp = new XMLHttpRequest();
-	    xmlhttp.onreadystatechange = function() {
-	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-	        {
-	            //alert(xmlhttp.responseText);
-	        }
-	    };
-	    xmlhttp.open("GET", "/ajax/updatePlus/"+id+"/"+sts, true);
-	    xmlhttp.send();
-	}
+function updPlus(id,sts)
+{
+// Used in the Plus details page
+// runs the ajax page to update the status of the players
+// leader only access
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+        {
+            alert(xmlhttp.responseText);
+        }
+    };
+    xmlhttp.open("GET", "/leader/access/update/"+id+"/"+sts, true);
+    xmlhttp.send();
+}
 </script>
 
 @endpush

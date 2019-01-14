@@ -122,6 +122,20 @@ class SupportController extends Controller
             
             Session::flash('success','Successfully changed the Primary account of the Travian profile');
         }
+        if(Input::has('unlink')){
+            
+            $account_id = $account->uid.Input::get('setPrimary');
+            $token = str_random(5);
+            
+            Account::where('server_id',$request->session()->get('server.id'))
+            ->where('user_id',Input::get('setPrimary'))
+            ->update(['account_id'=>$account_id,
+                'token'=>$token,
+                'status'=>'PRIMARY'
+            ]); 
+            
+            Session::flash('success','Successfully unlinked from the Primary account of the Travian profile');
+        }
         
         return Redirect::to('/account/support');
     }

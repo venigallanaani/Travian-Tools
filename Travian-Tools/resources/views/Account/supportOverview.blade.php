@@ -69,16 +69,20 @@
 						@foreach($duals as $dual)
     						<tr>
     							<td>{{$dual->user_name}}</td>
-    							<td>{{$dual->status}}</td>
-							@if($account->status=="PRIMARY" && $account->user_id==$dual->user_id)
+    							<td>{{$dual->status}}</td>							
     							<td>
     								<form action="/account/dual/update" method="post">
-    									{{csrf_field()}}
-    									<button class="btn btn-sm btn-primary" value="{{$dual->user_id}}" name="delDual">Delete</button> 
-    									<button class="btn btn-sm btn-primary" value="{{$dual->user_id}}" name="setPrimary">Set as Primary</button>
+    									{{csrf_field()}}    									
+									@if($account->status=="PRIMARY")
+										@if(!$account->user_id==$dual->user_id)
+											<button class="btn btn-sm btn-primary" value="{{$dual->user_id}}" name="delDual">Delete</button> 
+    										<button class="btn btn-sm btn-primary" value="{{$dual->user_id}}" name="setPrimary">Set as Primary</button>
+										@endif
+									@else
+										<button class="btn btn-sm btn-primary" value="{{$dual->user_id}}" name="unlink">Unlink Account</button>
+									@endif
     								</form>
-								</td>
-							@endif
+								</td>							
     						</tr>
 						@endforeach
     					</table>

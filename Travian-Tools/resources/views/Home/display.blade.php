@@ -77,7 +77,7 @@
                 <div class="card-body">
                     <p>External links to help you.</p>
                     <table>
-                        <tr><td><a href="http://travian.kirilloid.ru/warsim2.php" target="_blank" class="text-primary font-weight-bold">Battle Simulator</a></td></tr>
+                        <tr><td><a href="http://travian.kirilloid.ru/warsim2.php" target="_blank" class="text-primary font-weight-bold">Combat Simulator</a></td></tr>
                         <tr><td><a href="http://travian.kirilloid.ru/war.php#s=1.44&func=cu%2Ft" target="_blank" class="text-primary font-weight-bold">Unit Attributes</a></td></tr>
                         <tr><td><a href="http://travian.kirilloid.ru/build.php#mb=1&s=1.44" target="_blank" class="text-primary font-weight-bold">Building Calculator</a></td></tr>
                         <tr><td><a href="" target="_blank" class="text-primary font-weight-bold">Cropper Development</a></td></tr>

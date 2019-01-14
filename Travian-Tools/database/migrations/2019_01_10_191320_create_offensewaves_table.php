@@ -15,7 +15,7 @@ class CreateOffensewavesTable extends Migration
     {
         Schema::create('offensewaves', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('planid');
+            $table->string('plan_id');
             $table->string('plus_id');
             $table->string('server_id');
             $table->integer('a_uid');

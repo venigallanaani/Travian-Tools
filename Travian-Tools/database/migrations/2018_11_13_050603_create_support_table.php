@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReportsTable extends Migration
+class CreateSupportTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class CreateReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('support', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('subject');
+            $table->string('email');
+            $table->enum('type',['Suggest','Defect','Other']);
+            $table->string('description')->nullable();
+            $table->enum('status',['New','Inprocess','Complete']);
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('support');
     }
 }

@@ -20,31 +20,31 @@
 						</tr>
 						<tr class="font-weight-bold">
 							<td class="bg-info text-white"><strong>Rank</strong></td>
-						@if(!$ranking['total'][0]==null)
+						@if(!$ranking['total']==null)
 							<td>{{$ranking['total'][0]->rank}}</td>
 						@else
 							<td rowspan="2" class="align-middle small">Ranking not found</td>
 						@endif
 						
-						@if(!$ranking['total'][0]==null)
+						@if(!$ranking['off']==null)
 							<td>{{$ranking['off'][0]->rank}}</td>
 						@else
 							<td rowspan="2" class="align-middle small">Ranking not found</td>
 						@endif
 							
-						@if(!$ranking['total'][0]==null)
+						@if(!$ranking['def']==null)
 							<td>{{$ranking['def'][0]->rank}}</td>
 						@else
 							<td rowspan="2" class="align-middle small">Ranking not found</td>
 						@endif
 							
-						@if(!$ranking['total'][0]==null)
+						@if(!$ranking['hero']==null)
 							<td>{{$ranking['hero'][0]->rank}}</td>
 						@else
 							<td rowspan="2" class="align-middle small">Ranking not found</td>
 						@endif
 							
-						@if(!$ranking['total'][0]==null)
+						@if(!$ranking['pop']==null)
 							<td>{{$ranking['pop'][0]->rank}}</td>
 						@else
 							<td rowspan="2" class="align-middle small">Ranking not found</td>
@@ -52,19 +52,19 @@
 						</tr>
 						<tr class="font-weight-bold">
 							<td class="bg-info text-white"><strong>Value</strong></td>
-						@if(!$ranking['total'][0]==null)
+						@if(!$ranking['total']==null)
 							<td>{{$ranking['total'][0]->value}}</td>
 						@endif
-						@if(!$ranking['total'][0]==null)
+						@if(!$ranking['off']==null)
 							<td>{{$ranking['off'][0]->value}}</td>
 						@endif
-						@if(!$ranking['total'][0]==null)
+						@if(!$ranking['def']==null)
 							<td>{{$ranking['def'][0]->value}}</td>
 						@endif
-						@if(!$ranking['total'][0]==null)
+						@if(!$ranking['hero']==null)
 							<td>{{$ranking['hero'][0]->exp}} ({{$ranking['hero'][0]->level}})</td>
 						@endif
-						@if(!$ranking['total'][0]==null)
+						@if(!$ranking['pop']==null)
 							<td>{{$ranking['pop'][0]->value}}</td>
 						@endif
 						</tr>						

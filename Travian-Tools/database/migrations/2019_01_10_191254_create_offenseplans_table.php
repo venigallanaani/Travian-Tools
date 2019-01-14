@@ -17,6 +17,7 @@ class CreateOffenseplansTable extends Migration
             $table->increments('id');
             $table->string('server_id');
             $table->string('plus_id');
+            $table->string('name');
             $table->string('waves')->default(0);
             $table->string('real')->default(0);
             $table->string('fake')->default(0);
