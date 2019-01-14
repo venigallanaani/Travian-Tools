@@ -3,3 +3,6 @@ Change DIV on hover -- https://codepen.io/David_Leitch/pen/IJvKn
 Fixed div once you scroll to it -- http://jsfiddle.net/5n5MA/2/
 								-- https://css-tricks.com/scroll-fix-content/
 Drag and Droppable Div -- https://stackoverflow.com/questions/32711222/keep-a-copy-of-an-element-when-using-jquery-drag-and-drop
+
+
+Updatable table - https://www.tutorialrepublic.com/faq/how-to-add-remove-table-rows-dynamically-using-jquery.php

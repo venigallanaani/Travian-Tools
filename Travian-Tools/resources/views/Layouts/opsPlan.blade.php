@@ -42,23 +42,24 @@
                     	</tr>
                     </table>                
                 </div>
-            </header>  
-            <div class="container">
-		@foreach(['danger','success','warning','info'] as $msg)
-			@if(Session::has($msg))
-	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>{{ Session::get($msg) }}
-                </div>
-            @endif
-        @endforeach	
-            	@yield('content')
-            </div>            
-		</form>
-        @if(!$sankeyData==null)
-        	{{	createSankey($sankeyData)	}}
-    	@endif
+            </header> 
+        </form> 
+        <div class="container">
+	@foreach(['danger','success','warning','info'] as $msg)
+		@if(Session::has($msg))
+        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>{{ Session::get($msg) }}
+            </div>
+        @endif
+    @endforeach	
+        	@yield('content')
+        </div>            
+	
+    @if(!$sankeyData==null)
+    	{{	createSankey($sankeyData)	}}
+	@endif
 <!-- == Bootstrap additions == -->
 		       
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>

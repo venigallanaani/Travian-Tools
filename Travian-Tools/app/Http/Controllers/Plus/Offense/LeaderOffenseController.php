@@ -127,7 +127,7 @@ class LeaderOffenseController extends Controller
             foreach($villages as $village){
                 
                 $player = Diff::where('server_id',$request->session()->get('server.id'))
-                ->where('vid',$village->vid)->first();
+							->where('vid',$village->vid)->first();
                 
                 $troops[]=array(
                     'player'=>$player->player,

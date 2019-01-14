@@ -46,7 +46,7 @@
     						<tr>
     							<th class="col-md-2" rowspan="2">Player</th>
     							<th class="col-md-2" rowspan="2">Account</th>
-    							<th class="col-md-2" rowspan="2">Account</th>
+    							<th class="col-md-2" rowspan="2">Alliance</th>
     							<th class="col-md-1" rowspan="2">Plus</th>
     							<th colspan="6">Leadership Options</th>
     						</tr>
@@ -60,20 +60,10 @@
     						</tr>
 						</thead>
 					@foreach($players as $player)
-						<tr>
+						<tr>											
 							<td><a href="/finder/player/{{$player['account']}}/1">{{$player['account']}}</a></td>
 							<td><a href="/plus/member/{{$player['user']}}">{{$player['user']}}</a></td>
-							<td><a href="/finder/alliance/{{$player['alliance']}}/1">{{$player['alliance']}}</a></td>
-							<td id="plus"><input type="checkbox" @if($player['plus']==1) checked @endif/></td>
-            				<td id="leader"><input type="checkbox" @if($player['leader']==1) checked @endif/></td>
-            				<td id="defense"><input type="checkbox" @if($player['defense']==1) checked @endif/></td>
-            				<td id="offense"><input type="checkbox" @if($player['offense']==1) checked @endif/></td>
-            				<td id="resources"><input type="checkbox" @if($player['resources']==1) checked @endif/></td>
-            				<td id="artifact"><input type="checkbox" @if($player['artifact']==1) checked @endif/></td>
-            				<td id="wonder"><input type="checkbox" @if($player['wonder']==1) checked @endif/></td>            									
-
-					
-						<!-- 
+							<td><a href="/finder/alliance/{{$player['alliance']}}/1">{{$player['alliance']}}</a></td>					
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'plus')">
             							<input type="checkbox" @if($player['plus']==1) checked @endif/></a></td>
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'leader')">
@@ -87,8 +77,7 @@
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'artifact')">
             							<input type="checkbox" @if($player['artifact']==1) checked @endif/></a></td>
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'wonder')">
-            							<input type="checkbox" @if($player['wonder']==1) checked @endif/></a></td>	
-						 -->				
+            							<input type="checkbox" @if($player['wonder']==1) checked @endif/></a></td>				       
             			</tr>
 					@endforeach					
 					</table>
@@ -104,14 +93,11 @@
 <script>
 function updPlus(id,sts)
 {
-// Used in the Plus details page
-// runs the ajax page to update the status of the players
-// leader only access
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
         {
-            alert(xmlhttp.responseText);
+            console.log(xmlhttp.responseText);
         }
     };
     xmlhttp.open("GET", "/leader/access/update/"+id+"/"+sts, true);

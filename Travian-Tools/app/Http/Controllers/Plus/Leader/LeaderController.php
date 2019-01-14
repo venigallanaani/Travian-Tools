@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use lluminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 use App\Plus;
 use App\Account;
@@ -53,40 +55,6 @@ class LeaderController extends Controller
         
         return view('Plus.Leader.access')->with(['players'=>$players]);              // displays the leadership access page to edit and/or add players to group
         
-    }
-    
-    public function updateAccess(Request $request,$id,$role){
-        
-        $plus=Plus::where('server_id=',$request->session()->id('server.id'))
-                ->where('id',$id)->first();
-        
-        if($role=='plus'){            
-            if($plus->plus == 1){ $plus->plus = 0;  } 
-            else {  $plus->plus = 1;    }            
-        }
-        if($role=='leader'){
-            if($plus->leader == 1){ $plus->leader = 0;  }
-            else {  $plus->leader = 1;    }
-        }
-        if($role=='offense'){
-            if($plus->offense == 1){ $plus->offense = 0;  }
-            else {  $plus->offense = 1;    }
-        }
-        if($role=='defense'){
-            if($plus->defense == 1){ $plus->defense = 0;  }
-            else {  $plus->defense = 1;    }
-        }
-        if($role=='resources'){
-            if($plus->resources == 1){ $plus->resources = 0;  }
-            else {  $plus->resources = 1;    }
-        }     
-        
-        if($plus->save()){
-            return 'updated successfully';
-        }else{
-            return 'failed to update';
-        }
-                
     }
     
     
@@ -152,5 +120,20 @@ class LeaderController extends Controller
             
         }       
                      
-    }
+    }    
+    
+    
+    public function updateAccess(Request $request, $id, $role){        
+        
+        $sqlStr = "update PLUS ".
+            "set ".$role." = NOT ".$role." ".
+            "where ID='".$id."' and SERVER_ID='".$request->session()->get('server.id')."' ".
+            "and PLUS_ID='".$request->session()->get('plus.plus_id')."'"; 
+       
+        DB::update(DB::raw($sqlStr));
+        
+        return 'updated successfully';        
+        
+    }   
+    
 }

@@ -194,13 +194,8 @@ class TroopsController extends Controller
                         
                         $troops = Troops::where('account_id',$account->account_id)
                                     ->where('server_id',$request->session()->get('server.id'))
-                                    ->where('x',$village->x)->where('y',$village->y)->first();
+                                    ->where('x',$village->x)->where('y',$village->y)->first();                        
                         
-                        if(Session::has('plus.plus_id')){
-                            $plus_id=$request->session()->get('plus.plus_id');
-                        }else{
-                            $plus_id='';
-                        }
                         
                         if($units[0]['type']=='D'){$defense+=$troopsData[$i]['UNITS'][0]*$units[0]['upkeep'];}
                             elseif($units[0]['type']=='O'){$offense+=$troopsData[$i]['UNITS'][0]*$units[0]['upkeep'];}
@@ -258,7 +253,7 @@ class TroopsController extends Controller
                             $troops = new Troops;
                             
                             $troops->account_id=$account->account_id;
-                            $troops->plus_id=$plus_id;
+                            $troops->plus_id=$account->plus;
                             $troops->server_id=$request->session()->get('server.id');
                             $troops->vid=$village->vid;
                             $troops->village=$village->village;
@@ -285,7 +280,7 @@ class TroopsController extends Controller
                                     ->where('server_id',$request->session()->get('server.id'))
                                     ->where('x',$village->x)->where('y',$village->y)
                                     ->update([
-                                        'plus_id'=>$plus_id,
+                                        'plus_id'=>$account->plus,
                                         'village'=>$village->village,
                                         'unit01'=>$troopsData[$i]['UNITS'][0],
                                         'unit02'=>$troopsData[$i]['UNITS'][1],

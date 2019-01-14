@@ -17,7 +17,7 @@
     		
 		@if(count($troops)==0)
     		<div class="text-center my-2">	
-				<p>No defense troops are found with given parameters</p>	
+				<p>No offense troops are found</p>	
 			</div>
 		@else
 			<div class="text-center my-2 col-md-11 mx-auto">	
