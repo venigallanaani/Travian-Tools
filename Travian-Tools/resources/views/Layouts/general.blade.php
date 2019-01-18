@@ -61,7 +61,7 @@
 
         @yield('content')
 
-        
+  <!--      
         <div class="footer bg-secondary">
             <div class="container py-0">
                 <table>
@@ -74,13 +74,13 @@
             </div>
         </div>
         
-<!-- == Bootstrap additions == -->
+ == Bootstrap additions == -->
       
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
-        
+        <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>    
         @stack('scripts')
+
     </body>
 </html>

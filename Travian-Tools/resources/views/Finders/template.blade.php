@@ -16,7 +16,9 @@
                         <a href="{{route('server')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
-            <p class="h6 d-inline-block px-2"><span id="clock"></span></p>
+            @if(Session::has('server'))
+            	<p class="h6 d-inline-block px-2" data-toggle="tooltip" data-placement="top" title="Server Time"><span id="clock"></span></p>
+        	@endif
             </div>
         </div>
     </header>

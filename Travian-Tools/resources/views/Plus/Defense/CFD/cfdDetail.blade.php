@@ -26,7 +26,7 @@
 							<tr>
 								<td class="py-2">
 									<p class="py-0"><strong>Defense Needed:</strong> <input type="text" name="defNeed" size="10" value="{{$task->def_total}}"/></p>
-									<p class="py-0"><strong>Land Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task->target_time}}"/></p>
+									<p class="py-0"><strong>Land Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task->target_time}}" class="dateTimePicker"/></p>
 									<p class="py-0"><strong>Defense Priority:</strong> 
     													<select name="priority">
     														<option value="{{$task->priority}}">{{$task->priority}}</option>
@@ -46,7 +46,7 @@
 									<p><strong><span class="align-top">Comments: </span></strong><textarea name="comments">{{$task->comments}}</textarea></p>							
 								</td>
 								<td class="py-2">
-									<p class="py-0"><strong>Remaining Time: <span class="text-primary">10:12:00</span></strong></p>
+									<p class="py-0"><strong>Remaining Time: <span id="{{$task->task_id}}"></span></strong></p>
 									<p class="py-0 my-1"><button class="btn btn-primary px-5" name="update" value="{{$task->task_id}}">Update Task</button></p>
 									<p class="py-0 my-1"><button class="btn btn-success px-5" name="complete" value="{{$task->task_id}}">Mark as Complete</button></p>
 									<p class="py-0 my-1"><button class="btn btn-warning px-5" name="delete" value="{{$task->task_id}}">Delete Task</button></p>
@@ -142,3 +142,22 @@
 		</div>
 
 @endsection
+
+@push('scripts')
+
+	<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
+	<script type="text/javascript">
+        $(".dateTimePicker").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            showSecond:true
+        });
+	</script>
+	<script>
+        countDown("{{$task->task_id}}","{{$task->target_time}}");
+	</script>        
+
+@endpush
+
+@push('extensions')
+	<link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+@endpush

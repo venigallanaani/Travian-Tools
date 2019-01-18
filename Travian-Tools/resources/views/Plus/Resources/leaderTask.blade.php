@@ -17,7 +17,7 @@
 							<tr>
 								<td class="py-2">
 									<p class="py-0"><strong>Resource Needed:</strong> <input type="text" name="resNeed" size="8" value="{{$task[0]['res_total']}}"/></p>									
-									<p class="py-0"><strong>Target Time:</strong> <input type="text" name="targetTime" size="15" value="{{$task[0]['target_time']}}"/></p>
+									<p class="py-0"><strong>Target Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task[0]['target_time']}}" class="dateTimePicker"/></p>
 									<p class="py-0"><strong>Resource Type:</strong>
         								<input type="radio" name="resType" value="ALL" @php if($task[0]['type']=='all'){echo 'checked';} @endphp> <img alt="all" src="/images/x.gif" class="res all"> 
         								<input type="radio" name="resType" value="WOOD" @php if($task[0]['type']=='wood'){echo 'checked';} @endphp> <img alt="wood" src="/images/x.gif" class="res wood"> 
@@ -66,3 +66,18 @@
 		</div>
 
 @endsection
+
+@push('scripts')
+
+	<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+	<script type="text/javascript">
+        $(".dateTimePicker").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss"
+        });
+	</script>            
+
+@endpush
+
+@push('extensions')
+	<link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+@endpush

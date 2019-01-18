@@ -23,7 +23,7 @@
         							<strong>Resources Needed: <input type="text" name="resNeed" size="8" required></strong>
         						</p>
         						<p class="my-2">
-        							<strong>Land Time: <input type="text" name="targetTime" size="10"></strong>
+        							<strong>Target Time: <input type="text" name="targetTime" size="20" class="dateTimePicker"></strong>
         						</p>
     						    <p class="my-2 col-md-12">
         							<strong>Resource Type: </strong>
@@ -91,3 +91,19 @@
 			</div>
 		</div>
 @endsection
+
+@push('scripts')
+
+	<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
+	<script type="text/javascript">
+        $(".dateTimePicker").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            showSecond:true
+        });
+	</script>            
+
+@endpush
+
+@push('extensions')
+	<link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+@endpush

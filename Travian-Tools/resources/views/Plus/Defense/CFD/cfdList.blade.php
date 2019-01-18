@@ -22,8 +22,8 @@
         						<p class="my-2">
         							<strong>Defense Needed(<img alt="upkeep" src="/images/x.gif" class="res upkeep">): <input type="text" name="defNeed" size="8" required></strong>
         						</p>
-        						<p class="my-2">
-        							<strong>Land Time: <input type="text" name="targetTime" size="10"></strong>
+        						<p class="my-2"> 		
+    								<strong>Land Time: <input type="text" name="targetTime" size="20" class="dateTimePicker">        									 
         						</p>
     						    <p class="my-2 col-md-12">
         							<strong>Priority: </strong>
@@ -101,7 +101,7 @@
     							<td class="{{$color}}"><strong>{{$task->priority}}</strong></td>    							
     							<td>{{$task->def_percent}}%</td>
     							<td>{{$task->target_time}}</td>
-    							<td>00:00:00</td>
+    							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
     							<td><a class="btn btn-outline-secondary" href="/defense/cfd/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
@@ -113,3 +113,27 @@
 		</div>
 
 @endsection
+
+@push('scripts')
+
+	<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
+	<script type="text/javascript">
+        $(".dateTimePicker").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            showSecond:true
+        });
+	</script>    
+	
+	@if(count($tasks)>0)	
+	<script>
+		@foreach($tasks as $task)
+			countDown("{{$task->task_id}}","{{$task->target_time}}");
+		@endforeach
+	</script>
+	@endif     
+
+@endpush
+
+@push('extensions')
+	<link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+@endpush

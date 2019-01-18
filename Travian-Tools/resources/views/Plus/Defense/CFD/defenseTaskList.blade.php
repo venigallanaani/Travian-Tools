@@ -48,7 +48,7 @@
     							<td><strong>{{$task->type}}</strong></td>
     							<td class="{{$color}}"><strong>{{$task->priority}}</strong></td>
     							<td>{{$task->target_time}}</td>
-    							<td>00:00:00</td>
+    							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
     							<td><a class="btn btn-outline-secondary" href="/plus/defense/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
@@ -59,3 +59,14 @@
 			</div>
 		</div>
 @endsection
+
+@push('scripts')
+	@if(count($tasks)>0)	
+	<script>
+		@foreach($tasks as $task)
+			countDown("{{$task->task_id}}","{{$task->target_time}}");
+		@endforeach
+	</script>
+	@endif
+
+@endpush

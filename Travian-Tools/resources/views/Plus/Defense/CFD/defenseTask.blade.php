@@ -2,7 +2,7 @@
 
 @section('body')
 
-<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
 			<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Call for {{$task['player']}} ({{$task['village']}})</strong></div>
 			<div class="card-text">				
         <!-- ==================================== Defense Tasks Status ======================================= -->		
@@ -27,7 +27,7 @@
 						</tr>
 						<tr>
 							<td class="py-1"><strong>Land Time:</strong> {{$task['target_time']}}</td>
-							<td class="py-1"><strong>Time Left: <span class="text-info">12:44:00</span></strong></td>
+							<td class="py-1"><strong>Time Left: <span id="{{$task['task_id']}}"></span></strong></td>
 						</tr>
 					</table>
 
@@ -138,3 +138,11 @@
 			</div>
 		</div>
 @endsection
+
+@push('scripts')
+	<script>
+        countDown("{{$task['task_id']}}","{{$task['target_time']}}");
+	</script>
+
+
+@endpush
