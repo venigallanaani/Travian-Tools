@@ -43,7 +43,6 @@
                     </tr>                
                 @endforeach                
             </table>
-            {{$villages->links()}}
         </div>
     </div>
 

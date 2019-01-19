@@ -32,10 +32,10 @@ class CreateOffensewavesTable extends Migration
             $table->enum('type',['Real','Fake','Cheif','Scout','Other']);
             $table->string('unit');
             $table->string('landtime');
-            $table->string('comments');
-            $table->string('status');
-            $table->string('notes');
-            $table->string('report');
+            $table->string('comments')->nullable();
+            $table->string('status')->nullable();
+            $table->string('notes')->nullable();
+            $table->string('report')->nullable();
             $table->timestamps();
         });
     }

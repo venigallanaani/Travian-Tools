@@ -14,16 +14,17 @@
 				<table class="table table-sm table-hover m-2 table-bordered small">
 					<thead>
 						<tr>
+							<th>Dist</th>
 							<th>Village</th>
 							<th>Player</th>
 							<th colspan="10">Troops</th>
 							<th data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></th>
 							<th>Start Time</th>
-							<th>Timer</th>
 						</tr>
 					</thead>
 				@foreach($troops as $troop)
 					<tr>
+						<td rowspan="2" class="align-middle"><strong>{{$troop['dist']}}</strong></td>
 						<td rowspan="2" class="align-middle"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$troop['x']}}&y={{$troop['y']}}" target="_blank">
 							{{$troop['village']}} ({{$troop['x']}}|{{$troop['y']}})</a></td>
 						<td rowspan="2" class="align-middle"><a href="/finder/player/{{$troop['player']}}/1" target="_blank">
@@ -39,8 +40,7 @@
 						<td class="px-1 py-0"><img alt="" src="/images/x.gif" class="units {{$tribes[$troop['tribe']][8]['image']}}"></td>
 						<td class="px-1 py-0"><img alt="" src="/images/x.gif" class="units {{$tribes[$troop['tribe']][9]['image']}}"></td>
 						<td rowspan="2" class="align-middle"><strong>{{$troop['upkeep']}}</strong></td>
-						<td rowspan="2" class="align-middle">2019-01-12 00:00:00</td>
-						<td rowspan="2" class="align-middle">11:11:00</td>
+						<td rowspan="2" class="align-middle">{{$troop['startTime']}}</td>						
 					</tr>
 					<tr>
 						<td class="px-1 py-0">{{$troop['unit01']}}</td>
