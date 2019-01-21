@@ -13,6 +13,7 @@ use App\CFDTask;
 use App\Contacts;
 use App\Account;
 use App\Players;
+use App\OPSWaves;
 
 class PlusController extends Controller
 {
@@ -21,6 +22,11 @@ class PlusController extends Controller
         
     	session(['title'=>'Plus']);
     	$counts=array();
+    	
+    	if(!$request->session()->has('server.id')){    	    
+    	    return view('Plus.template');    	    
+    	}
+    	
     	if(Auth::check()){
     	    $plus=Plus::where('server_id',$request->session()->get('server.id'))
     	           ->where('id',Auth::user()->id)->first();
@@ -29,16 +35,25 @@ class PlusController extends Controller
             }
             if($plus!=null){
                $request->session()->put('plus',$plus);
+               
+               $account=Account::where('server_id',$request->session()->get('server.id'))
+                            ->where('user_id',$request->session()->get('plus.id'))->first();
                 
                $res = ResTask::where('plus_id',$plus->plus_id)
+                        ->where('server_id',$request->session()->get('server.id'))
                         ->where('status','ACTIVE')->get();
                $def = CFDTask::where('plus_id',$plus->plus_id)
+                        ->where('server_id',$request->session()->get('server.id'))
                         ->where('status','ACTIVE')->get();               
-
+               
+               $off = OPSWaves::where('plus_id',$plus->plus_id)
+                        ->where('server_id',$request->session()->get('server.id'))
+                        ->where('a_uid',$account->uid)->get();
+               
                $counts=array(
                    'res'=>count($res),
                    'def'=>count($def),
-                   'off'=>0 
+                   'off'=>count($off)
                );              
             }
             return view('Plus.General.overview')->with(['counts'=>$counts]);

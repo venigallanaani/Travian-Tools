@@ -134,6 +134,12 @@ class LeaderController extends Controller
         
         return 'updated successfully';        
         
-    }   
+    } 
+    
+    public function showRankings(){
+               
+        
+        return view('Plus.Leader.rankings')->with(['players'=>null]);
+    }
     
 }

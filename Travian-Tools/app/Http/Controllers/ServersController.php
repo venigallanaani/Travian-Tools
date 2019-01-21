@@ -38,6 +38,8 @@ class ServersController extends Controller
         $request->session()->put('server.url',$server->url);
         $request->session()->put('server.tmz',$server->timezone);
         
+        date_default_timezone_set($server->timezone);    
+        
         if(Auth::check()){
             $plus=Plus::where('server_id',$server_id)
                     ->where('id',Auth::user()->id)->first();

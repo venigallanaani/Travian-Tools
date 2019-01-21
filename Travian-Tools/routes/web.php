@@ -69,6 +69,8 @@ Route::get('/leader/access','Plus\Leader\LeaderController@access');
 Route::post('/leader/access/add','Plus\Leader\LeaderController@addAccess');
 Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@updateAccess');
 
+Route::get('/leader/rankings','Plus\Leader\LeaderController@showRankings');	
+
 /* --------------- Plus Member Resource routes  --------------- */
 Route::get('/plus/resource','Plus\Resources\ResourceController@showTaskList');
 Route::get('/plus/resource/{id}','Plus\Resources\ResourceController@showTask');
@@ -138,7 +140,6 @@ Route::get('/profile/servers','Profile\profileController@servers');
 
 /* --------------- Controller for the Contact Page ------------ */
 Route::get('/about','AboutController@index');			//Displays the contact page
-
 
 
 /* ---------------- Servers page controllers ------------------- */

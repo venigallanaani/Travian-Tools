@@ -31,11 +31,18 @@
             </button>Please <a href="{{route('login')}}" class="text-weight-bold"><strong>Login</strong></a> to access your account           
         </div>
     </div>    	
-	@endguest
+	@endguest	
     	
 	@auth
     <div class="container">
-      <div class="d-inline">
+    	@if(!Session::has('server'))
+    	<div class="alert alert-warning text-center my-1" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>You have not selected a server, <a href="{{route('server')}}" class="text-weight-bold"><strong>Select Server</strong></a>            
+        </div>
+        @else
+      	<div class="d-inline">
           <!-- ======================================= Account Side menu =================================== -->
   			<div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
 				<a class="list-group-item py-1 bg-dark h4">Account Menu</a>
@@ -48,7 +55,8 @@
 	    </div> 
 	    	
 		@yield('body')	 
-               
-    </div>
+  	@endif         
+    </div>    
     @endauth
+    
 @endsection

@@ -44,10 +44,10 @@
 					<table class="table table-hover table-sm table-bordered align-middle small">
 						<thead class="bg-dark text-white">
     						<tr>
-    							<th class="col-md-2" rowspan="2">Player</th>
-    							<th class="col-md-2" rowspan="2">Account</th>
-    							<th class="col-md-2" rowspan="2">Alliance</th>
-    							<th class="col-md-1" rowspan="2">Plus</th>
+    							<th class="col-md-2 align-middle" rowspan="2">Player</th>
+    							<th class="col-md-2 align-middle" rowspan="2">Account</th>
+    							<th class="col-md-2 align-middle" rowspan="2">Alliance</th>
+    							<th class="col-md-1 align-middle" rowspan="2">Plus</th>
     							<th colspan="6">Leadership Options</th>
     						</tr>
     						<tr class="">

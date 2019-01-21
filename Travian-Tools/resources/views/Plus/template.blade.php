@@ -33,6 +33,16 @@
     </div> 
 @endguest
 
+@if(!Session::has('server'))
+	<div class="container">
+        <div class="alert alert-warning text-center my-1" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>You have not selected a server, <a href="{{route('server')}}" class="text-weight-bold"><strong>Select Server</strong></a>            
+        </div>
+    </div>
+@else
+
 @auth
 @if(!Session::has('plus'))
 	<div class="container">
@@ -108,5 +118,6 @@
     @endif
 @endif
 @endauth
+@endif
 
 @endsection

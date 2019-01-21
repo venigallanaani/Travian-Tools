@@ -21,6 +21,11 @@ class AccountController extends Controller
 
     	session(['title'=>'Account']);
     	
+    	if(!$request->session()->has('server.id')){    	    
+    	    
+    	    return view('Account.template');    	    
+    	    
+    	}    	
     	if(Auth::check()){
     	    
     	    $account=Account::where('server_id',$request->session()->get('server.id'))
