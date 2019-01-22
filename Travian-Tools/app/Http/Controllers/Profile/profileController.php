@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Contacts;
+use App\Servers;
+use App\Account;
 
 class profileController extends Controller
 {
@@ -52,8 +54,32 @@ class profileController extends Controller
     
     public function servers(Request $request){
         
-        session(['title'=>'Profile']);
+        session(['title'=>'Profile']);        
+        $rows = Servers::where('status','ACTIVE')->get();
         
-        return view('Profile.servers');
+        $servers = array(); $profiles = array();
+        
+        foreach($rows as $row){
+            
+            $account=Account::where('server_id',$row->server_id)
+                        ->where('user_id',Auth::user()->id)->first();
+            if(!$account==null){
+                $profiles[]=array(
+                    'name'=>$row->url,
+                    'server_id'=>$row->server_id,
+                    'start_date'=>$row->start_date,
+                    'days'=>$row->days,
+                    'timezone'=>$row->timezone,
+                    'account'=>$account->account,
+                    'tribe'=>$account->tribe,
+                    'status'=>$account->status
+                );
+            }else{
+                $servers[]=$row;
+            }            
+        }        
+        return view('Profile.servers')->with(['profiles'=>$profiles])->with(['servers'=>$servers]);
     }
+   
+    
 }

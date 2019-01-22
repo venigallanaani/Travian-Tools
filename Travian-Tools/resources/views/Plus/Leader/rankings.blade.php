@@ -43,11 +43,11 @@
 							<td><a href="/finder/player/{{$player['account']}}/1" target="_blank">{{$player['account']}}</a></td>
 							<td><a href="/plus/member/{{$player['user']}}" target="_blank">{{$player['user']}}</a></td>
 							<td><a href="/finder/alliance/{{$player['alliance']}}/1" target="_blank">{{$player['alliance']}}</a></td>					
-            				<td class="font-weight-bold"></td>
-            				<td class="font-weight-bold"></td>
-            				<td class="font-weight-bold"></td>
-            				<td class="font-weight-bold"></td>
-            				<td class="font-weight-bold"></td>				       
+            				<td class="font-weight-bold">{{$player['pop']}}</td>
+            				<td class="font-weight-bold">{{$player['troop']}}</td>
+            				<td class="font-weight-bold">{{$player['off']}}</td>
+            				<td class="font-weight-bold">{{$player['def']}}</td>
+            				<td class="font-weight-bold">{{$player['hero']}}</td>				       
             			</tr>
 					@endforeach	
 				@endif			

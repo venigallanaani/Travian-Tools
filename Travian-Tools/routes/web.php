@@ -135,7 +135,9 @@ Route::post('/support','supportController@process');			// Creates the Defect / b
 /* ------------------ Profile Controller Page -------------- */
 Route::get('/profile','Profile\profileController@overview');
 Route::post('/profile/contact','Profile\profileController@updateContact');
+
 Route::get('/profile/servers','Profile\profileController@servers');
+Route::post('/profile/servers/load','ServersController@process');
 
 
 /* --------------- Controller for the Contact Page ------------ */

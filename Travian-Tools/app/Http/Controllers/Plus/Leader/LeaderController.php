@@ -137,7 +137,20 @@ class LeaderController extends Controller
     } 
     
     public function showRankings(){
-               
+        
+        session(['title'=>'Leader']);
+        
+        $members = Plus::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->orderby('account','asc')->get();
+        
+        $players = array();
+        foreach($members as $member){
+            
+                        
+            
+            
+        }
         
         return view('Plus.Leader.rankings')->with(['players'=>null]);
     }

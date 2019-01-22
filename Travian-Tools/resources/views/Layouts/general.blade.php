@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         
     </head>
-    <body onload="displayTime()">
+    <body>
         <nav class="navbar p-0 font-weight-bold navbar-expand-md navbar-dark bg-dark">
             <div class="container">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,8 +79,18 @@
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>    
-        @stack('scripts')
-
+        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script> 
+        <script type="text/javascript" src="{{ asset('js/moment-timezone.min.js') }}"></script>  
+        <script type="text/javascript" src="{{ asset('js/moment-timezone-with-data.min.js') }}"></script> 
+        
+        <script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>          
+        <script>
+            $(function(){
+    	  		setInterval(function(){
+    		 		$('#clock').html(moment().format('YYYY-MM-DD HH:mm:ss'));    		 		
+    	  		},500);
+        	});	        	
+        </script>
+		@stack('scripts')
     </body>
 </html>

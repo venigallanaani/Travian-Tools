@@ -34,29 +34,32 @@ class PlusController extends Controller
                $request->session()->forget('plus');
             }
             if($plus!=null){
-               $request->session()->put('plus',$plus);
+                $request->session()->put('plus',$plus);
                
-               $account=Account::where('server_id',$request->session()->get('server.id'))
+                $account=Account::where('server_id',$request->session()->get('server.id'))
                             ->where('user_id',$request->session()->get('plus.id'))->first();
                 
-               $res = ResTask::where('plus_id',$plus->plus_id)
+                $res = ResTask::where('plus_id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))
                         ->where('status','ACTIVE')->get();
-               $def = CFDTask::where('plus_id',$plus->plus_id)
+                $def = CFDTask::where('plus_id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))
                         ->where('status','ACTIVE')->get();               
                
-               $off = OPSWaves::where('plus_id',$plus->plus_id)
+                $off = OPSWaves::where('plus_id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))
                         ->where('a_uid',$account->uid)->get();
                
-               $counts=array(
+                $counts=array(
                    'res'=>count($res),
                    'def'=>count($def),
                    'off'=>count($off)
-               );              
+                );  
+                return view('Plus.General.overview')->with(['counts'=>$counts]);
+            }else{
+                return view('Plus.template');
             }
-            return view('Plus.General.overview')->with(['counts'=>$counts]);
+            
     	}else{    	    
     	    return view('Plus.template');
     	}
@@ -72,21 +75,19 @@ class PlusController extends Controller
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->orderby('account','asc')->get();
         $members = array();
-        $i=0;
         foreach($rows as $row){
             $account=Account::where('user_id',$row->id)
                         ->where('server_id',$row->server_id)->first();
             $alliance=Players::where('server_id',$row->server_id)
                         ->where('uid',$account->uid)
                         ->pluck('alliance')->first();
-            $members[$i]=array(
+            $members[]=array(
                 'player'=>$row->account,
                 'account'=>$row->user,
                 'alliance'=>$alliance,
                 'sitter1'=>$account->sitter1,
                 'sitter2'=>$account->sitter2
             );
-            $i++;
         }
         //dd($members);
         return view('Plus.General.members')->with(['members'=>$members]);
@@ -174,7 +175,6 @@ class PlusController extends Controller
             "pop"=>$pop
         );
         
-        //dd($ranking);
         return view('Plus.General.rankings')->with(['ranking'=>$ranking]);        
     }
     
