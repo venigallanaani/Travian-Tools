@@ -14,6 +14,7 @@ use App\Contacts;
 use App\Account;
 use App\Players;
 use App\OPSWaves;
+use App\Subscription;
 
 class PlusController extends Controller
 {
@@ -50,12 +51,15 @@ class PlusController extends Controller
                         ->where('server_id',$request->session()->get('server.id'))
                         ->where('a_uid',$account->uid)->get();
                
+                $subscription = Subscription::where('id',$plus->plus_id)
+                        ->where('server_id',$request->session()->get('server.id'))->first();
+                
                 $counts=array(
                    'res'=>count($res),
                    'def'=>count($def),
                    'off'=>count($off)
                 );  
-                return view('Plus.General.overview')->with(['counts'=>$counts]);
+                return view('Plus.General.overview')->with(['counts'=>$counts])->with(['subscription'=>$subscription]);
             }else{
                 return view('Plus.template');
             }

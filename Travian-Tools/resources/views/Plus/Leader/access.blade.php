@@ -42,7 +42,7 @@
 		<!-- =========================== leadership Options control panel ================================ -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
 					<table class="table table-hover table-sm table-bordered align-middle small">
-						<thead class="bg-dark text-white">
+						<thead class="bg-info text-white">
     						<tr>
     							<th class="col-md-2 align-middle" rowspan="2">Player</th>
     							<th class="col-md-2 align-middle" rowspan="2">Account</th>

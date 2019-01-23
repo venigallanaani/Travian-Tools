@@ -20,50 +20,37 @@
 		<!-- =========================== leadership Options control panel ================================ -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
 					<table class="table table-hover table-sm table-bordered align-middle small">
-						<thead class="bg-dark text-white">
+						<thead class="bg-info text-white">
     						<tr>
     							<th class="align-middle" rowspan="2">#</th>
-    							<th class="col-md-2 align-middle" rowspan="2">Player</th>
-    							<th class="col-md-2 align-middle" rowspan="2">Account</th>
-    							<th class="col-md-2 align-middle" rowspan="2">Alliance</th>
+    							<th class="align-middle" rowspan="2">Player</th>
+    							<th class="align-middle" rowspan="2">Account</th>
     							<th colspan="5">Rankings</th>
     						</tr>
     						<tr class="">
-    							<th class="col-md-1">Population</th>
-    							<th class="col-md-1">Troops</th>
-    							<th class="col-md-1">Offense</th>
-    							<th class="col-md-1">Defense</th>    							
-    							<th class="col-md-1">Hero</th>
+    							<th>Population</th>
+    							<th>Troops</th>
+    							<th>Offense</th>
+    							<th>Defense</th>    							
+    							<th>Hero</th>
     						</tr>
 						</thead>	
 				@if(!$players==null)
 					@foreach($players as $index=>$player)
 						<tr>	
 							<td>{{$index+1}}</td>										
-							<td><a href="/finder/player/{{$player['account']}}/1" target="_blank">{{$player['account']}}</a></td>
-							<td><a href="/plus/member/{{$player['user']}}" target="_blank">{{$player['user']}}</a></td>
-							<td><a href="/finder/alliance/{{$player['alliance']}}/1" target="_blank">{{$player['alliance']}}</a></td>					
-            				<td class="font-weight-bold">{{$player['pop']}}</td>
-            				<td class="font-weight-bold">{{$player['troop']}}</td>
-            				<td class="font-weight-bold">{{$player['off']}}</td>
-            				<td class="font-weight-bold">{{$player['def']}}</td>
-            				<td class="font-weight-bold">{{$player['hero']}}</td>				       
+							<td><a href="/finder/player/{{$player['player']}}/1" target="_blank">{{$player['player']}}</a></td>
+							<td><a href="/plus/member/{{$player['account']}}" target="_blank">{{$player['account']}}</a></td>				
+            				<td><strong>{{$player['pop'][0]->rank}}</strong> ({{$player['pop'][0]->value}})</td>
+            				<td><strong>{{$player['total'][0]->rank}}</strong> ({{$player['total'][0]->value}})</td>
+            				<td><strong>{{$player['off'][0]->rank}}</strong> ({{$player['off'][0]->value}})</td>
+            				<td><strong>{{$player['def'][0]->rank}}</strong> ({{$player['def'][0]->value}})</td>
+            				<td><strong>{{$player['hero'][0]->rank}}</strong> ({{$player['hero'][0]->exp}})</td>
             			</tr>
 					@endforeach	
-				@endif			
-						<tr>	
-							<td>1</td>										
-							<td><a href="/finder/player/Barca/1" target="_blank">Barca</a></td>
-							<td><a href="/plus/member/admin" target="_blank">admin</a></td>
-							<td><a href="/finder/alliance/1776/1" target="_blank">1776</a></td>					
-            				<td class="font-weight-bold">1</td>
-            				<td class="font-weight-bold">1</td>
-            				<td class="font-weight-bold">1</td>
-            				<td class="font-weight-bold">1</td>
-            				<td class="font-weight-bold">1</td>			       
-            			</tr>
+				@endif
 					</table>
-				</div>			
+				</div>	
 			</div>
 		</div>
 @endsection

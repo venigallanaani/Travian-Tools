@@ -12,6 +12,7 @@ use App\MapData;
 use App\Diff;
 use App\Players;
 use App\Alliances;
+use App\Map;
 
 
 class processCleanUp extends Command
@@ -37,14 +38,27 @@ class processCleanUp extends Command
             echo "\n".'***********************Server: '.$server->url.'***************************'."\n";
             echo "New clean up process job started at ".Carbon::now()."\n";
             
-            Alliances::where('table_id','<>',$server->table_id)->delete();
+            Alliances::where('table_id','<>',$server->table_id)
+                        ->where('server_id',$server->server_id)->delete();
             echo "Allainces table cleanup completed"."\n";
 
-            Players::where('table_id','<>',$server->table_id)->delete();
+            Players::where('table_id','<>',$server->table_id)
+                        ->where('server_id',$server->server_id)->delete();
             echo "Players table cleanup completed"."\n";
 
-            Diff::where('table_id','<>',$server->table_id)->delete();
+            Diff::where('table_id','<>',$server->table_id)
+                        ->where('server_id',$server->server_id)->delete();
             echo "Diff table cleanup completed"."\n";
+            
+            /* $maps = Map::where('server_id',$server->server_id)
+                        ->where('status','ACTIVE')->orderBy('created-at','desc')->get();
+            if(count($maps)>10){
+                for($i=10;$i<count($maps);$i++){
+                    
+                    Map::where('server_id',$maps[$i][''])
+                    
+                }                
+            }  */         
             echo "\n".'**************************************************************************'."\n";
         }
     }

@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use lluminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use App\Plus;
 use App\Account;
 use App\Players;
+use App\Subscription;
 
 class LeaderController extends Controller
 {
@@ -136,7 +138,7 @@ class LeaderController extends Controller
         
     } 
     
-    public function showRankings(){
+    public function showRankings(Request $request){
         
         session(['title'=>'Leader']);
         
@@ -147,12 +149,98 @@ class LeaderController extends Controller
         $players = array();
         foreach($members as $member){
             
-                        
+            $account = Account::where('server_id',$request->session()->get('server.id'))
+                        ->where('user_id',$member->id)->first();
             
+            $sqlStr = 'SELECT rank, value FROM (
+                        SELECT  @rank := @rank + 1 rank, s.* FROM (
+                            SELECT account_id, sum(upkeep) as value  FROM troops
+                                WHERE type="offense"
+                                GROUP BY account_id
+                                ORDER BY sum(upkeep) DESC
+                            ) s, (SELECT @rank := 0) init
+                        ) r WHERE account_id='.$account->account_id;
+            $offense = DB::select(DB::raw($sqlStr));
             
+            $sqlStr = 'SELECT rank, value FROM (
+                        SELECT  @rank := @rank + 1 rank, s.* FROM (
+                            SELECT account_id, sum(upkeep) as value  FROM troops
+                                WHERE type="defense"
+                                GROUP BY account_id
+                                ORDER BY sum(upkeep) DESC
+                            ) s, (SELECT @rank := 0) init
+                        ) r WHERE account_id='.$account->account_id;
+            $defense = DB::select(DB::raw($sqlStr));
+            
+            $sqlStr = 'SELECT rank, value FROM (
+                        SELECT  @rank := @rank + 1 rank, s.* FROM (
+                            SELECT account_id, sum(upkeep) as value  FROM troops
+                                GROUP BY account_id
+                                ORDER BY sum(upkeep) DESC
+                            ) s, (SELECT @rank := 0) init
+                        ) r WHERE account_id='.$account->account_id;
+            $total = DB::select(DB::raw($sqlStr));
+            
+            $sqlStr = 'SELECT rank, level, exp FROM (
+                        SELECT  @rank := @rank + 1 rank, s.* FROM (
+                            SELECT account_id, level, exp  FROM hero
+                                ORDER BY exp DESC
+                            ) s, (SELECT @rank := 0) init
+                        ) r WHERE account_id='.$account->account_id;
+            $hero = DB::select(DB::raw($sqlStr));
+            
+            $sqlStr = "SELECT rank, value FROM (
+                    	SELECT  @rank := @rank + 1 rank, s.* FROM (
+                    		SELECT a.uid as uid, sum(a.population) as value  FROM players a, accounts b, plus c
+                    			WHERE a.uid=b.uid
+                                AND a.server_id = b.server_id
+                                AND b.server_id = c.server_id
+                                AND c.plus_id = '".$request->session()->get('plus.plus_id')."'
+                                AND b.user_id = c.id
+                    			GROUP BY a.uid
+                    			ORDER BY sum(population) DESC
+                    		) s, (SELECT @rank := 0) init
+                    	) r WHERE uid=".$account->uid;
+            $pop = DB::select(DB::raw($sqlStr));
+            
+            $players[]=array(
+                "rank"=>($offense[0]->rank+$defense[0]->rank+$total[0]->rank+$hero[0]->rank+$pop[0]->rank),
+                "player"=>$member->account,
+                "account"=>$account->account,
+                "off"=>$offense,
+                "def"=>$defense,
+                "total"=>$total,
+                "hero"=>$hero,
+                "pop"=>$pop
+            );
         }
+        //dd($players);
+        return view('Plus.Leader.rankings')->with(['players'=>$players]);
+    }
+    
+    public function subscriptions(Request $request){
         
-        return view('Plus.Leader.rankings')->with(['players'=>null]);
+        session(['title'=>'Leader']);
+        
+        $subscription = Subscription::where('server_id',$request->session()->get('server.id'))
+                            ->where('id',$request->session()->get('plus.plus_id'))->first();
+        
+        return view('Plus.Leader.subscription')->with(['subscription'=>$subscription]);
+    }
+    
+    public function messageUpdate(Request $request){
+        session(['title'=>'Leader']);
+        
+        //dd(Carbon::now()->format('Y-m-d'));
+        
+        Subscription::where('server_id',$request->session()->get('server.id'))
+                        ->where('id',$request->session()->get('plus.plus_id'))
+                        ->update(['message'=>str_replace('<br>','',Input::get('message')),
+                                    'message_update'=>$request->session()->get('plus.user'),
+                                    'message_date'=>Carbon::now()->format('Y-m-d')                            
+                        ]);
+        
+        return Redirect::to('/leader/subscription'); 
     }
     
 }

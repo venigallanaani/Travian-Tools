@@ -33,16 +33,18 @@ class AccountController extends Controller
     	    
     	    if($account!= null){
     	        $player = Players::where('server_id',$request->session()->get('server.id'))
-    	        ->where('uid',$account->uid)->first();
+    	                   ->where('uid',$account->uid)->first();
     	        
     	        $villages = Diff::where('server_id',$request->session()->get('server.id'))
-    	        ->where('uid',$account->uid)->get();
-    	        
+    	                   ->where('uid',$account->uid)->get();    	        
+                
     	        return view('Account.overview')->with(['account'=>$account])
-    	        ->with(['player'=>$player])->with(['villages'=>$villages]);
+    	                   ->with(['player'=>$player])->with(['villages'=>$villages]);
     	    }else{
+    	        
     	        Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));
     	        return view('Account.addAccount');
+    	        
     	    }
     	    
     	}else{    	      
@@ -50,7 +52,7 @@ class AccountController extends Controller
     	}
     }
     
-    
+// Process to add new travian profile to account
    public function addAccount(Request $request){
        
        session(['title'=>'Account']);
@@ -81,15 +83,6 @@ class AccountController extends Controller
            
            Session::flash('danger','Travian account with name '.Input::get('player').' not found');           
            return Redirect::to('/account');
-       }
-        
-       
-       
-       
+       }       
    }
-
-
-    //This process will display the different kinds of finders based on the input
-
-
 }

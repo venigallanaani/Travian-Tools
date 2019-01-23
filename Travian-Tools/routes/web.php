@@ -71,6 +71,9 @@ Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@upd
 
 Route::get('/leader/rankings','Plus\Leader\LeaderController@showRankings');	
 
+Route::get('/leader/subscription','Plus\Leader\LeaderController@subscriptions');
+Route::post('/leader/subscription/message','Plus\Leader\LeaderController@messageUpdate');
+
 /* --------------- Plus Member Resource routes  --------------- */
 Route::get('/plus/resource','Plus\Resources\ResourceController@showTaskList');
 Route::get('/plus/resource/{id}','Plus\Resources\ResourceController@showTask');

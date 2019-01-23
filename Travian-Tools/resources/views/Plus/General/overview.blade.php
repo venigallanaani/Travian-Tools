@@ -8,13 +8,26 @@
         </div>
         <div class="card-text p-3 h5">
             <p>Welcome to Plus group - <span class="text-info"><strong>{{Session::get('plus.name')}}</strong></span></p>
-            <p class="h3 pt-3 text-info"><strong>Group Status</strong></p>            
-			<div class="ml-5">
-							
+            <br>
+            <div class="card mx-auto">
+            	<div class="card-header py-1 text-info h4">
+            		<p><strong>Message of the day</strong></p>
+            	</div>
+            	<div class="card-body py-1">
+            		<p class="card-text font-italic">{{$subscription->message}}</p>
+            		<p class="small text-info"><strong>{{$subscription->message_update}} ({{$subscription->message_date}})</strong></p>
+            	</div>
+            </div>
+            <br>
+            <div class="card mx-auto">
+            	<div class="card-header py-1 text-info h4">
+            		<p><strong>Group Status</strong></p>
+            	</div>
+            	<div class="card-body py-1">							
 				@if($counts['res']>0)				
 					<p><strong>{{$counts['res']}} <a href="/plus/resource" class="text-info">Resource Tasks</strong></a> are active</p>
 				@else
-					<p>No <span class="text-info"><strong>Resource tasks</strong></span> are available</p>
+					<p>No <span class="text-info"><strong>Resource tasks</strong></span> are currently active</p>
 				@endif
 				
 				@if($counts['def']>0)				
@@ -27,10 +40,10 @@
 					<p><strong>{{$counts['off']}} <a href="/plus/offense" class="text-info">Offense Plans</strong></a> are in progress</p>
 				@else
 					<p>No <span class="text-info"><strong>Offense plans</strong></span> are currently active</p>
-				@endif				
-			</div>
+				@endif	
+            	</div>
+            </div>            
         </div>
-        {{Session::get('plus')}}
     </div>
     	
 @endsection

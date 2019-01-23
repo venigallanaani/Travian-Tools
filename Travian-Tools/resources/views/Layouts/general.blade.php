@@ -16,12 +16,16 @@
         
     </head>
     <body>
-        <nav class="navbar p-0 font-weight-bold navbar-expand-md navbar-dark bg-dark">
+        <nav class="navbar p-0 font-weight-bold navbar-expand-md navbar-dark bg-dark align-middle">
             <div class="container">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a href="/" class="navbar-brand mr-3"><span class="h3">Travian Tools </span><small class="align-bottom"><small>1.0</small></small></a>
+                <!-- <a href="/" class="navbar-brand mr-3"><span class="h3">Travian Tools </span><small class="align-bottom"><small>1.0</small></small></a> -->
+                <a href="/" class="navbar-brand mr-3">
+            		<img id="logo" alt="" src="{{{ asset('images/favicon.png') }}}" width="42" height="30"> 	
+            		<span class="h3">Travian Tools </span><small class="align-bottom"><small>1.0</small></small>
+        		</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item px-2">
@@ -36,7 +40,8 @@
                         <li class="nav-item px-2">
                             <a href="{{ route('plus') }}" class="nav-link">Plus</a>
                         </li>
-                    </ul>                    
+                    </ul>   
+                                    
             @if(!Auth::check())
                     <div class="navbar-nav ml-auto">
                         <div class="nav-item">
