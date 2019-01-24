@@ -8,7 +8,7 @@
         </div>
         <div class="card-text mx-auto text-center col-md-12">
             <div>
-                <table class="table table-borderless mx-auto mt-3 text-left">
+                <table class="table table-borderless col-md-10 mx-auto mt-3 text-left">
                     <tr>
                         <td>
                             <table class="mx-auto px-0">
@@ -46,7 +46,7 @@
                 </table>                
             </div>
                 
-            <div class="mt-1 col-md-8 mx-auto">
+            <div class="mt-1 col-md-10 mx-auto">
                 <table class="table table-bordered table-hover table-sm">
                     <thead class="thead">
                         <tr>

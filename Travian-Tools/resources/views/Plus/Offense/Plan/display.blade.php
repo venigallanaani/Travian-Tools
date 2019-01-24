@@ -113,9 +113,10 @@
 @push('scripts')
 
 <script type="text/javascript">
+// Adds new line to the data
     $(document).ready(function(){
         $("#addRow").click(function(){
-            var markup = '<tr>'+
+        	var markup ='<tr>'+
             				'<td>X:<input name="a_x" type="text" size="2" /> |Y:<input name="a_y" type="text" size="2" /></td>'+
             				'<td>X:<input name="d_x" type="text" size="2" /> |Y:<input name="d_y" type="text" size="2" /></td>'+
             				'<td><select name="type">'+
@@ -139,34 +140,31 @@
             				'<td><input name="Comments" type="text" /></td>'+
             				'<td><span><button class="badge badge-primary" id="saveRow">Save</button></span>'+
             				'</td>'+
-            			'</tr>';
+        				'</tr>';
 
             
             $("#ops tbody").append(markup);
         });
     });          
 
+//deletes the attack from the plan
     $(function(){
-    	$('#ops').on('click','#delRow',function(e){            
-
-			var wave= $(this).parents('tr').attr("id");
-
-
-			alert(wave);
-    		//$.get("/"+, function(data){
-    			//alert("Data: " + data + "\nStatus: " + status);
-		    //});
+    	$('#ops').on('click','#delRow',function(e){
+			var wave= $(this).parents('tr').attr("id");	
 			
-            //e.preventDefault();
-          	//$(this).parents('tr').remove();
+			var xmlhttp = new XMLHttpRequest();
+		    xmlhttp.onreadystatechange = function() {
+		        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+		        {	console.log(xmlhttp.responseText);	}
+		    };
+		    xmlhttp.open("GET", "/offense/plan/delete/"+wave, true);
+		    xmlhttp.send();		
+
+            e.preventDefault();
+          	$(this).parents('tr').remove();		
         });
-   });
-            
-			        
+   });	        
   
 </script>
-
-
-
 
 @endpush

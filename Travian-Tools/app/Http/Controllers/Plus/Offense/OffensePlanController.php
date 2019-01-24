@@ -15,7 +15,7 @@ use App\Troops;
 use App\Units;
 use App\Diff;
 
-class MakeOffensePlanController extends Controller
+class OffensePlanController extends Controller
 {
     public function showPlanLayout(Request $request, $id){
         
@@ -67,9 +67,43 @@ class MakeOffensePlanController extends Controller
             $id = Input::get('savePlan');
         }
         
-        return Redirect::to('/offense/plan/edit/'.$id);
+        return Redirect::to('/offense/plan/edit/'.$id);       
         
+    }
+    
+    public function deleteWave(Request $request, $id){
         
+        $wave=OPSWaves::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('id',$id)->first();
         
+        if($wave!=null){
+                        
+            $plan=OPS::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('id',$wave->plan_id)->first();
+
+            if($wave->type=='Real'){    $real=$plan->real-1;    }
+                else{   $real=$plan->real;  }
+            if($wave->type=='Fake'){    $fake=$plan->fake-1;    }
+                else{   $fake=$plan->fake;  }
+            if($wave->type!='Real' or $wave->type!='Fake'){    $other=$plan->other-1;    }
+                else{   $other=$plan->other;  }
+                
+            OPS::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('id',$wave->plan_id)
+                    ->update([
+                        'real'=>$real,
+                        'fake'=>$fake,
+                        'other'=>$other
+                    ]);            
+            
+            OPSWaves::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('id',$id)->delete();           
+            
+        }
+
     }
 }

@@ -20,30 +20,28 @@
         
     </head>
     <body onload="displayTime()">
-    	<form action="/offense/plan/update" method="post">	
-    	{{csrf_field()}}
-            <header id="main-header" class="py-1 bg-dark text-white">
-                <div class="container">
-                    <p class="h3 font-weight-bold text-center">
-                    	<span class="h3">Offense Plan Editor </span>
-                    	<span class="h6"> Travian Tools </span>
-                    </p>                
-                </div>
-            </header> 
-    
-            <header id="main-header" class="py-1 bg-info text-white">
-                <div class="container">
-                    <table class="col-md-12 text-center">
-                    	<tr>
-                    		<td class="h4 font-weight-bold col-md-6">Plan : {{$plan->name}}</td>
-                    		<td class="align-right col-md-6">
-                    			<button class="btn btn-warning btn-sm px-5 font-weight-bold"  type="submit" name="savePlan" value="{{$plan->id}}">Save</button>                    			
-                			</td>
-                    	</tr>
-                    </table>                
-                </div>
-            </header> 
-        </form> 
+        <header id="main-header" class="py-1 bg-dark text-white">
+            <div class="container">
+                <p class="h3 font-weight-bold text-center">
+                	<span class="h3">Offense Plan Editor </span>
+                	<span class="h6"> Travian Tools </span>
+                </p>                
+            </div>
+        </header> 
+
+        <header id="main-header" class="py-1 bg-info text-white">
+            <div class="container">
+                <table class="col-md-12 text-center">
+                	<tr>
+                		<td class="h4 font-weight-bold col-md-6">Plan : {{$plan->name}}</td>
+                		<td class="align-right col-md-6">
+                			<a href='/offense/plan/edit/{{$plan->id}}'><button class="btn btn-warning btn-sm px-5 font-weight-bold">
+                			<i class="fas fa-sync"></i>  Refresh</button></a>                    			
+            			</td>
+                	</tr>
+                </table>                
+            </div>
+        </header> 
         <div class="container">
 	@foreach(['danger','success','warning','info'] as $msg)
 		@if(Session::has($msg))

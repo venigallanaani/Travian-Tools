@@ -16,7 +16,7 @@
                                 <strong>Coordinates : </strong><input type="text" size="5" name="xCor" required value="{{old('xCor') ?? '0'}}"/> | <input type="text" size="5" name="yCor" required value="{{old('yCor') ?? '0'}}"/>
                             </div>
                             <div class="px-2 py-1"><strong>Distance : </strong><input type="number" min=0 name="dist" required value="{{old('dist') ?? '25'}}"/></div>
-                            <div class="px-2 py-1"><strong>Population : </strong><input type="number" min=0 name="pop" required value="{{old('pop') ?? '2'}}"/></div>
+                            <div class="px-2 py-1"><strong>Min Pop : </strong><input type="number" min=0 name="pop" required value="{{old('pop') ?? '2'}}"/></div>
                             <div class="px-2 py-1">
                                 <button class="btn btn-outline-warning px-5" type="submit"><strong>Search Inactives</strong></button>
                             </div>
