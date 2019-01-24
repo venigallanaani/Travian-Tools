@@ -18,51 +18,52 @@
                 @endforeach	
                 
                 <div class="text-center col-md-8 mx-auto p-2">
-                	<table class="table table-borderless table-sm text-left">
-                		<tr>
-                			<td class="align-middle">
-                				<p><strong>Status : </strong>{{$plan->status}}</p>
-                				<p><strong>Created By : </strong>{{$plan->create_by}}</p>
-                				<p><strong>Updated By : </strong>{{$plan->update_by}}</p>
-                			</td>
-                			<td class="text-center align middle">
-                				<form action="/offense/status/update" method="post" class="my-1">{{csrf_field()}}
-                					<button class="btn btn-warning btn-sm px-5" name="deletePlan" value="{{$plan->id}}">Delete Plan</button>
-            					</form>
-                			</td>                			
-                		</tr>                    		
-                	</table>
+                	<svg id="sankeyChart" width="800" height="500" style="margin:auto"></svg>                	
                 </div>
             @if(count($waves)==0)
             	<div class="text-center col-md-11 mx-auto my-2 p-0">
-            		<p class="h5 my-5">No attacks are planned yet</p>
+            		<p class="h5 my-5">No attacks are present in the archived plan</p>
             	</div>            
             @else	
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
 					<table class="table align-middle small">
 						<thead class="thead-inverse">
     						<tr>
-    							<th class="col-md-1">Player</th>
-    							<th class="col-md-1">Defense</th>
+    							<th class="col-md-1">Attacker</th>
+    							<th class="col-md-1">Target</th>
     							<th class="col-md-1">Type</th>
-    							<th class="col-md-1">Priority</th>
-    							<th class="col-md-2">Land Time</th>
-    							<th class="col-md-1">Time left</th>
-    							<th class="col-md-1"></th>    							
+    							<th class="col-md-1">Land Time</th>
+    							<th class="col-md-1">Waves</th>
+    							<th class="col-md-1">Troops</th>
+    							<th class="col-md-1">Status</th>    							
+    							<th class="col-md-2">Comments</th>
+    							<th class="col-md-1">Report</th>  							
     						</tr>
 						</thead>
 						@foreach($waves as $wave)
+							@php
+                            	if($wave->type == 'Real'){	$color='text-danger';	}
+                            	elseif($wave->type == 'Fake'){	$color='text-primary';	}
+                            	elseif($wave->type == 'Cheif'){	$color='text-warning';	}
+                            	elseif($wave->type == 'Scout'){	$color='text-success';	}
+                            	else{	$color='text-dark';	}
+                            @endphp	
     						<tr>
-    							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
-    								<strong>{{$task->player}} ({{$task->village}})</strong></a>
+    							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$wave->a_x}}&y={{$wave->a_y}}" target="_blank">
+    								<strong>{{$wave->a_player}} ({{$wave->a_village}})</strong></a>
     							</td>
-    							<td>{{$task->def_total}}</td>
-    							<td><strong>{{$task->type}}</strong></td>
-    							<td class="{{$color}}"><strong>{{$task->priority}}</strong></td>
-    							<td>{{$task->target_time}}</td>
-    							<td>00:00:00</td>
-    							<td><a class="btn btn-outline-secondary" href="/plus/defense/{{$task->task_id}}">
-    								<i class="fa fa-angle-double-right"></i> Details</a>
+    							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$wave->d_x}}&y={{$wave->d_y}}" target="_blank">
+    								<strong>{{$wave->d_player}} ({{$wave->d_village}})</strong></a>
+    							</td>
+    							<td class="{{$color}}"><strong>{{$wave->type}}</strong></td>
+    							<td>{{$wave->landtime}}</td>
+    							<td>{{$wave->waves}}</td>
+    							<td data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="" src="/images/x.gif" class="units {{$wave->unit}}"></td>
+    							<td>{{$wave->status}}</td>    							
+    							<td>{{$wave->comments}}</td>
+    							<td>@if($wave->report!=null)    								
+    								<a href="{{$wave->report}}" target="_blank">Report</a>
+    								@endif
     							</td>
     						</tr>
 						@endforeach
@@ -72,3 +73,9 @@
 			</div>
 		</div>
 @endsection
+
+@push('scripts')
+    @if(!$sankeyData==null)
+    	{{	createSankey($sankeyData)	}}
+	@endif
+@endpush

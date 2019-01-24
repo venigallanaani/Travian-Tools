@@ -10,129 +10,69 @@
     			<p class="text-center h5 my-3">No offense plans are available</p>
     		@else
     			@foreach($ops as $plan)
-    			<p class="text-center h5 my-3">Plan: <span class="text-danger"><strong>{{$plan->name}}</strong></span></p>
-    			<p class="text-center h6 my-3">Created By: {{$plan->create}}	Updated By:{{$plan->update}}</p>
-    			<div class="text-center col-md-11 mx-auto my-2 p-0">
-					<table class="table align-middle small table-sm">
+    			<table class="text-center col-md-8 mx-auto my-3">
+    				<tr>
+    					<td colspan="2" class="h5">Plan: <span class="text-danger"><strong>{{$plan['name']}}</strong></span></td>
+					</tr>
+    				<tr>
+    					<td><span class="text-info font-weight-bold">Created By: </span>{{$plan['create']}}</td>
+    					<td><span class="text-info font-weight-bold">Updated By: </span>{{$plan['update']}}</td>
+    				</tr>
+    			</table>
+    			<div class="text-center col-md-12 mx-auto my-3 px-2">
+					<table class="table align-middle small table-sm table-hover">
 						<thead class="thead-inverse">
     						<tr>
     							<th class="col-md-1">Attacker</th>
-    							<th class="col-md-1">Target</th>
+    							<th class="col-md-2">Target</th>
     							<th class="col-md-1">Type</th>
-    							<th class="col-md-1">Waves</th>
-    							<th class="col-md-1">Troops</th>
     							<th class="col-md-1">Land time</th>
+    							<th class="col-md-1">Waves</th>
+    							<th class="col-md-1">Troops</th>    							
     							<th class="col-md-1">Start time</th>
-    							<th class="col-md-1">CountDown</th>
+    							<th class="col-md-1">Timer</th>
     							<th class="col-md-2">Comments</th>
     							<th class="col-md-1"></th>
     						</tr>
 						</thead>
-					@foreach($plan['waves'] as $waves)
+					@foreach($plan['waves'] as $wave)
 						<tr>
-							<td><a href="">
-								<strong>{{$plan->a_village}}</strong></a>
+							<td><a href="" target="_blank">
+								<strong>{{$wave->a_village}}</strong></a>
 							</td>
-							<td><a href="">
-								<strong>{{$plan->d_player}} ({{$plan->d_village}})</strong></a>
+							<td><a href="" target="_blank">
+								<strong>{{$wave->d_player}} ({{$wave->d_village}})</strong></a>
 							</td>
-							<td class="text-danger"><strong>{{$plan->type}}</strong></td>
-							<td><strong>{{$plan->waves}}</strong></td>
-							<td>{{$plan->unit}}</td>
-							<td>{{$plan->landtime}}</td>
-							<td>Start Time</td>
+							<td class="text-danger"><strong>{{$wave->type}}</strong></td>
+							<td>{{$wave->landtime}}</td>
+							<td><strong>{{$wave->waves}}</strong></td>
+							<td><span data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="all" src="/images/x.gif" class="units {{$wave->unit}}"></td>
+							<td>2019-01-30 00:00:00 </td>
 							<td>00:00:00</td>
-							<td>{{$plan->comments}}</td>
+							<td>{{$wave->comments}}</td>
+							<td>@if($wave->status==null)
+								<a href="/plus/offense/yes/{{$wave->id}}"><button class="badge badge-success"><i class="fas fa-check"></i></button></a>
+    							<a href="/plus/offense/no/{{$wave->id}}"><button class="badge badge-danger"><i class="fas fa-times"></i></button></a>
+    							@else
+    							{{$wave->status}}
+    							@endif
+							</td>							
 						</tr>
+					@if($wave->status=='Sent')
+						<tr>
+							<form method="post" action="/plus/offense/update">
+								{{csrf_field()}}
+    							<td colspan="5"><strong>Report: </strong><input type="text" name="report" size="40" value="{{$wave->report}}"/></td>
+    							<td colspan="4"><strong>Notes: </strong><input type="text" name="notes" size="20" value="{{$wave->notes}}"/></td>
+    							<td><button class="btn btn-info btn-sm px-3" type="submit" name="save" value="{{$wave->id}}">Save</button></td>
+							</form>
+						</tr>
+					@endif
 					@endforeach
 					</table>  			
     			@endforeach
     			</div>
     		@endif
-				<!-- <p class="text-center h5 my-3">Plan: <span class="text-danger"><strong>Default Name 1</strong></span></p>	
-				<div class="text-center col-md-11 mx-auto my-2 p-0">
-					<table class="table align-middle small table-sm">
-						<thead class="thead-inverse">
-    						<tr>
-    							<th class="col-md-1">Attacker</th>
-    							<th class="col-md-1">Target</th>
-    							<th class="col-md-1">Type</th>
-    							<th class="col-md-1">Waves</th>
-    							<th class="col-md-1">Troops</th>
-    							<th class="col-md-1">Land time</th>
-    							<th class="col-md-1">Start time</th>
-    							<th class="col-md-1">CountDown</th>
-    							<th class="col-md-2">Comments</th>
-    							<th class="col-md-1"></th>
-    						</tr>
-						</thead>
-						<tr>
-							<td><a href="">
-								<strong>village</strong></a>
-							</td>
-							<td><a href="">
-								<strong>village (Target)</strong></a>
-							</td>
-							<td class="text-danger"><strong>Real</strong></td>
-							<td>4</td>
-							<td><span data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="all" src="/images/x.gif" class="units t08"></td>
-							<td>16/12/2018 00:00:00</td>
-							<td>15/12/2018 00:00:00</td>
-							<td>24:00:00</td>
-							<td>Crop lock</td>
-							<td><img alt="all" src="/images/x.gif" class="res clock"></td>
-						</tr>
-						<tr>
-							<td><a href="">
-								<strong>village</strong></a>
-							</td>
-							<td><a href="">
-								<strong>village (Target)</strong></a>
-							</td>
-							<td class="text-primary"><strong>Fake</strong></td>
-							<td>4</td>
-							<td><span data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="all" src="/images/x.gif" class="units t08"></td>
-							<td>16/12/2018 00:00:00</td>
-							<td>15/12/2018 00:00:00</td>
-							<td>24:00:00</td>
-							<td>Crop lock</td>
-							<td><img alt="all" src="/images/x.gif" class="res clock"><img alt="all" src="/images/x.gif" class="res clock"></td>
-						</tr>
-						<tr>
-							<td><a href="">
-								<strong>village</strong></a>
-							</td>
-							<td><a href="">
-								<strong>village (Target)</strong></a>
-							</td>
-							<td class="text-warning"><strong>Cheif</strong></td>
-							<td>4</td>
-							<td><span data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="all" src="/images/x.gif" class="units t08"></td>
-							<td>16/12/2018 00:00:00</td>
-							<td>15/12/2018 00:00:00</td>
-							<td>24:00:00</td>
-							<td>Crop lock</td>
-							<td><img alt="all" src="/images/x.gif" class="res clock"></td>
-						</tr>
-						<tr>
-							<td><a href="">
-								<strong>village</strong></a>
-							</td>
-							<td><a href="">
-								<strong>village (Target)</strong></a>
-							</td>
-							<td class="text-dark"><strong>Scout</strong></td>
-							<td>4</td>
-							<td><span data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="all" src="/images/x.gif" class="units t08"></td>
-							<td>16/12/2018 00:00:00</td>
-							<td>15/12/2018 00:00:00</td>
-							<td>24:00:00</td>
-							<td>Crop lock</td>
-							<td><img alt="all" src="/images/x.gif" class="res clock"></td>
-						</tr>
-					</table>
-				</div> -->
 			</div>
 		</div>
-
 @endsection

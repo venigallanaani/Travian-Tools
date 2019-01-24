@@ -11,13 +11,13 @@ use Illuminate\Support\Facades\Auth;
 
 use App\OPS;
 use App\OPSWaves;
+use App\Account;
 
 class OffenseController extends Controller
 {
     public function offenseTaskList(Request $request){
         
-        session(['title'=>'Offense']);
-        
+        session(['title'=>'Offense']);        
         $ops = null;
         
         $plans = OPS::where('server_id',$request->session()->get('server.id'))
@@ -37,7 +37,7 @@ class OffenseController extends Controller
                             ->orderBy('landtime','asc')->get();
                 
                 if(count($waves)>0){
-                    $ops=array(
+                    $ops[]=array(
                         'id'=>$plan->id,
                         'name'=>$plan->name,
                         'create'=>$plan->create_by,
@@ -47,8 +47,21 @@ class OffenseController extends Controller
                 }                 
             }
         }       
+        return view('Plus.Offense.offenseTasks')->with(['ops'=>$ops]);        
+    }
+    
+    public function updateOffenseTask(Request $request, $sts, $id){
+        session(['title'=>'Offense']);
         
-        return view('Plus.Offense.offenseTasks')->with(['ops'=>$ops]);
+        if($sts == 'yes'){
+            $status = 'Sent';
+        }else{
+            $status = 'Not Sent';
+        }
+        $waves=OPSWaves::where('server_id',$request->session()->get('server.id'))
+                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                ->where('id',$id)->update(['status'=>$status]);        
         
+        return Redirect::To('/plus/offense');
     }
 }

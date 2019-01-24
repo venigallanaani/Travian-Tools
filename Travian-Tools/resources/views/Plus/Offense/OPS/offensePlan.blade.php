@@ -63,15 +63,22 @@
     							<th class="col-md-1">Attacker</th>
     							<th class="col-md-1">Target</th>
     							<th class="col-md-1">Type</th>
+    							<th class="col-md-1">Land Time</th>
     							<th class="col-md-1">Waves</th>
     							<th class="col-md-1">Troops</th>
-    							<th class="col-md-1">Status</th>
-    							<th class="col-md-1">Land Time</th>
-    							<th class="col-md-1">Timer</th>
-    							<th class="col-md-2">Comments</th>     							
+    							<th class="col-md-1">Status</th>    							
+    							<th class="col-md-2">Comments</th>
+    							<th class="col-md-1">Report</th>  							
     						</tr>
 						</thead>
 						@foreach($waves as $wave)
+							@php
+                            	if($wave->type == 'Real'){	$color='text-danger';	}
+                            	elseif($wave->type == 'Fake'){	$color='text-primary';	}
+                            	elseif($wave->type == 'Cheif'){	$color='text-warning';	}
+                            	elseif($wave->type == 'Scout'){	$color='text-success';	}
+                            	else{	$color='text-dark';	}
+                            @endphp	
     						<tr>
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$wave->a_x}}&y={{$wave->a_y}}" target="_blank">
     								<strong>{{$wave->a_player}} ({{$wave->a_village}})</strong></a>
@@ -79,13 +86,16 @@
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$wave->d_x}}&y={{$wave->d_y}}" target="_blank">
     								<strong>{{$wave->d_player}} ({{$wave->d_village}})</strong></a>
     							</td>
-    							<td>{{$wave->type}}</td>
+    							<td class="{{$color}}"><strong>{{$wave->type}}</strong></td>
+    							<td>{{$wave->landtime}}</td>
     							<td>{{$wave->waves}}</td>
     							<td data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="" src="/images/x.gif" class="units {{$wave->unit}}"></td>
-    							<td>{{$wave->status}}</td>
-    							<td>{{$wave->landtime}}</td>
-    							<td>00:00:00</td>
+    							<td>{{$wave->status}}</td>    							
     							<td>{{$wave->comments}}</td>
+    							<td>@if($wave->report!=null)    								
+    								<a href="{{$wave->report}}" target="_blank">Report</a>
+    								@endif
+    							</td>
     						</tr>
 						@endforeach
 					</table>
