@@ -35,6 +35,7 @@ class CreateDefenseTasksTable extends Migration
             $table->integer('def_percent')->default(0);
             $table->integer('def_inf')->default(0);
             $table->integer('def_cav')->default(0);
+			$table->integer('resources')->default(0);
             $table->timestamps();
         });
     }
