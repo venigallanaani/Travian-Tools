@@ -51,12 +51,12 @@ class LeaderCFDController extends Controller
         
         $players = CFDUpd::where('server_id','=',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))->where('task_id',$id)
-                        ->select('player', DB::raw('sum(UNIT01) as unit_01'), DB::raw('sum(UNIT02) as unit_02'),
+                        ->select('player', 'uid', DB::raw('sum(UNIT01) as unit_01'), DB::raw('sum(UNIT02) as unit_02'),
                                 DB::raw('sum(UNIT03) as unit_03'),DB::raw('sum(UNIT04) as unit_04'),DB::raw('sum(UNIT05) as unit_05'),
                                 DB::raw('sum(UNIT06) as unit_06'),DB::raw('sum(UNIT07) as unit_07'),DB::raw('sum(UNIT08) as unit_08'),
                                 DB::raw('sum(UNIT09) as unit_09'),DB::raw('sum(UNIT10) as unit_10'),DB::raw('sum(resources) as res'),
                                 DB::raw('sum(upkeep) as upkeep'),DB::raw('sum(def_inf) as inf'),DB::raw('sum(def_cav) as cav'))
-                        ->groupBy('player')->orderByRaw('sum(upkeep) DESC')->get(); 
+                        ->groupBy('player')->groupBy('uid')->orderByRaw('sum(upkeep) DESC')->get(); 
         
         
         $units = array();

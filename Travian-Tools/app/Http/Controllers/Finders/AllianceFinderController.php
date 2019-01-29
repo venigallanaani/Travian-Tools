@@ -38,7 +38,7 @@ class AllianceFinderController extends Controller
             }elseif(count($alliances)>1){
                 // more than one player is found in search results
                 //dd($players);
-                return view('finders.Alliance.manyAlliances')->with(['alliances'=>$alliances]);                
+                return view('Finders.Alliance.manyAlliances')->with(['alliances'=>$alliances]);                
             }else{
                 //one player is found in the search results
                 // fetching the villages details from diff table
@@ -46,7 +46,7 @@ class AllianceFinderController extends Controller
                             ->where('aid',$alliances[0]->aid)
                             ->orderBy('population','desc')->get();
                 //dd($villages);
-                return view('finders.Alliance.oneAlliance')->with(['alliance'=>$alliances[0]])
+                return view('Finders.Alliance.oneAlliance')->with(['alliance'=>$alliances[0]])
                             ->with(['players'=>$players]);
             }
         }

@@ -46,9 +46,9 @@ class InactiveFinderController extends Controller
         
                 
         if(count($villages)==0){
-            return view('finders.Inactive.noInactive');
+            return view('Finders.Inactive.noInactive');
         }else{
-            return view('finders.Inactive.inactivelist')->with(['villages'=>$villages])
+            return view('Finders.Inactive.inactivelist')->with(['villages'=>$villages])
             ->with(['x'=>$xCor])->with(['y'=>$yCor])->with(['dist'=>$dist]);
         }
     }

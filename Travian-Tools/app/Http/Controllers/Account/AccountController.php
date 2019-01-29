@@ -40,14 +40,12 @@ class AccountController extends Controller
                 
     	        return view('Account.overview')->with(['account'=>$account])
     	                   ->with(['player'=>$player])->with(['villages'=>$villages]);
-    	    }else{
     	        
+    	    }else{    	        
     	        Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));
-    	        return view('Account.addAccount');
-    	        
-    	    }
-    	    
-    	}else{    	      
+    	        return view('Account.addAccount');    	        
+    	    }    	    
+    	}else{
     	       return view('Account.template');
     	}
     }

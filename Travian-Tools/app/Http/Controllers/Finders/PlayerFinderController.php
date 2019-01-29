@@ -27,7 +27,7 @@ class PlayerFinderController extends Controller
         // displays the Player finder
         if($id==null && $name==null){
             // displays player finder form
-            return view('finders.Player.playerFinder');
+            return view('Finders.Player.playerFinder');
         }else{            
             if($id==null){
                 $players=Players::where('player','like','%'.$name.'%')
@@ -45,7 +45,7 @@ class PlayerFinderController extends Controller
             }elseif(count($players)>1){
                 // more than one player is found in search results
                 //dd($players);
-                return view('finders.Player.manyPlayers')->with(['players'=>$players]);
+                return view('Finders.Player.manyPlayers')->with(['players'=>$players]);
                 
             }else{
                 //one player is found in the search results
@@ -54,7 +54,7 @@ class PlayerFinderController extends Controller
                     ->where('uid',$players[0]->uid)
                     ->orderBy('population','desc')->get();
                 //dd($villages);
-                return view('finders.Player.onePlayer')->with(['player'=>$players[0]])
+                return view('Finders.Player.onePlayer')->with(['player'=>$players[0]])
                             ->with(['villages'=>$villages]);
             }            
         }

@@ -1,4 +1,4 @@
-@extends('layouts.general')
+@extends('Layouts.general')
 
 @section('content')    
     <header id="main-header" class="py-1 bg-info text-white">
