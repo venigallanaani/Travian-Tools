@@ -20,7 +20,7 @@ class AllianceFinderController extends Controller
     public function alliance($name=null,$id=null,Request $request){
         //Displays the alliance finder
         if($id==null && $name==null){
-            return view('finders.Alliance.allianceFinder');
+            return view('Finders.Alliance.allianceFinder');
         }else{
             if($id==null){
                 $alliances=Alliances::where('alliance','like','%'.$name.'%')

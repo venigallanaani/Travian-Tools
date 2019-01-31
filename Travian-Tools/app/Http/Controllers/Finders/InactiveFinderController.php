@@ -19,7 +19,7 @@ class InactiveFinderController extends Controller
 
     public function inactive(){
         //Displays the inactive finder
-        return view('finders.Inactive.inactiveFinder');
+        return view('Finders.Inactive.inactiveFinder');
     }
     
     public function processInactive(Request $request){

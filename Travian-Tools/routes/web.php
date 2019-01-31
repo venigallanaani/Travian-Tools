@@ -129,14 +129,18 @@ Route::get('/offense/plan/edit/{id}','Plus\Offense\OffensePlanController@showPla
 Route::post('/offense/plan/update','Plus\Offense\OffensePlanController@updatePlan');
 Route::get('/offense/plan/delete/{id}','Plus\Offense\OffensePlanController@deleteWave');
 
-
-
-
-
 /* ----------------------- Plus Leader Offense archive plan options ------------------------ */
 Route::get('/offense/archive','Plus\Offense\offenseArchiveController@archiveList');
 Route::get('/offense/archive/{id}','Plus\Offense\offenseArchiveController@displayArchivePlan');
 Route::post('/offense/archive/update','Plus\Offense\offenseArchiveController@updateArchivePlan');
+
+
+
+/* ----------------------- Plus Leader Artifacts plan ---------------------------------------- */
+Route::get('/artifact','Plus\Artifact\artifactLeaderController@overview');
+Route::get('/artifact/list','Plus\Artifact\artifactLeaderController@artifactList');
+Route::get('/artifact/request','Plus\Artifact\artifactLeaderController@artifactRequest');
+Route::get('/artifact/capture','Plus\Artifact\artifactLeaderController@captureOverview');
 
 /* --------------- Controller for the Report Page ----------- */
 Route::get('/support','supportController@index');				// Displays the Report Page
