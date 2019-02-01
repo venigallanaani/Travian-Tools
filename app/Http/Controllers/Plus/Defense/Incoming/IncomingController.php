@@ -18,6 +18,8 @@ class IncomingController extends Controller
 {
     public function enterIncoming(Request $request){
         
+        return view('Plus.TBD')->with(['title'=>'Incomings List']);
+        /*
         $saves=null; $drafts=null;
         $account=Account::where('server_id',$request->session()->get('server.id'))
                         ->where('user_id',Auth::user()->id)->first();
@@ -42,6 +44,7 @@ class IncomingController extends Controller
                             
         return view("Plus.Defense.Incomings.enterIncoming")->with(['drafts'=>$drafts])
                             ->with(['saves'=>$saves]);
+        */
         
     }
     

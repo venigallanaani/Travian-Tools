@@ -18,12 +18,14 @@ class LeaderIncomingController extends Controller
 {
     public function IncomingList(Request $request){
         
-        $incomings = Incomings::where('server_id',$request->session()->get('server.id'))
+        return view('Plus.TBD')->with(['title'=>'Incomings List']);
+        
+        /* $incomings = Incomings::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
                         ->where('deleteTime','>',strtotime(Carbon::now()))
                         ->orderBy('landTime','asc')->get();
         
-        return view('Plus.Defense.Incomings.incomingsList')->with(['incomings'=>$incomings]);        
+        return view('Plus.Defense.Incomings.incomingsList')->with(['incomings'=>$incomings]); */        
         
     }
 }

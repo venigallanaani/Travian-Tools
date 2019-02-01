@@ -20,13 +20,16 @@ class LeaderOffenseController extends Controller
     public function offensePlanList(Request $request){
         
         session(['title'=>'Offense']);
+        return view('Plus.TBD')->with(['title'=>'Offense Plans Status']);
         
+        /*        
         $plans=OPS::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('status','<>','ARCHIVE')
                     ->orderby('created_at','asc')->get();
                 
         return view('Plus.Offense.OPS.offensePlanList')->with(['plans'=>$plans]);
+        */
     }
     
     public function createOffensePlan(Request $request){

@@ -17,13 +17,15 @@ class offenseArchiveController extends Controller
     public function archiveList(Request $request){
         
         session(['title'=>'Offense']);
-        
+        return view('Plus.TBD')->with(['title'=>'Archived Plans']);
+        /*
         $plans=OPS::where('server_id',$request->session()->get('server.id'))
                 ->where('plus_id',$request->session()->get('plus.plus_id'))
                 ->where('status','=','ARCHIVE')
                 ->orderby('created_at','asc')->get();
         
         return view('Plus.Offense.Archive.displayList')->with(['plans'=>$plans]);
+        */
     }    
 
     
