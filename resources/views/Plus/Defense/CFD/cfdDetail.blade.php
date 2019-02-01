@@ -127,7 +127,7 @@
 							@foreach($players as $index=>$player)
 							<tr>		
 								<td class="">{{$index+1}}</td>
-								<td class="">{{$player->player}}</td>
+								<td class="" href="/finder/player/{{$player->player}}/1" target="_blank">{{$player->player}}</td>
 								<td class="">{{$player->upkeep}}</td>
 								<td class="">{{$player->res}}</td>
 								<td class=""><a class="btn btn-sm btn-outline-secondary" href="/defense/cfd/troops/{{$task->task_id}}/{{$player->uid}}">

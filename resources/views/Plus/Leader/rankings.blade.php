@@ -31,7 +31,7 @@
     							<th>Population</th>
     							<th>Troops</th>
     							<th>Offense</th>
-    							<th>Defense</th>    							
+    							<th>Defense</th> 
     							<th>Hero</th>
     						</tr>
 						</thead>	

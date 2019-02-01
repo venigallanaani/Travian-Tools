@@ -206,7 +206,7 @@ class LeaderController extends Controller
             $players[]=array(
                 "rank"=>($offense[0]->rank+$defense[0]->rank+$total[0]->rank+$hero[0]->rank+$pop[0]->rank),
                 "player"=>$member->account,
-                "account"=>$account->account,
+                "account"=>$member->user,
                 "off"=>$offense,
                 "def"=>$defense,
                 "total"=>$total,
@@ -214,7 +214,7 @@ class LeaderController extends Controller
                 "pop"=>$pop
             );
         }
-        //dd($players);
+        //dd($members);
         return view('Plus.Leader.rankings')->with(['players'=>$players]);
     }
     

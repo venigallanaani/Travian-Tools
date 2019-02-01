@@ -57,7 +57,7 @@ class NeighbourFinderController extends Controller
         if(count($villages)==0){
             return view('Finders.Neighbour.noNeighbours');
         }else{
-            return view('Finders.Neighbour.neighbourslist')->with(['villages'=>$villages])
+            return view('Finders.Neighbour.neighboursList')->with(['villages'=>$villages])
             ->with(['x'=>$xCor])->with(['y'=>$yCor])->with(['dist'=>$dist]);
         }
     }
