@@ -24,7 +24,7 @@
                 <!-- <a href="/" class="navbar-brand mr-3"><span class="h3">Travian Tools </span><small class="align-bottom"><small>1.0</small></small></a> -->
                 <a href="/" class="navbar-brand mr-3">
             		<img id="logo" alt="" src="{{{ asset('images/favicon.png') }}}" width="42" height="30"> 	
-            		<span class="h3">Travian Tools </span><small class="align-bottom"><small>1.0</small></small>
+            		<span class="h3">Travian Tools </span><small class="align-bottom"><small>dev</small></small>
         		</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">

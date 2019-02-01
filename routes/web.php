@@ -127,6 +127,8 @@ Route::get('/offense/troops','Plus\Offense\LeaderOffenseController@troopsList');
 /* ----------------------- Plus Leader Offense make and edit plan ------------------------ */
 Route::get('/offense/plan/edit/{id}','Plus\Offense\OffensePlanController@showPlanLayout');
 Route::post('/offense/plan/update','Plus\Offense\OffensePlanController@updatePlan');
+Route::post('/offense/plan/add','Plus\Offense\OffensePlanController@addWave');
+//Route::get('/offense/plan/add/{wave}','Plus\Offense\OffensePlanController@addWave');
 Route::get('/offense/plan/delete/{id}','Plus\Offense\OffensePlanController@deleteWave');
 
 /* ----------------------- Plus Leader Offense archive plan options ------------------------ */

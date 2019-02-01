@@ -8,12 +8,15 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\OPS;
 use App\OPSWaves;
 use App\Troops;
 use App\Units;
 use App\Diff;
+
+use App\Support;
 
 class OffensePlanController extends Controller
 {
@@ -106,4 +109,15 @@ class OffensePlanController extends Controller
         }
 
     }
+    
+    public function addWave(Request $request){
+        return response()->json(['success'=>'Created']);
+    }
 }
+
+
+
+
+
+
+

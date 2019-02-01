@@ -1,4 +1,4 @@
-@extends('layouts.opsPlan')
+@extends('Layouts.opsPlan')
 
 @section('content')
 
@@ -47,7 +47,7 @@
     				<th class="col-md-1">Troops</th>
     				<th class="col-md-2">Land Time</th>
     				<th class="col-md-2">Comments</th>
-    				<th><button class="badge badge-warning" id="addRow"><i class="fas fa-plus"></i></button></th>
+    				<th><button class="badge badge-warning" id="newRow"><i class="fas fa-plus"></i></button></th>
     			</tr>
 			</thead>
 			<tbody>
@@ -76,13 +76,13 @@
     				<td><span><button class="badge badge-primary" id="editRow"><i class="far fa-edit"></i></button></span>
     					<span><button class="badge badge-danger" id="delRow"><i class="far fa-trash-alt"></i></button></span>
     				</td>
-    			</tr>
-    			
-    						
-				<tr id="wave-input" style="display:none">
-					<td>X:<input name="a_x" type="text" size="2" placeholder=""/> |Y:<input name="a_y" type="text" size="2" /></td>
-					<td>X:<input name="d_x" type="text" size="2" /> |Y:<input name="d_y" type="text" size="2" /></td>
-					<td><select name="type">
+    			</tr>		
+
+		@endforeach
+				<tr>
+					<td>X:<input name="a_x" id="a_x" type="text" size="2" required/> |Y:<input name="a_y" id="a_y" type="text" size="2" required/></td>
+					<td>X:<input name="d_x" id="d_x" type="text" size="2" required/> |Y:<input name="d_y" id="d_y" type="text" size="2" required/></td>
+					<td><select name="type" id="type">
 							<option value="real">Real</option>
 							<option value="fake">Fake</option>
 							<option value="cheif">Cheif</option>
@@ -90,8 +90,8 @@
 							<option value="other">Other</option>
 						</select>
 					</td>
-					<td><input name="waves" type="text" size="2" /></td>
-					<td><select name="units">
+					<td><input name="waves" id="waves" type="text" size="2" /></td>
+					<td><select name="unit" id="unit">
 							<option value="1">Catapult</option>
 							<option value="2">Rams</option>
 							<option value="3">Cheif</option>
@@ -99,12 +99,11 @@
 							<option value="5">Infantry</option>
 						</select>
 					</td>
-					<td><input name="landtime" type="text" size="20" /></td>
-					<td><input name="Comments" type="text" /></td>
-    				<td><span><button class="badge badge-primary" id="saveRow">Save</button></span>
+					<td><input name="landtime" type="text" size="20" class="dateTimePicker" id="land" required/></td>
+					<td><input name="comments" type="text" id="comment"/></td>
+    				<td><span><button class="badge badge-primary" id="saveRow" onclick="addRow()">Save</button></span>
     				</td>
 				</tr> 
-		@endforeach
 			</tbody>
 		</table>
 	</div>
@@ -115,7 +114,7 @@
 <script type="text/javascript">
 // Adds new line to the data
     $(document).ready(function(){
-        $("#addRow").click(function(){
+        $("#newRow").click(function(){
         	var markup ='<tr>'+
             				'<td>X:<input name="a_x" type="text" size="2" /> |Y:<input name="a_y" type="text" size="2" /></td>'+
             				'<td>X:<input name="d_x" type="text" size="2" /> |Y:<input name="d_y" type="text" size="2" /></td>'+
@@ -136,7 +135,7 @@
             						'<option value="5">Infantry</option>'+
             					'</select>'+
             				'</td>'+
-            				'<td><input name="landtime" type="text" size="20" /></td>'+
+            				'<td><input name="landtime" type="text" size="20" class="dateTimePicker"/></td>'+
             				'<td><input name="Comments" type="text" /></td>'+
             				'<td><span><button class="badge badge-primary" id="saveRow">Save</button></span>'+
             				'</td>'+
@@ -163,8 +162,42 @@
             e.preventDefault();
           	$(this).parents('tr').remove();		
         });
-   });	        
-  
+   });
+
+</script>
+<script>
+	function addRow(){
+		var a_x = $("#a_x").val();				var a_y = $("#a_y").val();
+        var d_x = $("#d_x").val();				var d_y = $("#d_y").val();
+        var type = $("#type").val();			var waves = $("#waves").val();
+        var unit = $("#unit").val();			var land = $("#land").val();	
+        var comments = $("#comment").val();
+        
+        var wave = a_x+'|'+a_y+'|'+d_x+'|'+d_y+'|'+type+'|'+waves+'|'+unit+'|'+land+'|'+comments; 
+        	      
+        var xmlhttp = new XMLHttpRequest();
+	    xmlhttp.onreadystatechange = function() {
+	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+	        {	console.log(xmlhttp.responseText);	}
+	    };
+	    xmlhttp.open("GET", "/offense/plan/add/"+wave, true);
+	    xmlhttp.send();	
+
+	    alert(wave);
+	}
 </script>
 
+	<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
+	<script type="text/javascript">
+        $(".dateTimePicker").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            showSecond:true
+        });
+	</script>    
+
+@endpush
+
+@push('extensions')
+	<link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+	<meta name="csrf-token" content="{{ csrf_token() }}" />
 @endpush
