@@ -50,21 +50,15 @@ class processCleanUp extends Command
                         ->where('server_id',$server->server_id)->delete();
             echo "Diff table cleanup completed"."\n";
             
-            $maps = Map::where('server_id',$server->server_id)
-                        ->where('status','ACTIVE')->orderBy('created_at','desc')->get();
+            /* $maps = Map::where('server_id',$server->server_id)
+                        ->where('status','ACTIVE')->orderBy('created-at','desc')->get();
             if(count($maps)>10){
-                for($i=10;$i<count($maps);$i++){              
+                for($i=10;$i<count($maps);$i++){
                     
-                    Map::where('server_id',$server->server_id)
-                        ->where('map_id',$maps[$i]['map_id'])
-                        ->update(['status'=>'TRUNCATED']);
+                    Map::where('server_id',$maps[$i][''])
                     
-                    MapData::where('server_id',$server->server_id)
-                        ->where('table_id',$maps[$i]['map_id'])->delete();
-                    
-                }  
-                echo 'Truncated old maps data';
-            }        
+                }                
+            }  */         
             echo "\n".'**************************************************************************'."\n";
         }
     }

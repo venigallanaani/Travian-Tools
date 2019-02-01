@@ -19,10 +19,9 @@ class CreateDefenseUpdatesTable extends Migration
             $table->string('plus_id');
             $table->string('player_id');
             $table->string('player');
-            $table->string('uid');
             $table->string('vid');
             $table->string('village');
-            $table->integer('resources')->default(0);
+            $table->integer('resources');
             $table->string('tribe_id');
             $table->integer('unit01');
             $table->integer('unit02');

@@ -16,27 +16,27 @@ class Kernel extends ConsoleKernel
     {
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Load:Maps')
-            ->everyMinute()
+            ->dailyAt('00:00')
             ->appendOutputTo(storage_path('logs/processLoads.log')); 
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Load:Diff')
-            ->everyMinute()
+            ->dailyAt('00:15')
             ->appendOutputTo(storage_path('logs/processLoads.log')); 
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Process:Players')
-            ->everyMinute()
+            ->dailyAt('00:30')
             ->appendOutputTo(storage_path('logs/processLoads.log'));   
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Process:Alliances')
-            ->everyMinute()
+            ->dailyAt('00:45')
             ->appendOutputTo(storage_path('logs/processLoads.log'));   
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('process:CleanUp')
-            ->everyMinute()
+            ->dailyAt('01:00')
             ->appendOutputTo(storage_path('logs/processLoads.log')); 
     }
     

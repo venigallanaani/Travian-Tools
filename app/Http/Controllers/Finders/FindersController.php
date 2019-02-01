@@ -11,7 +11,7 @@ class FindersController extends Controller
     public function index(){
 
     	session(['title'=>'Finders']);
-    	return view('Finders.overview');
+    	return view('finders.overview');
 
     }
 }

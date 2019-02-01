@@ -18,7 +18,7 @@ class NeighbourFinderController extends Controller
 {
     public function neighbour(){        
         //Displays the neighbour finder
-        return view('Finders.Neighbour.neighbourFinder');
+        return view('finders.Neighbour.neighbourFinder');
     }
     
     public function processNeighbour(Request $request){
@@ -55,9 +55,9 @@ class NeighbourFinderController extends Controller
                     ->paginate(50);    */    
 
         if(count($villages)==0){
-            return view('Finders.Neighbour.noNeighbours');
+            return view('finders.Neighbour.noNeighbours');
         }else{
-            return view('Finders.Neighbour.neighbourslist')->with(['villages'=>$villages])
+            return view('finders.Neighbour.neighbourslist')->with(['villages'=>$villages])
             ->with(['x'=>$xCor])->with(['y'=>$yCor])->with(['dist'=>$dist]);
         }
     }

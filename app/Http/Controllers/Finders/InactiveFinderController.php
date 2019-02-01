@@ -19,7 +19,7 @@ class InactiveFinderController extends Controller
 
     public function inactive(){
         //Displays the inactive finder
-        return view('Finders.Inactive.inactiveFinder');
+        return view('finders.Inactive.inactiveFinder');
     }
     
     public function processInactive(Request $request){
@@ -46,9 +46,9 @@ class InactiveFinderController extends Controller
         
                 
         if(count($villages)==0){
-            return view('Finders.Inactive.noInactive');
+            return view('finders.Inactive.noInactive');
         }else{
-            return view('Finders.Inactive.inactivelist')->with(['villages'=>$villages])
+            return view('finders.Inactive.inactivelist')->with(['villages'=>$villages])
             ->with(['x'=>$xCor])->with(['y'=>$yCor])->with(['dist'=>$dist]);
         }
     }

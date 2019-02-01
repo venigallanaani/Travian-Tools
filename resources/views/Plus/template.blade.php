@@ -1,4 +1,4 @@
-@extends('Layouts.general')
+@extends('layouts.general')
 
 @section('content')    
     <header id="main-header" class="py-1 bg-info text-white">
@@ -33,7 +33,6 @@
     </div> 
 @endguest
 
-@auth
 @if(!Session::has('server'))
 	<div class="container">
         <div class="alert alert-warning text-center my-1" role="alert">
@@ -43,6 +42,8 @@
         </div>
     </div>
 @else
+
+@auth
 @if(!Session::has('plus'))
 	<div class="container">
 		<div class="card shadow my-1">
@@ -109,16 +110,6 @@
                 <a href="/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Push Status</a>
             </div> 
         @endif
-		@if(Session::get('plus.artifact')==2)
-            <!-- =================================== Artifacts menu ================================== -->
-            <div class="list-group text-center text-white mt-1">
-                <a class="list-group-item py-1 bg-dark h4">Artifacts Menu</a>                
-                <a href="/artifact" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
-                <a href="/artifact/list" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Artifact List</a>
-                <a href="/artifact/request" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Requests</a>
-                <a href="/artifact/capture" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Capture Plan</a>
-            </div> 
-        @endif
         </div>
         
         @yield('body')
@@ -126,8 +117,7 @@
     </div>
     @endif
 @endif
-@endif
 @endauth
-
+@endif
 
 @endsection

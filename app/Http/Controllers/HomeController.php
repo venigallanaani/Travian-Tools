@@ -13,6 +13,6 @@ class HomeController extends Controller
                        
     	session(['title'=>'Home']);
     	    	
-    	return view('Home.display');
+    	return view('home.display');
     }
 }

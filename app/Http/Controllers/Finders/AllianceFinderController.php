@@ -20,7 +20,7 @@ class AllianceFinderController extends Controller
     public function alliance($name=null,$id=null,Request $request){
         //Displays the alliance finder
         if($id==null && $name==null){
-            return view('Finders.Alliance.allianceFinder');
+            return view('finders.Alliance.allianceFinder');
         }else{
             if($id==null){
                 $alliances=Alliances::where('alliance','like','%'.$name.'%')
@@ -38,7 +38,7 @@ class AllianceFinderController extends Controller
             }elseif(count($alliances)>1){
                 // more than one player is found in search results
                 //dd($players);
-                return view('Finders.Alliance.manyAlliances')->with(['alliances'=>$alliances]);                
+                return view('finders.Alliance.manyAlliances')->with(['alliances'=>$alliances]);                
             }else{
                 //one player is found in the search results
                 // fetching the villages details from diff table
@@ -46,7 +46,7 @@ class AllianceFinderController extends Controller
                             ->where('aid',$alliances[0]->aid)
                             ->orderBy('population','desc')->get();
                 //dd($villages);
-                return view('Finders.Alliance.oneAlliance')->with(['alliance'=>$alliances[0]])
+                return view('finders.Alliance.oneAlliance')->with(['alliance'=>$alliances[0]])
                             ->with(['players'=>$players]);
             }
         }
