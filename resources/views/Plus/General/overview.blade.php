@@ -13,7 +13,7 @@
             	<div class="card-header py-1 text-info h4">
             		<p><strong>Message of the day</strong></p>
             	</div>
-            	<div class="card-body py-1">
+            	<div class="card-body">
             		<p class="card-text font-italic">{{$subscription->message}}</p>
             		<p class="small text-info"><strong>{{$subscription->message_update}} ({{$subscription->message_date}})</strong></p>
             	</div>
@@ -23,11 +23,11 @@
             	<div class="card-header py-1 text-info h4">
             		<p><strong>Group Status</strong></p>
             	</div>
-            	<div class="card-body py-1">							
-				@if($counts['res']>0)				
-					<p><strong>{{$counts['res']}} <a href="/plus/resource" class="text-info">Resource Tasks</strong></a> are active</p>
+            	<div class="card-body px-5 h6">							
+				@if($counts['inc']>0)				
+					<p><strong>{{$counts['inc']}} <a href="/plus/incoming" class="text-info">Incoming attacks</strong></a> on your account</p>
 				@else
-					<p>No <span class="text-info"><strong>Resource tasks</strong></span> are currently active</p>
+					<p>No <span class="text-info"><strong>Incoming attacks</strong></span> on your account</p>
 				@endif
 				
 				@if($counts['def']>0)				
@@ -41,6 +41,12 @@
 				@else
 					<p>No <span class="text-info"><strong>Offense plans</strong></span> are currently active</p>
 				@endif	
+				
+				@if($counts['res']>0)				
+					<p><strong>{{$counts['res']}} <a href="/plus/resource" class="text-info">Resource Tasks</strong></a> are active</p>
+				@else
+					<p>No <span class="text-info"><strong>Resource tasks</strong></span> are currently active</p>
+				@endif
             	</div>
             </div>            
         </div>

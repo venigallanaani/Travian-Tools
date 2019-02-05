@@ -36,7 +36,7 @@
     						</tr>
 						</thead>
 					@foreach($plan['waves'] as $wave)
-						<tr>
+						<tr id="{{$wave->id}}">
 							<td><a href="" target="_blank">
 								<strong>{{$wave->a_village}}</strong></a>
 							</td>
@@ -51,8 +51,8 @@
 							<td>00:00:00</td>
 							<td>{{$wave->comments}}</td>
 							<td>@if($wave->status==null)
-								<a href="/plus/offense/yes/{{$wave->id}}"><button class="badge badge-success"><i class="fas fa-check"></i></button></a>
-    							<a href="/plus/offense/no/{{$wave->id}}"><button class="badge badge-danger"><i class="fas fa-times"></i></button></a>
+								<button class="badge badge-success" id="sts"><i class="fas fa-check"></i></button>
+    							<button class="badge badge-danger" id="sts"><i class="fas fa-times"></i></button>
     							@else
     							{{$wave->status}}
     							@endif
@@ -76,3 +76,32 @@
 			</div>
 		</div>
 @endsection
+@push('scripts')
+		<script>    
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });   
+   
+        $(document).on('click','#sts',function(e){
+            e.preventDefault();  
+
+			var wave = $(this).closest("tr").attr("id"); 
+                
+            $.ajax({
+               type:'POST',
+               url:'/plus/offense/update',
+               data:{	wave:wave	},
+               success:function(data){					
+            	   	alert(data.success)
+               }
+            });  
+    
+    	});
+	</script>
+@endpush
+
+@push('extensions')
+	<meta name="csrf-token" content="{{ csrf_token() }}" />
+@endpush

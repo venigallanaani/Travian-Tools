@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Plus;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,7 @@ use App\Account;
 use App\Players;
 use App\OPSWaves;
 use App\Subscription;
+use App\Incomings;
 
 class PlusController extends Controller
 {
@@ -40,6 +42,17 @@ class PlusController extends Controller
                 $account=Account::where('server_id',$request->session()->get('server.id'))
                             ->where('user_id',$request->session()->get('plus.id'))->first();
                 
+                $incomings = Incomings::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))                            
+                            ->where('def_uid',$account->uid)
+                            ->where('landTime','>',Carbon::now())->get();
+                $inc=0;
+                if(count($incomings)>0){                    
+                    foreach($incomings as $incoming){
+                        $inc+=$incoming->waves;
+                    }
+                }
+                
                 $res = ResTask::where('plus_id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))
                         ->where('status','ACTIVE')->get();
@@ -55,6 +68,7 @@ class PlusController extends Controller
                         ->where('server_id',$request->session()->get('server.id'))->first();
                 
                 $counts=array(
+                   'inc'=>$inc,
                    'res'=>count($res),
                    'def'=>count($def),
                    'off'=>count($off)

@@ -112,7 +112,7 @@ Route::get('/defense/incoming','Plus\Defense\Incoming\LeaderIncomingController@I
 
 /* -------------------- Plus member Offense Options -----------------------*/
 Route::get('/plus/offense','Plus\Offense\OffenseController@offenseTaskList');
-Route::get('/plus/offense/{sts}/{id}','Plus\Offense\OffenseController@updateOffenseTask');
+Route::post('/plus/offense/update','Plus\Offense\OffenseController@updateOffenseTask');
 
 /* -------------------- Plus Leader Offense Options -----------------------*/
 Route::get('/offense/status','Plus\Offense\LeaderOffenseController@offensePlanList');
