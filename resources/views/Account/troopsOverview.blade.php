@@ -60,8 +60,8 @@
 							<td class="p-0">{{$troop['upkeep']}}</td>
 							<td class="p-0 tsq" contenteditable="true">{{$troop['Tsq']}}</td>
 							<td class="py-0">{{$troop['type']}}</td>
-							<td class="p-0">
-            					<button class="badge badge-primary" id="update"><i class="far fa-save"></i></button>																						
+							<td class="p-0" data-toggle="tooltip" data-placement="top" title="save">
+            					<button class="badge badge-primary" type="button" id="update"><i class="far fa-save"></i></button>																						
 							</td>
 						</tr>
 					@endforeach
@@ -110,28 +110,38 @@
 		</div>
 @endsection
 @push('scripts')
-	<script type="text/javascript">    
+	<script>    
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });   
-    
-        $("#update").click(function(e){      
+   
+        $(document).on('click','#update',function(e){
             e.preventDefault();  
 
-    		var village=$(this).closest("tr");
+			var village = $(this).closest("tr");
             var vid = village.attr("id");
-            var unit01 = village.find("td:eq(2)").text();
-            
-            alert(unit01);
-    
+            var unit01 = village.find('td:eq(1)').text();            var unit02 = village.find('td:eq(2)').text();
+            var unit03 = village.find('td:eq(3)').text();            var unit04 = village.find('td:eq(4)').text();
+            var unit05 = village.find('td:eq(5)').text();            var unit06 = village.find('td:eq(6)').text();
+            var unit07 = village.find('td:eq(7)').text();            var unit08 = village.find('td:eq(8)').text();
+            var unit09 = village.find('td:eq(9)').text();            var unit10 = village.find('td:eq(10)').text();
+            var tsq = village.find('td:eq(12)').text();
+                
             $.ajax({
                type:'POST',
                url:'/account/troops/update',
-               data:{vid:vid, unit01:unit01},
+               data:{	vid:vid, 		tsq:tsq,	
+            	   		unit01:unit01,	unit02:unit02,
+            	   		unit03:unit03,	unit04:unit04,
+            	   		unit05:unit05,	unit06:unit06,
+            	   		unit07:unit07,	unit08:unit08,
+            	   		unit09:unit09,	unit10:unit10
+                   },
                success:function(data){
-                  //alert(data.success);
+					village.find("td:eq(11)").text(data.upkeep);
+            	   	alert(data.success)
                }
             });  
     

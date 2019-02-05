@@ -42,7 +42,7 @@
     				<tr>
     					<td class="col-md-3 p-1 m-0 text-danger"><strong>Attacker</strong></td>
     					<td class="col-md-6 small p-1 m-0">
-    						<a href="">Hero XP: </a><input name="hxp" type="text" size='5'/>
+    						<a href="https://{{Session::get('server.url')}}/statistiken.php?id=3&name={{$draft->att_player}}" target="_blank">Hero XP: </a><input name="hxp" type="text" size='5'/>
     						<a href="http://travian.kirilloid.ru/items.php" target="_blank"><strong> Hero Equipment Details <i class="fas fa-external-link-alt"></i></strong></a>
     					</td>
     					<td class="col-md-3 p-1 m-0 text-success"><strong>Defender</strong></td>
