@@ -41,7 +41,8 @@ Route::get('/account','Account\AccountController@overview')->name('account');			
 Route::post('/account/add','Account\AccountController@addAccount');
 
 Route::get('/account/troops','Account\TroopsController@troopsOverview');
-Route::post('/account/troops/update','Account\TroopsController@processTroops');
+Route::post('/account/troops/parse','Account\TroopsController@processTroops');
+Route::post('/account/troops/update','Account\TroopsController@updateTroops');
 
 Route::get('/account/hero','Account\HeroController@heroOverview');
 Route::post('/account/hero/update','Account\HeroController@processHero');
@@ -120,7 +121,9 @@ Route::post('/offense/create','Plus\Offense\LeaderOffenseController@createOffens
 Route::get('/offense/status/{id}','Plus\Offense\LeaderOffenseController@displayOffensePlan');
 Route::post('/offense/status/update','Plus\Offense\LeaderOffenseController@updateOffensePlan');
 
-Route::get('/offense/troops','Plus\Offense\LeaderOffenseController@troopsList');
+Route::get('/offense/troops','Plus\Offense\LeaderSearchController@troopsList');
+Route::get('/offense/search','Plus\Offense\LeaderSearchController@show');
+Route::post('/offense/search','Plus\Offense\LeaderSearchController@search');
 
 
 

@@ -45,7 +45,7 @@
                 <p class="card-header h4 text-info font-weight-bold">Plus</p>
                 <div class="card-body">
                    	@guest
-                    	<p><a href="login.php"><strong>Sign In</strong></a> to access the Plus group</p>
+                    	<p><a href="/login"><strong>Sign In</strong></a> to access the Plus group</p>
                     @endguest
                     <p> Plus menu offers different options and tasks for the group to work efficiently.</p>
                     <table>
@@ -61,7 +61,7 @@
                 <p class="card-header h4 text-warning font-weight-bold">Account</p>
                 <div class="card-body">
                 	@guest
-                    	<p><a href="login.php"><strong>Sign In</strong></a> to access you account details.</p>
+                    	<p><a href="/login"><strong>Sign In</strong></a> to access you account details.</p>
                     @endguest
                     <p>Account Details can be displayed here.</p>
                     <table>

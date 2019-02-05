@@ -99,6 +99,7 @@
                 <a class="list-group-item py-1 bg-dark h4">Offense Menu</a>                 
                 <a href="/offense/status" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Ops Status</a>
                 <a href="/offense/troops" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Troops Details</a>
+                <a href="/offense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Offense</a>
                 <a href="/offense/archive" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Archive</a>                  
             </div>
         @endif

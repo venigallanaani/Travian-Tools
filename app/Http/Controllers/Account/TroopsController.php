@@ -48,6 +48,7 @@ class TroopsController extends Controller
             
             if($row==null){
                 $list[$i]=array(
+                    'vid'=>$village->vid,
                     'village'=>$village->village,
                     'x'=>$village->x,
                     'y'=>$village->y,
@@ -67,6 +68,7 @@ class TroopsController extends Controller
                 );
             }else{
                 $list[$i]=array(
+                    'vid'=>$village->vid,
                     'village'=>$village->village,
                     'x'=>$village->x,
                     'y'=>$village->y,
@@ -82,7 +84,7 @@ class TroopsController extends Controller
                     'unit10'=>$row->unit10,
                     'upkeep'=>$row->upkeep,
                     'Tsq'=>$row->Tsq,
-                    'type'=>$row->type,
+                    'type'=>ucfirst(strtolower($row->type)),
                 );
                 $unit01+=$row->unit01;  $unit02+=$row->unit02;  $unit03+=$row->unit03;
                 $unit04+=$row->unit04;  $unit05+=$row->unit05;  $unit06+=$row->unit06;
@@ -298,14 +300,18 @@ class TroopsController extends Controller
                         }                             
                     }                       
                 }                                             
-            }
-            
-            Session::flash('success',"Troops details are successfully updated"); 
-            
-        }
-        
-        return Redirect::to('/account/troops');
-        
+            }            
+            Session::flash('success',"Troops details are successfully updated");            
+        }        
+        return Redirect::to('/account/troops');        
     } 
+    
+    public function updateTroops(Request $request){
+        $input=$request->all;
+        
+        return response()->json(['success'=>$request->a_x]);
+        
+    }
+    
     
 }

@@ -66,6 +66,7 @@ class HeroController extends Controller
                 $hero = new Hero;
                 
                 $hero->account_id = $account->account_id;
+                $hero->plus_id = $account->plus_id;
                 $hero->server_id = $request->session()->get('server.id');
                 $hero->name = $account->account;
                 $hero->level = $heroData['LEVEL'];

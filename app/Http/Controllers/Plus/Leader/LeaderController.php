@@ -90,7 +90,7 @@ class LeaderController extends Controller
                 if(count($accounts)==0){
                     Session::flash('warning','Player - '.$name.' is not registered on Travian tools');
                 }else{                    
-                    foreach($accounts as $account){                        
+                    foreach($accounts as $account){
                         if($account->plus==null){
                             
                             Account::where('server_id',$request->session()->get('server.id'))
@@ -99,7 +99,7 @@ class LeaderController extends Controller
                             
                             $access=new Plus;
                             
-                            $access->id=Auth::user()->id;
+                            $access->id=$account->user_id;
                             $access->plus_id=$request->session()->get('plus.plus_id');
                             $access->name=$request->session()->get('plus.name');
                             $access->server_id=$request->session()->get('server.id');
@@ -114,6 +114,12 @@ class LeaderController extends Controller
                             $access->wonder=0;
                             
                             $access->save();
+                            
+                            
+                            Account::where('server_id',$request->session()->get('server.id'))
+                                ->where('account_id',$account->account_id)
+                                ->update(['plus'=>$request->session()->get('plus.plus_id')]);
+                            
                         }
                     }
                 }
