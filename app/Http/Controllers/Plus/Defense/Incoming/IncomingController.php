@@ -31,13 +31,13 @@ class IncomingController extends Controller
                                         $query->where('uid','=',$account_id)
                                             ->orWhere('def_uid','=',$uid);
                             })                                
-                            ->where('deleteTime','>',strtotime(Carbon::now()))
+                            //->where('deleteTime','>',strtotime(Carbon::now()))
                             ->where('status','DRAFT')->orderBy('landTime','asc')->get();
         
         $saves=Incomings::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
                             ->where('def_uid',$account->uid)
-                            ->where('deleteTime','>',strtotime(Carbon::now()))
+                            //->where('deleteTime','>',strtotime(Carbon::now()))
                             ->where('status','SAVED')->orderBy('landTime','asc')->get();
                             
         return view("Plus.Defense.Incomings.enterIncoming")->with(['drafts'=>$drafts])
@@ -97,6 +97,7 @@ class IncomingController extends Controller
                     $wave->def_uid=$def->uid;
                     $wave->def_player=$def->player;
                     $wave->def_village=$def->village;
+                    $wave->def_vid=$def->vid;
                     $wave->def_x=$def->x;
                     $wave->def_y=$def->y;
                     $wave->waves=$inc['wave'];
@@ -105,6 +106,7 @@ class IncomingController extends Controller
                     $wave->att_player=$att->player;
                     $wave->att_tribe=$tribe;
                     $wave->att_village=$att->village;
+                    $wave->att_vid=$att->vid;
                     $wave->att_x=$att->x;
                     $wave->att_y=$att->y;
                     $wave->landTime=$landTime;
@@ -126,6 +128,7 @@ class IncomingController extends Controller
                         $wave->def_uid=$def->uid;
                         $wave->def_player=$def->player;
                         $wave->def_village=$def->village;
+                        $wave->def_vid=$def->vid;
                         $wave->def_x=$def->x;
                         $wave->def_y=$def->y;
                         $wave->waves=$inc['wave']-$incoming->waves;
@@ -134,6 +137,7 @@ class IncomingController extends Controller
                         $wave->att_player=$att->player;
                         $wave->att_tribe=$tribe;
                         $wave->att_village=$att->village;
+                        $wave->att_vid=$att->vid;
                         $wave->att_x=$att->x;
                         $wave->att_y=$att->y;
                         $wave->landTime=$landTime;

@@ -1,4 +1,4 @@
-@extends('Layouts.opsPlan')
+@extends('Layouts.offense')
 
 @section('content')
 

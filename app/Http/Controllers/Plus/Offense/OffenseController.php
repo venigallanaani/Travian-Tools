@@ -63,6 +63,6 @@ class OffenseController extends Controller
 //                 ->where('id',$id)->update(['status'=>$status]);        
         
 
-        return response()->json(['success'=>'Success']);    
+        return response()->json(['success'=>$request->status]);    
     }
 }

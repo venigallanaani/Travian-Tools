@@ -51,8 +51,8 @@
 							<td>00:00:00</td>
 							<td>{{$wave->comments}}</td>
 							<td>@if($wave->status==null)
-								<button class="badge badge-success" id="sts"><i class="fas fa-check"></i></button>
-    							<button class="badge badge-danger" id="sts"><i class="fas fa-times"></i></button>
+								<button class="badge badge-success" id="sts">sent</button>
+    							<button class="badge badge-danger" id="sts">skipped</button>
     							@else
     							{{$wave->status}}
     							@endif
@@ -88,11 +88,12 @@
             e.preventDefault();  
 
 			var wave = $(this).closest("tr").attr("id"); 
+			var status = $(this).closest("tr").find('td:eq(9)').text(); 
                 
             $.ajax({
                type:'POST',
                url:'/plus/offense/update',
-               data:{	wave:wave	},
+               data:{	wave:wave, status=status	},
                success:function(data){					
             	   	alert(data.success)
                }

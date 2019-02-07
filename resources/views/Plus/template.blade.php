@@ -88,7 +88,7 @@
             <!-- =================================== Defense menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Defense Menu</a>
-                <a href="/defense/incoming" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Incomings</a>
+                <a href="/defense/incomings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Incomings</a>
                 <a href="/defense/cfd" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Defense Status</a>
                 <a href="/defense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Defense</a>                
             </div>

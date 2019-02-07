@@ -23,6 +23,7 @@ class CreateIncomingsTable extends Migration
             $table->string('def_uid');
             $table->string('def_player');
             $table->string('def_village');
+            $table->string('def_vid');
             $table->string('def_x');
             $table->string('def_y');
             $table->integer('waves');
@@ -31,6 +32,7 @@ class CreateIncomingsTable extends Migration
             $table->string('att_player');
             $table->string('att_tribe');
             $table->string('att_village');
+            $table->string('att_vid');
             $table->string('att_x');
             $table->string('att_y');
             $table->string('landTime');

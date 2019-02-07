@@ -108,7 +108,8 @@ Route::post('/plus/incoming','Plus\Defense\Incoming\IncomingController@processIn
 Route::post('/plus/incoming/update','Plus\Defense\Incoming\IncomingController@updateIncoming');
 
 /* -------------------- Plus Leader incoming Options -----------------------*/
-Route::get('/defense/incoming','Plus\Defense\Incoming\LeaderIncomingController@IncomingList');
+Route::get('/defense/incomings','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomings');
+Route::get('/defense/incomings/list','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomingsList');
 
 /* -------------------- Plus member Offense Options -----------------------*/
 Route::get('/plus/offense','Plus\Offense\OffenseController@offenseTaskList');
