@@ -15,15 +15,18 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         
     </head>
-    <body onload="displayTime()">
-        <header id="main-header" class="py-1 bg-dark text-white">
+    <body>
+		<nav class="navbar p-0 font-weight-bold navbar-expand-md navbar-dark bg-dark align-middle">
             <div class="container">
-                <p class="h3 font-weight-bold text-center">
-                	<span class="h3">Travian Tools</span>
-                	<span class="h6"> Reports </span>
-                </p>                
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>                
+                <a href="/" class="navbar-brand mr-3">
+            		<img id="logo" alt="" src="{{{ asset('images/favicon.png') }}}" width="42" height="30"> 	
+            		<span class="h3">Travian Tools </span><small class="align-bottom">Reports</small>
+        		</a>
             </div>
-        </header> 
+        </nav>
 
         <div class="container">
 	@foreach(['danger','success','warning','info'] as $msg)

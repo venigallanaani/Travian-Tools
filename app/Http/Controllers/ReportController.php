@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Redirect;
 class ReportController extends Controller
 {
     public function index(){        
-        session(['title'=>'Reports']);
+        session(['title'=>'TT Reports']);
         return view('Reports.display');
     }
     
     public function makeReport(Request $request){
-        session(['title'=>'Reports']);
+        session(['title'=>'TT Reports']);
                 
         $parseData = ParseReports(Input::get('report'));
         $report = str_random(10);
@@ -23,5 +23,13 @@ class ReportController extends Controller
         dd($parseData);
         
         //return view('Reports.reports');
+    }
+    
+    public function showReports(Request $request, $string){
+        session(['title'=>'TT Reports']);
+        
+        $reports = explode(",", $string);
+        
+        dd($reports);
     }
 }
