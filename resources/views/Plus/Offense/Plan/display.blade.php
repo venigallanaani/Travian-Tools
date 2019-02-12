@@ -51,6 +51,31 @@
     			</tr>
 			</thead>
 			<tbody>
+				<tr>
+					<td>X:<input name="a_x" id="a_x" type="text" size="2" required/> |Y:<input name="a_y" id="a_y" type="text" size="2" required/></td>
+					<td>X:<input name="d_x" id="d_x" type="text" size="2" required/> |Y:<input name="d_y" id="d_y" type="text" size="2" required/></td>
+					<td><select name="type" id="type">
+							<option value="real">Real</option>
+							<option value="fake">Fake</option>
+							<option value="cheif">Cheif</option>
+							<option value="scout">Scout</option>
+							<option value="other">Other</option>
+						</select>
+					</td>
+					<td><input name="waves" id="waves" type="text" size="2" /></td>
+					<td><select name="unit" id="unit">
+							<option value="1">Catapult</option>
+							<option value="2">Rams</option>
+							<option value="3">Cheif</option>
+							<option value="4">Cavalry</option>
+							<option value="5">Infantry</option>
+						</select>
+					</td>
+					<td><input name="landtime" type="text" size="20" class="dateTimePicker" id="land" required/></td>
+					<td><input name="comments" type="text" id="comment"/></td>
+    				<td><button class="badge badge-primary" id="saveRow" type="button" onClick="addRow()">Save</button>
+    				</td>
+				</tr> 
 		@foreach($waves as $wave)
 			@php
 				if($wave->type == 'Real'){	$color='text-danger';	}
@@ -79,31 +104,6 @@
     			</tr>		
 
 		@endforeach
-				<tr>
-					<td>X:<input name="a_x" id="a_x" type="text" size="2" required/> |Y:<input name="a_y" id="a_y" type="text" size="2" required/></td>
-					<td>X:<input name="d_x" id="d_x" type="text" size="2" required/> |Y:<input name="d_y" id="d_y" type="text" size="2" required/></td>
-					<td><select name="type" id="type">
-							<option value="real">Real</option>
-							<option value="fake">Fake</option>
-							<option value="cheif">Cheif</option>
-							<option value="scout">Scout</option>
-							<option value="other">Other</option>
-						</select>
-					</td>
-					<td><input name="waves" id="waves" type="text" size="2" /></td>
-					<td><select name="unit" id="unit">
-							<option value="1">Catapult</option>
-							<option value="2">Rams</option>
-							<option value="3">Cheif</option>
-							<option value="4">Cavalry</option>
-							<option value="5">Infantry</option>
-						</select>
-					</td>
-					<td><input name="landtime" type="text" size="20" class="dateTimePicker" id="land" required/></td>
-					<td><input name="comments" type="text" id="comment"/></td>
-    				<td><span><button class="badge badge-primary" id="saveRow" onclick="addRow()">Save</button></span>
-    				</td>
-				</tr> 
 			</tbody>
 		</table>
 	</div>
@@ -166,6 +166,11 @@
 
 </script>
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });  
 	function addRow(){
 		var a_x = $("#a_x").val();				var a_y = $("#a_y").val();
         var d_x = $("#d_x").val();				var d_y = $("#d_y").val();
@@ -174,18 +179,55 @@
         var comments = $("#comment").val();
         
         var wave = a_x+'|'+a_y+'|'+d_x+'|'+d_y+'|'+type+'|'+waves+'|'+unit+'|'+land+'|'+comments; 
-        	      
-        var xmlhttp = new XMLHttpRequest();
-	    xmlhttp.onreadystatechange = function() {
-	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-	        {	console.log(xmlhttp.responseText);	}
-	    };
-	    xmlhttp.open("GET", "/offense/plan/add/"+wave, true);
-	    xmlhttp.send();	
+	    //alert(wave);
 
-	    alert(wave);
+        $.ajax({
+            type:'POST',
+            url:'/offense/plan/add',
+            data:{	a_x:a_x, 		a_y:a_y,	
+            		d_x:d_x,		d_y:d_y,
+            		type:type,		waves:waves,
+            		unit:unit,		land:land,         	   		
+            		comment:comment
+                },
+            success:function(data){				
+         	   	alert(data.success)
+            }
+         });  
 	}
-</script>
+ </script>
+<!-- <script>    
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });   
+
+//     $(document).on('click','#saveRow',function(e){
+//         e.preventDefault();  
+
+// 		var a_x = $("#a_x").val();				var a_y = $("#a_y").val();
+//         var d_x = $("#d_x").val();				var d_y = $("#d_y").val();
+//         var type = $("#type").val();			var waves = $("#waves").val();
+//         var unit = $("#unit").val();			var land = $("#land").val();	
+//         var comments = $("#comment").val();
+            
+//         $.ajax({
+//            type:'POST',
+//            url:'/offense/plan/add',
+//            data:{		a_x:a_x, 		a_y:a_y,	
+//                    		d_x:d_x,		d_y:d_y,
+//                 		type:type,		waves:waves,
+//                 		unit:unit,		land:land,         	   		
+//                 		comment:comment
+//                },
+//            success:function(data){				
+//         	   	alert(data.success)
+//            }
+//         });  
+
+// 	});
+</script> -->
 
 	<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
 	<script type="text/javascript">

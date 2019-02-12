@@ -57,11 +57,31 @@ class LeaderOffenseController extends Controller
                     ->where('status','<>','ARCHIVE')
                     ->where('id',$id)->first();
         
-        $waves = OPSWaves::where('plan_id',$id)
-                    ->orderBy('landTime','asc')->get();
-        
+        $waves=OPSWaves::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('plan_id',$id)->orderBy('landtime','asc')->get();
+                    
+        if(count($waves)==0){
+            $sankeyData = null;
+        }else{
+            foreach($waves as $wave){                
+                if($wave->type=='Real'){
+                    $color = 'RED';
+                }elseif($wave->type == 'Fake'){
+                    $color = '#007bff';
+                }else{
+                    $color='GREY';
+                }                
+                $sankeyData[]=array(
+                    "ATT"=>$wave->a_player."(".$wave->a_village.")",
+                    "DEF"=>$wave->d_player."(".$wave->d_village.")",
+                    "WAVES"=>$wave->waves,
+                    "TYPE"=>$color
+                );                
+            }
+        }         
         return view('Plus.Offense.OPS.offensePlan')->with(['plan'=>$plan])
-                    ->with(['waves'=>$waves]); 
+                    ->with(['waves'=>$waves])->with(['sankeyData'=>$sankeyData]);
         
     }    
     

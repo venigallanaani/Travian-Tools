@@ -111,6 +111,7 @@ class OffensePlanController extends Controller
     }
     
     public function addWave(Request $request){
+        
         return response()->json(['success'=>'Created']);
     }
 }

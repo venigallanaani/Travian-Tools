@@ -169,3 +169,7 @@ Route::get('/servers','ServersController@index')->name('server');
 Route::post('/servers','ServersController@process');
 
 
+/* ------------------------------- Reports page controllers -------------------- */
+Route::get('/reports','ReportController@index')->name('reports');
+Route::post('/reports/create','ReportController@makeReport');
+
