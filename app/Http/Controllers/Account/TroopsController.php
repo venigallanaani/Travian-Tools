@@ -48,6 +48,7 @@ class TroopsController extends Controller
             
             if($row==null){
                 $list[$i]=array(
+                    'vid'=>$village->vid,
                     'village'=>$village->village,
                     'x'=>$village->x,
                     'y'=>$village->y,
@@ -67,6 +68,7 @@ class TroopsController extends Controller
                 );
             }else{
                 $list[$i]=array(
+                    'vid'=>$village->vid,
                     'village'=>$village->village,
                     'x'=>$village->x,
                     'y'=>$village->y,
@@ -82,7 +84,7 @@ class TroopsController extends Controller
                     'unit10'=>$row->unit10,
                     'upkeep'=>$row->upkeep,
                     'Tsq'=>$row->Tsq,
-                    'type'=>$row->type,
+                    'type'=>ucfirst(strtolower($row->type)),
                 );
                 $unit01+=$row->unit01;  $unit02+=$row->unit02;  $unit03+=$row->unit03;
                 $unit04+=$row->unit04;  $unit05+=$row->unit05;  $unit06+=$row->unit06;
@@ -298,14 +300,91 @@ class TroopsController extends Controller
                         }                             
                     }                       
                 }                                             
-            }
-            
-            Session::flash('success',"Troops details are successfully updated"); 
-            
-        }
-        
-        return Redirect::to('/account/troops');
-        
+            }            
+            Session::flash('success',"Troops details are successfully updated");            
+        }        
+        return Redirect::to('/account/troops');        
     } 
+    
+    public function updateTroops(Request $request){
+            
+        $vid = $request->vid;       $tsq=$request->tsq;
+        $unit01=$request->unit01;   $unit02=$request->unit02;
+        $unit03=$request->unit03;   $unit04=$request->unit04;
+        $unit05=$request->unit05;   $unit06=$request->unit06;
+        $unit07=$request->unit07;   $unit08=$request->unit08;
+        $unit09=$request->unit09;   $unit10=$request->unit10;
+        
+        $account=Account::where('server_id',$request->session()->get('server.id'))
+                        ->where('user_id',Auth::user()->id)->first();
+                
+        $units = Units::where('tribe',$account->tribe)
+                ->orderBy('id','asc')->get();
+        
+        $defense=0; $offense=0; $support=0; $type='NONE';
+        
+        $upkeep = $unit01*$units[0]['upkeep'] + $unit02*$units[1]['upkeep'] +
+                    $unit03*$units[2]['upkeep'] + $unit04*$units[3]['upkeep'] +
+                    $unit05*$units[4]['upkeep'] + $unit06*$units[5]['upkeep'] +
+                    $unit07*$units[6]['upkeep'] + $unit08*$units[7]['upkeep'] +
+                    $unit09*$units[8]['upkeep'] + $unit10*$units[9]['upkeep'];
+        
+        if($units[0]['type']=='D'){$defense+=$unit01*$units[0]['upkeep'];}
+            elseif($units[0]['type']=='O'){$offense+=$unit01*$units[0]['upkeep'];}
+            else{$support+=$unit01*$units[0]['upkeep'];} 
+        if($units[1]['type']=='D'){$defense+=$unit02*$units[1]['upkeep'];}
+            elseif($units[1]['type']=='O'){$offense+=$unit02*$units[1]['upkeep'];}
+            else{$support+=$unit02*$units[1]['upkeep'];} 
+        if($units[2]['type']=='D'){$defense+=$unit03*$units[2]['upkeep'];}
+            elseif($units[2]['type']=='O'){$offense+=$unit03*$units[2]['upkeep'];}
+            else{$support+=$unit03*$units[2]['upkeep'];} 
+        if($units[3]['type']=='D'){$defense+=$unit04*$units[3]['upkeep'];}
+            elseif($units[3]['type']=='O'){$offense+=$unit04*$units[3]['upkeep'];}
+            else{$support+=$unit04*$units[3]['upkeep'];} 
+        if($units[4]['type']=='D'){$defense+=$unit05*$units[4]['upkeep'];}
+            elseif($units[4]['type']=='O'){$offense+=$unit05*$units[4]['upkeep'];}
+            else{$support+=$unit05*$units[4]['upkeep'];} 
+        if($units[5]['type']=='D'){$defense+=$unit06*$units[5]['upkeep'];}
+            elseif($units[5]['type']=='O'){$offense+=$unit06*$units[5]['upkeep'];}
+            else{$support+=$unit06*$units[5]['upkeep'];} 
+        if($units[6]['type']=='D'){$defense+=$unit07*$units[6]['upkeep'];}
+            elseif($units[6]['type']=='O'){$offense+=$unit07*$units[6]['upkeep'];}
+            else{$support+=$unit07*$units[6]['upkeep'];}
+        if($units[7]['type']=='D'){$defense+=$unit08*$units[7]['upkeep'];}
+            elseif($units[7]['type']=='O'){$offense+=$unit08*$units[7]['upkeep'];}
+            else{$support+=$unit08*$units[7]['upkeep'];} 
+        if($units[8]['type']=='D'){$defense+=$unit09*$units[8]['upkeep'];}
+            elseif($units[8]['type']=='O'){$offense+=$unit09*$units[8]['upkeep'];}
+            else{$support+=$unit09*$units[8]['upkeep'];}
+        if($units[9]['type']=='D'){$defense+=$unit10*$units[9]['upkeep'];}
+            elseif($units[9]['type']=='O'){$offense+=$unit10*$units[9]['upkeep'];}
+            else{$support+=$unit10*$units[9]['upkeep'];} 
+        
+        if($upkeep==0){
+            $type='None';
+        }elseif($offense>$defense){
+            $type='Offense';
+        }else{
+            $type='Defense';
+            if($defense<$support){
+                $type='Support';
+            }
+        }
+            
+        $village=Troops::where('server_id',$request->session()->get('server.id'))
+                ->where('account_id',$account->account_id)
+                ->where('vid',$vid)
+                ->update([  'unit01'=>$unit01,      'unit02'=>$unit02,
+                            'unit03'=>$unit03,      'unit04'=>$unit04,
+                            'unit05'=>$unit05,      'unit06'=>$unit06,
+                            'unit07'=>$unit07,      'unit08'=>$unit08,
+                            'unit09'=>$unit09,      'unit10'=>$unit10,
+                            'Tsq'=>$tsq,            'upkeep'=>$upkeep,
+                            'type'=>$type
+                        ]);                
+                
+        $resp = 'Updated Successfully';
+        return response()->json(['success'=>$resp, 'upkeep'=>$upkeep]);        
+    }  
     
 }

@@ -42,7 +42,7 @@
     				<tr>
     					<td class="col-md-3 p-1 m-0 text-danger"><strong>Attacker</strong></td>
     					<td class="col-md-6 small p-1 m-0">
-    						<a href="">Hero XP: </a><input name="hxp" type="text" size='5'/>
+    						<a href="https://{{Session::get('server.url')}}/statistiken.php?id=3&name={{$draft->att_player}}" target="_blank">Hero XP: </a><input name="hxp" type="text" size='5'/>
     						<a href="http://travian.kirilloid.ru/items.php" target="_blank"><strong> Hero Equipment Details <i class="fas fa-external-link-alt"></i></strong></a>
     					</td>
     					<td class="col-md-3 p-1 m-0 text-success"><strong>Defender</strong></td>
@@ -111,7 +111,7 @@
 			<thead class="thead-inverse">
 				<tr>
 					<th class="col-md-1">Attacker</th>
-					<th class="col-md-1">Defender</th>
+					<th class="col-md-1">Target</th>
 					<th class="col-md-1">Waves</th>
 					<th class="col-md-1">Land Time</th>
 					<th class="col-md-1">Timer</th>
@@ -129,10 +129,10 @@
 						
     			<tr class="{{$color}}">
     				<td><a href="/finder/player/{{$save->att_player}}/1"><strong>{{$save->att_player}} ({{$save->att_village}})</strong></a></td>
-    				<td><a href="/finder/player/{{$save->def_player}}/1"><strong>{{$save->def_player}} ({{$save->def_village}})</strong></a></td>
+    				<td><strong>{{$save->def_village}}</strong></td>
     				<td>{{$save->waves}}</td>
     				<td>{{$save->landTime}}</td>
-    				<td>11:00:00</td>
+    				<td><strong><span id="{{$save->incid}}"></span></strong></td>
     				<td>{{$save->hero}}</td>
     				<td>{{$save->ldr_sts}}</td>
     			</tr>
@@ -140,6 +140,15 @@
 		</table>
 		@endif			
 	</div>
-</div>			
-
+</div>
 @endsection
+
+@push('scripts')
+	@if(count($saves)>0)	
+	<script>
+		@foreach($saves as $save)
+			countDown("{{$save->incid}}","{{$save->landTime}}");
+		@endforeach
+	</script>
+	@endif
+@endpush

@@ -40,6 +40,9 @@
                         <li class="nav-item px-2">
                             <a href="{{ route('plus') }}" class="nav-link">Plus</a>
                         </li>
+                        <li class="nav-item px-2">
+                            <a href="{{ route('reports') }}" class="nav-link">Reports</a>
+                        </li>
                     </ul>   
                                     
             @if(!Auth::check())

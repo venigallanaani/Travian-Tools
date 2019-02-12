@@ -60,8 +60,7 @@ class AccountController extends Controller
        $player = Players::where('server_id',$request->session()->get('server.id'))
                     ->where('player',Input::get('player'))->first();
        
-       if($player->count() > 0){
-           
+       if($player->count() > 0){           
            
            $account = new Account;
            $account->uid = $player->uid;

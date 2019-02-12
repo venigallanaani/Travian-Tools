@@ -50,18 +50,19 @@ class OffenseController extends Controller
         return view('Plus.Offense.offenseTasks')->with(['ops'=>$ops]);        
     }
     
-    public function updateOffenseTask(Request $request, $sts, $id){
+    public function updateOffenseTask(Request $request){
         session(['title'=>'Offense']);
         
-        if($sts == 'yes'){
-            $status = 'Sent';
-        }else{
-            $status = 'Not Sent';
-        }
-        $waves=OPSWaves::where('server_id',$request->session()->get('server.id'))
-                ->where('plus_id',$request->session()->get('plus.plus_id'))
-                ->where('id',$id)->update(['status'=>$status]);        
+//         if($sts == 'yes'){
+//             $status = 'Sent';
+//         }else{
+//             $status = 'Not Sent';
+//         }
+//         $waves=OPSWaves::where('server_id',$request->session()->get('server.id'))
+//                 ->where('plus_id',$request->session()->get('plus.plus_id'))
+//                 ->where('id',$id)->update(['status'=>$status]);        
         
-        return Redirect::To('/plus/offense');
+
+        return response()->json(['success'=>$request->status]);    
     }
 }

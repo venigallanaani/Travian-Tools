@@ -41,7 +41,8 @@ Route::get('/account','Account\AccountController@overview')->name('account');			
 Route::post('/account/add','Account\AccountController@addAccount');
 
 Route::get('/account/troops','Account\TroopsController@troopsOverview');
-Route::post('/account/troops/update','Account\TroopsController@processTroops');
+Route::post('/account/troops/parse','Account\TroopsController@processTroops');
+Route::post('/account/troops/update','Account\TroopsController@updateTroops');
 
 Route::get('/account/hero','Account\HeroController@heroOverview');
 Route::post('/account/hero/update','Account\HeroController@processHero');
@@ -107,11 +108,12 @@ Route::post('/plus/incoming','Plus\Defense\Incoming\IncomingController@processIn
 Route::post('/plus/incoming/update','Plus\Defense\Incoming\IncomingController@updateIncoming');
 
 /* -------------------- Plus Leader incoming Options -----------------------*/
-Route::get('/defense/incoming','Plus\Defense\Incoming\LeaderIncomingController@IncomingList');
+Route::get('/defense/incomings','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomings');
+Route::get('/defense/incomings/list','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomingsList');
 
 /* -------------------- Plus member Offense Options -----------------------*/
 Route::get('/plus/offense','Plus\Offense\OffenseController@offenseTaskList');
-Route::get('/plus/offense/{sts}/{id}','Plus\Offense\OffenseController@updateOffenseTask');
+Route::post('/plus/offense/update','Plus\Offense\OffenseController@updateOffenseTask');
 
 /* -------------------- Plus Leader Offense Options -----------------------*/
 Route::get('/offense/status','Plus\Offense\LeaderOffenseController@offensePlanList');
@@ -120,13 +122,17 @@ Route::post('/offense/create','Plus\Offense\LeaderOffenseController@createOffens
 Route::get('/offense/status/{id}','Plus\Offense\LeaderOffenseController@displayOffensePlan');
 Route::post('/offense/status/update','Plus\Offense\LeaderOffenseController@updateOffensePlan');
 
-Route::get('/offense/troops','Plus\Offense\LeaderOffenseController@troopsList');
+Route::get('/offense/troops','Plus\Offense\LeaderSearchController@troopsList');
+Route::get('/offense/search','Plus\Offense\LeaderSearchController@show');
+Route::post('/offense/search','Plus\Offense\LeaderSearchController@search');
 
 
 
 /* ----------------------- Plus Leader Offense make and edit plan ------------------------ */
 Route::get('/offense/plan/edit/{id}','Plus\Offense\OffensePlanController@showPlanLayout');
 Route::post('/offense/plan/update','Plus\Offense\OffensePlanController@updatePlan');
+Route::post('/offense/plan/add','Plus\Offense\OffensePlanController@addWave');
+//Route::get('/offense/plan/add/{wave}','Plus\Offense\OffensePlanController@addWave');
 Route::get('/offense/plan/delete/{id}','Plus\Offense\OffensePlanController@deleteWave');
 
 
@@ -158,4 +164,8 @@ Route::get('/about','AboutController@index');			//Displays the contact page
 Route::get('/servers','ServersController@index')->name('server');
 Route::post('/servers','ServersController@process');
 
+
+/* ------------------------------- Reports page controllers -------------------- */
+Route::get('/reports','ReportController@index')->name('reports');
+Route::post('/reports/create','ReportController@makeReport');
 

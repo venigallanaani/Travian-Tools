@@ -60,11 +60,31 @@ class LeaderOffenseController extends Controller
                     ->where('status','<>','ARCHIVE')
                     ->where('id',$id)->first();
         
-        $waves = OPSWaves::where('plan_id',$id)
-                    ->orderBy('landTime','asc')->get();
-        
+        $waves=OPSWaves::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('plan_id',$id)->orderBy('landtime','asc')->get();
+                    
+        if(count($waves)==0){
+            $sankeyData = null;
+        }else{
+            foreach($waves as $wave){                
+                if($wave->type=='Real'){
+                    $color = 'RED';
+                }elseif($wave->type == 'Fake'){
+                    $color = '#007bff';
+                }else{
+                    $color='GREY';
+                }                
+                $sankeyData[]=array(
+                    "ATT"=>$wave->a_player."(".$wave->a_village.")",
+                    "DEF"=>$wave->d_player."(".$wave->d_village.")",
+                    "WAVES"=>$wave->waves,
+                    "TYPE"=>$color
+                );                
+            }
+        }         
         return view('Plus.Offense.OPS.offensePlan')->with(['plan'=>$plan])
-                    ->with(['waves'=>$waves]); 
+                    ->with(['waves'=>$waves])->with(['sankeyData'=>$sankeyData]);
         
     }    
     
@@ -107,66 +127,7 @@ class LeaderOffenseController extends Controller
             
             Session::flash('primary','Plan is successfully archived');
         }        
-        return Redirect::To('/offense/status');     
-        
-    }
-    
-    
-    public function troopsList(Request $request){
-        
-        session(['title'=>'Offense']);
-        
-        $tribes = null; $troops=array();
-        
-        $villages = Troops::where('server_id',$request->session()->get('server.id'))
-                ->where('plus_id',$request->session()->get('plus.plus_id'))
-                ->where('type','Offense')->orderBy('upkeep','desc')->get();
-        
-        if(count($villages)>0){
-            $rows = Units::select('tribe_id','name','image')->get();
-            foreach($rows as $row){
-                $tribes[$row->tribe_id][]=$row;
-            }
-            foreach($villages as $village){
-                
-                $player = Diff::where('server_id',$request->session()->get('server.id'))
-							->where('vid',$village->vid)->first();
-                
-                $troops[]=array(
-                    'player'=>$player->player,
-                    'tribe'=>$player->id,
-                    'village'=>$village->village,
-                    'x'=>$village->x,
-                    'y'=>$village->y,
-                    'unit01'=>$village->unit01,
-                    'unit02'=>$village->unit02,
-                    'unit03'=>$village->unit03,
-                    'unit04'=>$village->unit04,
-                    'unit05'=>$village->unit05,
-                    'unit06'=>$village->unit06,
-                    'unit07'=>$village->unit07,
-                    'unit08'=>$village->unit08,
-                    'unit09'=>$village->unit09,
-                    'unit10'=>$village->unit10,
-                    'upkeep'=>$village->upkeep,
-                    'tsq'=>$village->Tsq,
-                    'update'=>explode(" ",$village->updated_at)[0]
-                );
-            }
-        }else{
-            $troops = $villages;
-        }
-        
-        return view("Plus.Offense.displayTroops")->with(['troops'=>$troops])
-        ->with(['tribes'=>$tribes]);       
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
+        return Redirect::To('/offense/status');         
+    }    
+   
 }

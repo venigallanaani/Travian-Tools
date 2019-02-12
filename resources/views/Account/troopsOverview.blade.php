@@ -41,32 +41,28 @@
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></td> 
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Tournament Square"><img alt="" src="/images/x.gif" class="build tsq"></td>
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Village Type">Type</td>
-							<!-- <td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Icons"></td>  -->
+							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Icons"></td>
 						</tr>
 					@foreach($troops as $index=>$troop)
-						<tr class="">
+						<tr id="{{$troop['vid']}}">
 							<td class="p-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$troop['x']}}&y={{$troop['y']}}" target="_blank">
 								{{$troop['village']}}</a></td>
-							<td class="p-0">{{$troop['unit01']}}</td>
-							<td class="p-0">{{$troop['unit02']}}</td>
-							<td class="p-0">{{$troop['unit03']}}</td>
-							<td class="p-0">{{$troop['unit04']}}</td>
-							<td class="p-0">{{$troop['unit05']}}</td>
-							<td class="p-0">{{$troop['unit06']}}</td>
-							<td class="p-0">{{$troop['unit07']}}</td>
-							<td class="p-0">{{$troop['unit08']}}</td>
-							<td class="p-0">{{$troop['unit09']}}</td>
-							<td class="p-0">{{$troop['unit10']}}</td>
+							<td class="p-0 unit01" contenteditable="true">{{$troop['unit01']}}</td>
+							<td class="p-0 unit02" contenteditable="true">{{$troop['unit02']}}</td>
+							<td class="p-0 unit03" contenteditable="true">{{$troop['unit03']}}</td>
+							<td class="p-0 unit04" contenteditable="true">{{$troop['unit04']}}</td>
+							<td class="p-0 unit05" contenteditable="true">{{$troop['unit05']}}</td>
+							<td class="p-0 unit06" contenteditable="true">{{$troop['unit06']}}</td>
+							<td class="p-0 unit07" contenteditable="true">{{$troop['unit07']}}</td>
+							<td class="p-0 unit08" contenteditable="true">{{$troop['unit08']}}</td>
+							<td class="p-0 unit09" contenteditable="true">{{$troop['unit09']}}</td>
+							<td class="p-0 unit10" contenteditable="true">{{$troop['unit10']}}</td>
 							<td class="p-0">{{$troop['upkeep']}}</td>
-							<td class="p-0">{{$troop['Tsq']}}</td>
+							<td class="p-0 tsq" contenteditable="true">{{$troop['Tsq']}}</td>
 							<td class="py-0">{{$troop['type']}}</td>
-							<!-- <td class="py-0 px-0">
-								<form>
-									{{ csrf_field() }}
-									<input id="skype" name="skype" style="display:none">
-									<button class="btn p-0 m-0" type="submit" value=""><i class="far fa-save"></i></button>
-								</form>
-							</td>  -->
+							<td class="p-0" data-toggle="tooltip" data-placement="top" title="save">
+            					<button class="badge badge-primary" type="button" id="update"><i class="far fa-save"></i></button>																						
+							</td>
 						</tr>
 					@endforeach
 						<tr class="font-weight-bold">
@@ -81,7 +77,7 @@
 							<td class="px-0">{{$stats['unit08']}}</td>
 							<td class="px-0">{{$stats['unit09']}}</td>
 							<td class="px-0">{{$stats['unit10']}}</td>
-							<td class="px-0"colspan="2" class="">{{$stats['upkeep']}}</td>
+							<td class="px-0" colspan="2">{{$stats['upkeep']}}</td>
 							<!-- <td></td>
 							<td></td>  -->
 						</tr>
@@ -90,7 +86,7 @@
 			</div>	
 
 			<div class="col-md-8 mx-auto rounded mb-5 pt-2" style="background-color:#dbeef4;">
-				<form method="post" action="/account/troops/update">	
+				<form method="post" action="/account/troops/parse">	
 					{{ csrf_field() }}
     				<table>
     					<tr>
@@ -112,6 +108,47 @@
 				</form>
 			</div>				
 		</div>
-
-
 @endsection
+@push('scripts')
+	<script>    
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });   
+   
+        $(document).on('click','#update',function(e){
+            e.preventDefault();  
+
+			var village = $(this).closest("tr");
+            var vid = village.attr("id");
+            var unit01 = village.find('td:eq(1)').text();            var unit02 = village.find('td:eq(2)').text();
+            var unit03 = village.find('td:eq(3)').text();            var unit04 = village.find('td:eq(4)').text();
+            var unit05 = village.find('td:eq(5)').text();            var unit06 = village.find('td:eq(6)').text();
+            var unit07 = village.find('td:eq(7)').text();            var unit08 = village.find('td:eq(8)').text();
+            var unit09 = village.find('td:eq(9)').text();            var unit10 = village.find('td:eq(10)').text();
+            var tsq = village.find('td:eq(12)').text();
+                
+            $.ajax({
+               type:'POST',
+               url:'/account/troops/update',
+               data:{	vid:vid, 		tsq:tsq,	
+            	   		unit01:unit01,	unit02:unit02,
+            	   		unit03:unit03,	unit04:unit04,
+            	   		unit05:unit05,	unit06:unit06,
+            	   		unit07:unit07,	unit08:unit08,
+            	   		unit09:unit09,	unit10:unit10
+                   },
+               success:function(data){
+					village.find("td:eq(11)").text(data.upkeep);
+            	   	alert(data.success)
+               }
+            });  
+    
+    	});
+	</script>
+@endpush
+
+@push('extensions')
+	<meta name="csrf-token" content="{{ csrf_token() }}" />
+@endpush

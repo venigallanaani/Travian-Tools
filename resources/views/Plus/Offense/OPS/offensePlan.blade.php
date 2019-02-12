@@ -56,6 +56,11 @@
             		<p class="h5 my-5">No attacks are planned yet</p>
             	</div>            
             @else	
+        		<div class="float-md-left p-2 shadow rounded" >
+                	<div class="mx-auto">
+                		<svg id="sankeyChart" width="800" height="300" style="margin:auto"></svg> 			 		
+                	</div>
+                </div>
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
 					<table class="table align-middle small">
 						<thead class="thead-inverse">
@@ -104,3 +109,8 @@
 			</div>
 		</div>
 @endsection
+@push('scripts')
+    @if(!$sankeyData==null)
+    	{{	createSankey($sankeyData)	}}
+	@endif
+@endpush
