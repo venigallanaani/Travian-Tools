@@ -21,6 +21,7 @@ class ReportController extends Controller
         $report = str_random(10);
         
         dd($parseData);
+        //dd(Input::get('defender'));
         
         //return view('Reports.reports');
     }
@@ -28,8 +29,9 @@ class ReportController extends Controller
     public function showReports(Request $request, $string){
         session(['title'=>'TT Reports']);
         
-        $reports = explode(",", $string);
+        //$reports = explode(",", $string);
+        //dd($reports);
         
-        dd($reports);
+        dd(Input::get('defender'));
     }
 }

@@ -9,8 +9,16 @@ if(!function_exists('ParseReports')){
             
             if(strtoupper(trim($incStrs[$x]))=='ARCHIVE' &&
                 strtoupper(trim($incStrs[$x+1]))=='SURROUNDING'){
-                $result['SUBJECT']=trim($incStrs[$x+2]);
+                $result['TITLE']=trim($incStrs[$x+2]);
                 $result['TIME']=trim($incStrs[$x+3]);
+                
+                if(strpos(strtoupper($result['TITLE']),'SCOUTS')!==false){
+                    $result['TYPE']='SCOUT';
+                }elseif(strpos(strtoupper($result['TITLE']),'RAIDS')!==false){
+                    $result['TYPE']='RAID';
+                }else{
+                    $result['TYPE']='ATTACK';
+                }
             }
 // ATTACKER INFORMATION
             if(strtoupper(trim($incStrs[$x]))=='ATTACKER' &&
@@ -58,15 +66,9 @@ if(!function_exists('ParseReports')){
                         $result['ATTACKER']['SURVIVORS'][$y]='?';
                     }else{
                         $result['ATTACKER']['SURVIVORS'][$y]=trim($result['ATTACKER']['UNITS'][$y])-trim($result['ATTACKER']['LOSES'][$y]);
-                    }
-                    
-                }
-                
-            }
-            if(strtoupper(explode(" ",trim($incStrs[$x]))[0])=='INFORMATION'){
-                $result['ATTACKER']['INFORMATION'][]=trim($incStrs[$x]);
-            }
-            
+                    }                    
+                }                
+            }            
 // Bounty Information
             if(strtoupper(trim($incStrs[$x]))=='BOUNTY'){
                 $result['ATTACKER']['BOUNTY']['WOOD']=trim($incStrs[$x+1]);
@@ -74,15 +76,12 @@ if(!function_exists('ParseReports')){
                 $result['ATTACKER']['BOUNTY']['IRON']=trim($incStrs[$x+3]);
                 $result['ATTACKER']['BOUNTY']['CROP']=trim($incStrs[$x+4]);
                 $result['ATTACKER']['CARRY']=substr(trim($incStrs[$x+5]),5);
-            }
-            
-            
+            }            
             
             if(strtoupper(trim($incStrs[$x]))=='DEFENDER' &&
                 strtoupper(trim($incStrs[$x+1]))=='DEFENDER'){
 // Reinforcements Information
-                if(strtoupper(trim($incStrs[$x+2]))=='REINFORCEMENT'){
-                    
+                if(strtoupper(trim($incStrs[$x+2]))=='REINFORCEMENT'){                    
                     if(strpos(strtoupper($incStrs[$x+3]),'CLUBSWINGER')!==false &&
                             strpos(strtoupper($incStrs[$x+3]),'PALADIN')!==false){
                         $result['REINFORCEMENT'][$rein]['TRIBE']='TEUTON';
@@ -130,95 +129,114 @@ if(!function_exists('ParseReports')){
                     $rein++;
                 }else{
 // Defender Information
-                    $result['DEFENDER']['SUBJECT']=trim($incStrs[$x+3]);
+                    if(strpos(strtoupper($incStrs[$x+3]),'FROM VILLAGE')!==false){
+                        $z=$x+3;
+                    }else{
+                        $z=$x+2;
+                    }
+                    $result['DEFENDER']['SUBJECT']=trim($incStrs[$z]);
                     
-                    if(strpos(strtoupper($incStrs[$x+4]),'CLUBSWINGER')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'PALADIN')!==false){
+                    if(strpos(strtoupper($incStrs[$z+1]),'CLUBSWINGER')!==false &&
+                            strpos(strtoupper($incStrs[$z+1]),'PALADIN')!==false){
                         $result['DEFENDER']['TRIBE']='TEUTON';
                     }
-                    if(strpos(strtoupper($incStrs[$x+4]),'LEGIONNAIRE')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'SENATOR')!==false){
+                    if(strpos(strtoupper($incStrs[$z+1]),'LEGIONNAIRE')!==false &&
+                            strpos(strtoupper($incStrs[$z+1]),'SENATOR')!==false){
                         $result['DEFENDER']['TRIBE']='ROMAN';
                     }
-                    if(strpos(strtoupper($incStrs[$x+4]),'PHALANX')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'TREBUCHET')!==false){
+                    if(strpos(strtoupper($incStrs[$z+1]),'PHALANX')!==false &&
+                            strpos(strtoupper($incStrs[$z+1]),'TREBUCHET')!==false){
                         $result['DEFENDER']['TRIBE']='GAUL';
                     }
-                    if(strpos(strtoupper($incStrs[$x+4]),'MERCENARY')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'LOGADES')!==false){
+                    if(strpos(strtoupper($incStrs[$z+1]),'MERCENARY')!==false &&
+                            strpos(strtoupper($incStrs[$z+1]),'LOGADES')!==false){
                         $result['DEFENDER']['TRIBE']='HUN';
                     }
-                    if(strpos(strtoupper($incStrs[$x+4]),'KHOPESH')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'NOMARCH')!==false){
+                    if(strpos(strtoupper($incStrs[$z+1]),'KHOPESH')!==false &&
+                            strpos(strtoupper($incStrs[$z+1]),'NOMARCH')!==false){
                         $result['DEFENDER']['TRIBE']='EGYPTIAN';
                     }
-                    if(strpos(strtoupper($incStrs[$x+4]),'PIKEMAN')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'NATARIAN EMPEROR')!==false){
+                    if(strpos(strtoupper($incStrs[$z+1]),'PIKEMAN')!==false &&
+                            strpos(strtoupper($incStrs[$z+1]),'NATARIAN EMPEROR')!==false){
                         $result['DEFENDER']['TRIBE']='NATAR';
                     }
-                    if(strpos(strtoupper($incStrs[$x+4]),'RAT')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'TIGER')!==false){
+                    if(strpos(strtoupper($incStrs[$z+1]),'RAT')!==false &&
+                            strpos(strtoupper($incStrs[$z+1]),'TIGER')!==false){
                         $result['DEFENDER']['TRIBE']='NATURE';
                     }
                     
-                    $unitList = explode("\t", trim($incStrs[$x+5]));
+                    $unitList = explode("\t", trim($incStrs[$z+2]));
                     $result['DEFENDER']['UNITS']=$unitList;
                     
-                    $losesList = explode("\t", trim($incStrs[$x+6]));
+                    $losesList = explode("\t", trim($incStrs[$z+3]));
                     $result['DEFENDER']['LOSES']=$losesList;
                     
                     for($y=0;$y<count($result['DEFENDER']['UNITS']);$y++){
-                        if($result['DEFENDER']['UNITS'][$y]=='?'||$result['DEFENDER']['LOSES'][$y]=='?'){
+                        if($result['DEFENDER']['UNITS'][$y]=='?'){
+                            $result['DEFENDER']['LOSES'][$y]='?';
                             $result['DEFENDER']['SURVIVORS'][$y]='?';
                         }else{
                             $result['DEFENDER']['SURVIVORS'][$y]=trim($result['DEFENDER']['UNITS'][$y])-trim($result['DEFENDER']['LOSES'][$y]);
-                        }
-                        //$result['DEFENDER']['SURVIVORS'][$y]=trim($result['DEFENDER']['UNITS'][$y])-trim($result['DEFENDER']['LOSES'][$y]);
+                        }                        
                     }
                 }                                    
             }   
-            
-            if(strtoupper(trim($incStrs[$x]))=='STATISTICS'){
-                for($y=$x;$y<count($incStrs);$y++){
-                    
-                    if(strtoupper(trim($incStrs[$y]))=='COMBAT STRENGTH'){
-                        $result['ATTACKER']['COMBAT']=trim($incStrs[$y+1]);
-                        
-                        if(strlen(trim($incStrs[$y+2]))!=0){
-                            $result['DEFENDER']['COMBAT']=trim($incStrs[$y+2]);
-                        }else{
-                            $result['DEFENDER']['COMBAT']=trim($incStrs[$y+3]);
-                        }
-                    }
-                    if(strtoupper(trim($incStrs[$y]))=='SUPPLY BEFORE'){
-                        $result['ATTACKER']['SUPPLY_BEFORE']=trim($incStrs[$y+1]);
-                        
-                        if(strlen(trim($incStrs[$y+2]))!=0){
-                            $result['DEFENDER']['SUPPLY_BEFORE']=trim($incStrs[$y+2]);
-                        }else{
-                            $result['DEFENDER']['SUPPLY_BEFORE']=trim($incStrs[$y+3]);
-                        }
-                    }
-                    if(strtoupper(trim($incStrs[$y]))=='SUPPLY LOST'){
-                        $result['ATTACKER']['SUPPLY_LOST']=trim($incStrs[$y+1]);
-                        
-                        if(strlen(trim($incStrs[$y+2]))!=0){
-                            $result['DEFENDER']['SUPPLY_LOST']=trim($incStrs[$y+2]);
-                        }else{
-                            $result['DEFENDER']['SUPPLY_LOST']=trim($incStrs[$y+3]);
-                        }
-                    }
-                    if(strtoupper(trim($incStrs[$y]))=='RESOURCES LOST'){
-                        $result['ATTACKER']['RESOURCE_LOST']=trim($incStrs[$y+1]);
-                        
-                        if(strlen(trim($incStrs[$y+2]))!=0){
-                            $result['DEFENDER']['RESOURCE_LOST']=trim($incStrs[$y+2]);
-                        }else{
-                            $result['DEFENDER']['RESOURCE_LOST']=trim($incStrs[$y+3]);
-                        }
+//Information data
+            if(strtoupper(explode(" ",trim($incStrs[$x]))[0])=='INFORMATION'){
+                $result['ATTACKER']['INFORMATION'][]=trim($incStrs[$x]);
+                for($y=$x+1;$y<count($incStrs);$y++){
+                    if(strpos(strtoupper(trim($incStrs[$y])),'DEFENDER')!==false ||
+                        strpos(strtoupper(trim($incStrs[$y])),'BOUNTY')!==false){
+                        break;
+                    }else{
+                        $result['ATTACKER']['INFORMATION'][]=trim($incStrs[$y]);
                     }
                 }
             }
+            
+            
+// //Statistics data            
+//             if(strtoupper(trim($incStrs[$x]))=='STATISTICS'){
+//                 for($y=$x;$y<count($incStrs);$y++){
+                    
+//                     if(strtoupper(trim($incStrs[$y]))=='COMBAT STRENGTH'){
+//                         $result['ATTACKER']['COMBAT']=trim($incStrs[$y+1]);
+                        
+//                         if(strlen(trim($incStrs[$y+2]))!=0){
+//                             $result['DEFENDER']['COMBAT']=trim($incStrs[$y+2]);
+//                         }else{
+//                             $result['DEFENDER']['COMBAT']=trim($incStrs[$y+3]);
+//                         }
+//                     }
+//                     if(strtoupper(trim($incStrs[$y]))=='SUPPLY BEFORE'){
+//                         $result['ATTACKER']['SUPPLY_BEFORE']=trim($incStrs[$y+1]);
+                        
+//                         if(strlen(trim($incStrs[$y+2]))!=0){
+//                             $result['DEFENDER']['SUPPLY_BEFORE']=trim($incStrs[$y+2]);
+//                         }else{
+//                             $result['DEFENDER']['SUPPLY_BEFORE']=trim($incStrs[$y+3]);
+//                         }
+//                     }
+//                     if(strtoupper(trim($incStrs[$y]))=='SUPPLY LOST'){
+//                         $result['ATTACKER']['SUPPLY_LOST']=trim($incStrs[$y+1]);
+                        
+//                         if(strlen(trim($incStrs[$y+2]))!=0){
+//                             $result['DEFENDER']['SUPPLY_LOST']=trim($incStrs[$y+2]);
+//                         }else{
+//                             $result['DEFENDER']['SUPPLY_LOST']=trim($incStrs[$y+3]);
+//                         }
+//                     }
+//                     if(strtoupper(trim($incStrs[$y]))=='RESOURCES LOST'){
+//                         $result['ATTACKER']['RESOURCE_LOST']=trim($incStrs[$y+1]);
+                        
+//                         if(strlen(trim($incStrs[$y+2]))!=0){
+//                             $result['DEFENDER']['RESOURCE_LOST']=trim($incStrs[$y+2]);
+//                         }else{
+//                             $result['DEFENDER']['RESOURCE_LOST']=trim($incStrs[$y+3]);
+//                         }
+//                     }
+//                 }
+//             }
         }
         
         return $result;
