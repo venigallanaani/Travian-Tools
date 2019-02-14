@@ -12,9 +12,9 @@ if(!function_exists('ParseReports')){
                 $result['TITLE']=trim($incStrs[$x+2]);
                 $result['TIME']=trim($incStrs[$x+3]);
                 
-                if(strpos(strtoupper($result['TITLE']),'SCOUTS')!==false){
+                if(strpos(strtoupper($result['TITLE']),' SCOUTS ')!==false){
                     $result['TYPE']='SCOUT';
-                }elseif(strpos(strtoupper($result['TITLE']),'RAIDS')!==false){
+                }elseif(strpos(strtoupper($result['TITLE']),' RAIDS ')!==false){
                     $result['TYPE']='RAID';
                 }else{
                     $result['TYPE']='ATTACK';
@@ -182,18 +182,21 @@ if(!function_exists('ParseReports')){
                 }                                    
             }   
 //Information data
-            if(strtoupper(explode(" ",trim($incStrs[$x]))[0])=='INFORMATION'){
-                $result['ATTACKER']['INFORMATION'][]=trim($incStrs[$x]);
+            if(strtoupper(explode("\t",trim($incStrs[$x]))[0])=='INFORMATION'){
+                if(isset(explode("\t",trim($incStrs[$x]))[1])){
+                    $result['ATTACKER']['INFORMATION'][]=explode("\t",trim($incStrs[$x]))[1];
+                }                
                 for($y=$x+1;$y<count($incStrs);$y++){
-                    if(strpos(strtoupper(trim($incStrs[$y])),'DEFENDER')!==false ||
-                        strpos(strtoupper(trim($incStrs[$y])),'BOUNTY')!==false){
-                        break;
-                    }else{
-                        $result['ATTACKER']['INFORMATION'][]=trim($incStrs[$y]);
+                    if(strlen(trim($incStrs[$y]))>0){                        
+                        if(strpos(strtoupper(trim($incStrs[$y])),'DEFENDER')!==false ||
+                            strpos(strtoupper(trim($incStrs[$y])),'BOUNTY')!==false){
+                            break;
+                        }else{
+                            $result['ATTACKER']['INFORMATION'][]=trim($incStrs[$y]);
+                        }
                     }
                 }
-            }
-            
+            }            
             
 // //Statistics data            
 //             if(strtoupper(trim($incStrs[$x]))=='STATISTICS'){
@@ -239,8 +242,26 @@ if(!function_exists('ParseReports')){
 //             }
         }
         
+        for($i=0;$i<count($result['ATTACKER']['INFORMATION']);$i++){
+                        
+            $info=explode(" ",$result['ATTACKER']['INFORMATION'][$i]);            
+            if(strpos($info[1],$info[0])!==false){
+                $result['ATTACKER']['INFORMATION'][$i]=explode(' ',$result['ATTACKER']['INFORMATION'][$i],2)[1];
+            }if(strpos($info[1],$info[2])!==false){
+                $len = strlen($info[2]);                
+                $result['ATTACKER']['INFORMATION'][$i]=substr($result['ATTACKER']['INFORMATION'][$i],$len);
+            }
+            
+            $info=explode(" ",$result['ATTACKER']['INFORMATION'][$i]);
+            $len=strlen($info[0]);            
+            if($len % 2==0 && (substr($info[0],$len/2)==substr($info[0],0,$len/2))){
+                $result['ATTACKER']['INFORMATION'][$i]=substr($result['ATTACKER']['INFORMATION'][$i],$len/2);
+            }
+        }
+        
         return $result;
     }
+        
 }
 
 ?>
