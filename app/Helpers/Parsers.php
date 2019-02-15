@@ -198,7 +198,7 @@ if(!function_exists('ParseReports')){
                 }
             }            
             
-// //Statistics data            
+// //Statistics data 
 //             if(strtoupper(trim($incStrs[$x]))=='STATISTICS'){
 //                 for($y=$x;$y<count($incStrs);$y++){
                     
