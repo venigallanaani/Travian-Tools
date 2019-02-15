@@ -71,6 +71,20 @@ img.stats{
 .dinf{	background-position:-100px 0px;	}
 .dcav{	background-position:-125px 0px;	}
 
+/* Hero */
+img.exp{
+	width:16px;	height:16px;
+	background-repeat:no-repeat;
+	background-image:url("../images/experience.png");
+}
+
+img.hero{
+	width:18px; height:16px;
+	background-image:url("../images/specials.png");
+	background-repeat:no-repeat;
+	background-position:-36px 0px; 
+}
+
 
 
 
