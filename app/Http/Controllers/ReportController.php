@@ -313,7 +313,7 @@ class ReportController extends Controller
             
 //         }
         if(Input::has('link') && Input::has('previous') && Input::get('previous')=='yes'){
-            $link = $link.",".$id;
+            $link = Input::get('link').",".$id;
         }else{
             $link='/reports/'.$id;
         }
