@@ -2,9 +2,9 @@
 
 if(!function_exists('ParseReports')){    
     function ParseReports(String $incStr){
-//        try{
+
             $incStrs = preg_split('/$\R?^/m', $incStr);
-            $rein = 0;
+            $rein = 0;  $result=null;
             for($x=0;$x<count($incStrs);$x++){
                 
                 if(strtoupper(trim($incStrs[$x]))=='ARCHIVE' &&
@@ -198,48 +198,6 @@ if(!function_exists('ParseReports')){
                     }
                 }
             }
-
-//                 $information = array();
-//                 if(strtoupper(explode("\t",trim($incStrs[$x]))[0])=='INFORMATION'){
-//                     if(isset(explode("\t",trim($incStrs[$x]))[1])){
-//                         $information[]=explode("\t",trim($incStrs[$x]))[1];
-//                     }
-//                     for($y=$x+1;$y<count($incStrs);$y++){
-//                         if(strlen(trim($incStrs[$y]))>0){
-//                             if(strpos(strtoupper(trim($incStrs[$y])),'DEFENDER')!==false ||
-//                                 strpos(strtoupper(trim($incStrs[$y])),'BOUNTY')!==false){
-//                                 break;
-//                             }else{
-//                                 $information[]=trim($incStrs[$y]);
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-            
-//             if(count($information)>0){
-                
-//                 for($i=0;$i<count($information);$i++){
-                    
-//                     $info = explode(" ",$information[$i]);
-//                     if(count($info)>2){
-//                         if(strpos($info[1],$info[0]!==false)){
-//                             $result['ATTACKER']['INFORMATION'][]=explode(' ',$information[$i],2)[1];
-//                         }
-//                         if(strpos($info[1],$info[2])!==false){                            
-//                             $len = strlen($info[2]);
-//                             $result['ATTACKER']['INFORMATION'][]=substr($information[$i],$len);
-//                         }
-//                         $info = explode(" ",$information[$i]);
-//                         $len=strlen($info[0]);
-//                         if($len % 2==0 && (substr($info[0],$len/2)==substr($info[0],0,$len/2))){
-//                             $result['ATTACKER']['INFORMATION'][]=substr($information[$i],$len/2);
-//                         }
-//                     }
-                    
-//                 }
-                
-//             }
             
             if(isset($result['ATTACKER']['INFORMATION'])){
                 for($i=0;$i<count($result['ATTACKER']['INFORMATION']);$i++){
@@ -261,11 +219,6 @@ if(!function_exists('ParseReports')){
 
                 }
             }
-
-
-//         catch(Exception $e){
-//             return null;
-//         }
 
         return $result;
     }
