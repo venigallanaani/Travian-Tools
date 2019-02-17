@@ -52,10 +52,19 @@ class ReportController extends Controller
             $attacker['SUBJECT']=$parseData['ATTACKER']['SUBJECT'];
             $attacker['TRIBE']=$parseData['ATTACKER']['TRIBE'];
             if(isset($parseData['ATTACKER']['INFORMATION'])){
-                $information=join("|",$parseData['ATTACKER']['INFORMATION']);
+                if($parseData['TYPE']=='SCOUT'){
+                    $information=join(",",$parseData['ATTACKER']['INFORMATION']);                    
+                }else{
+                    $information=join("|",$parseData['ATTACKER']['INFORMATION']);
+                }                
             }else{
                 $information='';
-            }            
+            }
+            if(isset($parseData['ATTACKER']['BOUNTY'])){
+                $information.='|BOUNTY,'.$parseData['ATTACKER']['BOUNTY']['WOOD'].",".
+                    $parseData['ATTACKER']['BOUNTY']['CLAY'].",".$parseData['ATTACKER']['BOUNTY']['IRON'].",".
+                    $parseData['ATTACKER']['BOUNTY']['CROP'].",".$parseData['ATTACKER']['CARRY'];
+            }
             
             if(Input::get('attacker')=='yes'){
         //Attacker Information
@@ -77,9 +86,10 @@ class ReportController extends Controller
                 $report->stat1=$hides;
                 $report->stat2=$hides;
                 $report->stat3=$hides;
-                if(isset($parseData['ATTACKER']['INFORMATION'])){
-                    $report->info=join("|",$parseData['ATTACKER']['INFORMATION']);
-                }                 
+//                 if(isset($parseData['ATTACKER']['INFORMATION'])){
+//                     $report->info=join("|",$parseData['ATTACKER']['INFORMATION']);
+//                 }            
+                $report->info=$information;
                 $report->deldate=$date;            
                 $report->save();            
                 
@@ -119,9 +129,10 @@ class ReportController extends Controller
                 $report->stat1=join("|",$attacker['UNITS']);
                 $report->stat2=join("|",$attacker['LOSES']);
                 $report->stat3=join("|",$attacker['SURVIVORS']);
-                if(isset($parseData['ATTACKER']['INFORMATION'])){
-                    $report->info=join("|",$parseData['ATTACKER']['INFORMATION']);
-                }                
+//                 if(isset($parseData['ATTACKER']['INFORMATION'])){
+//                     $report->info=join("|",$parseData['ATTACKER']['INFORMATION']);
+//                 }   
+                $report->info=$information;
                 $report->deldate=$date;
                 //dd($report);
                 $report->save();
@@ -347,8 +358,27 @@ class ReportController extends Controller
                     $data[$i]['ATTACK']['UNITS']=explode("|",$row->stat1);
                     $data[$i]['ATTACK']['LOSES']=explode("|",$row->stat2);
                     $data[$i]['ATTACK']['SURVIVORS']=explode("|",$row->stat3);
-                    $data[$i]['ATTACK']['INFO']=explode("|",$row->info);
+                    //$data[$i]['ATTACK']['INFO']=explode("|",$row->info);
+                    
+                    $infos = explode("|",$row->info);
+                    
+                    if(isset($infos)){
+                        foreach($infos as $info){
+                            if(strpos(strtoupper(explode(",",$info)[0]),'BOUNTY')!==false){
+                                $bounty =  explode(",",$info);
+                                $data[$i]['ATTACK']['BOUNTY']['WOOD']=$bounty[1];
+                                $data[$i]['ATTACK']['BOUNTY']['CLAY']=$bounty[2];
+                                $data[$i]['ATTACK']['BOUNTY']['IRON']=$bounty[3];
+                                $data[$i]['ATTACK']['BOUNTY']['CROP']=$bounty[4];
+                                $data[$i]['ATTACK']['BOUNTY']['CARRY']=$bounty[5];
+                            }else{
+                                $data[$i]['ATTACK']['INFO'][]=$info;
+                            }
+                        }
+                        
+                    }
                 }
+
                 
                 if($row->type=='DEFEND'){
                     
