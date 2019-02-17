@@ -172,14 +172,14 @@
 						@if($report['STATS']['OFFENSE']['HERO'] == 0)
 							0
 						@else
-							<img alt="" src="/images/x.gif" class="hero"> {{$report['STATS']['OFFENSE']['LOSS']}}
+							<img alt="" src="/images/x.gif" class="hero"> {{$report['STATS']['DEFENSE']['LOSS']}}
 						@endif						 
 						</td>
 						<td class="col-md-5 py-0" colspan="2">
 						@if($report['STATS']['DEFENSE']['HERO'] == 0)
 							0 
 						@else
-							<img alt="" src="/images/x.gif" class="hero"> {{$report['STATS']['DEFENSE']['HERO']}} / {{$report['STATS']['DEFENSE']['LOSS']}} 
+							<img alt="" src="/images/x.gif" class="hero"> {{$report['STATS']['DEFENSE']['HERO']}} / {{$report['STATS']['OFFENSE']['LOSS']}} 
 						@endif 
 						</td>
 					</tr>	
