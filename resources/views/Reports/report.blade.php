@@ -1,4 +1,4 @@
-@extends('Reports.display')
+@extends('Reports.template')
 
 @section('report')
 

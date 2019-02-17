@@ -15,7 +15,7 @@ class ReportController extends Controller
 {
     public function index(){        
         session(['title'=>'Travian Reports']);
-        return view('Reports.display');
+        return view('Reports.template');
     }
 
     
@@ -28,7 +28,7 @@ class ReportController extends Controller
             if($parseData==null){
                 
                 Session::flash('danger', 'Something went wrong, cannot create report. Please contact administrator.');
-                return view('Reports.display'); 
+                return view('Reports.template'); 
                 
             }else{            
                 //dd($parseData);

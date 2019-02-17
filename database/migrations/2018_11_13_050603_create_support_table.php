@@ -18,7 +18,7 @@ class CreateSupportTable extends Migration
             $table->string('subject');
             $table->string('email');
             $table->enum('type',['Suggest','Defect','Other']);
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->enum('status',['New','Inprocess','Complete']);
             $table->timestamps();
         });

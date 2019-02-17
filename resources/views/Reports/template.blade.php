@@ -1,8 +1,24 @@
-@extends('Layouts.reports')
+@extends('Layouts.general')
 
 
 @section('content')
-<div class="container">
+<header id="main-header" class="py-1 bg-info text-white">
+    <div class="container">
+        <p class="h3 font-weight-bold d-inline-block">Reports</p>
+    </div>
+</header>
+	@foreach(['danger','success','warning','info'] as $msg)
+		@if(Session::has($msg))
+		<div class="container">
+        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>{{ Session::get($msg) }}
+            </div>
+        </div> 
+        @endif
+    @endforeach	
+
 	<div class="container">
 		@yield('report')
 		<div class="card col-md-12 p-1 my-2 shadow">
@@ -28,5 +44,5 @@
 			</form>
 		</div>	
 	</div>
-</div>
+
 @endsection

@@ -15,45 +15,33 @@
         
     </head>
     <body>
-		<nav class="navbar p-0 font-weight-bold navbar-expand-md navbar-dark bg-dark align-middle">
+    	<nav class="navbar p-0 font-weight-bold navbar-expand-md navbar-dark bg-dark align-middle">
             <div class="container">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>                
                 <a href="/" class="navbar-brand mr-3">
             		<img id="logo" alt="" src="{{{ asset('images/favicon.png') }}}" width="42" height="30"> 	
-            		<span class="h3">Travian Tools </span><small class="align-bottom">1.0</small>
+            		<span class="h3">Travian Tools Reports </span><small class="align-bottom">1.0</small>
+            		
         		</a>
             </div>
         </nav>
-
         
-	@foreach(['danger','success','warning','info'] as $msg)
-		@if(Session::has($msg))
-		<div class="container">
-        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>{{ Session::get($msg) }}
-            </div>
-        </div> 
-        @endif
-    @endforeach	
-        	@yield('content')
-        	
-       <div class="footer bg-secondary">
+        @yield('content')
+
+        <div class="footer bg-secondary">
             <div class="container py-0">
                 <table class="col-md-12">
                     <tr class="font-weight-bold">
                         <td class="col-md-2"><a href="/about" class="text-white">About</a></td>
-                        <td class="col-md-2"><a href="/releases" class="text-white">Releases</a></td>
-                        
+                        <td class="col-md-2"><a href="/support" class="text-white">Support</a></td>                        
                         <td class="col-md-6 text-white text-right"><small>All rights to images belongs to Travian Games Gmbh.</small></td>
                     </tr>
                 </table>
             </div>
         </div>
-
+		
 <!-- == Bootstrap additions == -->
 		       
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
