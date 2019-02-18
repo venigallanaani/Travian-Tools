@@ -23,51 +23,63 @@ if(!function_exists('ParseReports')){
     // ATTACKER INFORMATION
                 if(strtoupper(trim($incStrs[$x]))=='ATTACKER' &&
                     strtoupper(trim($incStrs[$x+1]))=='ATTACKER'){
-                    
-                    $result['ATTACKER']['SUBJECT']=trim($incStrs[$x+3]);
-                    
-                    if(strpos(strtoupper($incStrs[$x+4]),'CLUBSWINGER')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'PALADIN')!==false){
-                        $result['ATTACKER']['TRIBE']='TEUTON';
-                    }
-                    if(strpos(strtoupper($incStrs[$x+4]),'LEGIONNAIRE')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'SENATOR')!==false){
-                        $result['ATTACKER']['TRIBE']='ROMAN';
-                    }
-                    if(strpos(strtoupper($incStrs[$x+4]),'PHALANX')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'TREBUCHET')!==false){
-                        $result['ATTACKER']['TRIBE']='GAUL';
-                    }
-                    if(strpos(strtoupper($incStrs[$x+4]),'MERCENARY')!==false &&
-                        strpos(strtoupper($incStrs[$x+4]),'LOGADES')!==false){
-                            $result['ATTACKER']['TRIBE']='HUN';
-                    }
-                    if(strpos(strtoupper($incStrs[$x+4]),'KHOPESH')!==false &&
-                        strpos(strtoupper($incStrs[$x+4]),'NOMARCH')!==false){
-                            $result['ATTACKER']['TRIBE']='EGYPTIAN';
-                    }
-                    if(strpos(strtoupper($incStrs[$x+4]),'PIKEMAN')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'NATARIAN EMPEROR')!==false){
-                        $result['ATTACKER']['TRIBE']='NATAR';
-                    }
-                    if(strpos(strtoupper($incStrs[$x+4]),'RAT')!==false &&
-                            strpos(strtoupper($incStrs[$x+4]),'TIGER')!==false){
-                        $result['ATTACKER']['TRIBE']='NATURE';
-                    }
-                    
-                    $unitList = explode("\t", trim($incStrs[$x+5]));
-                    $result['ATTACKER']['UNITS']=$unitList;
-                    
-                    $losesList = explode("\t", trim($incStrs[$x+6]));
-                    $result['ATTACKER']['LOSES']=$losesList;
-                    
+                    for($y=$x;$y<count($incStrs);$y++){
+                        
+                        if(strlen(trim($incStrs[$y]))!=0 && strtoupper(explode(" ",trim($incStrs[$y]))[0])!='ATTACKER'){
+                            $result['ATTACKER']['SUBJECT']=trim($incStrs[$y]);
+                            
+                            for($z=$y+1;$z<count($incStrs);$z++){
+                                if(strlen(trim($incStrs[$z]))>0){
+                                    
+                                    if(strpos(strtoupper($incStrs[$z]),'CLUBSWINGER')!==false &&
+                                        strpos(strtoupper($incStrs[$z]),'PALADIN')!==false){
+                                            $result['ATTACKER']['TRIBE']='TEUTON';
+                                    }
+                                    if(strpos(strtoupper($incStrs[$z]),'LEGIONNAIRE')!==false &&
+                                        strpos(strtoupper($incStrs[$z]),'SENATOR')!==false){
+                                            $result['ATTACKER']['TRIBE']='ROMAN';
+                                    }
+                                    if(strpos(strtoupper($incStrs[$z]),'PHALANX')!==false &&
+                                        strpos(strtoupper($incStrs[$z]),'TREBUCHET')!==false){
+                                            $result['ATTACKER']['TRIBE']='GAUL';
+                                    }
+                                    if(strpos(strtoupper($incStrs[$z]),'MERCENARY')!==false &&
+                                        strpos(strtoupper($incStrs[$z]),'LOGADES')!==false){
+                                            $result['ATTACKER']['TRIBE']='HUN';
+                                    }
+                                    if(strpos(strtoupper($incStrs[$z]),'KHOPESH')!==false &&
+                                        strpos(strtoupper($incStrs[$z]),'NOMARCH')!==false){
+                                            $result['ATTACKER']['TRIBE']='EGYPTIAN';
+                                    }
+                                    if(strpos(strtoupper($incStrs[$z]),'PIKEMAN')!==false &&
+                                        strpos(strtoupper($incStrs[$z]),'NATARIAN EMPEROR')!==false){
+                                            $result['ATTACKER']['TRIBE']='NATAR';
+                                    }
+                                    if(strpos(strtoupper($incStrs[$z]),'RAT')!==false &&
+                                        strpos(strtoupper($incStrs[$z]),'TIGER')!==false){
+                                            $result['ATTACKER']['TRIBE']='NATURE';
+                                    }
+
+                                    $unitList = explode("\t", trim($incStrs[$z+1]));
+                                    $result['ATTACKER']['UNITS']=$unitList;
+                                    
+                                    $losesList = explode("\t", trim($incStrs[$z+2]));
+                                    $result['ATTACKER']['LOSES']=$losesList;      
+                                    
+                                    break;
+                                }
+                            }                            
+                            break;
+                        }
+                        
+                    }                  
                     for($y=0;$y<count($result['ATTACKER']['UNITS']);$y++){
                         if($result['ATTACKER']['UNITS'][$y]=='?'||$result['ATTACKER']['LOSES'][$y]=='?'){
                             $result['ATTACKER']['SURVIVORS'][$y]='?';
                         }else{
-                            $result['ATTACKER']['SURVIVORS'][$y]=trim($result['ATTACKER']['UNITS'][$y])-trim($result['ATTACKER']['LOSES'][$y]);
-                        }                    
-                    }                
+                            $result['ATTACKER']['SURVIVORS'][$y]=intval(trim($result['ATTACKER']['UNITS'][$y]))-trim($result['ATTACKER']['LOSES'][$y]);
+                        }
+                    } 
                 }            
     // Bounty Information
                 if(strtoupper(trim($incStrs[$x]))=='BOUNTY'){
