@@ -87,7 +87,7 @@ if(!function_exists('ParseReports')){
                     $result['ATTACKER']['BOUNTY']['CLAY']=trim($incStrs[$x+2]);
                     $result['ATTACKER']['BOUNTY']['IRON']=trim($incStrs[$x+3]);
                     $result['ATTACKER']['BOUNTY']['CROP']=trim($incStrs[$x+4]);
-                    $result['ATTACKER']['CARRY']=substr(trim($incStrs[$x+5]),5);
+                    $result['ATTACKER']['CARRY']=str_replace('?','',substr(trim($incStrs[$x+5]),5));
                 }            
                 
                 if(strtoupper(trim($incStrs[$x]))=='DEFENDER' &&
@@ -222,13 +222,12 @@ if(!function_exists('ParseReports')){
                             $len = strlen($info[2]);
                             $result['ATTACKER']['INFORMATION'][$i]=substr($result['ATTACKER']['INFORMATION'][$i],$len);
                         }
-                        $info=explode(" ",$result['ATTACKER']['INFORMATION'][$i]);
-                        $len=strlen($info[0]);
-                        if($len % 2==0 && (substr($info[0],$len/2)==substr($info[0],0,$len/2))){
-                            $result['ATTACKER']['INFORMATION'][$i]=substr($result['ATTACKER']['INFORMATION'][$i],$len/2);
-                        }
                     }        
-
+                    $info=explode(" ",$result['ATTACKER']['INFORMATION'][$i]);
+                    $len=strlen($info[0]);
+                    if($len % 2==0 && (substr($info[0],$len/2)==substr($info[0],0,$len/2))){
+                        $result['ATTACKER']['INFORMATION'][$i]=substr($result['ATTACKER']['INFORMATION'][$i],$len/2);
+                    }
                 }
             }
 
