@@ -55,8 +55,8 @@
 					</tr>
 				@if(!empty($report['ATTACK']['BOUNTY']))
 					<tr>
-						<td class="col-md-1 align-middle"><strong>Bounty</strong></td>
-						<td class="col-md-11 text-left" colspan="11">
+						<td class="align-middle"><strong>Bounty</strong></td>
+						<td class="text-left" colspan="11">
 							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="wood"><img alt="" src="/images/x.gif" class="res wood"> {{$report['ATTACK']['BOUNTY']['WOOD']}}</span>
 							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="clay"><img alt="" src="/images/x.gif" class="res clay"> {{$report['ATTACK']['BOUNTY']['CLAY']}}</span>
 							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="iron"><img alt="" src="/images/x.gif" class="res iron"> {{$report['ATTACK']['BOUNTY']['IRON']}}</span>
