@@ -36,7 +36,7 @@ class LoadMaps extends Command
             $tableId = $server->server_id.'_'.$dateStmp;             
             $contents=file_get_contents($mapsUrl);
             
-            $file='App/Downloads/'.$tableId;
+            $file=env("DOWNLOAD_LOCATION","app/Downloads/").$tableId;
             file_put_contents($file, $contents);
             echo 'file name '.$file.' is downloaded successfully'."\n";
             
