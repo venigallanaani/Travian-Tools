@@ -25,15 +25,15 @@
 			<div>
 				<table class="table table-sm col-md-10 mx-auto table-bordered text-center">
 					<tr class="bg-warning font-weight-bold">
-						<td class="col-md-1"><strong>Attacker</strong></td>
+						<td class=""><strong>Attacker</strong></td>
 						<td class="text-left" colspan="11">{{$report['ATTACK']['SUBJECT']}}</td>
 					</tr>
 					<tr>
 						<td></td>
 					@foreach($tribes[$report['ATTACK']['TRIBE']] as $unit)
-						<td class="col-md-1 py-0" data-toggle="tooltip" data-placement="top" title="{{$unit->name}}"><img alt="" src="/images/x.gif" class="units {{$unit->image}}">
+						<td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$unit->name}}"><img alt="" src="/images/x.gif" class="units {{$unit->image}}">
 					@endforeach
-						<td class="col-md-1 py-0" data-toggle="tooltip" data-placement="top" title="hero"><img alt="" src="/images/x.gif" class="hero"></td>
+						<td class="py-0" data-toggle="tooltip" data-placement="top" title="hero"><img alt="" src="/images/x.gif" class="hero"></td>
 					</tr>
 					<tr>
 						<td class="py-0"><strong>Units</strong></td>
@@ -50,13 +50,13 @@
 					<tr>
 						<td class="py-0"><strong>Survivours</strong></td>
 					@foreach($report['ATTACK']['SURVIVORS'] as $unit)
-						<td class="py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
+						<td class=" py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
 					@endforeach
 					</tr>
 				@if(!empty($report['ATTACK']['BOUNTY']))
 					<tr>
-						<td class="align-middle"><strong>Bounty</strong></td>
-						<td class="text-left" colspan="11">
+						<td class="col-md-1 align-middle"><strong>Bounty</strong></td>
+						<td class="col-md-11 text-left" colspan="11">
 							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="wood"><img alt="" src="/images/x.gif" class="res wood"> {{$report['ATTACK']['BOUNTY']['WOOD']}}</span>
 							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="clay"><img alt="" src="/images/x.gif" class="res clay"> {{$report['ATTACK']['BOUNTY']['CLAY']}}</span>
 							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="iron"><img alt="" src="/images/x.gif" class="res iron"> {{$report['ATTACK']['BOUNTY']['IRON']}}</span>
@@ -89,13 +89,13 @@
 			<div>
 				<table class="table table-sm col-md-7 mx-auto table-bordered text-center shadow">
 					<tr>
-						<td class="col-md-2"></td>
-						<td class="col-md-5 text-white bg-danger font-weight-bold h6" colspan="2">Attacker ({{$report['STATS']['OFFENSE']['PERCENT']}} %)</td>
-						<td class="col-md-5 text-white bg-success font-weight-bold h6" colspan="2">Defender ({{$report['STATS']['DEFENSE']['PERCENT']}} %)</td>
+						<td class=""></td>
+						<td class="text-white bg-danger font-weight-bold h6" colspan="2">Attacker ({{$report['STATS']['OFFENSE']['PERCENT']}} %)</td>
+						<td class="text-white bg-success font-weight-bold h6" colspan="2">Defender ({{$report['STATS']['DEFENSE']['PERCENT']}} %)</td>
 					</tr>
 					<tr>
-						<td class="col-md-2 font-weight-bold">Troops</td>
-						<td class="col-md-5" colspan="2">
+						<td class="font-weight-bold">Troops</td>
+						<td class="" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></span> 
 								@if(is_numeric($report['STATS']['OFFENSE']['UPKEEP'])){{number_format($report['STATS']['OFFENSE']['UPKEEP'])}} 
 								@else {{$report['STATS']['OFFENSE']['UPKEEP']}} @endif - 
@@ -106,7 +106,7 @@
 							@if(is_numeric($report['STATS']['OFFENSE']['REST'])){{number_format($report['STATS']['OFFENSE']['REST'])}} 
 							@else {{$report['STATS']['OFFENSE']['REST']}} @endif
 						</td>
-						<td class="col-md-5" colspan="2">
+						<td class="" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></span> 
 								@if(is_numeric($report['STATS']['DEFENSE']['UPKEEP'])){{number_format($report['STATS']['DEFENSE']['UPKEEP'])}} 
 								@else {{$report['STATS']['DEFENSE']['UPKEEP']}} @endif - 
@@ -119,26 +119,26 @@
 						</td>						
 					</tr>
 					<tr>
-						<td class="col-md-2 py-0 font-weight-bold">Offense</td>
-						<td class="col-md-5 py-0" colspan="2">
+						<td class="py-0 font-weight-bold">Offense</td>
+						<td class="py-0" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Total Offense"><img alt="" src="/images/x.gif" class="stats off"></span> 
 								@if(is_numeric($report['STATS']['OFFENSE']['OFFENSE'])){{number_format($report['STATS']['OFFENSE']['OFFENSE'])}} 
 								@else {{$report['STATS']['OFFENSE']['OFFENSE']}} @endif
 						</td>
-						<td class="col-md-5 py-0" colspan="2">
+						<td class="py-0" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Total Offense"><img alt="" src="/images/x.gif" class="stats off"></span> 
 								@if(is_numeric($report['STATS']['DEFENSE']['OFFENSE'])){{number_format($report['STATS']['DEFENSE']['OFFENSE'])}} 
 								@else {{$report['STATS']['DEFENSE']['OFFENSE']}} @endif
 						</td>
 					</tr>
 					<tr>
-						<td class="col-md-2 align-middle py-0 font-weight-bold" rowspan="2">Defense</td>
-						<td class="col-md-5 py-0" colspan="2">
+						<td class="align-middle py-0 font-weight-bold" rowspan="2">Defense</td>
+						<td class="py-0" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Total Defense"><img alt="" src="/images/x.gif" class="stats def"></span> 
 							@if(is_numeric($report['STATS']['OFFENSE']['DEFENSE'])){{number_format($report['STATS']['OFFENSE']['DEFENSE'])}} 
 							@else {{$report['STATS']['OFFENSE']['DEFENSE']}} @endif
 						</td>
-						<td class="col-md-5 py-0" colspan="2">
+						<td class="py-0" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Total Defense"><img alt="" src="/images/x.gif" class="stats def"></span> 
 							@if(is_numeric($report['STATS']['DEFENSE']['DEFENSE'])){{number_format($report['STATS']['DEFENSE']['DEFENSE'])}} 
 							@else {{$report['STATS']['DEFENSE']['DEFENSE']}} @endif
@@ -167,15 +167,15 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="col-md-2 py-0 font-weight-bold">Experience</td>
-						<td class="col-md-5 py-0" colspan="2"> 
+						<td class="py-0 font-weight-bold">Experience</td>
+						<td class="py-0" colspan="2"> 
 						@if($report['STATS']['OFFENSE']['HERO'] == 0)
 							0
 						@else
 							<img alt="" src="/images/x.gif" class="hero"> {{$report['STATS']['DEFENSE']['LOSS']}}
 						@endif						 
 						</td>
-						<td class="col-md-5 py-0" colspan="2">
+						<td class="py-0" colspan="2">
 						@if($report['STATS']['DEFENSE']['HERO'] == 0)
 							0 
 						@else
@@ -184,7 +184,7 @@
 						</td>
 					</tr>	
 					<tr>
-						<td class="col-md-2 align-middle py-0 font-weight-bold" rowspan="5">Resources</td>
+						<td class="align-middle py-0 font-weight-bold" rowspan="5">Resources</td>
 						<td class="py-0">
 							<p class="my-0 py-0">
 								<span data-toggle="tooltip" data-placement="top" title="Wood"><img alt="" src="/images/x.gif" class="res wood"></span> 
@@ -239,15 +239,15 @@
 			<div>
 				<table class="table table-sm col-md-10 mx-auto table-bordered text-center">
 					<tr class="bg-info text-white font-weight-bold">
-						<td class="col-md-1"><strong>Defender</strong></td>
+						<td class=""><strong>Defender</strong></td>
 						<td class="text-left" colspan="11">{{$report['DEFEND']['SUBJECT']}}</td>
 					</tr>
 					<tr>
 						<td></td>
 					@foreach($tribes[$report['DEFEND']['TRIBE']] as $unit)						
-						<td class="col-md-1 py-0" data-toggle="tooltip" data-placement="top" title="{{$unit->name}}"><img alt="" src="/images/x.gif" class="units {{$unit->image}}">
+						<td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$unit->name}}"><img alt="" src="/images/x.gif" class="units {{$unit->image}}">
 					@endforeach
-						<td class="col-md-1 py-0"  data-toggle="tooltip" data-placement="top" title="hero"><img alt="" src="/images/x.gif" class="hero"></td>
+						<td class="py-0"  data-toggle="tooltip" data-placement="top" title="hero"><img alt="" src="/images/x.gif" class="hero"></td>
 					</tr>
 					<tr>
 						<td class="py-0"><strong>Units</strong></td>
@@ -281,10 +281,10 @@
 					<tr>
 						<td></td>
 					@foreach($tribes[$reinforcement['TRIBE']] as $unit)
-						<td class="col-md-1" data-toggle="tooltip" data-placement="top" title="{{$unit->name}}"><img alt="" src="/images/x.gif" class="units {{$unit->image}}">
+						<td class="" data-toggle="tooltip" data-placement="top" title="{{$unit->name}}"><img alt="" src="/images/x.gif" class="units {{$unit->image}}">
 					@endforeach
 					@if(count($reinforcement['UNITS'])>10)
-						<td class="col-md-1"  data-toggle="tooltip" data-placement="top" title="hero"><img alt="" src="/images/x.gif" class="hero"></td>
+						<td class=""  data-toggle="tooltip" data-placement="top" title="hero"><img alt="" src="/images/x.gif" class="hero"></td>
 					@endif
 					</tr>
 					<tr>

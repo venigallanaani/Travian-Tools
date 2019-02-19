@@ -34,9 +34,9 @@
             <div class="container py-0">
                 <table class="col-md-12">
                     <tr class="font-weight-bold">
-                        <td class="col-md-2"><a href="/about" class="text-white">About</a></td>
-                        <td class="col-md-2"><a href="/support" class="text-white">Support</a></td>                        
-                        <td class="col-md-6 text-white text-right"><small>All rights to images belongs to Travian Games Gmbh.</small></td>
+                        <td><a href="/about" class="text-white">About</a></td>
+                        <td><a href="/support" class="text-white">Support</a></td>                        
+                        <td class="text-white text-right"><small>All rights to images belongs to Travian Games Gmbh.</small></td>
                     </tr>
                 </table>
             </div>
