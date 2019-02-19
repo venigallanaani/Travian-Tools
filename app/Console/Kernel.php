@@ -16,32 +16,32 @@ class Kernel extends ConsoleKernel
     {
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Load:Maps')
-            //->dailyAt('00:00')
-            ->everyminute()
+            ->dailyAt('00:00')
+            //->everyminute()
             ->appendOutputTo(storage_path('logs/processLoads.log')); 
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Load:Diff')
-            //->dailyAt('00:15')
-            ->everyminute()
+            ->dailyAt('00:15')
+            //->everyminute()
             ->appendOutputTo(storage_path('logs/processLoads.log')); 
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Process:Players')
-            //->dailyAt('00:30')
-            ->everyminute()
+            ->dailyAt('00:30')
+            //->everyminute()
             ->appendOutputTo(storage_path('logs/processLoads.log'));   
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Process:Alliances')
-            //->dailyAt('00:45')
-            ->everyminute()
+            ->dailyAt('00:45')
+            //->everyminute()
             ->appendOutputTo(storage_path('logs/processLoads.log'));   
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('process:CleanUp')
-            //->dailyAt('01:00')
-            ->everyminute()
+            ->dailyAt('01:00')
+            //->everyminute()
             ->appendOutputTo(storage_path('logs/processLoads.log'));
         
         // Deletes the reports which are not used for 100 days
