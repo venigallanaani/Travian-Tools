@@ -15,6 +15,7 @@ class CreateDiffDetailsTable extends Migration
     {
         Schema::create('diff_details', function (Blueprint $table) {
             $table->string('server_id');
+            $table->integer('worldid');
             $table->integer('x');
             $table->integer('y');
             $table->integer('id');
