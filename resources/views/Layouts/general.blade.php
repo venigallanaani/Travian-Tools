@@ -22,9 +22,18 @@
                 </button>                
                 <a href="/" class="navbar-brand mr-3">
             		<img id="logo" alt="" src="{{{ asset('images/favicon.png') }}}" width="42" height="30"> 	
-            		<span class="h3">Travian Tools Reports </span><small class="align-bottom">1.0</small>
-            		
+            		<span class="h3">Travian Tools </span><small class="align-bottom">1.0</small>            		
         		</a>
+        		<div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">                        
+                        <li class="nav-item px-2">
+                            <a href="{{ route('reports') }}" class="nav-link">Reports</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a href="{{ route('finders') }}" class="nav-link">Finders</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         
@@ -32,7 +41,7 @@
 
         <div class="footer bg-secondary">
             <div class="container py-0">
-                <table class="col-md-12">
+                <table class="col-md-12 col-12">
                     <tr class="font-weight-bold">
                         <td><a href="/about" class="text-white">About</a></td>
                         <td><a href="/support" class="text-white">Support</a></td>                        

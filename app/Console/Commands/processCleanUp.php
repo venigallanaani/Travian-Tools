@@ -53,13 +53,16 @@ class processCleanUp extends Command
             $maps = Map::where('server_id',$server->server_id)
                         ->where('status','ACTIVE')->orderBy('created_at','desc')->get();
             if(count($maps)>10){
-                for($i=10;$i<count($maps);$i++){
-                    
+                for($i=10;$i<count($maps);$i++){                    
+                // Updates the maps table status  
                     Map::where('server_id',$server->server_id)
                                 ->where('map_id',$maps[$i]->map_id)
                                 ->update(['status'=>'ARCHIVE']);
                     
+                //Delete maps data
                     MapData::where('table_id','=',$maps[$i]->map_id)->delete();
+                //Delete files
+                    unlink(env("DOWNLOAD_LOCATION","app/Downloads/").$maps[$i]->map_id);
                     
                 }                
             }  
