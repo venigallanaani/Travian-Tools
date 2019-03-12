@@ -78,7 +78,9 @@ class processPlayers extends Command
                         'table_id'=>$server->table_id
                     ]);
                     
-                    if($status=='Active' && $diffPop<0){ $status='Under Attack'; } 
+                    if($status=='Active' && $diffPop<0){ 
+                        $status='Under Attack'; 
+                    } 
                     
                     Diff::where('uid',$uid)
                         ->where('table_id',$server->table_id)
