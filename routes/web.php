@@ -37,6 +37,14 @@ Route::get('/finders/neighbour','Finders\NeighbourFinderController@neighbour');	
 Route::post('/finders/neighbour','Finders\NeighbourFinderController@processNeighbour');		// Displays the result of the neighbour finders
 
 
+/* ------------------------------- Cropper page controller --------------------------------- */
+//Route::get('/calculators','Calculators\CalculatorController@overview')->name('calculators');
+
+Route::get('/calculators/cropper','Calculators\CropperController@display')->name('cropper');
+Route::post('/calculators/cropper','Calculators\CropperController@process');
+Route::get('/calculators/cropper/{crop}/{cap}/{o1}/{o2}/{o3}/{plus}','Calculators\CropperController@calculate');
+
+
 /* ---------------- Servers page controllers ------------------- */
 Route::get('/servers','ServersController@index')->name('server');
 Route::post('/servers','ServersController@process');

@@ -16,4 +16,3 @@ yarn-error.log
 /storage/logs
 /app/Downloads
 /app/Console/Kernal.php
-app/Console/Kernel.php

@@ -32,6 +32,9 @@
                         <li class="nav-item px-2">
                             <a href="{{ route('finders') }}" class="nav-link">Finders</a>
                         </li>
+                        <li class="nav-item px-2">
+                            <a href="{{ route('cropper') }}" class="nav-link">Cropper</a>
+                        </li>
                     </ul>
                 </div>
             </div>

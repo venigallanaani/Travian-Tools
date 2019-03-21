@@ -33,7 +33,7 @@
             			else{	$status='text-danger';	}
         			@endphp
                     <tr>
-                        <td class="py-0">{{round(sqrt(pow(($x-$village->x),2)+pow(($y-$village->y),2)),1)}}</td>
+                        <td class="py-0">{{round(sqrt(pow(($xCor-$village->x),2)+pow(($yCor-$village->y),2)),1)}}</td>
                         <td class="py-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$village->x}}&y={{$village->y}}" target="_blank">{{$village->village}}</a></td>                    
                         <td class="py-0"><a href="/finder/player/{{$village->player}}/1">{{$village->player}}</a></td>
                     	<td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$tribe}}"><img alt="" src="/images/x.gif" class="tribe {{$tribe}}"></td>
