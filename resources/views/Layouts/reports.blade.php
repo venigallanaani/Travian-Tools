@@ -43,7 +43,7 @@
         	
        <div class="footer bg-secondary">
             <div class="container py-0">
-                <table class="col-md-12">
+                <table class="col-md-12 col-12">
                     <tr class="font-weight-bold">
                         <td class="col-md-2"><a href="/about" class="text-white">About</a></td>
                         <td class="col-md-2"><a href="/releases" class="text-white">Releases</a></td>

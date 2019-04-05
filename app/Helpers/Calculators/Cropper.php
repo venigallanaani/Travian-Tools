@@ -48,21 +48,17 @@ if(!function_exists('calcNextProd')){
         
         $prod=calcProd($fields);
         
-        if($infra[2]==20){
+        if($infra[2]==3){
             $bonus = ($oasis[0]+$oasis[1]+$oasis[2])/100;
-        }else if($infra[2]==15){
+        }else if($infra[2]==2){
             $bonus = ($oasis[0]+$oasis[1])/100;
-        }else if($infra[2]==10){
+        }else if($infra[2]==1){
             $bonus = $oasis[0]/100;
         }else{
             $bonus = 0;
-        }       
-        
-        if($lvl==0){
-            $next=0;
-        }else{
-            $next= $increase[$lvl+1]; 
-        }        
+        } 
+
+        $next= $increase[$lvl+1];        
         $rslt=($prod+$next)*(1+$infra[0]*0.05+$infra[1]*0.05+$bonus+$inc);
         
         return $rslt;        

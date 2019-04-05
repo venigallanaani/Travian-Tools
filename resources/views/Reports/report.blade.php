@@ -327,7 +327,6 @@
       var copyText = document.getElementById("link");
       copyText.select();
       document.execCommand("copy");
-      //alert("Copied the text: " + copyText.value);
     }
 </script>
 

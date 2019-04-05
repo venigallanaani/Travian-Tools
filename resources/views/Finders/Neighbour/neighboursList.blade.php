@@ -35,9 +35,9 @@
                         <td class="py-0">{{round(sqrt(pow(($x-$village->x),2)+pow(($y-$village->y),2)),1)}}</td>
                         <td class="py-0">{{$village->village}}</td>
                         <td class="py-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$village->x}}&y={{$village->y}}" target="_blank">{{$village->x}}|{{$village->y}}</a></td>
-                        <td class="py-0"><a href="/finder/player/{{$village->player}}/1">{{$village->player}}</a></td>
+                        <td class="py-0"><a href="/finders/player/{{$village->player}}/1">{{$village->player}}</a></td>
                         <td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$tribe}}"><img alt="" src="/images/x.gif" class="tribe {{$tribe}}"></td>
-                        <td class="py-0"><a href="/finder/alliance/{{$village->alliance}}/1">{{$village->alliance}}</a></td>
+                        <td class="py-0"><a href="/finders/alliance/{{$village->alliance}}/1">{{$village->alliance}}</a></td>
                         <td class="py-0">{{$village->population}}</td>
                     </tr>
                 @endforeach
