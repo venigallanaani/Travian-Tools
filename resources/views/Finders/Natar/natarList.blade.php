@@ -4,7 +4,7 @@
 
 <!-- ========================================= Natar Finder -- Village found ======================================================== -->
 
-    <div class="card float-md-left my-1 p-0 col-md-12 shadow">
+    <div class="card float-md-left my-1 p-0 col-md-12 shadow mb-5">
         <div class="card-header h4 py-2 bg-success text-white">
             <strong>Natar Results</strong>
         </div>

@@ -3,6 +3,7 @@
 @section('body')
 
 <!-- =================================== Player Finder input screen================================== -->
+
     <div class="card float-md-left shadow mb-1">
         <div class="card-header h4 py-2 bg-success text-white">
             <strong>Player Finder</strong>

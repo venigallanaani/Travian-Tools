@@ -2,7 +2,7 @@
 
 @section('result')    
 <!-- =========================== alliance Finder Output -- Single alliance ====================================== -->
-    <div class="card float-md-left shadow col-md-12 px-0 mb-1">
+    <div class="card float-md-left shadow col-md-12 px-0 mb-5">
         <div class="card-header h4 py-2 bg-success text-white">
             <strong>Alliance Details</strong>
         </div>

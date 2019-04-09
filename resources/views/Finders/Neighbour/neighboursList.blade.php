@@ -5,7 +5,7 @@
 
 <!-- ========================================= Natar Finder -- Village found ======================================================== -->
 
-    <div class="card float-md-left my-1 p-0 col-md-12 shadow">
+    <div class="card float-md-left my-1 p-0 col-md-12 shadow mb-5">
         <div class="card-header h4 py-2 bg-success text-white">
             <strong>Neighbourhood Scan</strong>
         </div>
@@ -32,7 +32,7 @@
             			else {	$tribe='Natar';	}
         			@endphp
                     <tr>
-                        <td class="py-0">{{round(sqrt(pow(($x-$village->x),2)+pow(($y-$village->y),2)),1)}}</td>
+                        <td class="py-0">{{round(sqrt(pow(($xCor-$village->x),2)+pow(($yCor-$village->y),2)),1)}}</td>
                         <td class="py-0">{{$village->village}}</td>
                         <td class="py-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$village->x}}&y={{$village->y}}" target="_blank">{{$village->x}}|{{$village->y}}</a></td>
                         <td class="py-0"><a href="/finders/player/{{$village->player}}/1">{{$village->player}}</a></td>

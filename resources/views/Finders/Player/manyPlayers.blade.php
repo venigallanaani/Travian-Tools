@@ -3,7 +3,7 @@
 @section('result')
 
 <!-- ==================================== Player Finder Output -- Multiple players found ==================================== -->
-    <div class="card float-md-left shadow col-md-12 px-0 mb-1">
+    <div class="card float-md-left shadow col-md-12 px-0 mb-5">
         <div class="card-header h4 py-2 bg-success text-white">
             <strong>Search Results</strong>
         </div>
