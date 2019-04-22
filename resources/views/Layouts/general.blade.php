@@ -27,12 +27,40 @@
         		<div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">                        
                         <li class="nav-item px-2">
-                            <a href="{{ route('reports') }}" class="nav-link">Reports</a>
+                            <a href="{{ route('home') }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item px-2">
                             <a href="{{ route('finders') }}" class="nav-link">Finders</a>
                         </li>
+                        <li class="nav-item px-2">
+                            <a href="{{ route('account') }}" class="nav-link">Account</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a href="{{ route('plus') }}" class="nav-link">Plus</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a href="{{ route('reports') }}" class="nav-link">Reports</a>
+                        </li>
                     </ul>
+                    
+            @if(!Auth::check())
+                    <div class="navbar-nav ml-auto">
+                        <div class="nav-item">
+                            <a href="/login" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        </div>                  
+                    </div>
+            @else
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown mr-3">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{Auth::user()->name}}</a>
+                            <div class="dropdown-menu">
+                                <a href="/profile" class="dropdown-item"><i class="fa fa-user-circle"></i> Profile</a>
+                                <a href="/profile/servers" class="dropdown-item"><i class="fas fa-cog"></i> Server Settings</a>
+                                <a href="/logout" class="dropdown-item"><i class="fa fa-user-times"></i> Log Out</a>
+                            </div>
+                        </li>
+                    </ul>
+            @endif
                 </div>
             </div>
         </nav>

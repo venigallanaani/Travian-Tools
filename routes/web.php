@@ -1,8 +1,15 @@
 <?php
+Auth::routes();
+
+$this->get('logout', 'Auth\LoginController@logout')->name('logout');
+
+/*----------------------------------------------------------------------------------*/
+/* ----------------------------------- Home page ----------------------------------- */
+/*----------------------------------------------------------------------------------*/
+Route::get('/', 'HomeController@index')->name('home');					// Displays home page on login
+Route::get('/home', 'HomeController@index')->name('home');				// Displays home page on selection
 
 /* ------------------------------- Reports page controllers -------------------- */
-Route::get('/','ReportController@index')->name('reports');
-Route::get('/home','ReportController@index')->name('reports');
 Route::get('/reports','ReportController@index')->name('reports');
 Route::post('/reports/create','ReportController@makeReport');
 Route::get('reports/{string}','ReportController@showReports');
@@ -48,3 +55,82 @@ Route::get('/calculators/cropper/{crop}/{cap}/{o1}/{o2}/{o3}/{plus}','Calculator
 /* ---------------- Servers page controllers ------------------- */
 Route::get('/servers','ServersController@index')->name('server');
 Route::post('/servers','ServersController@process');
+
+/*----------------------------------------------------------------------------------*/
+/* -------------------------- Controller for Account Page -------------------------- */
+/*----------------------------------------------------------------------------------*/
+Route::get('/account','Account\AccountController@overview')->name('account');			// Account main page
+Route::post('/account/add','Account\AccountController@addAccount');
+
+Route::get('/account/troops','Account\TroopsController@troopsOverview');
+Route::post('/account/troops/parse','Account\TroopsController@processTroops');
+Route::post('/account/troops/update','Account\TroopsController@updateTroops');
+
+Route::get('/account/hero','Account\HeroController@heroOverview');
+Route::post('/account/hero/update','Account\HeroController@processHero');
+
+Route::get('/account/alliance','Account\AllianceController@allianceOverview');
+
+Route::get('/account/support','Account\SupportController@overview');
+Route::post('/account/sitter/update', 'Account\SupportController@updateSitters');
+Route::post('/account/dual/update', 'Account\SupportController@updateDuals');
+
+/*----------------------------------------------------------------------------------*/
+/* ----------------------- Plus Page Routes --------------------------- */
+/*----------------------------------------------------------------------------------*/
+Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu main page
+
+/* --------------------- Join Plus Group -------------------------- */
+Route::get('/plus/join/{link}','Plus\PlusController@joinPlusGroup');
+Route::post('/plus/join','Plus\PlusController@refreshLink');
+
+/*-------------------------- Plus overview routes ----------------------------*/
+Route::get('/plus/members','Plus\PlusController@members');
+Route::get('/plus/member/{id}','Plus\PlusController@member');
+
+/* ------------------ Plus player display of rankings ------------------------ */
+Route::get('/plus/rankings','Plus\PlusController@rankings');
+
+/* --------------- Controller for Plus leader routes --------------- */
+Route::get('/leader/access','Plus\Leader\LeaderController@access');
+Route::post('/leader/access/add','Plus\Leader\LeaderController@addAccess');
+Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@updateAccess');
+
+Route::get('/leader/rankings','Plus\Leader\LeaderController@showRankings');
+
+Route::get('/leader/subscription','Plus\Leader\LeaderController@subscriptions');
+Route::post('/leader/subscription/message','Plus\Leader\LeaderController@messageUpdate');
+
+/* --------------- Plus Member Resource routes  --------------- */
+Route::get('/plus/resource','Plus\Resources\ResourceController@showTaskList');
+Route::get('/plus/resource/{id}','Plus\Resources\ResourceController@showTask');
+Route::post('/plus/resource/{id}','Plus\Resources\ResourceController@updateTask');
+
+/* --------------- Plus Leader Resource routes  --------------- */
+Route::get('/resource','Plus\Resources\LeaderResourceController@resourceTaskList');
+Route::get('/resource/{id}','Plus\Resources\LeaderResourceController@resourceTask');
+Route::post('/resource/create','Plus\Resources\LeaderResourceController@createResourceTask');
+Route::post('/resource/update','Plus\Resources\LeaderResourceController@processResourceTask');
+
+/* --------------- Plus group member CFD routes  --------------- */
+Route::get('/plus/defense','Plus\Defense\CFD\CFDController@defenseTaskList');
+Route::get('/plus/defense/{id}','Plus\Defense\CFD\CFDController@defenseTask');
+Route::post('/plus/defense/{id}','Plus\Defense\CFD\CFDController@updateDefenseTask');
+
+/* --------------- Plus leader CFD options routes  --------------- */
+Route::get('/defense/cfd','Plus\Defense\CFD\LeaderCFDController@CFDList');
+Route::get('/defense/cfd/{id}','Plus\Defense\CFD\LeaderCFDController@CFDDetail');
+Route::get('/defense/cfd/troops/{id}/{uid}','Plus\Defense\CFD\LeaderCFDController@CFDTroops');
+Route::post('/defense/cfd/create','Plus\Defense\CFD\LeaderCFDController@createCFD');
+Route::post('/defense/cfd/update','Plus\Defense\CFD\LeaderCFDController@processCFD');
+
+/* -------------------- Plus Search Defense -----------------------*/
+Route::get('/defense/search','Plus\Defense\Search\DefenseController@show');
+Route::post('/defense/search','Plus\Defense\Search\DefenseController@process');
+
+/* ------------------ Profile Controller Page -------------- */
+Route::get('/profile','Profile\profileController@overview');
+Route::post('/profile/contact','Profile\profileController@updateContact');
+
+Route::get('/profile/servers','Profile\profileController@servers');
+Route::post('/profile/servers/load','ServersController@process');
