@@ -22,7 +22,6 @@
             </div>
         </div>
     </header>
-    
 @guest
 	<div class="container">
         <div class="alert alert-warning text-center my-1" role="alert">
@@ -63,6 +62,15 @@
 	</div>
 	@else
     <div class="container">
+@foreach(['template'] as $msg)
+	@if(Session::has($msg))
+    	<div class="alert alert-warning text-center my-1" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>{{ Session::get($msg) }}
+        </div>
+    @endif
+@endforeach
         <div class="d-inline float-md-left col-md-3">
             <!-- ======================================= Finders Side menu =================================== -->
             <div class="list-group text-center text-white mt-1">
@@ -79,8 +87,8 @@
             <!-- =================================== Plus Leader/Owner menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Leader Menu</a>
-                <a href="/leader/access" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Access</a>
                 <a href="/leader/subscription" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Subscription</a>
+                <a href="/leader/access" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Access</a>                
                 <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a>
             </div>
         @endif   

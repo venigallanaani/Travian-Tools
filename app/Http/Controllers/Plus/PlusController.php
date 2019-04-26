@@ -195,46 +195,7 @@ class PlusController extends Controller
         );
         
         return view('Plus.General.rankings')->with(['ranking'=>$ranking]);        
-    }
-    
-    
-    function refreshLink(Request $request){
-        
-        $link=str_random(10);
-        
-        $plus=Plus::where('server_id',$request->session()->get('server.id'))
-                        ->where('id',Auth::user()->id)->first();
-        
-        Subscription::where('id',$plus->plus_id)
-                        ->where('server_id',$request->session()->get('server.id'))
-                        ->update(['link'=>$link]);
-        
-        return Redirect::to('/leader/subscription');        
-        
-    }
-    
-    function joinPlusGroup(Request $request, $link){
-        
-        session(['title'=>'Plus']);
-        
-        if(!$request->session()->has('server.id')){
-            return view('Plus.template');
-        }
-        
-        if(Auth::Check()){
-            
-            $subscription=Subscription::where('server_id',$request->session()->get('server.id'))
-                                ->where('link',$link)->first();
-                        
-            
-        }else{
-            return view('Plus.template');
-        }
-        
-        
-        
-        
-        
-    }
+    }       
+
 }
 

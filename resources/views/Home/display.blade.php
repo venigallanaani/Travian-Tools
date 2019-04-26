@@ -30,7 +30,14 @@
             </div>
             <div class="card shadow">
                 <div class="card-body">
-                    <p class="h3"><a class="font-weight-bold text-info" href="/reports">Reports Converter</a></p>
+                    <p class="h3"><a class="font-weight-bold text-info" href="{{route('reports')}}">Reports Converter</a></p>
+                    <p>Convert your battle reports into sharable format.</p>
+                </div>
+            </div>
+        	<div class="card shadow">
+                <div class="card-body">
+                    <p class="h3"><a class="font-weight-bold text-warning" href="{{route('server')}}">Servers</a></p>
+                    <p>Select the server and explore the features.</p>
                 </div>
             </div>
             <div class="card shadow">

@@ -81,8 +81,9 @@ Route::post('/account/dual/update', 'Account\SupportController@updateDuals');
 Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu main page
 
 /* --------------------- Join Plus Group -------------------------- */
-Route::get('/plus/join/{link}','Plus\PlusController@joinPlusGroup');
-Route::post('/plus/join','Plus\PlusController@refreshLink');
+Route::get('/plus/join/{link}','Plus\Leader\LeaderController@joinPlusGroup');
+Route::post('/plus/join','Plus\Leader\SubscriptionController@refreshLink');
+Route::post('/plus/leave','Plus\Leader\LeaderController@leavePlusGroup');
 
 /*-------------------------- Plus overview routes ----------------------------*/
 Route::get('/plus/members','Plus\PlusController@members');
@@ -93,13 +94,12 @@ Route::get('/plus/rankings','Plus\PlusController@rankings');
 
 /* --------------- Controller for Plus leader routes --------------- */
 Route::get('/leader/access','Plus\Leader\LeaderController@access');
-Route::post('/leader/access/add','Plus\Leader\LeaderController@addAccess');
 Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@updateAccess');
 
 Route::get('/leader/rankings','Plus\Leader\LeaderController@showRankings');
 
-Route::get('/leader/subscription','Plus\Leader\LeaderController@subscriptions');
-Route::post('/leader/subscription/message','Plus\Leader\LeaderController@messageUpdate');
+Route::get('/leader/subscription','Plus\Leader\SubscriptionController@subscriptions');
+Route::post('/leader/subscription/message','Plus\Leader\SubscriptionController@messageUpdate');
 
 /* --------------- Plus Member Resource routes  --------------- */
 Route::get('/plus/resource','Plus\Resources\ResourceController@showTaskList');

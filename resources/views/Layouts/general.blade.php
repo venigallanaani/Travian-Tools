@@ -9,7 +9,10 @@
         <!-- Fonts -->
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/images.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/footer.css') }}" rel="stylesheet">		
+        <link href="{{ asset('css/footer.css') }}" rel="stylesheet">	
+        <script src="{{ asset('js/moment.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/moment-timezone.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/moment-timezone-with-data.js') }}" type="text/javascript"></script>
         @stack('extensions')        
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         
@@ -22,7 +25,7 @@
                 </button>                
                 <a href="/" class="navbar-brand mr-3">
             		<img id="logo" alt="" src="{{{ asset('images/favicon.png') }}}" width="42" height="30"> 	
-            		<span class="h3">Travian Tools </span><small class="align-bottom">1.0</small>            		
+            		<span class="h3">Travian Tools </span><small class="align-bottom">2.0</small>            		
         		</a>
         		<div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">                        
@@ -84,7 +87,18 @@
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>        
+        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script> 
+        @if(Session::has('server'))
+        <script>
+            $(function(){
+    	  		setInterval(function(){
+        	  		var time = moment();
+    		 		//$('#clock').html(time.tz('UTC').format('YYYY-MM-DD HH:mm:ss'));    
+        	  		document.getElementById('clock').innerHTML = time.tz("{{ Session::get('server.tmz')}}").format('YYYY-MM-DD HH:mm:ss'); 		 		
+    	  		},1000);
+        	});	        	
+        </script>
+		@endif
     </body>
     @stack('scripts')
 </html>

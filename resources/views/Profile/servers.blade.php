@@ -7,7 +7,7 @@
 		</div>
 		<div class="card-text p-4">
 			<div class="h3 container text-warning font-weight-bold">
-				<p>Your Servers</p>
+				<p>My Active Servers</p>
 			</div>
 		@if(count($profiles)>0)
 			<form action="/profile/servers/load" method="POST" class="col-md-12 mx-auto">
@@ -46,7 +46,7 @@
 			</div>
 		@endif		
 			<div class="h3 container text-warning font-weight-bold">
-				<p>Active Servers</p>
+				<p>Available Servers</p>
 			</div>
 		@if(count($servers)>0)
 			<form action="/profile/servers/load" method="POST" class="col-md-12 mx-auto">

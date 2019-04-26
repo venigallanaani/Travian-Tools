@@ -19,17 +19,18 @@ use App\Subscription;
 
 class LeaderController extends Controller
 {
+// displays the leadership access page to edit and/or add players to group
     public function access(Request $request){
         
         session(['title'=>'Leader']);
-        
+                
         $plus=Plus::where('server_id',$request->session()->get('server.id'))
                     ->where('id',Auth::user()->id)->first();
         
         if(!$plus->leader==1){
             $players = null;
             Session::flash('warning',"Leader Access Denied");            
-        }else{            
+        }else{
             $members = Plus::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$plus->plus_id)
                             ->orderBy('account','asc')->get();
@@ -55,82 +56,12 @@ class LeaderController extends Controller
             }
         }
         
-        return view('Plus.Leader.access')->with(['players'=>$players]);              // displays the leadership access page to edit and/or add players to group
+        return view('Plus.Leader.access')->with(['players'=>$players]);             
         
-    }
+    }   
+     
     
-    
-    public function addAccess(Request $request){
-        
-        session(['title'=>'Leader']);
-        
-        $name = trim(Input::get('player'));
-        
-        $plus=Plus::where('server_id',$request->session()->get('server.id'))
-                    ->where('id',Auth::user()->id)->first();
-        
-        if($plus->leader==1){            
-            
-            $players = Players::where('server_id',$request->session()->get('server.id'))
-                            ->where('player',$name)->get();
-            //dd($players);
-            if(count($players)==0){
-                Session::flash('danger','Player - '.$name.' not found');
-                return Redirect::to('/leader/access'); 
-            }if(count($players)>1){
-                Session::flash('warning','More than one player - '.$name.' was found');
-                return Redirect::to('/leader/access'); 
-            }else{
-                $accounts=array();
-                foreach($players as $player){
-                    $accounts=Account::where('server_id',$request->session()->get('server.id'))
-                                ->where('uid',$player->uid)->get();
-                }
-                
-                if(count($accounts)==0){
-                    Session::flash('warning','Player - '.$name.' is not registered on Travian tools');
-                }else{                    
-                    foreach($accounts as $account){
-                        if($account->plus==null){
-                            
-                            Account::where('server_id',$request->session()->get('server.id'))
-                                ->where('user_id',Auth::user()->id)
-                                ->update(['plus'=>$request->session()->get('plus.plus_id')]);
-                            
-                            $access=new Plus;
-                            
-                            $access->id=$account->user_id;
-                            $access->plus_id=$request->session()->get('plus.plus_id');
-                            $access->name=$request->session()->get('plus.name');
-                            $access->server_id=$request->session()->get('server.id');
-                            $access->user=$account->user_name;
-                            $access->account=$name;
-                            $access->plus=1;
-                            $access->leader=0;
-                            $access->offense=0;
-                            $access->defense=0;
-                            $access->artifact=0;
-                            $access->resources=0;
-                            $access->wonder=0;
-                            
-                            $access->save();
-                            
-                            
-                            Account::where('server_id',$request->session()->get('server.id'))
-                                ->where('account_id',$account->account_id)
-                                ->update(['plus'=>$request->session()->get('plus.plus_id')]);
-                            
-                        }
-                    }
-                }
-                return Redirect::to('/leader/access'); 
-            }           
-            
-        }       
-                     
-    }    
-    
-    
+// Update access of the players using the Ajax call
     public function updateAccess(Request $request, $id, $role){        
         
         $sqlStr = "update PLUS ".
@@ -143,7 +74,8 @@ class LeaderController extends Controller
         return 'updated successfully';        
         
     } 
-    
+
+// Shows the rankings of all the players to the leaders
     public function showRankings(Request $request){
         
         session(['title'=>'Leader']);
@@ -222,31 +154,94 @@ class LeaderController extends Controller
         }
         //dd($members);
         return view('Plus.Leader.rankings')->with(['players'=>$players]);
+    }   
+    
+// Access link to join the Plus group
+    function joinPlusGroup(Request $request, $link){
+        
+        session(['title'=>'Plus']);
+        // Check server selected        
+        if(!$request->session()->has('server.id')){
+            return view('Plus.template');
+        }
+        // Check if the user is login        
+        if(Auth::Check()){
+            $subscription=Subscription::where('server_id',$request->session()->get('server.id'))
+                            ->where('link',$link)->first();
+            // Checking the validity of the join link            
+            if($subscription!=null){
+
+                $account = Account::where('server_id',$request->session()->get('server.id'))
+                                ->where('user_id',Auth::user()->id)->first();
+                // Check if the user has the travian account on the server                
+                if($account!=null){
+                    
+                    $plus = Plus::where('server_id',$request->session()->get('server.id'))
+                                ->where('id',$account->user_id)->get();
+                    // Check if the user is already in a plus group                    
+                    if($plus!=null){
+                        
+                        Session::flash('template','You are already in a Plus group. Please leave the current group to join new group');
+                        return view('Plus.template');
+                        
+                    }else{                        
+                        $access=new Plus;
+                        
+                        $access->id=$account->user_id;
+                        $access->plus_id=$subscription->id;
+                        $access->name=$subscription->name;
+                        $access->server_id=$request->session()->get('server.id');
+                        $access->user=$account->user_name;
+                        $access->account=$account->account;
+                        $access->plus=1;
+                        $access->leader=0;
+                        $access->offense=0;
+                        $access->defense=0;
+                        $access->artifact=0;
+                        $access->resources=0;
+                        $access->wonder=0;
+                        
+                        $access->save();                        
+                        
+                        Account::where('server_id',$request->session()->get('server.id'))
+                                    ->where('user_id',$account->user_id)
+                                    ->update(['plus'=>$subscription->id]);
+                        
+                        Session::flash('success','Welcome, you are added to PLUS group');
+                        return Redirect::to('/plus');                         
+                    }
+                    
+                }else{
+                // No account for user found on server
+                    Session::flash('template','No associated Travian profiles are found for user-'.Auth::user()->name.' on server-'.$request->session()->get('server.name'));
+                    return view('Plus.template');                    
+                }             
+                
+            }else{
+                // Join link is invalid
+                Session::flash('template','This join link is no longer valid!');
+                return view('Plus.template');
+            }
+            
+        }else{
+            return view('Plus.template');
+        }
+        
     }
     
-    public function subscriptions(Request $request){
+    public function leavePlusGroup(){
+             
+        Plus::where('server_id',$request->session()->get('server.id'))
+            ->where('plus_id',$request->session()->get('plus.plus_id'))
+            ->where('id',Auth::user()->id)->delete();
         
-        session(['title'=>'Leader']);
+        Account::where('server_id',$request->session()->get('server.id'))            
+            ->where('id',Auth::user()->id)
+            ->update(['plus'=>null]);
         
-        $subscription = Subscription::where('server_id',$request->session()->get('server.id'))
-                            ->where('id',$request->session()->get('plus.plus_id'))->first();
+        Session::flash('success','You have left from the PLUS group');
+        return Redirect::to('/home'); 
         
-        return view('Plus.Leader.subscription')->with(['subscription'=>$subscription]);
-    }
-    
-    public function messageUpdate(Request $request){
-        session(['title'=>'Leader']);
-        
-        //dd(Carbon::now()->format('Y-m-d'));
-        
-        Subscription::where('server_id',$request->session()->get('server.id'))
-                        ->where('id',$request->session()->get('plus.plus_id'))
-                        ->update(['message'=>str_replace('<br>','',Input::get('message')),
-                                    'message_update'=>$request->session()->get('plus.user'),
-                                    'message_date'=>Carbon::now()->format('Y-m-d')                            
-                        ]);
-        
-        return Redirect::to('/leader/subscription'); 
     }
     
 }

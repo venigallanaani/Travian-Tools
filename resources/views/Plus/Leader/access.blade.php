@@ -5,28 +5,8 @@
 		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
 			<div class="card-header h4 py-2 bg-info text-white"><strong>Leader Access</strong></div>
 			<div class="card-text">
-<!-- ==========================Add player and add alliance options ============================== -->
-				<div class="m-3">
-					<div class="card card-header text-center h6 btn btn-block collapsed bg-warning shadow" data-toggle="collapse" href="#task" aria-expanded="false" aria-controls="task">
-                		<p class="p-0 m-0">
-                    		<i class="fa fa-plus"></i> <span class=""><strong>Add Player to Group</strong></span>
-        			 	</p>
-            		</div>
-            		<div class="collapse" id="task" style="">
-              			<div class="card card-body shadow">
-    						<form action="/leader/access/add" method="POST" class="col-md-10 mx-auto text-center">
-        						{{ csrf_field() }}        						
-        						<p class="my-2">
-        							<strong>Player Name <input type="text" name="player" size="15" required></strong>
-        						</p>        						
-        						<p class="my-2">
-        							<button class="btn btn-info px-5" name="addPlayer"><strong>Add Player</strong></button>
-        						</p> 						
-    						</form>
-              			</div>
-            		</div>	
-				</div>				
-		<!-- ============================ Add success/failure notifications ============================== -->
+									
+<!-- ============================ Add success/failure notifications ============================== -->
 		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
 				<div class="container">
@@ -53,8 +33,8 @@
     						<tr class="">
     							<th class="col-md-1">Leader</th>
     							<th class="col-md-1">Defense</th>
-<!--     							<th class="col-md-1">Offense</th> -->
     							<th class="col-md-1">Resources</th>
+<!--     							<th class="col-md-1">Offense</th> -->    							
 <!--     							<th class="col-md-1">Artifacts</th> -->
 <!--     							<th class="col-md-1">Wonder</th> -->
     						</tr>
@@ -62,7 +42,7 @@
 					@foreach($players as $player)
 						<tr>											
 							<td><a href="/finders/player/{{$player['account']}}/1">{{$player['account']}}</a></td>
-							<td><a href="/plus/member/{{$player['user']}}">{{$player['user']}}</a></td>
+							<td><a href="/plus/member/{{$player['user']}}"><strong>{{$player['user']}}</strong></a></td>
 							<td><a href="/finders/alliance/{{$player['alliance']}}/1">{{$player['alliance']}}</a></td>					
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'plus')">
             							<input type="checkbox" @if($player['plus']==1) checked @endif/></a></td>
@@ -70,11 +50,11 @@
             							<input type="checkbox" @if($player['leader']==1) checked @endif/></a></td>
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'defense')">
             							<input type="checkbox" @if($player['defense']==1) checked @endif/></a></td>
-<!--         					<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'offense')">	
-            							<input type="checkbox" @if($player['offense']==1) checked @endif/></a></td>	-->
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'resources')">
             							<input type="checkbox" @if($player['resources']==1) checked @endif/></a></td>
-<!--            				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'artifact')">
+<!--         					<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'offense')">	
+            							<input type="checkbox" @if($player['offense']==1) checked @endif/></a></td>
+	          				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'artifact')">
              							<input type="checkbox" @if($player['artifact']==1) checked @endif/></a></td> 
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'wonder')">
              							<input type="checkbox" @if($player['wonder']==1) checked @endif/></a></td>				        -->

@@ -23,8 +23,7 @@
             	<div class="card-header py-1 text-info h4">
             		<p><strong>Group Tasks</strong></p>
             	</div>
-            	<div class="card-body px-5 h6">							
-				
+            	<div class="card-body px-5 h6">				
 				@if($counts['def']>0)				
 					<p><strong>{{$counts['def']}} <a href="/plus/defense" class="text-info">Defense Calls</strong></a> are in progress</p>
 				@else
@@ -37,7 +36,19 @@
 					<p>No <span class="text-info"><strong>Resource tasks</strong></span> are currently active</p>
 				@endif
             	</div>
-            </div>            
+            </div> 
+            <br>
+            <div class="card mx-auto">
+            	<div class="card-header py-1 text-info h4">
+            		<p><strong>Group Options</strong></p>
+            	</div>
+            	<div class="card-body">
+        			<form action="/plus/leave" method="post">
+        				{{csrf_field()}}
+        				<button class="btn btn-info px-3"> Leave Group </button>
+    				</form> 
+            	</div>
+            </div>           
         </div>
     </div>
     	
