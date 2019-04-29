@@ -99,6 +99,6 @@
         	});	        	
         </script>
 		@endif
-    </body>
-    @stack('scripts')
+		@stack('scripts')
+    </body>    
 </html>

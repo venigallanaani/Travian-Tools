@@ -12,7 +12,7 @@ Route::get('/home', 'HomeController@index')->name('home');				// Displays home p
 /* ------------------------------- Reports page controllers -------------------- */
 Route::get('/reports','ReportController@index')->name('reports');
 Route::post('/reports/create','ReportController@makeReport');
-Route::get('reports/{string}','ReportController@showReports');
+Route::get('/reports/{string}','ReportController@showReports');
 
 /* ----------------------------- footer options page controllers ------------------------------- */
 Route::get('/about','AboutController@index')->name('about');			//Displays the contact page

@@ -20,7 +20,8 @@ class CreateSubscriptionsTable extends Migration
             $table->string('owner');
             $table->integer('duration');
             $table->enum('status',['INPROCESS','ACTIVE','EXPIRED']);
-            $table->time('end_date');
+            $table->string('link')->nullable();
+            $table->date('end_date');
             $table->string('timezone')->nullable();
             $table->string('message')->nullable();
             $table->string('message_update')->nullable();
