@@ -20,11 +20,11 @@
     			</tr>
     			<tr>
     				<td class="text-left py-2 text-info font-weight-bold">Skype </td>
-    				<td class="text-left">: {{$contact->skype}}</td>
+    				<td class="text-left">: {{$skype}}</td>
     			</tr>
     			<tr>
     				<td class="text-left py-2 text-info font-weight-bold">Discord </td>
-    				<td class="text-left">: {{$contact->discord}}</td>
+    				<td class="text-left">: {{$discord}}</td>
     			</tr>
 			</table>
         </div>

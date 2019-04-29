@@ -14,7 +14,10 @@ function countDown(elementId, date) {
     var x = setInterval(function() {
 
       // Get todays date and time
-      var now = new Date().getTime();
+      var time = moment();
+      //var now = new Date().getTime();
+      var newDate = time.tz("{{ Session::get('server.tmz')}}").format('YYYY-MM-DD HH:mm:ss');
+      var now = new Date(newDate).getTime();
 
       // Find the distance between now an the count down date
       var distance = countDownDate - now;

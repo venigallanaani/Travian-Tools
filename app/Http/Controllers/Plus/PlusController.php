@@ -119,11 +119,21 @@ class PlusController extends Controller
         
         $contact=Contacts::where('id',Auth::user()->id)->first();
         
+        $skype=null;
+        $discord=null;
+        
+        if($contact!=null){
+            
+            $skype=$contact->skype;
+            $discord=$contact->discord;
+            
+        }
+        
         $name=Plus::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->pluck('account')->first();
         
-        return view('Plus.General.member')->with(['contact'=>$contact])
+        return view('Plus.General.member')->with(['skype'=>$skype])->with(['discord'=>$discord])
                     ->with(['name'=>$name]);
         
     }

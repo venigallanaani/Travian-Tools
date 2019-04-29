@@ -31,7 +31,7 @@
 						</tr>
 						<tr>
 							<td class="py-0"><strong><span class="text-warning">Alliance Name</span></strong></td>
-							<td class="py-0">: <a href="/finder/alliance/{{$player->alliance}}/1" target="_blank"><strong>{{$player->alliance}}</strong></a></td>
+							<td class="py-0">: <a href="/finders/alliance/{{$player->alliance}}/1" target="_blank"><strong>{{$player->alliance}}</strong></a></td>
 						</tr>
 						<tr>
 							<td class="py-0"><strong><span class="text-warning">Plus Group</span></strong></td>

@@ -101,7 +101,7 @@
                 <a href="/defense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Defense</a>                
             </div>
   		@endif
-  		@if(Session::get('plus.offense')==1)
+  		@if(Session::get('plus.offense')==2)
             <!-- =================================== Offense menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Offense Menu</a>                 
