@@ -5,7 +5,7 @@ function checkTime(i) {
 }
 
 
-function countDown(elementId, date) {
+function countDown(elementId, date,tmz) {
     // Set the date we're counting down to
     var countDownDate = new Date(date).getTime();
 
@@ -16,7 +16,7 @@ function countDown(elementId, date) {
       // Get todays date and time
       var time = moment();
       //var now = new Date().getTime();
-      var newDate = time.tz("{{ Session::get('server.tmz')}}").format('YYYY-MM-DD HH:mm:ss');
+      var newDate = time.tz(tmz).format('YYYY-MM-DD HH:mm:ss');
       var now = new Date(newDate).getTime();
 
       // Find the distance between now an the count down date
@@ -34,6 +34,7 @@ function countDown(elementId, date) {
 
       // Display the result in the element with id="demo"
       document.getElementById(elementId).innerHTML = hours + ":"+ minutes + ":" + seconds;
+      //document.getElementById(elementId).innerHTML = newDate;
       document.getElementById(elementId).style.color = "blue";
       // If the count down is finished, write some text 
       if (distance < 0) {

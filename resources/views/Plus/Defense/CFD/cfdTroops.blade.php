@@ -56,11 +56,11 @@
     				@endforeach
     				<tr>	
     					<td colspan="3" rowspan="2" class="p-0 text-center align-middle" data-toggle="tooltip" data-placement="top" title="Total Troops">
-    						<img alt="" src="/images/x.gif" class="res upkeep">: <strong>{{$upkeep}}</strong></td>
+    						<img alt="" src="/images/x.gif" class="res upkeep">: <strong>{{number_format($upkeep)}}</strong></td>
     					<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Total Defense">
     						<img alt="" src="/images/x.gif" class="stats def">: {{$defInf + $defCav}}</td>
     					<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Resources">
-    						<img alt="" src="/images/x.gif" class="res all">: {{$res}}</td>								
+    						<img alt="" src="/images/x.gif" class="res all">: {{number_format($res)}}</td>								
     				</tr>
     				<tr>
     					<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Infantry Defense">

@@ -25,7 +25,7 @@
 							{{ csrf_field() }}
 							<tr>
 								<td class="py-2">
-									<p class="py-0"><strong>Defense Needed:</strong> <input type="text" name="defNeed" size="10" value="{{$task->def_total}}"/></p>
+									<p class="py-0"><strong>Defense Needed:</strong> <input type="text" name="defNeed" size="10" value="{{number_format($task->def_total)}}"/></p>
 									<p class="py-0"><strong>Land Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task->target_time}}" class="dateTimePicker"/></p>
 									<p class="py-0"><strong>Defense Priority:</strong> 
     													<select name="priority">
@@ -52,19 +52,19 @@
 									<p class="py-0 my-1"><button class="btn btn-warning px-5" name="delete" value="{{$task->task_id}}">Delete Task</button></p>
 									<p></p>
 									<p class="py-0 my-1"><strong>Created By:</strong> {{$task->created_by}}</p>
-									<p class="py-0 my-1"><strong>Last Updated By:</strong> {{$task->updated_by}}</p>
+									<p class="py-0 my-1"><strong>Updated By:</strong> {{$task->updated_by}}</p>
 								</td>
 							</tr>
 						</form>
 					  	<tr class="py-2">
 							<td class="py-0">								
-								<p class="py-0 my-1"><strong>Defense Received(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{$task->def_received}} ({{$task->def_percent}}%)</p>
+								<p class="py-0 my-1"><strong>Defense Received(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{number_format($task->def_received)}} ({{$task->def_percent}}%)</p>
 								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Total Defense"><img alt="" src="/images/x.gif" class="stats def">: {{$task->def_inf + $task->def_cav}}</p>
 								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Infantry Defense"><img alt="" src="/images/x.gif" class="stats dinf">: {{$task->def_inf}}</p>
 							</td>
 							<td class="py-0">								
-								<p class="py-0 my-1"><strong>Defense Remaining(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{$task->def_remain}}</p>
-								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Resources"><img alt="" src="/images/x.gif" class="res all"> : {{$task->resources}}</p>
+								<p class="py-0 my-1"><strong>Defense Remaining(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{number_format($task->def_remain)}}</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Resources"><img alt="" src="/images/x.gif" class="res all"> : {{number_format($task->resources)}}</p>
 								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Cavalry Defense"><img alt="" src="/images/x.gif" class="stats dcav">: {{$task->def_cav}}</p>
 							</td>
 						</tr>					
@@ -128,8 +128,8 @@
 							<tr>		
 								<td class="">{{$index+1}}</td>
 								<td class="" href="/finder/player/{{$player->player}}/1" target="_blank">{{$player->player}}</td>
-								<td class="">{{$player->upkeep}}</td>
-								<td class="">{{$player->res}}</td>
+								<td class="">{{number_format($player->upkeep)}}</td>
+								<td class="">{{number_format($player->res)}}</td>
 								<td class=""><a class="btn btn-sm btn-outline-secondary" href="/defense/cfd/troops/{{$task->task_id}}/{{$player->uid}}">
     								<i class="fa fa-angle-double-right"></i> troops</a></td>
 							</tr>
@@ -153,7 +153,7 @@
         });
 	</script>
 	<script>
-        countDown("{{$task->task_id}}","{{$task->target_time}}");
+        countDown("{{$task->task_id}}","{{$task->target_time}}","{{ Session::get('server.tmz')}}");
 	</script>        
 
 @endpush

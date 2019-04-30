@@ -19,7 +19,7 @@
 					<table class="table mx-auto col-md-8 table-borderless text-left">
 						<tr>
 							<td class="py-1"><strong>Target: <a href="https://{{Session::get('server.url')}}/karte.php?x={{$task['x']}}&y={{$task['y']}}" target="_blank">{{$task['player']}}({{$task['village']}})</a></strong></td>
-							<td class="py-1"><strong>Defense </strong>(<img alt="upkeep" src="/images/x.gif" class="res upkeep">): {{$task['def_total']}}</td>							
+							<td class="py-1"><strong>Defense </strong>(<img alt="upkeep" src="/images/x.gif" class="res upkeep">): {{number_format($task['def_total'])}}</td>							
 						</tr>
 						<tr>
 							<td class="py-1"><strong>Type:</strong> {{$task['type']}}</td>
@@ -119,11 +119,11 @@
 							@endforeach
 							<tr>	
 								<td colspan="3" rowspan="2" class="p-0 text-center align-middle" data-toggle="tooltip" data-placement="top" title="Total Troops">
-									<img alt="" src="/images/x.gif" class="res upkeep">: <strong>{{$upkeep}}</strong></td>
+									<img alt="" src="/images/x.gif" class="res upkeep">: <strong>{{number_format($upkeep)}}</strong></td>
 								<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Total Defense">
 									<img alt="" src="/images/x.gif" class="stats def">: {{$defInf + $defCav}}</td>
 								<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Resources">
-									<img alt="" src="/images/x.gif" class="res all">: {{$res}}</td>								
+									<img alt="" src="/images/x.gif" class="res all">: {{number_format($res)}}</td>								
 							</tr>
 							<tr>
 								<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Infantry Defense">
@@ -141,7 +141,7 @@
 
 @push('scripts')
 	<script>
-        countDown("{{$task['task_id']}}","{{$task['target_time']}}");
+        countDown("{{$task['task_id']}}","{{$task['target_time']}}","{{ Session::get('server.tmz')}}");
 	</script>
 
 

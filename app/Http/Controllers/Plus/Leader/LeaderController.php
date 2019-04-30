@@ -75,95 +75,95 @@ class LeaderController extends Controller
         
     } 
 
-// Shows the rankings of all the players to the leaders
-    public function showRankings(Request $request){
+// // Shows the rankings of all the players to the leaders
+//     public function showRankings(Request $request){
         
-        session(['title'=>'Leader']);
+//         session(['title'=>'Leader']);
         
-        $plus=Plus::where('server_id',$request->session()->get('server.id'))
-                    ->where('id',Auth::user()->id)->first();
+//         $plus=Plus::where('server_id',$request->session()->get('server.id'))
+//                     ->where('id',Auth::user()->id)->first();
         
-        if(!$plus->leader==1){
-            $players = null;
-            Session::flash('warning',"Leader Access Denied");
-        }else{
+//         if(!$plus->leader==1){
+//             $players = null;
+//             Session::flash('warning',"Leader Access Denied");
+//         }else{
         
-            $members = Plus::where('server_id',$request->session()->get('server.id'))
-                        ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->orderby('account','asc')->get();
+//             $members = Plus::where('server_id',$request->session()->get('server.id'))
+//                         ->where('plus_id',$request->session()->get('plus.plus_id'))
+//                         ->orderby('account','asc')->get();
             
-            $players = array();
-            foreach($members as $member){
+//             $players = array();
+//             foreach($members as $member){
                 
-                $account = Account::where('server_id',$request->session()->get('server.id'))
-                            ->where('user_id',$member->id)->first();
+//                 $account = Account::where('server_id',$request->session()->get('server.id'))
+//                             ->where('user_id',$member->id)->first();
                 
-                $sqlStr = 'SELECT rank, value FROM (
-                            SELECT  @rank := @rank + 1 rank, s.* FROM (
-                                SELECT account_id, sum(upkeep) as value  FROM troops
-                                    WHERE type="offense"
-                                    GROUP BY account_id
-                                    ORDER BY sum(upkeep) DESC
-                                ) s, (SELECT @rank := 0) init
-                            ) r WHERE account_id='.$account->account_id;
-                $offense = DB::select(DB::raw($sqlStr));
+//                 $sqlStr = 'SELECT rank, value FROM (
+//                             SELECT  @rank := @rank + 1 rank, s.* FROM (
+//                                 SELECT account_id, sum(upkeep) as value  FROM troops
+//                                     WHERE type="offense"
+//                                     GROUP BY account_id
+//                                     ORDER BY sum(upkeep) DESC
+//                                 ) s, (SELECT @rank := 0) init
+//                             ) r WHERE account_id='.$account->account_id;
+//                 $offense = DB::select(DB::raw($sqlStr));
                 
-                $sqlStr = 'SELECT rank, value FROM (
-                            SELECT  @rank := @rank + 1 rank, s.* FROM (
-                                SELECT account_id, sum(upkeep) as value  FROM troops
-                                    WHERE type="defense"
-                                    GROUP BY account_id
-                                    ORDER BY sum(upkeep) DESC
-                                ) s, (SELECT @rank := 0) init
-                            ) r WHERE account_id='.$account->account_id;
-                $defense = DB::select(DB::raw($sqlStr));
+//                 $sqlStr = 'SELECT rank, value FROM (
+//                             SELECT  @rank := @rank + 1 rank, s.* FROM (
+//                                 SELECT account_id, sum(upkeep) as value  FROM troops
+//                                     WHERE type="defense"
+//                                     GROUP BY account_id
+//                                     ORDER BY sum(upkeep) DESC
+//                                 ) s, (SELECT @rank := 0) init
+//                             ) r WHERE account_id='.$account->account_id;
+//                 $defense = DB::select(DB::raw($sqlStr));
                 
-                $sqlStr = 'SELECT rank, value FROM (
-                            SELECT  @rank := @rank + 1 rank, s.* FROM (
-                                SELECT account_id, sum(upkeep) as value  FROM troops
-                                    GROUP BY account_id
-                                    ORDER BY sum(upkeep) DESC
-                                ) s, (SELECT @rank := 0) init
-                            ) r WHERE account_id='.$account->account_id;
-                $total = DB::select(DB::raw($sqlStr));
+//                 $sqlStr = 'SELECT rank, value FROM (
+//                             SELECT  @rank := @rank + 1 rank, s.* FROM (
+//                                 SELECT account_id, sum(upkeep) as value  FROM troops
+//                                     GROUP BY account_id
+//                                     ORDER BY sum(upkeep) DESC
+//                                 ) s, (SELECT @rank := 0) init
+//                             ) r WHERE account_id='.$account->account_id;
+//                 $total = DB::select(DB::raw($sqlStr));
                 
-                $sqlStr = 'SELECT rank, level, exp FROM (
-                            SELECT  @rank := @rank + 1 rank, s.* FROM (
-                                SELECT account_id, level, exp  FROM hero
-                                    ORDER BY exp DESC
-                                ) s, (SELECT @rank := 0) init
-                            ) r WHERE account_id='.$account->account_id;
-                $hero = DB::select(DB::raw($sqlStr));
+//                 $sqlStr = 'SELECT rank, level, exp FROM (
+//                             SELECT  @rank := @rank + 1 rank, s.* FROM (
+//                                 SELECT account_id, level, exp  FROM hero
+//                                     ORDER BY exp DESC
+//                                 ) s, (SELECT @rank := 0) init
+//                             ) r WHERE account_id='.$account->account_id;
+//                 $hero = DB::select(DB::raw($sqlStr));
                 
-                $sqlStr = "SELECT rank, value FROM (
-                        	SELECT  @rank := @rank + 1 rank, s.* FROM (
-                        		SELECT a.uid as uid, sum(a.population) as value  FROM players a, accounts b, plus c
-                        			WHERE a.uid=b.uid
-                                    AND a.server_id = b.server_id
-                                    AND b.server_id = c.server_id
-                                    AND c.plus_id = '".$request->session()->get('plus.plus_id')."'
-                                    AND b.user_id = c.id
-                        			GROUP BY a.uid
-                        			ORDER BY sum(population) DESC
-                        		) s, (SELECT @rank := 0) init
-                        	) r WHERE uid=".$account->uid;
-                $pop = DB::select(DB::raw($sqlStr));
+//                 $sqlStr = "SELECT rank, value FROM (
+//                         	SELECT  @rank := @rank + 1 rank, s.* FROM (
+//                         		SELECT a.uid as uid, sum(a.population) as value  FROM players a, accounts b, plus c
+//                         			WHERE a.uid=b.uid
+//                                     AND a.server_id = b.server_id
+//                                     AND b.server_id = c.server_id
+//                                     AND c.plus_id = '".$request->session()->get('plus.plus_id')."'
+//                                     AND b.user_id = c.id
+//                         			GROUP BY a.uid
+//                         			ORDER BY sum(population) DESC
+//                         		) s, (SELECT @rank := 0) init
+//                         	) r WHERE uid=".$account->uid;
+//                 $pop = DB::select(DB::raw($sqlStr));
                 
-                $players[]=array(
-                    "rank"=>($offense[0]->rank+$defense[0]->rank+$total[0]->rank+$hero[0]->rank+$pop[0]->rank),
-                    "player"=>$member->account,
-                    "account"=>$member->user,
-                    "off"=>$offense,
-                    "def"=>$defense,
-                    "total"=>$total,
-                    "hero"=>$hero,
-                    "pop"=>$pop
-                );
-            }
-            //dd($members);
-            return view('Plus.Leader.rankings')->with(['players'=>$players]);
-        }
-    }   
+//                 $players[]=array(
+//                     "rank"=>($offense[0]->rank+$defense[0]->rank+$total[0]->rank+$hero[0]->rank+$pop[0]->rank),
+//                     "player"=>$member->account,
+//                     "account"=>$member->user,
+//                     "off"=>$offense,
+//                     "def"=>$defense,
+//                     "total"=>$total,
+//                     "hero"=>$hero,
+//                     "pop"=>$pop
+//                 );
+//             }
+//             //dd($members);
+//             return view('Plus.Leader.rankings')->with(['players'=>$players]);
+//         }
+//     }   
     
 // Access link to join the Plus group
     function joinPlusGroup(Request $request, $link){
@@ -251,5 +251,25 @@ class LeaderController extends Controller
         return Redirect::to('/home'); 
         
     }
+    
+    
+// Shows the rankings of all the players to the leaders
+    public function showRankings(Request $request){
+        
+        session(['title'=>'Leader']);
+        
+        $plus=Plus::where('server_id',$request->session()->get('server.id'))
+                    ->where('id',Auth::user()->id)->first();
+        
+        if(!$plus->leader==1){
+            $players = null;
+            Session::flash('warning',"Leader Access Denied");
+        }else{
+            
+            
+            
+        }
+    }
+    
     
 }

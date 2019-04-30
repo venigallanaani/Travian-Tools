@@ -38,7 +38,7 @@
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player }}({{$task->village}})</strong></a>
     							</td>
-    							<td>{{$task->res_total}}</td>
+    							<td>{{number_format($task->res_total)}}</td>
     							<td data-toggle="tooltip" data-placement="top" title="{{$task->type}}"><img alt="all" src="/images/x.gif" class="res {{$task->type}}"></td>							
     							<td>{{$task->res_percent}}%</td>
     							<td>{{$task->target_time}}</td>

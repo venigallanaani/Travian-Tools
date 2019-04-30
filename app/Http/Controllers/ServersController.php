@@ -39,8 +39,6 @@ class ServersController extends Controller
         $request->session()->put('server.url',$server->url);
         $request->session()->put('server.tmz',$server->timezone);
         
-        //date_default_timezone_set($server->timezone);    
-        
         if(Auth::check()){
             $plus=Plus::where('server_id',$server_id)
                     ->where('id',Auth::user()->id)->first();
@@ -48,12 +46,12 @@ class ServersController extends Controller
             if($plus!=null){       
                 $request->session()->put('plus',$plus);  
                 
-                $sub = Subscription::where('id',$plus->plus_id)
-                                ->where('server_id',$server->server_id)->first();
+//                 $sub = Subscription::where('id',$plus->plus_id)
+//                                 ->where('server_id',$server->server_id)->first();
                 
-                if($sub->timezone!=null){
-                    $request->session()->put('server.tmz',$sub->timezone);
-                }
+//                 if($sub->timezone!=null){
+//                     $request->session()->put('server.tmz',$sub->timezone);
+//                 }
                 
             }else{
                 //echo 'No Plus Found';

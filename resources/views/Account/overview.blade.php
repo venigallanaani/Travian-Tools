@@ -35,7 +35,11 @@
 						</tr>
 						<tr>
 							<td class="py-0"><strong><span class="text-warning">Plus Group</span></strong></td>
-							<td class="py-0">: {{$account->plus}}</td>
+                    	@if(Session::has('plus'))
+                    		<td class="py-0">: <a href="/plus">{{Session::get('plus.name')}}</td>
+                    	@else 	
+                    		<td class="py-0">: </td>
+                    	@endif
 						</tr>        						
         			</table>
         		</div>
