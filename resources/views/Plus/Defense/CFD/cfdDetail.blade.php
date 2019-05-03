@@ -25,7 +25,7 @@
 							{{ csrf_field() }}
 							<tr>
 								<td class="py-2">
-									<p class="py-0"><strong>Defense Needed:</strong> <input type="text" name="defNeed" size="10" value="{{number_format($task->def_total)}}"/></p>
+									<p class="py-0"><strong>Defense Needed:</strong> <input type="text" name="defNeed" size="10" value="{{$task->def_total}}"/></p>
 									<p class="py-0"><strong>Land Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task->target_time}}" class="dateTimePicker"/></p>
 									<p class="py-0"><strong>Defense Priority:</strong> 
     													<select name="priority">

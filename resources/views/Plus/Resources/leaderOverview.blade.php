@@ -72,7 +72,11 @@
     						</tr>
 						</thead>
 							@foreach($tasks as $task)
-    						<tr>
+							@php							
+								if($task->status=='COMPLETE'){$status="table-secondary";}
+								else{$status='';}
+							@endphp
+    						<tr class="{{$status}}">
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player }} ({{$task->village}})</strong></a>
     							</td>

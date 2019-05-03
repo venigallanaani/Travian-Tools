@@ -89,7 +89,7 @@ class LeaderCFDController extends Controller
         
         session(['title'=>'Defense']);
         $plus=Plus::where('server_id',$request->session()->get('server.id'))
-        ->where('id',Auth::user()->id)->first();
+                ->where('id',Auth::user()->id)->first();
         
         if(!$plus->defense==1){
             Session::flash('warning',"Defense leader Access Denied");
@@ -110,6 +110,9 @@ class LeaderCFDController extends Controller
     public function createCFD(Request $request){
         
         session(['title'=>'Defense']);
+        
+        $plus=Plus::where('server_id',$request->session()->get('server.id'))
+                ->where('id',Auth::user()->id)->first();
         
         if(!$plus->defense==1){
             Session::flash('template',"Defense leader Access Denied");
@@ -150,6 +153,11 @@ class LeaderCFDController extends Controller
     }
     
     public function processCFD(Request $request){
+        
+        session(['title'=>'Defense']);
+        
+        $plus=Plus::where('server_id',$request->session()->get('server.id'))
+                ->where('id',Auth::user()->id)->first();
         
         if(!$plus->defense==1){
             Session::flash('template',"Defense leader Access Denied");

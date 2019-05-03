@@ -25,7 +25,7 @@ class CFDController extends Controller
                     ->orderBy('target_time','asc')->get();
 
         
-        return view("Plus.Defense.CFD.defenseTaskList")->with(['tasks'=>$tasks]);
+        return view("Plus.Defense.General.defenseTaskList")->with(['tasks'=>$tasks]);
         
     }
     
@@ -49,7 +49,7 @@ class CFDController extends Controller
                     ->where('task_id',$id)->get();
         
         //dd($troops);                    
-        return view("Plus.Defense.CFD.defenseTask")->with(['task'=>$task])
+        return view("Plus.Defense.General.defenseTask")->with(['task'=>$task])
                        ->with(['villages'=>$villages])->with(['units'=>$units])->with(['troops'=>$troops]);
         
     }
@@ -101,10 +101,11 @@ class CFDController extends Controller
                 ->where('task_id',$id)->first();
             
             $defReceived = $task->def_received + $upkeep;
-            $defRemain = $task->def_total - $defReceived;            
+            $defRemain = $task->def_total - $defReceived; 
             
-            if($defReceived > $task->def_total){
+            if($defReceived >= $task->def_total){
                 $status='COMPLETE'; $defPercent=100;
+                $defRemain = 0;
             }else{
                 $status='ACTIVE';   $defPercent = ceil(($defReceived/$task->def_total)*100);
             }
