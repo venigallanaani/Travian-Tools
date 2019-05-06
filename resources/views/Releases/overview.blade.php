@@ -10,16 +10,26 @@
 
     <!-- ============================================ home page body starts here ============================================ -->
     <div class="container my-1">			
-		<table class="col-md-12 mx-auto table table-bordered shadow">
+		<table class="col-md-10 mx-auto table table-bordered shadow">
 			<tr class=" bg-info text-center text-white h5">
-				<th class="col-md-1">Version</th>
-				<th class="col-md-3">Date</th>
+				<th class="">Version</th>
+				<th class="">Date</th>
 				<th>Description</th>
 			</tr>
 			<tr>
 				<td class="text-center">1.0</td>
 				<td>February 15, 2019</td>
 				<td>Initial Release - Reports Page</td>
+			</tr>
+			<tr>
+				<td class="text-center">1.5</td>
+				<td>March 28, 2019</td>
+				<td>Finders & servers pages</td>
+			</tr>
+			<tr>
+				<td class="text-center">2.0</td>
+				<td>April 30, 2019</td>
+				<td>Profile, Account, Auth features and Plus</td>
 			</tr>
 		</table>			
     </div>

@@ -328,7 +328,12 @@ if(!function_exists('ParseHero')){
                 $result['EXPERIENCE'] = trim(substr($heroStrs[$x],11));
             }
             if(strpos($heroStrs[$x],'Fighting strength')!==FALSE){
-                $fsValue=trim(substr(strrchr(trim($heroStrs[$x]), "    "), 1));
+                //$fsValue=trim(substr(strrchr(trim($heroStrs[$x]), "    "), 1));
+                
+                
+                $fsValue = preg_split('/\s+/', $heroStrs[$x]);
+                
+                
                 $result['FS_VALUE']=trim(preg_replace('/[^a-z0-9 -]+/', '', $fsValue));
                 $result['FS_POINTS']=trim($heroStrs[$x+1]);
             }

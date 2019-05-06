@@ -63,10 +63,10 @@
         						<th colspan="4" class="h4 text-white bg-warning"><strong>Villages</strong></th>
         					</tr>
         					<tr>
-        						<th class="col-md-1">#</th>
-        						<th class="col-md-4">Village Name</th>
-        						<th class="col-md-1">Population</th>
-        						<th class="col-md-1">Coordinates</th>
+        						<th class="">#</th>
+        						<th class="">Village Name</th>
+        						<th class="">Population</th>
+        						<th class="">Coordinates</th>
         					</tr>
         				</thead>
         				@foreach($villages as $index=>$village)

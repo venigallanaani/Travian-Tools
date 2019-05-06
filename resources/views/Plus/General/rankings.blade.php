@@ -11,12 +11,12 @@
             <div class="text-center col-md-10 mx-auto my-2 p-0">
 					<table class="table table-sm table-bordered align-middle small">
 						<tr class="bg-info text-white">
-							<th class="col-md-1"></th>
-							<th class="col-md-1"><span data-toggle="tooltip" data-placement="top" title="Total"><img alt="" src="/images/x.gif" class="res upkeep"></span> Total Troops</th>
-							<th class="col-md-1"><span data-toggle="tooltip" data-placement="top" title="Offense"><img alt="" src="/images/x.gif" class="stats off"></span> Offense</th>
-							<th class="col-md-1"><span data-toggle="tooltip" data-placement="top" title="Defense"><img alt="" src="/images/x.gif" class="stats def"></span> Defense</th>
-							<th class="col-md-1">Hero</th>
-							<th class="col-md-1">Population</th>
+							<th class=""></th>
+							<th class=""><span data-toggle="tooltip" data-placement="top" title="Total"><img alt="" src="/images/x.gif" class="res upkeep"></span> Total Troops</th>
+							<th class=""><span data-toggle="tooltip" data-placement="top" title="Offense"><img alt="" src="/images/x.gif" class="stats off"></span> Offense</th>
+							<th class=""><span data-toggle="tooltip" data-placement="top" title="Defense"><img alt="" src="/images/x.gif" class="stats def"></span> Defense</th>
+							<th class="">Hero</th>
+							<th class="">Population</th>
 						</tr>
 						<tr class="font-weight-bold">
 							<td class="bg-info text-white"><strong>Rank</strong></td>

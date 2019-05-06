@@ -10,12 +10,12 @@
         <div class="card-text mx-auto text-center col-md-10">
             <table class="table table-border-success small table-sm">
                 <tr>
-                    <th class="col-md-1">Rank</th>
-                    <th class="col-md-1">Tribe</th>
-                    <th class="col-md-2">Name</th>
-                    <th class="col-md-2">Alliance</th>                    
-                    <th class="col-md-1">Population</th>
-                    <th class="col-md-1">Villages</th>
+                    <th class="">Rank</th>
+                    <th class="">Tribe</th>
+                    <th class="">Name</th>
+                    <th class="">Alliance</th>                    
+                    <th class="">Population</th>
+                    <th class="">Villages</th>
                 </tr>
                 @foreach($players as $player)
                     <tr>

@@ -25,7 +25,7 @@
             	</div>
             	<div class="card-body px-5 h6">				
 				@if($counts['def']>0)				
-					<p><strong>{{$counts['def']}} <a href="/plus/defense" class="text-info">Defense Calls</strong></a> are in progress</p>
+					<p><strong>{{$counts['def']}} <a href="/plus/defense" class="text-info">Defense Calls</a></strong> are in progress</p>
 				@else
 					<p>No <span class="text-info"><strong>Defense Calls</strong></span> are currently active</p>
 				@endif				

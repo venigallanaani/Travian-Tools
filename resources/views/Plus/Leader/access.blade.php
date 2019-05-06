@@ -24,19 +24,19 @@
 					<table class="table table-hover table-sm table-bordered align-middle small">
 						<thead class="bg-info text-white">
     						<tr>
-    							<th class="col-md-2 align-middle" rowspan="2">Player</th>
-    							<th class="col-md-2 align-middle" rowspan="2">Account</th>
-    							<th class="col-md-2 align-middle" rowspan="2">Alliance</th>
-    							<th class="col-md-1 align-middle" rowspan="2">Plus</th>
-    							<th colspan="6">Leadership Options</th>
+    							<th class="align-middle" rowspan="2">Player</th>
+    							<th class="align-middle" rowspan="2">Account</th>
+    							<th class="align-middle" rowspan="2">Alliance</th>
+    							<th class="align-middle" rowspan="2">Plus</th>
+    							<th colspan="6">Access Options</th>
     						</tr>
     						<tr class="">
-    							<th class="col-md-1">Leader</th>
-    							<th class="col-md-1">Defense</th>
-    							<th class="col-md-1">Resources</th>
-<!--     							<th class="col-md-1">Offense</th> -->    							
-<!--     							<th class="col-md-1">Artifacts</th> -->
-<!--     							<th class="col-md-1">Wonder</th> -->
+    							<th class="">Leader</th>
+    							<th class="">Defense</th>
+    							<th class="">Resources</th>
+<!--     							<th class="">Offense</th>   							 -->
+<!--     							<th class="">Artifacts</th> -->
+<!--     							<th class="">Wonder</th> -->
     						</tr>
 						</thead>
 					@foreach($players as $player)
@@ -57,7 +57,7 @@
 	          				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'artifact')">
              							<input type="checkbox" @if($player['artifact']==1) checked @endif/></a></td> 
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'wonder')">
-             							<input type="checkbox" @if($player['wonder']==1) checked @endif/></a></td>				        -->
+           							<input type="checkbox" @if($player['wonder']==1) checked @endif/></a></td>				        --> 
             			</tr>
 					@endforeach					
 					</table>
@@ -69,7 +69,6 @@
 
 
 @push('scripts')
-
 <script>
 function updPlus(id,sts)
 {
@@ -84,5 +83,4 @@ function updPlus(id,sts)
     xmlhttp.send();
 }
 </script>
-
 @endpush

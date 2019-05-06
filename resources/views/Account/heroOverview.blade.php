@@ -23,9 +23,9 @@
                     </button>Hero data not added yet
                 </div>
             @else
-    			<table class="p-0 m-0 col-md-10 mx-auto">
+    			<table class="p-0 m-0 mx-auto">
     				<tr>
-    					<td class="col-md-6">
+    					<td class="">
     						<table class="mx-auto">
         						<tr>
         							<td class="p-0 text-primary"><strong>Name</strong></td><td>: {{$hero->name}}</td>
@@ -50,8 +50,8 @@
         						</tr>
         					</table>
     					</td>
-    					<td class="col-md-6">
-    		        		<div id="heroPieChart" style="width: 100%; height: 100%;" class="m-2">        			
+    					<td class="">
+    		        		<div id="heroPieChart" style="width: 100%; height: 100%;" class="">        			
                     		</div>
     					</td>
     				</tr>

@@ -49,6 +49,8 @@ class HeroController extends Controller
         
         $heroData = ParseHero(Input::get('heroStr'));
         
+        dd($heroData);
+        
         if(empty($heroData)){
             Session::flash('danger',"Something went wrong, Hero data not updated");
         }else{
