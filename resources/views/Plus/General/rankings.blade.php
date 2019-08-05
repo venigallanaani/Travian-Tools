@@ -53,19 +53,19 @@
 						<tr class="font-weight-bold">
 							<td class="bg-info text-white"><strong>Value</strong></td>
 						@if(!$ranking['total']==null)
-							<td>{{$ranking['total'][0]->value}}</td>
+							<td>{{number_format($ranking['total'][0]->value)}}</td>
 						@endif
 						@if(!$ranking['off']==null)
-							<td>{{$ranking['off'][0]->value}}</td>
+							<td>{{number_format($ranking['off'][0]->value)}}</td>
 						@endif
 						@if(!$ranking['def']==null)
-							<td>{{$ranking['def'][0]->value}}</td>
+							<td>{{number_format($ranking['def'][0]->value)}}</td>
 						@endif
 						@if(!$ranking['hero']==null)
-							<td>{{$ranking['hero'][0]->exp}} ({{$ranking['hero'][0]->level}})</td>
+							<td>{{number_format($ranking['hero'][0]->exp)}} ({{$ranking['hero'][0]->level}})</td>
 						@endif
 						@if(!$ranking['pop']==null)
-							<td>{{$ranking['pop'][0]->value}}</td>
+							<td>{{number_format($ranking['pop'][0]->value)}}</td>
 						@endif
 						</tr>						
 					</table>

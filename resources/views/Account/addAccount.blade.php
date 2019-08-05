@@ -2,7 +2,7 @@
 
 @section('body')
 <!-- =================================== Account Overview screen================================== -->
-		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+		<div class="card float-md-left col-md-12 col-12 mt-1 p-0 shadow">
 			<div class="card-header h4 py-2 bg-warning text-white">
 				<strong>Account Overview</strong>
 			</div>

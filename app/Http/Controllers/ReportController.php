@@ -31,7 +31,7 @@ class ReportController extends Controller
                 return view('Reports.template'); 
                 
             }else{            
-                //dd($parseData);
+                dd($parseData);
                 
                 $id = str_random(10);
                 $date=Carbon::today()->addDays(100)->format('Y-m-d');

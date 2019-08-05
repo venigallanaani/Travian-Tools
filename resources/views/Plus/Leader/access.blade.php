@@ -33,10 +33,10 @@
     						<tr class="">
     							<th class="">Leader</th>
     							<th class="">Defense</th>
-    							<th class="">Resources</th>
-<!--     							<th class="">Offense</th>   							 -->
-<!--     							<th class="">Artifacts</th> -->
-<!--     							<th class="">Wonder</th> -->
+    							<th class="">Resource</th>
+<!--     							<th class="">Offense</th>
+     							<th class="">Artifacts</th>
+     							<th class="">Wonder</th> -->
     						</tr>
 						</thead>
 					@foreach($players as $player)

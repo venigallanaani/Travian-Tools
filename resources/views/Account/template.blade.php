@@ -53,8 +53,20 @@
 				<a href="/account/alliance" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Alliance</a>
   			</div>	
 	    </div> 
+	    
+        <div class="float-md-left col-md-9 mt-1 p-0">
+		@foreach(['danger','success','warning','info'] as $msg)
+			@if(Session::has($msg))
+	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>{{ Session::get($msg) }}
+                </div>
+            @endif
+        @endforeach
 	    	
-		@yield('body')	 
+			@yield('body')	
+		</div> 
   	@endif         
     </div>    
     @endauth

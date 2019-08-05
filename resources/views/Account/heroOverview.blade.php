@@ -1,7 +1,7 @@
 @extends('Account.template')
 @section('body')
 
-    <div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+    <div class="card float-md-left col-md-12 col-12 mt-1 p-0 shadow">
     	<div class="card-header h4 py-2 bg-warning text-white">
     		<strong>Hero Details</strong>
     	</div>
@@ -28,25 +28,32 @@
     					<td class="">
     						<table class="mx-auto">
         						<tr>
-        							<td class="p-0 text-primary"><strong>Name</strong></td><td>: {{$hero->name}}</td>
+        							<td class="px-0 text-warning"><strong>Name</strong></td>
+        							<td>: {{$hero->name}}</td>
         						</tr>
         						<tr>
-        							<td class="p-0 text-primary"><strong>Level</strong></td><td>: {{$hero->level}}</td>
+        							<td class="px-0 text-warning"><strong>Level</strong></td>
+        							<td>: {{$hero->level}}</td>
         						</tr>
         						<tr>
-        							<td class="p-0 text-primary"><strong>Experience</strong></td><td>: {{$hero->exp}}</td>
+        							<td class="px-0 text-warning"><strong>Experience</strong></td>
+        							<td>: {{$hero->exp}}</td>
         						</tr>
         						<tr>
-        							<td class="p-0 text-primary"><strong>Fighting Strength</strong></td><td>: {{$hero->fs}} ({{$hero->fp}})</td>
+        							<td class="px-0 text-warning"><strong>Fighting Strength</strong></td>
+        							<td>: {{$hero->fp}} <span class="text-primary"> ({{$hero->fs}})</span></td>
         						</tr>
         						<tr>
-        							<td class="p-0 text-primary"><strong>Offense Bonus</strong></td><td>: {{$hero->off * 0.2}}% ({{$hero->off}})</td>
+        							<td class="px-0 text-warning"><strong>Offense Bonus</strong></td>
+        							<td>: {{$hero->off}} <span class="text-primary"> ({{$hero->off * 0.2}}%)</span></td>
         						</tr>
         						<tr>
-        							<td class="p-0 text-primary"><strong>Defense Bonus</strong></td><td>: {{$hero->def * 0.2}}% ({{$hero->def}})</td>
+        							<td class="px-0 text-warning"><strong>Defense Bonus</strong></td>
+        							<td>: {{$hero->def}} <span class="text-primary"> ({{$hero->def * 0.2}}%)</span></td>
         						</tr>
         						<tr>
-        							<td class="p-0 text-primary"><strong>Resources</strong></td><td>: {{$hero->res}}</td>
+        							<td class="px-0 text-warning"><strong>Resources</strong></td>
+        							<td>: {{$hero->res}}</td>
         						</tr>
         					</table>
     					</td>
@@ -58,7 +65,7 @@
     			</table>
 			@endif					
     		</div>        		
-    		<div class="col-md-9 mx-auto rounded my-3" style="background-color:#dbeef4;">
+    		<div class="col-md-9 mx-auto rounded my-5" style="background-color:#dbeef4;">
     			<form action="/account/hero/update" method="post">
     			{{csrf_field()}}
         			<table class="mx-auto">
@@ -67,7 +74,7 @@
         				</tr>
         				<tr>
         					<td class="align-middle px-2"><p><textarea rows="3" cols="25" name="heroStr" required></textarea></td>
-        					<td class="align-middle px-2 small font-italic"><p>Enter the Troops page data here</p></td>
+        					<td class="align-middle px-2 small font-italic"><p>Enter the Hero page data here <br/>(Expand the attributes section)</p></td>
         				</tr>
         				<tr>
         					<td colspan="2" class="text-center pb-3"><button class="btn btn-primary px-4" type="submit"><strong>Update Hero</strong></button></td>

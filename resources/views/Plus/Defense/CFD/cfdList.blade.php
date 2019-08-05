@@ -62,23 +62,20 @@
             @endif
         @endforeach
         
-    		@if(count($tasks)==0)
-    			<p class="text-center h5 py-2">No defense tasks are active currently.</p>				
-    		@endif
     <!-- ==================================== List of CFD is progress ======================================= -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
 					<table class="table align-middle small">
 						<thead class="thead-inverse">
     						<tr>
-    							<th class="col-md-1">Player</th>
-    							<th class="col-md-1">Defense</th>
-    							<th class="col-md-1">Type</th>
-    							<th class="col-md-1">Status</th>
-    							<th class="col-md-1">Priority</th>
-    							<th class="col-md-1">%</th>
-    							<th class="col-md-1">Land time</th>
-    							<th class="col-md-1">Time left</th>
-    							<th class="col-md-1"></th>    							
+    							<th class="">Player</th>
+    							<th class="">Defense</th>
+    							<th class="">Type</th>
+    							<th class="">Status</th>
+    							<th class="">Priority</th>
+    							<th class="">%</th>
+    							<th class="">Land time</th>
+    							<th class="">Time left</th>
+    							<th class=""></th>    							
     						</tr>
 						</thead>
 						@foreach($tasks as $task)
@@ -88,17 +85,22 @@
 								elseif($task->priority=='low'){$color='text-info';}
 								else{$color="";}
 								
-								if($task->status=='COMPLETE'){$status="table-secondary";}
-								else{$status='';}
+								if($task->type=='snipe'){$row='table-warning';}
+								elseif($task->type=='defend'){$row='table-info';}
+								elseif($task->type=='scout'){$row='table-success';}
+								else {$row="";}	
+								
+								if($task->status=='COMPLETE'){$row="table-secondary";}
+																
 							@endphp
-    						<tr class="{{$status}}">
+    						<tr class="{{$row}}">
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>
     							<td>{{number_format($task->def_total)}}</td>
-    							<td><strong>{{$task->type}}</strong></td>
+    							<td><strong>{{ucfirst($task->type)}}</strong></td>
     							<td>{{$task->status}}</td>
-    							<td class="{{$color}}"><strong>{{$task->priority}}</strong></td>    							
+    							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    							
     							<td>{{$task->def_percent}}%</td>
     							<td>{{$task->target_time}}</td>
     							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
@@ -109,6 +111,9 @@
 						@endforeach
 					</table>
 				</div>
+				@if(count($tasks)==0)
+					<p class="text-center h5 py-2 text-primary">No defense tasks are active currently.</p>				
+				@endif
 			</div>
 		</div>
 

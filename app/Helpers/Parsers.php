@@ -21,8 +21,7 @@ if(!function_exists('ParseReports')){
                     }
                 }
     // ATTACKER INFORMATION
-                if(strtoupper(trim($incStrs[$x]))=='ATTACKER' &&
-                    strtoupper(trim($incStrs[$x+1]))=='ATTACKER'){
+                if(strtoupper(trim($incStrs[$x]))=='ATTACKER'){
                     for($y=$x;$y<count($incStrs);$y++){
                         
                         if(strlen(trim($incStrs[$y]))!=0 && strtoupper(explode(" ",trim($incStrs[$y]))[0])!='ATTACKER'){
@@ -90,10 +89,9 @@ if(!function_exists('ParseReports')){
                     $result['ATTACKER']['CARRY']=str_replace('?','',substr(trim($incStrs[$x+5]),5));
                 }            
                 
-                if(strtoupper(trim($incStrs[$x]))=='DEFENDER' &&
-                    strtoupper(trim($incStrs[$x+1]))=='DEFENDER'){
+                if(strtoupper(trim($incStrs[$x]))=='DEFENDER'){
     // Reinforcements Information
-                    if(strtoupper(trim($incStrs[$x+2]))=='REINFORCEMENT'){                    
+                    if(strtoupper(trim($incStrs[$x+2]))=='REINFORCEMENT'){
                         if(strpos(strtoupper($incStrs[$x+3]),'CLUBSWINGER')!==false &&
                                 strpos(strtoupper($incStrs[$x+3]),'PALADIN')!==false){
                             $result['REINFORCEMENT'][$rein]['TRIBE']='TEUTON';
@@ -188,7 +186,7 @@ if(!function_exists('ParseReports')){
                                 $result['DEFENDER']['LOSES'][$y]='?';
                                 $result['DEFENDER']['SURVIVORS'][$y]='?';
                             }else{
-                                $result['DEFENDER']['SURVIVORS'][$y]=trim($result['DEFENDER']['UNITS'][$y])-trim($result['DEFENDER']['LOSES'][$y]);
+                                $result['DEFENDER']['SURVIVORS'][$y]=0; //trim($result['DEFENDER']['UNITS'][$y])-trim($result['DEFENDER']['LOSES'][$y]);
                             }                        
                         }
                     }                                    
@@ -235,6 +233,19 @@ if(!function_exists('ParseReports')){
     }
         
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if(!function_exists('ParseTroops')){
@@ -310,6 +321,15 @@ if(!function_exists('ParseTroops')){
     }
 }
 
+
+
+
+
+
+
+
+
+
 if(!function_exists('ParseHero')){
     function ParseHero(String $heroStr){
         
@@ -328,13 +348,10 @@ if(!function_exists('ParseHero')){
                 $result['EXPERIENCE'] = trim(substr($heroStrs[$x],11));
             }
             if(strpos($heroStrs[$x],'Fighting strength')!==FALSE){
-                //$fsValue=trim(substr(strrchr(trim($heroStrs[$x]), "    "), 1));
+             
+                $data = preg_split('/\s+/', $heroStrs[$x]);                
                 
-                
-                $fsValue = preg_split('/\s+/', $heroStrs[$x]);
-                
-                
-                $result['FS_VALUE']=trim(preg_replace('/[^a-z0-9 -]+/', '', $fsValue));
+                $result['FS_VALUE']=trim($data[count($data)-2]);
                 $result['FS_POINTS']=trim($heroStrs[$x+1]);
             }
             if(strpos($heroStrs[$x],'Off bonus')!==FALSE){

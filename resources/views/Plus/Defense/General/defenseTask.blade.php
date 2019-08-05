@@ -22,8 +22,8 @@
 							<td class="py-1"><strong>Defense </strong>(<img alt="upkeep" src="/images/x.gif" class="res upkeep">): {{number_format($task['def_total'])}}</td>							
 						</tr>
 						<tr>
-							<td class="py-1"><strong>Type:</strong> {{$task['type']}}</td>
-							<td class="py-1"><strong>Priority: <span class="{{$color}}">{{$task['priority']}}</span></strong></td>
+							<td class="py-1"><strong>Type:</strong> {{ucfirst($task['type'])}}</td>
+							<td class="py-1"><strong>Priority: <span class="{{$color}}">{{ucfirst($task['priority'])}}</span></strong></td>
 						</tr>
 						<tr>
 							<td class="py-1"><strong>Land Time:</strong> {{$task['target_time']}}</td>

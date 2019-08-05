@@ -7,10 +7,12 @@
             <strong>Plus Overview</strong>
         </div>
         <div class="card-text p-3 h5">
-            <p>Welcome to Plus group - <span class="text-info"><strong>{{Session::get('plus.name')}}</strong></span></p>
+            <p>Welcome to <span class="text-primary"><strong>{{Session::get('plus.name')}}</strong></span></p>
             <br>
+            
+            @if(strlen(trim($subscription->message))>0)
             <div class="card mx-auto">
-            	<div class="card-header py-1 text-info h4">
+            	<div class="card-header py-0 text-info h4">
             		<p><strong>Message of the day</strong></p>
             	</div>
             	<div class="card-body">
@@ -19,8 +21,10 @@
             	</div>
             </div>
             <br>
+            @endif
+            
             <div class="card mx-auto">
-            	<div class="card-header py-1 text-info h4">
+            	<div class="card-header py-0 text-info h4">
             		<p><strong>Group Tasks</strong></p>
             	</div>
             	<div class="card-body px-5 h6">				
@@ -38,14 +42,16 @@
             	</div>
             </div> 
             <br>
+            
+            
             <div class="card mx-auto">
-            	<div class="card-header py-1 text-info h4">
+            	<div class="card-header py-0 text-info h4">
             		<p><strong>Group Options</strong></p>
             	</div>
             	<div class="card-body">
         			<form action="/plus/leave" method="post">
         				{{csrf_field()}}
-        				<button class="btn btn-info px-3"> Leave Group </button>
+        				<button class="btn btn-info float-right px-3"> Leave Group </button>
     				</form> 
             	</div>
             </div>           

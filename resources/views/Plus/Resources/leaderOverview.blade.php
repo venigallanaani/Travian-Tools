@@ -62,13 +62,13 @@
 					<table class="table align-middle small">
 						<thead class="thead-inverse">
     						<tr>
-    							<th class="col-md-1">Target</th>
-    							<th class="col-md-1">Resources</th>
-    							<th class="col-md-1">Pref</th>
-    							<th class="col-md-1">Status</th>
-    							<th class="col-md-1">%</th>
-    							<th class="col-md-1">Target Time</th>
-    							<th class="col-md-1"></th>    							
+    							<th class="">Target</th>
+    							<th class="">Resources</th>
+    							<th class="">Pref</th>
+    							<th class="">Status</th>
+    							<th class="">%</th>
+    							<th class="">Target Time</th>
+    							<th class=""></th>    							
     						</tr>
 						</thead>
 							@foreach($tasks as $task)

@@ -29,7 +29,7 @@
 									<p class="py-0"><strong>Land Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task->target_time}}" class="dateTimePicker"/></p>
 									<p class="py-0"><strong>Defense Priority:</strong> 
     													<select name="priority">
-    														<option value="{{$task->priority}}">{{$task->priority}}</option>
+    														<option value="{{$task->priority}}">{{ucfirst($task->priority)}}</option>
     														<option value="high">High</option>
     														<option value="medium">Medium</option>
     														<option value="low">Low</option>
@@ -37,7 +37,7 @@
     													</select></p>
 	    							<p class="py-0"><strong>Defense Type:</strong> 
     													<select name="type">
-    														<option value="{{$task->type}}">{{$task->type}}</option>
+    														<option value="{{$task->type}}">{{ucfirst($task->type)}}</option>
     														<option value="defend">Defend</option>
     														<option value="snipe">Snipe</option>
     														<option value="scout">Scout</option>
@@ -127,7 +127,7 @@
 							@foreach($players as $index=>$player)
 							<tr>		
 								<td class="">{{$index+1}}</td>
-								<td class="" href="/finder/player/{{$player->player}}/1" target="_blank">{{$player->player}}</td>
+								<td class=""><a href="/finders/player/{{$player->player}}/1" target="_blank">{{$player->player}}</a></td>
 								<td class="">{{number_format($player->upkeep)}}</td>
 								<td class="">{{number_format($player->res)}}</td>
 								<td class=""><a class="btn btn-sm btn-outline-secondary" href="/defense/cfd/troops/{{$task->task_id}}/{{$player->uid}}">

@@ -6,7 +6,7 @@
 		<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Search Results</strong></div>
 		<div class="card-text">	
 		@if(count($troops)==0)
-    		<div class="text-center my-2">	
+    		<div class="text-center text-danger my-2">	
 				<p>No defense troops are found with given parameters</p>	
 			</div>
 		@else

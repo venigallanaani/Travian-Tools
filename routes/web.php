@@ -82,7 +82,7 @@ Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu 
 
 /* --------------------- Join Plus Group -------------------------- */
 Route::get('/plus/join/{link}','Plus\Leader\LeaderController@joinPlusGroup');
-Route::post('/plus/join','Plus\Leader\SubscriptionController@refreshLink');
+Route::post('/plus/join','Plus\Leader\LeaderController@refreshLink');
 Route::post('/plus/leave','Plus\Leader\LeaderController@leavePlusGroup');
 
 /*-------------------------- Plus overview routes ----------------------------*/
@@ -92,7 +92,13 @@ Route::get('/plus/member/{id}','Plus\PlusController@member');
 /* ------------------ Plus player display of rankings ------------------------ */
 Route::get('/plus/rankings','Plus\PlusController@rankings');
 
+/* -------------------- Plus player display of Artifact page -----------------------*/
+Route::get('/plus/artifact','Plus\Artifacts\ArtifactController@display');
+
 /* --------------- Controller for Plus leader routes --------------- */
+Route::get('/leader/overview','Plus\Leader\LeaderController@overview');
+Route::post('/leader/overview/message','Plus\Leader\LeaderController@messageUpdate');
+
 Route::get('/leader/access','Plus\Leader\LeaderController@access');
 Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@updateAccess');
 
@@ -128,7 +134,27 @@ Route::post('/defense/cfd/update','Plus\Defense\CFD\LeaderCFDController@processC
 Route::get('/defense/search','Plus\Defense\Search\DefenseController@show');
 Route::post('/defense/search','Plus\Defense\Search\DefenseController@process');
 
+
+/* -------------------- Plus member Offense Options -----------------------*/
+Route::get('/plus/offense','Plus\Offense\OffenseController@offenseTaskList');
+Route::post('/plus/offense/update','Plus\Offense\OffenseController@updateOffenseTask');
+
+/* -------------------- Plus Leader Offense Options -----------------------*/
+Route::get('/offense/status','Plus\Offense\LeaderOffenseController@offensePlanList');
+Route::post('/offense/create','Plus\Offense\LeaderOffenseController@createOffensePlan');
+
+Route::get('/offense/status/{id}','Plus\Offense\LeaderOffenseController@displayOffensePlan');
+Route::post('/offense/status/update','Plus\Offense\LeaderOffenseController@updateOffensePlan');
+
+Route::get('/offense/troops','Plus\Offense\LeaderSearchController@troopsList');
+Route::get('/offense/search','Plus\Offense\LeaderSearchController@show');
+Route::post('/offense/search','Plus\Offense\LeaderSearchController@search');
+
+
+
+/*----------------------------------------------------------------------------------*/
 /* ------------------ Profile Controller Page -------------- */
+/*----------------------------------------------------------------------------------*/
 Route::get('/profile','Profile\profileController@overview');
 Route::post('/profile/contact','Profile\profileController@updateContact');
 

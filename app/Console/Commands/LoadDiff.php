@@ -43,7 +43,7 @@ class LoadDiff extends Command
           
                 $diff=Diff::firstOrCreate(
 					['server_id'=>$village->server_id,
-					    'worldid'=>$village->worldid,
+					    //'worldid'=>$village->worldid,
                         'x'=>$village->x,
                         'y'=>$village->y,
                         'id'=>$village->id,

@@ -6,7 +6,7 @@
 		<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Call Troops Details</strong></div>
 		<div class="card-text">
 			<div class="text-center col-md-11 mx-auto my-2 p-0">
-				<p class="h4 py-2"><strong>Troops Contribution of {{$troops[0]['player']}}</strong></p>
+				<p class="h4 py-2">Troops Contribution of <strong><span class="text-primary">{{$troops[0]['player']}}</span></strong></p>
     		@foreach(['danger','success','warning','info'] as $msg)
     			@if(Session::has($msg))
 	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
@@ -41,7 +41,7 @@
     						$res+=$troop->resources;
     					@endphp
     					<tr class="">
-    						<td class="py-1">{{$troop->village}}</td>
+    						<td class="py-1 font-weight-bold text-info">{{$troop->village}}</td>
     						<td class="py-1">{{$troop->unit01}}</td>
     						<td class="py-1">{{$troop->unit02}}</td>
     						<td class="py-1">{{$troop->unit03}}</td>

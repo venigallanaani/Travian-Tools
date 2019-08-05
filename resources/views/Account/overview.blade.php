@@ -2,7 +2,7 @@
 
 @section('body')
 <!-- =================================== Account Overview screen================================== -->
-		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+		<div class="card float-md-left col-md-12 col-12 mt-1 p-0 shadow">
 			<div class="card-header h4 py-2 bg-warning text-white">
 				<strong>Account Overview</strong>
 			</div>
@@ -63,10 +63,10 @@
         						<th colspan="4" class="h4 text-white bg-warning"><strong>Villages</strong></th>
         					</tr>
         					<tr>
-        						<th class="">#</th>
-        						<th class="">Village Name</th>
-        						<th class="">Population</th>
-        						<th class="">Coordinates</th>
+        						<th>#</th>
+        						<th>Village Name</th>
+        						<th>Population</th>
+        						<th>Coordinates</th>
         					</tr>
         				</thead>
         				@foreach($villages as $index=>$village)

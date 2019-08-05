@@ -45,11 +45,11 @@
                 <div class="card-body">                 
                     <p>Finders help you search the Travian to find different points you need.</p>
                     <table>
-                        <tr><td><a href="/finder/player" class="text-success font-weight-bold">Player Finder</a></td></tr>
-                        <tr><td><a href="/finder/alliance" class="text-success font-weight-bold">Alliance Finder</a></td></tr>
-                        <tr><td><a href="/finder/inactive" class="text-success font-weight-bold">Inactive Finder</a></td></tr>
-                        <tr><td><a href="/finder/natar" class="text-success font-weight-bold">Natar Finder</a></td></tr>
-                        <tr><td><a href="/finder/neighbour" class="text-success font-weight-bold">Neighbour Finder</a></td></tr>
+                        <tr><td><a href="/finders/player" class="text-success font-weight-bold">Player Finder</a></td></tr>
+                        <tr><td><a href="/finders/alliance" class="text-success font-weight-bold">Alliance Finder</a></td></tr>
+                        <tr><td><a href="/finders/inactive" class="text-success font-weight-bold">Inactive Finder</a></td></tr>
+                        <tr><td><a href="/finders/natar" class="text-success font-weight-bold">Natar Finder</a></td></tr>
+                        <tr><td><a href="/finders/neighbour" class="text-success font-weight-bold">Neighbour Finder</a></td></tr>
                     </table>
                 </div>
             </div>

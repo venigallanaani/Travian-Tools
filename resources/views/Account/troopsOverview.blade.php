@@ -1,7 +1,7 @@
 @extends('Account.template')
 
 @section('body')
-<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+	<div class="card float-md-left col-md-12 col-12 mt-1 p-0 shadow">
 			<div class="card-header h4 py-2 bg-warning text-white">
 				<strong>Troops Details</strong>
 			</div>
@@ -17,16 +17,16 @@
                 </div>
             @endif
         @endforeach
-    			<div class="col-md-8 mx-auto my-4 rounded" style="background-color:#dbeef4;">
+    			<div class="col-md-8 mx-auto my-4 rounded p-2" style="background-color:#dbeef4;">
     				<p class="h4 text-center text-primary"><strong>Summary</strong></p>
         			<table class="table table-borderless">					
         				<tr>
-        					<td class="py-1"><strong>Total Troops : </strong>{{$stats['upkeep']}}</td>
-        					<td class="py-1"><strong>Troop/Pop Ratio : </strong>{{round($stats['upkeep']/$stats['pop'],1)}} : 1</td>
+        					<td class="py-1"><strong>Total Troops : </strong>{{number_format($stats['upkeep'])}}</td>
+        					<td class="py-1"><strong>Troop/Pop Ratio : </strong>{{round($stats['upkeep']/$stats['pop'],1)}}</td>
         				</tr>
         				<tr>
-        					<td class="py-1"><strong>Offense Troops : </strong>{{$stats['offense']}} ({{$stats['offratio']}}%)</td>
-        					<td class="py-1"><strong>Defense Troops : </strong>{{$stats['defense']}} ({{$stats['defratio']}}%)</td>
+        					<td class="py-1"><strong>Offense Troops : </strong>{{number_format($stats['offense'])}} ({{$stats['offratio']}}%)</td>
+        					<td class="py-1"><strong>Defense Troops : </strong>{{number_format($stats['defense'])}} ({{$stats['defratio']}}%)</td>
         				</tr>
         			</table>
     			</div>
@@ -44,6 +44,13 @@
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Icons"></td>
 						</tr>
 					@foreach($troops as $index=>$troop)
+					
+					@php
+						if($troop['type']=="Defense"){ $color="text-success";	}
+						elseif($troop['type']=="Offense"){	$color="text-danger";	}
+						else {	$color="text-primary";	}
+					@endphp
+					
 						<tr id="{{$troop['vid']}}">
 							<td class="p-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$troop['x']}}&y={{$troop['y']}}" target="_blank">
 								{{$troop['village']}}</a></td>
@@ -59,7 +66,7 @@
 							<td class="p-0 unit10" contenteditable="true">{{$troop['unit10']}}</td>
 							<td class="p-0">{{$troop['upkeep']}}</td>
 							<td class="p-0 tsq" contenteditable="true">{{$troop['Tsq']}}</td>
-							<td class="py-0">{{$troop['type']}}</td>
+							<td class="py-0 {{$color}}">{{$troop['type']}}</td>
 							<td class="p-0" data-toggle="tooltip" data-placement="top" title="save">
             					<button class="badge badge-primary" type="button" id="update"><i class="far fa-save"></i></button>																						
 							</td>
@@ -67,17 +74,17 @@
 					@endforeach
 						<tr class="font-weight-bold">
 							<td class="px-0">Total</td>
-							<td class="px-0">{{$stats['unit01']}}</td>
-							<td class="px-0">{{$stats['unit02']}}</td>
-							<td class="px-0">{{$stats['unit03']}}</td>
-							<td class="px-0">{{$stats['unit04']}}</td>
-							<td class="px-0">{{$stats['unit05']}}</td>
-							<td class="px-0">{{$stats['unit06']}}</td>
-							<td class="px-0">{{$stats['unit07']}}</td>
-							<td class="px-0">{{$stats['unit08']}}</td>
-							<td class="px-0">{{$stats['unit09']}}</td>
-							<td class="px-0">{{$stats['unit10']}}</td>
-							<td class="px-0" colspan="2">{{$stats['upkeep']}}</td>
+							<td class="px-0">{{number_format($stats['unit01'])}}</td>
+							<td class="px-0">{{number_format($stats['unit02'])}}</td>
+							<td class="px-0">{{number_format($stats['unit03'])}}</td>
+							<td class="px-0">{{number_format($stats['unit04'])}}</td>
+							<td class="px-0">{{number_format($stats['unit05'])}}</td>
+							<td class="px-0">{{number_format($stats['unit06'])}}</td>
+							<td class="px-0">{{number_format($stats['unit07'])}}</td>
+							<td class="px-0">{{number_format($stats['unit08'])}}</td>
+							<td class="px-0">{{number_format($stats['unit09'])}}</td>
+							<td class="px-0">{{number_format($stats['unit10'])}}</td>
+							<td class="px-0" colspan="2"><img alt="" src="/images/x.gif" class="res upkeep"> {{number_format($stats['upkeep'])}}</td>
 							<!-- <td></td>
 							<td></td>  -->
 						</tr>

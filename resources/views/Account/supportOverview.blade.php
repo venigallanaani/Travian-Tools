@@ -2,19 +2,8 @@
 
 @section('body')
 <!-- =================================== Account Overview screen================================== -->
-		<div class="float-md-left col-md-9 mt-1 p-0">
+		<div class="card float-md-left col-md-12 col-12 mt-1 p-0 shadow">
 			<div class="card-text">
-		@foreach(['danger','success','warning','info'] as $msg)
-    		@if(Session::has($msg))
-    			<div class="col-md-10 mx-auto">
-                	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>{{ Session::get($msg) }}
-                    </div>
-                </div>
-            @endif
-        @endforeach
         		<div class="card shadow col-md-12 p-0 mx-auto">
     				<div class="card-header h4 py-2 bg-warning text-white text-center">
     					<strong>Sitter Details</strong>
@@ -22,12 +11,12 @@
     				<div class="card-text">
     					<table class="table table-hover col-md-6 text-center mx-auto">
     						<tr>
-    							<td class="text-right col-md-6">Sitter 1 :</td>
-    							<td contenteditable="true" class="text-left col-md-6" id="sitter1Edit">{{$account->sitter1}}</td>
+    							<td class="" >Sitter 1 :</td>
+    							<td contenteditable="true" class="" id="sitter1Edit">{{$account->sitter1}}</td>
     						</tr>
     						<tr>
-    							<td class="text-right col-md-6">Sitter 2 :</td>
-    							<td contenteditable="true" class="text-left col-md-6" id="sitter2Edit">{{$account->sitter2}}</td>
+    							<td class="">Sitter 2 :</td>
+    							<td contenteditable="true" class="" id="sitter2Edit">{{$account->sitter2}}</td>
     						</tr>
     					</table>
     					<form id="form" action="/account/sitter/update" method="POST" onsubmit="return updateSitter()" class="text-center pb-3">
@@ -56,10 +45,10 @@
 								<p class="col-md-8 mx-auto"><small>(Note: Entering the dual passcode will make this account dual of the passcode owner's account)</small></p>
     						</form>
     					</div>
-    					<table class="table table-hover table-sm table-bordered col-md-8 text-center mx-auto">
+    					<table class="table table-hover table-sm table-bordered col-md-10 text-center mx-auto">
     						<thead class="bg-warning">
     							<tr>
-        							<th class="text-center">TT Account Name</th>
+        							<th class="text-center">Account Name</th>
         							<th class="text-center">Account Type</th>
     							@if($account->status=="PRIMARY")
         							<th class="text-center">Options</th>
@@ -69,7 +58,7 @@
 						@foreach($duals as $dual)
     						<tr>
     							<td>{{$dual->user_name}}</td>
-    							<td>{{$dual->status}}</td>							
+    							<td>{{ucfirst(strtolower($dual->status))}}</td>							
     							<td>
     								<form action="/account/dual/update" method="post">
     									{{csrf_field()}}    									

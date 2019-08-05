@@ -78,18 +78,21 @@
                 <a href="/plus" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>
                 <a href="/plus/members" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Member Details</a>
                 <a href="/plus/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a>
-<!--                 <a href="/plus/incoming" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Report Incomings</a> -->
+                <a href="/plus/incoming" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Report Incomings</a> 
                 <a href="/plus/defense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Defense Tasks</a>
-<!--                 <a href="/plus/offense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Offense Tasks</a> -->
+                <a href="/plus/offense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Offense Tasks</a>
                 <a href="/plus/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Resource Tasks</a>
-            </div>       
+<!-- 	        	<a href="/plus/artifact" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Artifact Tasks</a> 
+              	<a href="/plus/wonder" class="list-group-item py-1 list-group-item-action bg-info text-white h5">World Wonder</a> -->
+            </div>
         @if(Session::get('plus.leader')==1)
             <!-- =================================== Plus Leader/Owner menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Leader Menu</a>
-                <a href="/leader/subscription" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Subscription</a>
+                <a href="/leader/overview" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>
                 <a href="/leader/access" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Access</a>                
                 <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a>
+                <a href="/leader/subscription" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Subscription</a>
             </div>
         @endif   
         @if(Session::get('plus.defense')==1) 
@@ -126,6 +129,15 @@
                 <a href="/artifact/list" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Artifact List</a>
                 <a href="/artifact/request" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Requests</a>
                 <a href="/artifact/capture" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Capture Plan</a>
+            </div> 
+        @endif
+		@if(Session::get('plus.wonder')==2)
+            <!-- =================================== Artifacts menu ================================== -->
+            <div class="list-group text-center text-white mt-1">
+                <a class="list-group-item py-1 bg-dark h4">Wonder Menu</a>                
+                <a href="/wonder" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
+                <a href="/wonder/croptool" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Crop Tool</a>
+                <a href="/wonder/defense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Defense Status</a>                
             </div> 
         @endif
         </div>

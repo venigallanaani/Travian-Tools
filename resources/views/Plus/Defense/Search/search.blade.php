@@ -26,7 +26,7 @@
     			</form>	
 			</div>	
 		</div>
-		<p class="small text-center">Do not enter Target Time to fetch all defense data</p>
+		<p class="small text-center">*Do not enter Target Time to fetch all defense data</p>
 	</div>
 	
 	@yield('results')

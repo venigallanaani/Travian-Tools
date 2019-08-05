@@ -2,7 +2,7 @@
 
 @section('body')
 <!-- =================================== Account Overview screen================================== -->
-	<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+	<div class="card float-md-left col-md-12 col-12 mt-1 p-0 shadow">
         <div class="card-header h4 py-2 bg-warning text-white">
             <strong>Alliance Details</strong>
         </div>
@@ -32,6 +32,10 @@
                                     <td class="py-1"><strong><span class="text-warning">Villages</span></strong></td>
                                     <td class="py-1">: {{$alliance->villages}}</td>
                                 </tr>
+                                <tr>
+                                    <td class="py-1"><strong><span class="text-warning">Avg Pop</span></strong></td>
+                                    <td class="py-1">: {{round($alliance->population/$alliance->players)}}</td>
+                                </tr>
                             </table>
                         </td>
                         <td>
@@ -39,7 +43,7 @@
                                 <tr><td class="py-1 text-warning h5"><strong>Ingame Links</strong></td></tr>
                                 <tr><td class="py-1"><a href="https://{{Session::get('server.url')}}/allianz.php?aid={{$alliance['aid']}}" target="_blank"><strong>Travian Profile</strong></a></td></tr>
                                 <tr><td class="py-1"><a href="https://{{Session::get('server.url')}}/statistiken.php?id=1&idSub=1&name={{$alliance['alliance']}}" target="_blank"><strong>Attack Points</strong></a></td></tr>
-                                <tr><td class="py-1"><a href="https://{{Session::get('server.url')}}/statistiken.php?id=1&idSub=2&name={{$alliance['aid']}}" target="_blank"><strong>Defense Points</strong></a></td></tr>
+                                <tr><td class="py-1"><a href="https://{{Session::get('server.url')}}/statistiken.php?id=1&idSub=2&name={{$alliance['alliance']}}" target="_blank"><strong>Defense Points</strong></a></td></tr>
                             </table>
                         </td>
                     </tr>
@@ -54,13 +58,13 @@
                         </tr>
                         <tr>
                             <th>#</th>
-                            <th class="col-md-3">Player</th>
-                            <th class="col-md-1">Tribe</th>
-                            <th class="col-md-1">Rank</th>
-                            <th class="col-md-2">Population</th>
-                            <th class="col-md-1">Villages</th>
-                            <th class="col-md-2">Sitter 1</th>
-                            <th class="col-md-2">Sitter 2</th>
+                            <th class="">Player</th>
+                            <th class="">Tribe</th>
+                            <th class="">Rank</th>
+                            <th class="">Population</th>
+                            <th class="">Villages</th>
+                            <th class="">Sitter 1</th>
+                            <th class="">Sitter 2</th>
                         </tr>
                     </thead>
                     @foreach($players as $index=>$player)
@@ -80,6 +84,7 @@
             </div>         
         </div>
     </div>
+
 	
 
 @endsection
