@@ -40,13 +40,13 @@
 		<table class="table table-hover table-sm small table-striped m-1" id="ops">
 			<thead>
     			<tr class="bg-info text-white">
-    				<th class="col-md-2">Attacker</th>
-    				<th class="col-md-2">Target</th>
-    				<th class="col-md-1">Type</th>
-    				<th class="col-md-1">Waves</th>
-    				<th class="col-md-1">Troops</th>
-    				<th class="col-md-2">Land Time</th>
-    				<th class="col-md-2">Comments</th>
+    				<th class="">Attacker</th>
+    				<th class="">Target</th>
+    				<th class="">Type</th>
+    				<th class="">Waves</th>
+    				<th class="">Troops</th>
+    				<th class="">Land Time</th>
+    				<th class="">Comments</th>
     				<th><button class="badge badge-warning" id="newRow"><i class="fas fa-plus"></i></button></th>
     			</tr>
 			</thead>

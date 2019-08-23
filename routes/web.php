@@ -14,24 +14,24 @@ Route::get('/home', 'HomeController@index')->name('home');				// Displays home p
 /*----------------------------------------------------------------------------------*/
 /* --------------------------------- Finders page ---------------------------------- */
 /*----------------------------------------------------------------------------------*/
-Route::get('/finders','Finders\FindersController@index')->name('finders');			// Finders main page
+Route::get('/finder','Finders\FindersController@index')->name('finder');			// Finders main page
 
-Route::get('/finders/player','Finders\PlayerFinderController@player');		    // Displays the different type of finders
-Route::post('/finders/player','Finders\PlayerFinderController@processPlayer');		// Displays the different type of finders
-Route::get('/finders/player/{name}/{id?}','Finders\PlayerFinderController@player');		    // Displays the different type of finders
+Route::get('/finder/player','Finders\PlayerFinderController@player');		    // Displays the different type of finders
+Route::post('/finder/player','Finders\PlayerFinderController@processPlayer');		// Displays the different type of finders
+Route::get('/finder/player/{name}/{id?}','Finders\PlayerFinderController@player');		    // Displays the different type of finders
 
-Route::get('/finders/alliance','Finders\AllianceFinderController@alliance');		// Displays the different type of finders
-Route::post('/finders/alliance','Finders\AllianceFinderController@processAlliance');	// Displays the different type of finders
-Route::get('/finders/alliance/{name}/{id?}','Finders\AllianceFinderController@alliance');	// Displays the different type of finders
+Route::get('/finder/alliance','Finders\AllianceFinderController@alliance');		// Displays the different type of finders
+Route::post('/finder/alliance','Finders\AllianceFinderController@processAlliance');	// Displays the different type of finders
+Route::get('/finder/alliance/{name}/{id?}','Finders\AllianceFinderController@alliance');	// Displays the different type of finders
 
-Route::get('/finders/inactive','Finders\InactiveFinderController@inactive');		// Displays the different type of finders
-Route::post('/finders/inactive','Finders\InactiveFinderController@processInactive');		// Displays the result of the inactive finders
+Route::get('/finder/inactive','Finders\InactiveFinderController@inactive');		// Displays the different type of finders
+Route::post('/finder/inactive','Finders\InactiveFinderController@processInactive');		// Displays the result of the inactive finders
 
-Route::get('/finders/natar','Finders\NatarFinderController@natar');		        // Displays the different type of finders
-Route::post('/finders/natar','Finders\NatarFinderController@processNatar');		// Displays the result of the Natar finders
+Route::get('/finder/natar','Finders\NatarFinderController@natar');		        // Displays the different type of finders
+Route::post('/finder/natar','Finders\NatarFinderController@processNatar');		// Displays the result of the Natar finders
 
-Route::get('/finders/neighbour','Finders\NeighbourFinderController@neighbour');		// Displays the different type of finders
-Route::post('/finders/neighbour','Finders\NeighbourFinderController@processNeighbour');		// Displays the result of the neighbour finders
+Route::get('/finder/neighbour','Finders\NeighbourFinderController@neighbour');		// Displays the different type of finders
+Route::post('/finder/neighbour','Finders\NeighbourFinderController@processNeighbour');		// Displays the result of the neighbour finders
 
 
 /*----------------------------------------------------------------------------------*/
@@ -140,6 +140,8 @@ Route::get('/offense/archive','Plus\Offense\offenseArchiveController@archiveList
 Route::get('/offense/archive/{id}','Plus\Offense\offenseArchiveController@displayArchivePlan');
 Route::post('/offense/archive/update','Plus\Offense\offenseArchiveController@updateArchivePlan');
 
+
+
 /* ----------------------- Plus Leader Artifacts plan ---------------------------------------- */
 Route::get('/artifact','Plus\Artifact\artifactLeaderController@overview');
 Route::get('/artifact/list','Plus\Artifact\artifactLeaderController@artifactList');
@@ -171,9 +173,8 @@ Route::post('/servers','ServersController@process');
 Route::get('/reports','ReportController@index')->name('reports');
 Route::post('/reports/create','ReportController@makeReport');
 
-/* ----------------------------- Calculators Page --------------------------- */
-Route::get('/calculators','Calculators\CalculatorController@overview')->name('calculators');
 
-Route::get('/calculators/cropper','Calculators\CropperController@display');
-Route::post('/calculators/cropper','Calculators\CropperController@process');
-Route::get('/calculators/cropper/{crop}/{cap}/{o1}/{o2}/{o3}/{plus}','Calculators\CropperController@calculate');
+
+/* -------------------------------- Calculators Controllers --------------------------- */
+Route::get('/calculators','Calculators\DistanceController@travelDisplay');
+Route::get('/calculators/distance','Calculators\DistanceController@travelDisplay');

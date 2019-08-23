@@ -32,10 +32,7 @@
                             <a href="{{ route('home') }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a href="{{ route('finders') }}" class="nav-link">Finders</a>
-                        </li>
-                        <li class="nav-item px-2">
-                            <a href="{{ route('calculators') }}" class="nav-link">Calculators</a>
+                            <a href="{{ route('finder') }}" class="nav-link">Finders</a>
                         </li>
                         <li class="nav-item px-2">
                             <a href="{{ route('account') }}" class="nav-link">Account</a>
