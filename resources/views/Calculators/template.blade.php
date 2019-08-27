@@ -3,7 +3,7 @@
 @section('content')
     <header id="main-header" class="py-1 bg-primary text-white">
         <div class="container">
-            <p class="h3 font-weight-bold d-inline-block">Calculators</p>
+            <p class="h3 font-weight-bold d-inline-block">Cropper Development</p>
             
         </div>
     </header>

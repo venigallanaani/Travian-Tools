@@ -52,7 +52,7 @@
                 </div>
             @endif
         @endforeach
-                
+        
         @yield('body')
         
         </div>

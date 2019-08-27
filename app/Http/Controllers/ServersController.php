@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Servers;
 use App\Plus;
-use App\Subscription;
 
 class ServersController extends Controller
 {
@@ -39,29 +38,23 @@ class ServersController extends Controller
         $request->session()->put('server.url',$server->url);
         $request->session()->put('server.tmz',$server->timezone);
         
-        if(Auth::check()){
-            $plus=Plus::where('server_id',$server_id)
-                    ->where('id',Auth::user()->id)->first();
+        date_default_timezone_set($server->timezone);    
+        
+//         if(Auth::check()){
+//             $plus=Plus::where('server_id',$server_id)
+//                     ->where('id',Auth::user()->id)->first();
             
-            if($plus!=null){       
-                $request->session()->put('plus',$plus);  
-                
-//                 $sub = Subscription::where('id',$plus->plus_id)
-//                                 ->where('server_id',$server->server_id)->first();
-                
-//                 if($sub->timezone!=null){
-//                     $request->session()->put('server.tmz',$sub->timezone);
+//             if($plus!=null){       
+//                 $request->session()->put('plus',$plus);           
+//             }else{
+//                 //echo 'No Plus Found';
+//                 if($request->session()->has('plus')){
+//                     $request->session()->forget('plus');
 //                 }
-                
-            }else{
-                //echo 'No Plus Found';
-                if($request->session()->has('plus')){
-                    $request->session()->forget('plus');
-                }
-            }        
-        }        
+//             }        
+//         }        
         Session::flash('success',$server->url.' is loaded');
-        return Redirect::to('/home') ;        
+        return Redirect::to('/finders') ;        
     }
     
     

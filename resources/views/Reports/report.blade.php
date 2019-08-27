@@ -95,6 +95,7 @@
 					</tr>
 					<tr>
 						<td class="font-weight-bold">Troops</td>
+						
 						<td class="" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></span> 
 								@if(is_numeric($report['STATS']['OFFENSE']['UPKEEP'])){{number_format($report['STATS']['OFFENSE']['UPKEEP'])}} 
@@ -106,6 +107,7 @@
 							@if(is_numeric($report['STATS']['OFFENSE']['REST'])){{number_format($report['STATS']['OFFENSE']['REST'])}} 
 							@else {{$report['STATS']['OFFENSE']['REST']}} @endif
 						</td>
+						
 						<td class="" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></span> 
 								@if(is_numeric($report['STATS']['DEFENSE']['UPKEEP'])){{number_format($report['STATS']['DEFENSE']['UPKEEP'])}} 
@@ -120,11 +122,13 @@
 					</tr>
 					<tr>
 						<td class="py-0 font-weight-bold">Offense</td>
+						
 						<td class="py-0" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Total Offense"><img alt="" src="/images/x.gif" class="stats off"></span> 
 								@if(is_numeric($report['STATS']['OFFENSE']['OFFENSE'])){{number_format($report['STATS']['OFFENSE']['OFFENSE'])}} 
 								@else {{$report['STATS']['OFFENSE']['OFFENSE']}} @endif
 						</td>
+						
 						<td class="py-0" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Total Offense"><img alt="" src="/images/x.gif" class="stats off"></span> 
 								@if(is_numeric($report['STATS']['DEFENSE']['OFFENSE'])){{number_format($report['STATS']['DEFENSE']['OFFENSE'])}} 
@@ -133,11 +137,13 @@
 					</tr>
 					<tr>
 						<td class="align-middle py-0 font-weight-bold" rowspan="2">Defense</td>
+						
 						<td class="py-0" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Total Defense"><img alt="" src="/images/x.gif" class="stats def"></span> 
 							@if(is_numeric($report['STATS']['OFFENSE']['DEFENSE'])){{number_format($report['STATS']['OFFENSE']['DEFENSE'])}} 
 							@else {{$report['STATS']['OFFENSE']['DEFENSE']}} @endif
 						</td>
+						
 						<td class="py-0" colspan="2">
 							<span data-toggle="tooltip" data-placement="top" title="Total Defense"><img alt="" src="/images/x.gif" class="stats def"></span> 
 							@if(is_numeric($report['STATS']['DEFENSE']['DEFENSE'])){{number_format($report['STATS']['DEFENSE']['DEFENSE'])}} 

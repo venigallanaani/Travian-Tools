@@ -31,31 +31,15 @@ class CropperController extends Controller
             $plus=1;
         }
         
-        $oasis1  = Input::get('oasis1') ;
-        $oasis2  = Input::get('oasis2') ;
-        $oasis3 = Input::get('oasis3') ;
-                
-        return Redirect::to('/calculators/cropper/'.$crop.'/'.$cap.'/'.$oasis1.'/'.$oasis2.'/'.$oasis3.'/'.$plus) ;
+        $o1  = Input::get('oasis1') ;
+        $o2  = Input::get('oasis2') ;
+        $o3 = Input::get('oasis3') ;
         
-    }
-    
-    
-    public function calculate($crop,$cap,$o1,$o2,$o3,$plus, Request $request){
-        
-        $costs['mill']=array(0,2560,4605,8295,14925,26875);
-        $costs['bake']=array(0,5150,9270,16690,30035,54060);
-        $costs['hm']=array(0,114240,383315,1595070);
-        $costs['fields'] = array(0,250,415,695,1165,1945,3250,5425,9055,15125,25255,42180,70445,117650,196445,328070,547880,914960,1527985,2551735,4261410,7116555);
-        
-        if($plus == 0){ $plus = 1;
-        }else{  $plus=1.25; }
-   // Calculate max field level     
-        if($cap == 0){  $cap = 10;
-        }else{  $cap = 21;  }
-        
-    // Calculate the oasis priority
-        $total = $o1+$o2+$o3;        
-        if($total==125){
+        // Calculate the oasis priority
+        $total = $o1+$o2+$o3;
+        if($total==150){
+            $o1=50;  $o2=50;  $o3=50;
+        }else if($total==125){
             $o1=50; $o2=50; $o3=25;
         }else if($total==100){
             if($o1==25 || $o2==25 || $o3==25){
@@ -79,7 +63,33 @@ class CropperController extends Controller
             $o1=25; $o2=0; $o3=0;
         }else{
             $o1=0;  $o2=0;  $o3=0;
-        }        
+        }  
+                
+        return Redirect::to('/cropper/'.$crop.'/'.$cap.'/'.$o1.'/'.$o2.'/'.$o3.'/'.$plus) ;
+        
+    }
+    
+    
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+// Function calculates the steps for the cropper development
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+    
+    public function calculate($crop,$cap,$o1,$o2,$o3,$plus, Request $request){
+        
+        $costs['mill']=array(0,2560,4605,8295,14925,26875);
+        $costs['bake']=array(0,5150,9270,16690,30035,54060);
+        $costs['hm']=array(0,114240,383315,1595070);
+        $costs['fields'] = array(0,250,415,695,1165,1945,3250,5425,9055,15125,25255,42180,70445,117650,196445,328070,547880,914960,1527985,2551735,4261410,7116555);
+        
+        if($plus == 0){ $plus = 1;
+        }else{  $plus=1.25; }
+   // Calculate max field level     
+        if($cap == 0){  $cap = 10;
+        }else{  $cap = 21;  }
+        
+    // 
         $oasis=array($o1,$o2,$o3);
         
     // Calculate Max HM level 

@@ -20,7 +20,7 @@
                                 <button class="btn btn-outline-warning px-5" type="submit"><strong>Search Alliance</strong></button>
                             </div>
                         </td>
-                        <td class="mx-2 font-italic align-center">
+                        <td class="col-md-7 mx-2 font-italic">
                             <p class="p-2"><small>The Travian maps file is not updated in real time, so expect difference in the statistics of what is displayed on the website vs what is displayed in real time in the game.</small></p>
                         </td>
                     </tr>

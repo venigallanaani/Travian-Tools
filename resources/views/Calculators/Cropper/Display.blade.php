@@ -5,7 +5,7 @@
 <!-- =================================== Cropper input screen================================== -->
     <div class="card float-md-left my-1 p-0 col-md-12 shadow">
         <div class="card-header h4 py-2 bg-primary text-white col-md-12">
-            <strong>Cropper Development</strong>
+            <strong>Cropper</strong>
         </div>
         <div class="card-text mx-auto text-center my-2">
             <form action="{{ route('cropper') }}" method="POST">

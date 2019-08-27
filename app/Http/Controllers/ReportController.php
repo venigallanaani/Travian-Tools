@@ -31,7 +31,7 @@ class ReportController extends Controller
                 return view('Reports.template'); 
                 
             }else{            
-                dd($parseData);
+                //dd($parseData);
                 
                 $id = str_random(10);
                 $date=Carbon::today()->addDays(100)->format('Y-m-d');
@@ -74,7 +74,7 @@ class ReportController extends Controller
                 if(Input::get('attacker')=='yes'){
             //Attacker Information
                     $stats['ATTACKER']['UNITS']='????';  $stats['ATTACKER']['LOSES']='????';  $stats['ATTACKER']['SURVIVORS']='????';
-                    $stats['ATTACKER']['PERCENT']='????';    $stats['ATTACKER']['HERO']='??';
+                    $stats['ATTACKER']['PERCENT']='??';    $stats['ATTACKER']['HERO']='??';
                     
                     $stats['ATTACKER']['OFFENSE']='????';    $stats['ATTACKER']['INF']='????';    $stats['ATTACKER']['CAV']='????';
                     $stats['ATTACKER']['DEFENSE']='????';

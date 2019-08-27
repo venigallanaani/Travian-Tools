@@ -13,7 +13,7 @@
                     <th onclick="sortTable(0)" class="">Distance</th>
                     <th onclick="sortTable(1)" class="">Village</th>                    
                     <th onclick="sortTable(2)" class="">Player</th>
-                    <th class="col-md-1">Tribe</th>
+                    <th class="">Tribe</th>
                     <th onclick="sortTable(3)" class="">Alliance</th>   
                     <th onclick="sortTable(4)" class="">Pop<small>(+/- 7 days)</small></th>
                     <th onclick="sortTable(5)" class="">Status</th>
