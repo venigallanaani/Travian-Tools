@@ -9,18 +9,19 @@
         <div class="card-text mx-auto text-center">
             <form action="/finders/natar" method="POST">
             	{{ csrf_field() }}
-                <table class="table table-borderless my-2">
+            	
+                <table class="table table-borderless mt-2">
                     <tr>
                         <td class="">
                             <div class="p-2">
-                                <strong>Coordinates: </strong><input type="text" size="5" name="xCor" required value="{{isset($xCor) ? $xCor : 0}}"/> | <input type="text" size="5" name="yCor" required value="{{isset($yCor) ? $yCor : 0}}"/>
+                                <strong>Coordinates: </strong><input type="text" size="3" name="xCor" required value="{{isset($xCor) ? $xCor : 0}}"/> | <input type="text" size="3" name="yCor" required value="{{isset($yCor) ? $yCor : 0}}"/>
                             </div>
-                            <div><strong>Distance: </strong><input type="number" size="5" name="dist" required value="{{isset($dist) ? $dist : 50}}"/></div>
+                            <div><strong>Distance: </strong><input type="text" size="5" name="dist" required value="{{isset($dist) ? $dist : 50}}"/></div>
                             <div  class="p-2">
-                                <button class="btn btn-outline-warning px-5" type="submit"><strong>Search Natars</strong></button>
+                                <button class="btn btn-outline-warning px-5" type="submit"><div class="mx-3"><strong>Search Natars</strong></div></button>
                             </div>
                         </td>
-                        <td class="col-md-7 col-7 col-lg-7 mx-2">
+                        <td class="mx-2 font-italic align-middle">
                             <p><small>The Travian maps file is not updated in real time, so expect difference in the statistics of what is displayed on the website vs what is displayed in real time in the game.</small></p>
                         </td>
                     </tr>

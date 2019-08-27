@@ -54,7 +54,7 @@ class ServersController extends Controller
 //             }        
 //         }        
         Session::flash('success',$server->url.' is loaded');
-        return Redirect::to('/home') ;        
+        return Redirect::to('/finders') ;        
     }
     
     

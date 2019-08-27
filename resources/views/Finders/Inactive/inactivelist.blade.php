@@ -10,13 +10,13 @@
         <div class="card-text mx-auto text-center col-md-12">
             <table id="sortableTable" class="table table-border-success table-hover table-sm small">
                 <tr class="h6">
-                    <th onclick="sortTable(0)" class="col-md-1">Distance</th>
-                    <th onclick="sortTable(1)" class="col-md-2">Village</th>                    
-                    <th onclick="sortTable(2)" class="col-md-2">Player</th>
-                    <th class="col-md-1">Tribe</th>
-                    <th onclick="sortTable(3)" class="col-md-2">Alliance</th>   
-                    <th onclick="sortTable(4)" class="col-md-2">Pop<small>(+/- 7 days)</small></th>
-                    <th onclick="sortTable(5)" class="col-md-2">Status</th>
+                    <th onclick="sortTable(0)" class="">Distance</th>
+                    <th onclick="sortTable(1)" class="">Village</th>                    
+                    <th onclick="sortTable(2)" class="">Player</th>
+                    <th class="">Tribe</th>
+                    <th onclick="sortTable(3)" class="">Alliance</th>   
+                    <th onclick="sortTable(4)" class="">Pop<small>(+/- 7 days)</small></th>
+                    <th onclick="sortTable(5)" class="">Status</th>
                 </tr>
                 @foreach($villages as $village)
             		@php 

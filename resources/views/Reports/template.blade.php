@@ -39,7 +39,7 @@
 				</table>
     			<div class="py-2 align-middle">
     				<button class="btn btn-primary px-5" type="submit">Convert</button> 
-    				<span class="align-right small"> *The report will be deleted if not used for 100 days.</span>
+    				<span class="align-right small"> *The report will be deleted if the link is not used for 100 days.</span>
     			</div>
 			</form>
 		</div>	
