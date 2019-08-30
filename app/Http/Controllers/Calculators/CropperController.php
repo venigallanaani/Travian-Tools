@@ -81,6 +81,145 @@ class CropperController extends Controller
         $costs['mill']=array(0,2560,4605,8295,14925,26875);
         $costs['bake']=array(0,5150,9270,16690,30035,54060);
         $costs['hm']=array(0,114240,383315,1595070);
+        $costs['fields'] = array(0,250,415,695,1165,1945,3250,5425,9055,15125,25255,42180,70445,117650,196445,328070,547880,914960,1527985,2551735,4261410,7116555);        
+        
+        // plus multiplier value
+        if($plus == 0){ $plus = 1;
+        }else{  $plus=1.25; }
+        
+        //Max field level
+        if($cap == 0){  $cap = 10;
+        }else{  $cap = 21;  }
+        
+        //Max HM level
+        if($o1==0 && $o2==0 && $o3==0){     $maxHM=0;
+        }else if($o2==0 && $o3==0){     $maxHM=1;
+        }else if($o3==0){       $maxHM=2;
+        }else{      $maxHM=3;        }
+        
+        //Oasis decleration
+        $oasis=array($o1,$o2,$o3);
+        
+        // fields array values
+        if($crop==15){
+            $fields=array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+        }else if($crop == 9){
+            $fields=array(0,0,0,0,0,0,0,0,0);
+        }else if($crop == 7){
+            $fields=array(0,0,0,0,0,0,0);
+        }else{
+            $fields=array(0,0,0,0,0,0);
+        }  
+        
+        
+        //Initial values decleration
+        $fm=0; $bk=0; $hm=0; $index=0;
+        $infra=array(0,0,0);
+        $steps=array();
+        
+        while($fields[count($fields)-1]<$cap){
+            //$infra = array($fm,$bk,$hm);
+            if($index > 0){
+                $infra=$steps[$index-1]['INFRA'];
+                $fields=explode(",",$steps[$index-1]['FIELDS']);
+                //$fields=explode(",",$steps[$index-1]);
+                
+                $fm = $infra[0];    $bk= $infra[1];     $hm=$infra[2];
+            }
+            
+            $cProd = calcTotalProd($fields,$infra,$oasis);
+        
+        // Different construction time variables
+            $fLvl=0;
+            $fTime=0;   // field time
+            $hTime=0;   // Hero Mansion time
+            $iTime=0;   // Mill & Bakery time
+            
+        // Calculate the optimal fields level
+            $nfields = $fields; // new fields            
+            $incFields=array(); // fields construction time array
+            
+            for($i=0;$i<count($nfields);$i++){
+                $tfields=$nfields;
+                $tfields[$i]++; 
+                $nfProd = calcTotalProd($tfields,$infra,$oasis);
+                
+                $t1 = $costs['fields'][$nfields[$i]]/($nfProd-$cProd);
+                
+                $incFields[$i]=$t1;
+
+            }
+            
+            $fTime = min($incFields);
+            $fLvl=array_keys($incFields,$fTime);            
+            $nfields[$fLvl[0]]++;                       
+            
+        // Calculate Flour mill and Bakery values
+//             $nInfra=$infra;
+//             if($fm<5){      //mill calculations
+                
+//                 $nInfra[0]++;
+//                 $niProd = calcTotalProd($fields,$nInfra,$oasis);
+//                 $iTime = $costs['mill'][$nInfra[1]]/($niProd-$cProd);
+                
+//             }else{
+//                 if($bk<5){  //bakery calculations
+                    
+//                     $nInfra[1]++;
+//                     $niProd = calcTotalProd($fields,$nInfra,$oasis);
+//                     $iTime = $costs['bake'][$nInfra[1]]/($niProd-$cProd);
+//                     //echo $niProd."-".$cProd."    ";
+                    
+//                 }            
+                
+//             }
+            
+
+            
+            
+//           if($iTime>$fTime){
+                // field upgrade
+                $fields=$nfields;
+                $desc = 'Upgrade field to level '.$nfields[$fLvl[0]];
+                
+//             }else{
+//                 // infra upgrade
+//                 $infra=$nInfra;
+                
+//             }      
+            
+            
+            
+            
+            
+            $steps[$index]= array(
+//                 'FONT'=>$font,
+//                 'TEST'=>join(',',$nfields),
+                 'INFRA'=>$infra,
+//                 'OASIS'=>$oasisUp,
+                 'FIELDS'=>join(",",$fields),
+                 'DESC'=>$desc
+//                 'PROD'=>$cProd
+//                 'PROD'=>ceil(calcTotalProd($fields,$infra,$oasisUp)*$plus)
+             );
+            $index++;
+            
+        }
+        
+        dd($steps);        
+        //return view('Calculators.Cropper.Results')->with(['steps'=>$steps]);
+        
+        
+        
+        
+    }
+    
+/// ------------------------------------------------------------------------------------------
+    public function calculate_temp($crop,$cap,$o1,$o2,$o3,$plus, Request $request){
+        
+        $costs['mill']=array(0,2560,4605,8295,14925,26875);
+        $costs['bake']=array(0,5150,9270,16690,30035,54060);
+        $costs['hm']=array(0,114240,383315,1595070);
         $costs['fields'] = array(0,250,415,695,1165,1945,3250,5425,9055,15125,25255,42180,70445,117650,196445,328070,547880,914960,1527985,2551735,4261410,7116555);
         
         if($plus == 0){ $plus = 1;
