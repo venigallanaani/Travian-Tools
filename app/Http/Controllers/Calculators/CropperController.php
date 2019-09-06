@@ -111,13 +111,14 @@ class CropperController extends Controller
             $fields=array(0,0,0,0,0,0);
         }  
         
+        $switch = 1;
         
         //Initial values decleration
         $fm=0; $bk=0; $hm=0; $index=0;
         $infra=array(0,0,0);
         $steps=array();
         
-        while($fields[count($fields)-1]<$cap){
+        while($switch!=0){
             //$infra = array($fm,$bk,$hm);
             if($index > 0){
                 $infra=$steps[$index-1]['INFRA'];
@@ -134,62 +135,77 @@ class CropperController extends Controller
             $fTime=0;   // field time
             $hTime=0;   // Hero Mansion time
             $iTime=0;   // Mill & Bakery time
-            
+            $nfields = $fields; // new fields
         // Calculate the optimal fields level
-            $nfields = $fields; // new fields            
-            $incFields=array(); // fields construction time array
-            
-            for($i=0;$i<count($nfields);$i++){
-                $tfields=$nfields;
-                $tfields[$i]++; 
-                $nfProd = calcTotalProd($tfields,$infra,$oasis);
+            if($fields[count($fields)-1]<$cap){
+               
+                $incFields=array(); // fields construction time array
                 
-                $t1 = $costs['fields'][$nfields[$i]]/($nfProd-$cProd);
+                for($i=0;$i<count($nfields);$i++){
+                    $tfields=$nfields;
+                    $tfields[$i]++;
+                    $nfProd = calcTotalProd($tfields,$infra,$oasis);
+                    
+                    $tF = $costs['fields'][$nfields[$i]]/($nfProd-$cProd);
+                    
+                    $incFields[$i]=$tF;
+                    
+                }
                 
-                $incFields[$i]=$t1;
-
+                $fTime = min($incFields);
+                $fLvl=array_keys($incFields,$fTime);
+                $nfields[$fLvl[0]]++;    
+            }else{               
+                $fTime=9999;
             }
-            
-            $fTime = min($incFields);
-            $fLvl=array_keys($incFields,$fTime);            
-            $nfields[$fLvl[0]]++;                       
+                   
             
         // Calculate Flour mill and Bakery values
-//             $nInfra=$infra;
-//             if($fm<5){      //mill calculations
+            $nInfra=$infra;
+            $iTime=9999;
+            
+            if(max($fields)>=5 && $fm<5){
+                $nInfra[0]++;
+                $niProd = calcTotalProd($fields,$nInfra,$oasis);
+                $iTime = $costs['mill'][$nInfra[0]]/($niProd-$cProd);
+            }
+
+            if($fm==5 && max($fields)>=10 && $bk<5){  //bakery calculations
                 
-//                 $nInfra[0]++;
-//                 $niProd = calcTotalProd($fields,$nInfra,$oasis);
-//                 $iTime = $costs['mill'][$nInfra[1]]/($niProd-$cProd);
+                $nInfra[1]++;
+                $niProd = calcTotalProd($fields,$nInfra,$oasis);
+                $iTime = $costs['bake'][$nInfra[1]]/($niProd-$cProd);
+                //echo $niProd."-".$cProd."    ";
                 
-//             }else{
-//                 if($bk<5){  //bakery calculations
-                    
-//                     $nInfra[1]++;
-//                     $niProd = calcTotalProd($fields,$nInfra,$oasis);
-//                     $iTime = $costs['bake'][$nInfra[1]]/($niProd-$cProd);
-//                     //echo $niProd."-".$cProd."    ";
-                    
-//                 }            
+            }            
                 
-//             }
             
 
             
             
-//           if($iTime>$fTime){
+           if($iTime>$fTime){
                 // field upgrade
                 $fields=$nfields;
                 $desc = 'Upgrade field to level '.$nfields[$fLvl[0]];
                 
-//             }else{
-//                 // infra upgrade
-//                 $infra=$nInfra;
+            }else{
+                // infra upgrade
+                $infra=$nInfra;
+                $desc = 'Infrastructure Update';
+                //$switch = 0;
                 
-//             }      
+            }      
             
-            
-            
+            if($fields[count($fields)-1]<$cap){
+                $switch = 1;
+            }else{
+                if($infra[0]<5 || $infra[1]<5){
+                    $switch=1;
+                }else{
+                    $switch=0;
+                }
+            }
+//             
             
             
             $steps[$index]= array(
@@ -198,8 +214,8 @@ class CropperController extends Controller
                  'INFRA'=>$infra,
 //                 'OASIS'=>$oasisUp,
                  'FIELDS'=>join(",",$fields),
-                 'DESC'=>$desc
-//                 'PROD'=>$cProd
+                 'DESC'=>$desc,
+                 'PROD'=>$cProd
 //                 'PROD'=>ceil(calcTotalProd($fields,$infra,$oasisUp)*$plus)
              );
             $index++;
