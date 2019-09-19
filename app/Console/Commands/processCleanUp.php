@@ -61,6 +61,7 @@ class processCleanUp extends Command
                     
                 //Delete maps data
                     MapData::where('table_id','=',$maps[$i]->map_id)->delete();
+                    
                 //Delete files
                     unlink(env("DOWNLOAD_LOCATION","app/Downloads/").$maps[$i]->map_id);
                     
