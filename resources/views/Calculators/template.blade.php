@@ -1,10 +1,9 @@
-@extends('Layouts.general')
+@extends('Layouts.general_var1')
 
 @section('content')
     <header id="main-header" class="py-1 bg-primary text-white">
         <div class="container">
-            <p class="h3 font-weight-bold d-inline-block">Cropper Development</p>
-            
+            <p class="h3 font-weight-bold d-inline-block">Cropper Development</p>            
         </div>
     </header>
     
@@ -26,6 +25,5 @@
         @yield('body')
         
         </div>
-    </div>
-	@stack('scripts')
+    </div>	
 @endsection

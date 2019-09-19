@@ -36,20 +36,17 @@ Route::post('/finders/natar','Finders\NatarFinderController@processNatar');		// 
 Route::get('/finders/neighbour','Finders\NeighbourFinderController@neighbour');		// Displays the different type of finders
 Route::post('/finders/neighbour','Finders\NeighbourFinderController@processNeighbour');		// Displays the result of the neighbour finders
 
-
-/* ------------------------------- Cropper page controller --------------------------------- */
-// Route::get('/calculators','Calculators\CalculatorController@overview')->name('calculators');
-
-// Route::get('/calculators/cropper','Calculators\CropperController@display')->name('cropper');
-// Route::post('/calculators/cropper','Calculators\CropperController@process');
-// Route::get('/calculators/cropper/{crop}/{cap}/{o1}/{o2}/{o3}/{plus}','Calculators\CropperController@calculate');
+/* ----------------------------------------------------------------------------------------- */
+/* ------------------------------- Calculators page controller --------------------------------- */
+/* ----------------------------------------------------------------------------------------- */
 
 
 /* ------------------------------- Cropper page controller --------------------------------- */
 
-Route::get('/cropper','Calculators\CropperController@display')->name('cropper');
-Route::post('/cropper','Calculators\CropperController@process');
-Route::get('/cropper/{crop}/{cap}/{o1}/{o2}/{o3}/{plus}','Calculators\CropperController@calculate');
+Route::get('/cropper','Calculators\CalculatorController@cropper')->name('cropper');
+//Route::get('/cropper','Calculators\CropperController@display')->name('cropper');
+// Route::post('/cropper','Calculators\CropperController@process');
+// Route::get('/cropper/{crop}/{cap}/{o1}/{o2}/{o3}/{plus}','Calculators\CropperController@calculate');
 
 
 /* ---------------- Servers page controllers ------------------- */
