@@ -10,8 +10,8 @@
         <div class="card-text mx-auto text-center my-3">
 			<table>
 				<tr>
-					<td colspan="3">
-						<div class="py-0">
+					<td colspan="3" class="text-left">
+						<div class="px-2 py-1">
 							<form name="o0">
     							<strong>Cropper:</strong> 
     								<select name="no0" onChange="seto0(document.o0.no0.options[document.o0.no0.options.selectedIndex].value)">
@@ -19,44 +19,6 @@
     									<option value=9>9 Crop</option>
     									<option value=7>7 Crop</option>
     									<option value=6>6 Crop</option>
-    								</select>
-							</form>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="py-2">
-							<form name="o1">
-    							<strong>Oasis 1:</strong> 
-    								<select name="no1" onChange="seto1(document.o1.no1.options[document.o1.no1.options.selectedIndex].value)">
-    									<option value=0>0%</option>
-    									<option value=0.25>25%</option>
-    									<option value=0.50>50%</option>									
-    								</select>
-							</form>
-						</div>
-					</td>
-					<td>
-						<div class="py-2">
-							<form name="o2">
-    							<strong>Oasis 2:</strong> 
-    								<select name="no2" onChange="seto2(document.o2.no2.options[document.o2.no2.options.selectedIndex].value)">
-    									<option value=0>0%</option>
-    									<option value=0.25>25%</option>
-    									<option value=0.50>50%</option>									
-    								</select>
-							</form>
-						</div>
-					</td>
-					<td>
-						<div class="py-2">
-							<form name="o3">
-    							<strong>Oasis 3:</strong> 
-    								<select name="no3" onChange="seto3(document.o3.no3.options[document.o3.no3.options.selectedIndex].value)">
-    									<option value=0>0%</option>
-    									<option value=0.25>25%</option>
-    									<option value=0.50>50%</option>									
     								</select>
 							</form>
 						</div>
@@ -87,18 +49,58 @@
 					</td>					
 				</tr>
 				<tr>
+					<td>
+						<div class="px-2 py-1">
+							<form name="o1">
+    							<strong>Oasis 1:</strong> 
+    								<select name="no1" onChange="seto1(document.o1.no1.options[document.o1.no1.options.selectedIndex].value)">
+    									<option value=0>0%</option>
+    									<option value=0.25>25%</option>
+    									<option value=0.50>50%</option>									
+    								</select>
+							</form>
+						</div>
+					</td>
+					<td>
+						<div class="px-2 py-1">
+							<form name="o2">
+    							<strong>Oasis 2:</strong> 
+    								<select name="no2" onChange="seto2(document.o2.no2.options[document.o2.no2.options.selectedIndex].value)">
+    									<option value=0>0%</option>
+    									<option value=0.25>25%</option>
+    									<option value=0.50>50%</option>									
+    								</select>
+							</form>
+						</div>
+					</td>
+					<td>
+						<div class="px-2 py-1">
+							<form name="o3">
+    							<strong>Oasis 3:</strong> 
+    								<select name="no3" onChange="seto3(document.o3.no3.options[document.o3.no3.options.selectedIndex].value)">
+    									<option value=0>0%</option>
+    									<option value=0.25>25%</option>
+    									<option value=0.50>50%</option>									
+    								</select>
+							</form>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="text-danger font-italic px-2 py-1">Please select the highest Oasis first</td>
+				</tr>
+				<tr>
 					<td colspan="3">
 						<button class="btn btn-outline-primary px-5" type="button" onclick="getOrder()"><strong>Calculate</strong></button>
 					</td>
 				</tr>
 			</table>
         </div>
-        <div>
+        
         	<p class="text-right px-5"><small>Page credited to Bryan H </small></p>
-        </div>
+        
     </div>
     
-
     	<span id="steps"></span>
 
     
@@ -441,28 +443,28 @@
             		if (cap==1 && field.lowest()==10)
             			return;
             		output = output + field.uplowest();
-            		return "Upgrade a crop field to level " + output + ". </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
+            		return "Upgrade a crop field to level " + output + ". </td>";
             	}
             	if (lowest == 1)
             	{
             		if (cap==1 && field.lowest()==10)
             			return;
             		field.uphighest();
-            		return '<b>Upgrade a crop field to level ' + field.fields[0] + "</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
+            		return '<b>Upgrade a crop field to level ' + field.fields[0] + "</span></b>. </td>";
             	}
             	if (lowest == 2)
             	{
             		mill++;
-            		return '<b><span class="text-warning">Upgrade the flour mill to level ' + mill + "</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
+            		return '<b><span class="text-warning">Upgrade the Flour Mill to level ' + mill + "</span></b>. </td>";
             	}
             	if (lowest == 3)
             	{
             		bake++;
-            		return '<b><span class="text-info">Upgrade the bakery to level ' + bake + "</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
+            		return '<b><span class="text-info">Upgrade the Bakery to level ' + bake + "</span></b>. </td>";
             	}
             	if (lowest == 4)
             	{
-            		return "<b><span class='text-danger'>Upgrade the hero's mansion to level " + hm + " and capture your oasis</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
+            		return "<b><span class='text-danger'>Upgrade the Hero Mansion to level " + hm + " and capture your oasis</span></b>. </td>";
             	}
             }
             
@@ -475,7 +477,7 @@
             	var output='<div class="card float-md-left my-1 p-0 col-md-12 shadow"><div class="card-header h4 py-2 bg-primary text-white"><strong>Cropper Development Sequence</strong></div>';
             	output=output+'<div class="card-text mx-auto text-center"><table class="table table-hover table-sm small"><tr class="h6 text-primary">';
             	output=output+'<th>#</th><th>[<img alt="" src="/images/x.gif" class="build fm">,<img alt="" src="/images/x.gif" class="build bkry">,<img alt="" src="/images/x.gif" class="build hm">]</th>';
-            	output=output+'<th>[Fields]</th><th>Production</th><th>Action</th><th>Days for ROI</th><tr>';
+            	output=output+'<th>Fields</th><th>Production</th><th>Action</th><tr>';
             	var i=0;
             	if (cap == 0)
             	{

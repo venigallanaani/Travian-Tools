@@ -11,7 +11,7 @@ Route::get('reports/{string}','ReportController@showReports');
 Route::get('/about','AboutController@index')->name('about');			//Displays the contact page
 Route::get('/releases','ReleaseController@index')->name('release');     //Displays the releases page
 
-Route::get('/support','SupportController@index');				// Displays the Report Page
+Route::get('/support','SupportController@index')->name('support');				// Displays the Report Page
 Route::post('/support','SupportController@process');			// Creates the Defect / bug in the Database
 
 /* ----------------------------------------------------------------------------------------- */

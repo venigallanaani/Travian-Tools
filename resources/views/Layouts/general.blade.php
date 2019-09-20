@@ -46,8 +46,8 @@
             <div class="container py-2">
                 <table class="col-md-12 col-12">
                     <tr class="font-weight-bold">
-                        <td><a href="/about" class="text-white">About</a></td>
-                        <td><a href="/support" class="text-white">Support</a></td>                        
+                        <td><a href="{{ route('about') }}" class="text-white">About</a></td>
+                        <td><a href="{{ route('support') }}" class="text-white">Support</a></td>                        
                         <td class="text-white text-right"><small>All rights to images belongs to Travian Games Gmbh.</small></td>
                     </tr>
                 </table>
@@ -59,7 +59,7 @@
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>        
-    </body>
-    @stack('scripts')
+        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>    
+        @stack('scripts')    
+    </body>    
 </html>

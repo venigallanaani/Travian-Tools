@@ -1,4 +1,4 @@
-@extends('Layouts.general_var1')
+@extends('Layouts.general')
 
 @section('content')
     <header id="main-header" class="py-1 bg-primary text-white">
@@ -8,9 +8,6 @@
     </header>
     
     <div class="container">
-        <div class="d-inline">
-            <!-- ======================================= Finders Side menu =================================== -->                   
-        </div>
         <div class="float-md-left col-md-12 mt-1 p-0">
 		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
