@@ -42,12 +42,12 @@ class LoadMaps extends Command
             
             if($server->table_id==$tableId){
                 echo 'Maps already loaded for today, going to refresh'."\n";
+                
                 Map::where('map_id',$tableId)
                     ->update(['status'=>'ACTIVE']);   
                 Servers::where('server_id',$server->server_id)
                     ->update(['table_id'=>$tableId]);
                 MapData::where('table_id',$tableId)->delete();
-
                 
                 echo 'Completed removing entries with table id '.$tableId."\n";
             }else{
@@ -79,7 +79,7 @@ class LoadMaps extends Command
                 } 
             }
             fclose($fileData);
-            
+                       
             echo "Load servers job completed at ".Carbon::now()."\n";            
         }
         echo "\n".'*************************************************************************************************'."\n";

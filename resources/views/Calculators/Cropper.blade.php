@@ -111,7 +111,7 @@
 @push('scripts')
 
         <script>
-            var o0=6, mill=0, bake=0, hm=0, o1=0, o2=0, o3=0, o1p=0, o2p=0, o3p=0, cap=0, gold=1.25;
+            var o0=15, mill=0, bake=0, hm=0, o1=0, o2=0, o3=0, o1p=0, o2p=0, o3p=0, cap=0, gold=1.25;
             costs=new Object();
             costs.m = new Array(0,2560,4605,8295,14925,26875);
             costs.b = new Array(0,5150,9270,16690,30035,54060);
@@ -474,7 +474,7 @@
             	z=document.getElementById("steps");  // nothing
             	z.innerHTML="Calculating...";   
             	var j=1;
-            	var output='<div class="card float-md-left my-1 p-0 col-md-12 shadow"><div class="card-header h4 py-2 bg-primary text-white"><strong>Cropper Development Sequence</strong></div>';
+            	var output='<div class="card float-md-left mb-5 p-0 col-md-12 shadow"><div class="card-header h4 py-2 bg-primary text-white"><strong>Cropper Development Sequence</strong></div>';
             	output=output+'<div class="card-text mx-auto text-center"><table class="table table-hover table-sm small"><tr class="h6 text-primary">';
             	output=output+'<th>#</th><th>[<img alt="" src="/images/x.gif" class="build fm">,<img alt="" src="/images/x.gif" class="build bkry">,<img alt="" src="/images/x.gif" class="build hm">]</th>';
             	output=output+'<th>Fields</th><th>Production</th><th>Action</th><tr>';
@@ -499,7 +499,7 @@
             	}
             	}
             	
-            	output=output+"<tr><td>"+j+"</td><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td>"+Math.round(totalprod()*gold)+'</td><td class="text-success">Done</td></table></div>';
+            	output=output+"<tr><td>"+j+"</td><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td>"+Math.round(totalprod()*gold)+'</td><td class="text-success">Done. Congrats!!</td></table></div>';
             	x=document.getElementById("steps");  // Find the element
             	x.innerHTML=output;   // Change the content
             

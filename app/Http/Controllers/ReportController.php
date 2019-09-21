@@ -319,7 +319,7 @@ class ReportController extends Controller
             if(Input::has('link') && Input::has('previous') && Input::get('previous')=='yes'){
                 $link = Input::get('link').",".$id;
             }else{
-                $link='/reports/'.$id;
+                $link=env('SITE_URL','https://www.travian-tools.com').'/reports/'.$id;
             }
                 
             return Redirect::to($link);
@@ -447,7 +447,7 @@ class ReportController extends Controller
             $i++;
         }
         //dd($data);
-        $link = env('APP_URL').'/reports/'.$string;
+        $link = env('SITE_URL','https://www.travian-tools.com').'/reports/'.$string;
         
         return view('Reports.report')->with(['reports'=>$data])->with(['tribes'=>$tribes])->with(['link'=>$link]);
     }
