@@ -103,20 +103,25 @@ if(!function_exists('ParseReports')){
                     $result['DEFENDER']['SUBJECT']=trim($incStrs[$z]);
                     $result['DEFENDER']['TRIBE']= FindTribe($incStrs[$z+1]);
                     
-                    $unitList = explode("\t", trim($incStrs[$z+2]));
+                    $unitList = explode("\t", trim($incStrs[$z+2]));                    
                     $result['DEFENDER']['UNITS']=$unitList;
                     
-                    $losesList = explode("\t", trim($incStrs[$z+3]));
+                    $losesList = explode("\t", trim($incStrs[$z+3]));                    
                     $result['DEFENDER']['LOSES']=$losesList;
-                    
+                                        
                     for($y=0;$y<count($result['DEFENDER']['UNITS']);$y++){
                         if($result['DEFENDER']['UNITS'][$y]=='?'){
                             $result['DEFENDER']['LOSES'][$y]='?';
                             $result['DEFENDER']['SURVIVORS'][$y]='?';
-                        }else{
+                        }if ($result['DEFENDER']['UNITS'][$y]==0) {
+                            $result['DEFENDER']['LOSES'][$y]=0;
+                            $result['DEFENDER']['SURVIVORS'][$y]=0;
+                        }else{                            
                             $result['DEFENDER']['SURVIVORS'][$y]=trim($result['DEFENDER']['UNITS'][$y])-trim($result['DEFENDER']['LOSES'][$y]);
                         }
                     }
+                    
+                    //dd($result['DEFENDER']);
                 }
             }
             //Information data
