@@ -78,8 +78,11 @@ class LoadMaps extends Command
                     DB::insert(DB::raw($villageSql));                    
                 } 
             }
+            
             fclose($fileData);
-                       
+            //Delete the download file
+            unlink($file);
+            
             echo "Load servers job completed at ".Carbon::now()."\n";            
         }
         echo "\n".'*************************************************************************************************'."\n";

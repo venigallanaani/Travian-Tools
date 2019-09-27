@@ -40,7 +40,7 @@ class processCleanUp extends Command
             
             Alliances::where('table_id','<>',$server->table_id)
                         ->where('server_id',$server->server_id)->delete();
-            echo "Allainces table cleanup completed"."\n";
+            echo "Alliances table cleanup completed"."\n";
 
             Players::where('table_id','<>',$server->table_id)
                         ->where('server_id',$server->server_id)->delete();
