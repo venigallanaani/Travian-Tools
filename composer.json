@@ -30,9 +30,8 @@
 			"App\\" : "app/"
 		},
 		"files" : [
-			"app/Helpers/Parsers.php",
-			"app/Helpers/Graphics.php",
-			"app/Helpers/Calculators/Cropper.php"
+			"app/Helpers/Parsers/ReportParser.php",
+			"app/Helpers/Graphics.php"
 		]
 	},
 	"autoload-dev" : {

@@ -40,7 +40,7 @@ class processCleanUp extends Command
             
             Alliances::where('table_id','<>',$server->table_id)
                         ->where('server_id',$server->server_id)->delete();
-            echo "Allainces table cleanup completed"."\n";
+            echo "Alliances table cleanup completed"."\n";
 
             Players::where('table_id','<>',$server->table_id)
                         ->where('server_id',$server->server_id)->delete();
@@ -61,6 +61,7 @@ class processCleanUp extends Command
                     
                 //Delete maps data
                     MapData::where('table_id','=',$maps[$i]->map_id)->delete();
+                    
                 //Delete files
                     unlink(env("DOWNLOAD_LOCATION","app/Downloads/").$maps[$i]->map_id);
                     

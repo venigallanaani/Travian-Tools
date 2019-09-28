@@ -13,7 +13,7 @@ if(!function_exists('ParseReports')){
                 $i++;
             }
         }
-        //dd($array);
+        //dd($incStrs);
         $rein = 0;  $result=null;
         for($x=0;$x<count($incStrs);$x++){
             
@@ -74,13 +74,13 @@ if(!function_exists('ParseReports')){
             
             if(strtoupper(trim($incStrs[$x]))=='DEFENDER'){
                 // Reinforcements Information
-                if(strtoupper(trim($incStrs[$x+2]))=='REINFORCEMENT'){
-                    $result['REINFORCEMENT'][$rein]['TRIBE']=FindTribe($incStrs[$x+3]);
+                if(strtoupper(trim($incStrs[$x+1]))=='REINFORCEMENT'){
+                    $result['REINFORCEMENT'][$rein]['TRIBE']=FindTribe($incStrs[$x+2]);
                     
-                    $unitList = explode("\t", trim($incStrs[$x+4]));
+                    $unitList = explode("\t", trim($incStrs[$x+3]));
                     $result['REINFORCEMENT'][$rein]['UNITS']=$unitList;
                     
-                    $losesList = explode("\t", trim($incStrs[$x+5]));
+                    $losesList = explode("\t", trim($incStrs[$x+4]));
                     $result['REINFORCEMENT'][$rein]['LOSES']=$losesList;
                     
                     for($y=0;$y<count($result['REINFORCEMENT'][$rein]['UNITS']);$y++){
@@ -103,20 +103,25 @@ if(!function_exists('ParseReports')){
                     $result['DEFENDER']['SUBJECT']=trim($incStrs[$z]);
                     $result['DEFENDER']['TRIBE']= FindTribe($incStrs[$z+1]);
                     
-                    $unitList = explode("\t", trim($incStrs[$z+2]));
+                    $unitList = explode("\t", trim($incStrs[$z+2]));                    
                     $result['DEFENDER']['UNITS']=$unitList;
                     
-                    $losesList = explode("\t", trim($incStrs[$z+3]));
+                    $losesList = explode("\t", trim($incStrs[$z+3]));                    
                     $result['DEFENDER']['LOSES']=$losesList;
-                    
+                                        
                     for($y=0;$y<count($result['DEFENDER']['UNITS']);$y++){
                         if($result['DEFENDER']['UNITS'][$y]=='?'){
                             $result['DEFENDER']['LOSES'][$y]='?';
                             $result['DEFENDER']['SURVIVORS'][$y]='?';
+                        }else if ($result['DEFENDER']['UNITS'][$y]==0) {
+                            $result['DEFENDER']['LOSES'][$y]=0;
+                            $result['DEFENDER']['SURVIVORS'][$y]=0;
                         }else{
                             $result['DEFENDER']['SURVIVORS'][$y]=trim($result['DEFENDER']['UNITS'][$y])-trim($result['DEFENDER']['LOSES'][$y]);
                         }
                     }
+                    
+                    //dd($result['DEFENDER']);
                 }
             }
             //Information data

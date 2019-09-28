@@ -11,7 +11,7 @@ Route::get('reports/{string}','ReportController@showReports');
 Route::get('/about','AboutController@index')->name('about');			//Displays the contact page
 Route::get('/releases','ReleaseController@index')->name('release');     //Displays the releases page
 
-Route::get('/support','SupportController@index');				// Displays the Report Page
+Route::get('/support','SupportController@index')->name('support');				// Displays the Report Page
 Route::post('/support','SupportController@process');			// Creates the Defect / bug in the Database
 
 /* ----------------------------------------------------------------------------------------- */
@@ -36,13 +36,17 @@ Route::post('/finders/natar','Finders\NatarFinderController@processNatar');		// 
 Route::get('/finders/neighbour','Finders\NeighbourFinderController@neighbour');		// Displays the different type of finders
 Route::post('/finders/neighbour','Finders\NeighbourFinderController@processNeighbour');		// Displays the result of the neighbour finders
 
+/* ----------------------------------------------------------------------------------------- */
+/* ------------------------------- Calculators page controller --------------------------------- */
+/* ----------------------------------------------------------------------------------------- */
+
 
 /* ------------------------------- Cropper page controller --------------------------------- */
-//Route::get('/calculators','Calculators\CalculatorController@overview')->name('calculators');
 
-Route::get('/calculators/cropper','Calculators\CropperController@display')->name('cropper');
-Route::post('/calculators/cropper','Calculators\CropperController@process');
-Route::get('/calculators/cropper/{crop}/{cap}/{o1}/{o2}/{o3}/{plus}','Calculators\CropperController@calculate');
+Route::get('/cropper','Calculators\CalculatorController@cropper')->name('cropper');
+//Route::get('/cropper','Calculators\CropperController@display')->name('cropper');
+// Route::post('/cropper','Calculators\CropperController@process');
+// Route::get('/cropper/{crop}/{cap}/{o1}/{o2}/{o3}/{plus}','Calculators\CropperController@calculate');
 
 
 /* ---------------- Servers page controllers ------------------- */

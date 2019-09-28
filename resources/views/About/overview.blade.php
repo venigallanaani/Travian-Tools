@@ -13,7 +13,7 @@
         <div class="card col-md-4 float-md-left">
         	<!-- img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%" -->
             <div class="card-body">
-                <h4 class="card-title">Administrator</h4>
+                <h4 class="card-title">Jag</h4>
                 <div class="card-text">
                 	<p class='font-italic h6'>Admin/Support</p>
                 	<p class='my-0'><strong>Email : </strong>admin@travian-tools.com</p>

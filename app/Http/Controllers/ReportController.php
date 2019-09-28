@@ -319,7 +319,7 @@ class ReportController extends Controller
             if(Input::has('link') && Input::has('previous') && Input::get('previous')=='yes'){
                 $link = Input::get('link').",".$id;
             }else{
-                $link='/reports/'.$id;
+                $link=env('SITE_URL','https://www.travian-tools.com').'/reports/'.$id;
             }
                 
             return Redirect::to($link);
@@ -336,11 +336,17 @@ class ReportController extends Controller
             $tribes[strtoupper($row->tribe)][]=$row;
         }  
         
+        $date=Carbon::today()->addDays(100)->format('Y-m-d');
+        
         $data= array();
         $i=0;
         foreach($reports as $report){
             
             $rows = Reports::where('id',$report)->get();
+            
+            Reports::where('id',$report)
+                        ->update(['deldate'=>$date]);
+            
             $j=0;
             foreach($rows as $row){
                 
@@ -441,7 +447,7 @@ class ReportController extends Controller
             $i++;
         }
         //dd($data);
-        $link = 'https://www.travian-tools.com/reports/'.$string;
+        $link = env('SITE_URL','https://www.travian-tools.com').'/reports/'.$string;
         
         return view('Reports.report')->with(['reports'=>$data])->with(['tribes'=>$tribes])->with(['link'=>$link]);
     }

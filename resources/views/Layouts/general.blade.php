@@ -22,12 +22,15 @@
                 </button>                
                 <a href="/" class="navbar-brand mr-3">
             		<img id="logo" alt="" src="{{{ asset('images/favicon.png') }}}" width="42" height="30"> 	
-            		<span class="h3">Travian Tools </span><small class="align-bottom">1.0</small>            		
+            		<span class="h3">Travian Tools </span><small class="align-bottom">1.1</small>            		
         		</a>
         		<div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">                        
                         <li class="nav-item px-2">
                             <a href="{{ route('reports') }}" class="nav-link">Reports</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a href="{{ route('cropper') }}" class="nav-link">Cropper</a>
                         </li>
                         <li class="nav-item px-2">
                             <a href="{{ route('finders') }}" class="nav-link">Finders</a>
@@ -43,8 +46,8 @@
             <div class="container py-2">
                 <table class="col-md-12 col-12">
                     <tr class="font-weight-bold">
-                        <td><a href="/about" class="text-white">About</a></td>
-                        <td><a href="/support" class="text-white">Support</a></td>                        
+                        <td><a href="{{ route('about') }}" class="text-white">About</a></td>
+                        <td><a href="{{ route('support') }}" class="text-white">Support</a></td>                        
                         <td class="text-white text-right"><small>All rights to images belongs to Travian Games Gmbh.</small></td>
                     </tr>
                 </table>
@@ -56,7 +59,7 @@
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>        
-    </body>
-    @stack('scripts')
+        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>    
+        @stack('scripts')    
+    </body>    
 </html>
