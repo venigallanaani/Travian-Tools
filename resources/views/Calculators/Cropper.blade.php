@@ -499,7 +499,7 @@
             	}
             	}
             	
-            	output=output+"<tr><td>"+j+"</td><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td>"+Math.round(totalprod()*gold)+'</td><td class="text-success">Done. Congrats!!</td></table></div>';
+            	output=output+"<tr><td>"+j+"</td><td>["+mill+","+bake+","+hm+"]</td>"+"<td>[ "+field.fields+" ]</td>"+"<td>"+Math.round(totalprod()*gold)+'</td><td class="text-success"><b>Done. Congrats!!</b></td></table></div>';
             	x=document.getElementById("steps");  // Find the element
             	x.innerHTML=output;   // Change the content
             
