@@ -23,10 +23,9 @@ class DeleteReports extends Command
     {
         $days = env('REPORT_DAYS',100);
         $deleteDate = Carbon::now()->subDays($days)->format('Y-m-d');
-        
+                
         echo "\n".'*************************************Deleting reports for date '.$deleteDate.' ******************************************'."\n";
-        Reports::where('deldata','<',$deleteDate)->delete();        
-        
+        Reports::where('deldate','<',$deleteDate)->delete();
         
     }
 }
