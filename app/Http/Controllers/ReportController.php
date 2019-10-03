@@ -39,7 +39,7 @@ class ReportController extends Controller
                 $rows = Units::all();
                 foreach($rows as $row){
                     $tribes[strtoupper($row->tribe)][]=$row;
-                }   
+                }
                 
                 //Offense Statistics
                 $stats['ATTACKER']['UNITS']=0;  $stats['ATTACKER']['LOSES']=0;  $stats['ATTACKER']['SURVIVORS']=0;
@@ -52,7 +52,7 @@ class ReportController extends Controller
                 $stats['ATTACKER']['CROP']=0;   $stats['ATTACKER']['RESOURCES']=0;
                 
                 $hides='?|?|?|?|?|?|?|?|?|?|?';
-                $nature_hide='?|?|?|?|?|?|?|?|?|?';        
+                $nature_hide='?|?|?|?|?|?|?|?|?|?'; 
                 
                 $attacker['SUBJECT']=$parseData['ATTACKER']['SUBJECT'];
                 $attacker['TRIBE']=$parseData['ATTACKER']['TRIBE'];

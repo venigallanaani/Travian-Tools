@@ -5,7 +5,7 @@
 <!-- =================================== Cropper input screen================================== -->
     <div class="card float-md-left my-1 p-0 col-md-12 shadow">
         <div class="card-header h4 py-2 bg-primary text-white col-md-12">
-            <strong>Cropper</strong>
+            <strong>Cropper Development</strong>
         </div>
         <div class="card-text mx-auto text-center my-3">
 			<table>
@@ -484,7 +484,7 @@
             	while(field.lowest()<21)
             	{
             		i = i+1;
-            		output=output+"<tr><td>"+j+"</td><td>[ "+mill+","+bake+","+hm+" ]</td>"+"<td>[ "+field.fields+" ]</td>"+"<td>"+Math.round(totalprod()*gold)+"</td><td>"+getNextStep()+"</td></tr>";
+            		output=output+"<tr><td>"+j+"</td><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td>"+Math.round(totalprod()*gold)+"</td><td>"+getNextStep()+"</td></tr>";
             		j = j+1;
             	}
             	}
@@ -499,7 +499,7 @@
             	}
             	}
             	
-            	output=output+"<tr><td>"+j+"</td><td>["+mill+","+bake+","+hm+"]</td>"+"<td>[ "+field.fields+" ]</td>"+"<td>"+Math.round(totalprod()*gold)+'</td><td class="text-success"><b>Done. Congrats!!</b></td></table></div>';
+            	output=output+"<tr><td>"+j+"</td><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td>"+Math.round(totalprod()*gold)+'</td><td class="text-success"><b>Done. Congrats!!</b></td></table></div>';
             	x=document.getElementById("steps");  // Find the element
             	x.innerHTML=output;   // Change the content
             

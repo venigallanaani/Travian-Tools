@@ -16,7 +16,7 @@ class CalculatorController extends Controller
     
     public function cropper(){    
         
-        session(['title'=>'Cropper']);
+        session(['title'=>'Calculators']);
         return view('Calculators.Cropper');
         
     }

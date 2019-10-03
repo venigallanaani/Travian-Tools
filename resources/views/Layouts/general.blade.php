@@ -30,7 +30,7 @@
                             <a href="{{ route('reports') }}" class="nav-link">Reports</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a href="{{ route('cropper') }}" class="nav-link">Cropper</a>
+                            <a href="{{ route('calculators') }}" class="nav-link">Calculators</a>
                         </li>
                         <li class="nav-item px-2">
                             <a href="{{ route('finders') }}" class="nav-link">Finders</a>
