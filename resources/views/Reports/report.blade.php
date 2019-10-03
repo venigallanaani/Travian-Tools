@@ -77,7 +77,7 @@
 							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Cranny"><img alt="" src="/images/x.gif" class="building cranny">{{explode(" ",explode(",",$report['ATTACK']['INFO'][0])[5])[1]}}</span>
 						@else
 						@foreach($report['ATTACK']['INFO'] as $info)
-							<p class="my-0 small">{{$info}}</p>
+							<p class="my-0">{{$info}}</p>
 						@endforeach
 						@endif
 						</td>
