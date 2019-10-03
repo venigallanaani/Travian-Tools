@@ -68,7 +68,7 @@
 				@if(!empty($report['ATTACK']['INFO']))
 					<tr>
 						<td class="align-middle"><strong>Information</strong></td>
-						<td class="text-left" colspan="11">
+						<td class="text-left small" colspan="11">
 						@if(strtoupper(explode(",",$report['ATTACK']['INFO'][0])[0])=='RESOURCES')
 							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Wood"><img alt="" src="/images/x.gif" class="res wood"> {{explode(",",$report['ATTACK']['INFO'][0])[1]}}</span>
 							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Clay"><img alt="" src="/images/x.gif" class="res clay"> {{explode(",",$report['ATTACK']['INFO'][0])[2]}}</span>
