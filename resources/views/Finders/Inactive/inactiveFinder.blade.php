@@ -7,7 +7,7 @@
             <strong>Inactive Finder</strong>
         </div>
         <div class="card-text mx-auto text-center">
-            <form action="/finders/inactive" method="POST">
+            <form action="{{route('findInactive')}}" method="POST">
             	{{ csrf_field() }}
                 <table class="table table-borderless my-2">
                     <tr>

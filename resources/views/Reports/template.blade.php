@@ -22,7 +22,7 @@
 	<div class="container">
 		@yield('report')
 		<div class="card col-md-12 p-1 my-2 shadow">
-			<form class="mx-auto col-md-10" action="/reports/create" method="post">
+			<form class="mx-auto col-md-10" action="{{route('makeReport')}}" method="post">
 				@if(!empty($link))
 					<input name="link" value="{{$link}}" hidden>
 				@endif
@@ -38,8 +38,8 @@
 					</tr>
 				</table>
     			<div class="py-2 align-middle">
-    				<button class="btn btn-primary px-5" type="submit">Convert</button> 
-    				<span class="align-right small"> *The report will be deleted if the link is not used for 100 days.</span>
+    				<button class="btn btn-info px-5" type="submit">Convert</button> 
+    				<span class="align-right small px-5"><i>*The report will be deleted if not viewed for 100 days.</i></span>
     			</div>
 			</form>
 		</div>	

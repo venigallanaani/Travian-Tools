@@ -38,19 +38,19 @@
 					<tr>
 						<td class="py-0"><strong>Units</strong></td>
 					@foreach($report['ATTACK']['UNITS'] as $unit)
-						<td class="py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
+						<td class="py-0 @if($unit==0) text-muted @endif">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
 					@endforeach
 					</tr>
 					<tr>
 						<td class="py-0"><strong>Loses</strong></td>
 					@foreach($report['ATTACK']['LOSES'] as $unit)
-						<td class="py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
+						<td class="py-0 @if($unit==0) text-muted @endif">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
 					@endforeach
 					</tr>
 					<tr>
 						<td class="py-0"><strong>Survivours</strong></td>
 					@foreach($report['ATTACK']['SURVIVORS'] as $unit)
-						<td class=" py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
+						<td class="py-0 @if($unit==0) text-muted @endif">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
 					@endforeach
 					</tr>
 				@if(!empty($report['ATTACK']['BOUNTY']))
@@ -258,19 +258,19 @@
 					<tr>
 						<td class="py-0"><strong>Units</strong></td>
 					@foreach($report['DEFEND']['UNITS'] as $unit)
-						<td class="py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
+						<td class="py-0 @if($unit==0) text-muted @endif">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
 					@endforeach
 					</tr>
 					<tr>
 						<td class="py-0"><strong>Loses</strong></td>
 					@foreach($report['DEFEND']['LOSES'] as $unit)
-						<td class="py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
+						<td class="py-0 @if($unit==0) text-muted @endif">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
 					@endforeach
 					</tr>
 					<tr>
 						<td class="py-0"><strong>Survivours</strong></td>
 					@foreach($report['DEFEND']['SURVIVORS'] as $unit)
-						<td class="py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
+						<td class="py-0 @if($unit==0) text-muted @endif">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
 					@endforeach
 					</tr>					
 				</table>
@@ -296,19 +296,19 @@
 					<tr>
 						<td class="py-0"><strong>Units</strong></td>
 					@foreach($reinforcement['UNITS'] as $unit)
-						<td class="py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
+						<td class="py-0 @if($unit==0) text-muted @endif">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
 					@endforeach
 					</tr>
 					<tr>
 						<td class="py-0"><strong>Loses</strong></td>
 					@foreach($reinforcement['LOSES'] as $unit)
-						<td class="py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
+						<td class="py-0 @if($unit==0) text-muted @endif">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
 					@endforeach
 					</tr>
 					<tr>
 						<td class="py-0"><strong>Survivours</strong></td>
 					@foreach($reinforcement['SURVIVORS'] as $unit)
-						<td class="py-0">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
+						<td class="py-0 @if($unit==0) text-muted @endif">@if(is_numeric($unit)){{number_format($unit)}} @else {{$unit}} @endif</td>					
 					@endforeach
 					</tr>					
 				</table>

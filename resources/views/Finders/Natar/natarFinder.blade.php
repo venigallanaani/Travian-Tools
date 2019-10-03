@@ -7,7 +7,7 @@
             <strong>Natar Finder</strong>
         </div>
         <div class="card-text mx-auto text-center">
-            <form action="/finders/natar" method="POST">
+            <form action="{{route('findNatar')}}" method="POST">
             	{{ csrf_field() }}
             	
                 <table class="table table-borderless mt-2">
