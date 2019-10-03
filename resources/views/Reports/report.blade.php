@@ -56,12 +56,12 @@
 				@if(!empty($report['ATTACK']['BOUNTY']))
 					<tr>
 						<td class="align-middle"><strong>Bounty</strong></td>
-						<td class="text-left" colspan="11">
-							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="wood"><img alt="" src="/images/x.gif" class="res wood"> {{$report['ATTACK']['BOUNTY']['WOOD']}}</span>
-							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="clay"><img alt="" src="/images/x.gif" class="res clay"> {{$report['ATTACK']['BOUNTY']['CLAY']}}</span>
-							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="iron"><img alt="" src="/images/x.gif" class="res iron"> {{$report['ATTACK']['BOUNTY']['IRON']}}</span>
-							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="crop"><img alt="" src="/images/x.gif" class="res crop"> {{$report['ATTACK']['BOUNTY']['CROP']}}</span>
-							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="carry"><img alt="" src="/images/x.gif" class="stats carry">{{$report['ATTACK']['BOUNTY']['CARRY']}}</span>
+						<td class="text-left small" colspan="11">
+							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Wood"><img alt="" src="/images/x.gif" class="res wood"> {{$report['ATTACK']['BOUNTY']['WOOD']}}</span>
+							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Clay"><img alt="" src="/images/x.gif" class="res clay"> {{$report['ATTACK']['BOUNTY']['CLAY']}}</span>
+							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Iron"><img alt="" src="/images/x.gif" class="res iron"> {{$report['ATTACK']['BOUNTY']['IRON']}}</span>
+							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Crop"><img alt="" src="/images/x.gif" class="res crop"> {{$report['ATTACK']['BOUNTY']['CROP']}}</span>
+							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Carry"><img alt="" src="/images/x.gif" class="stats carry">{{$report['ATTACK']['BOUNTY']['CARRY']}}</span>
 						</td>
 					</tr>
 				@endif
@@ -70,11 +70,11 @@
 						<td class="align-middle"><strong>Information</strong></td>
 						<td class="text-left" colspan="11">
 						@if(strtoupper(explode(",",$report['ATTACK']['INFO'][0])[0])=='RESOURCES')
-							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="wood"><img alt="" src="/images/x.gif" class="res wood"> {{explode(",",$report['ATTACK']['INFO'][0])[1]}}</span>
-							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="clay"><img alt="" src="/images/x.gif" class="res clay"> {{explode(",",$report['ATTACK']['INFO'][0])[2]}}</span>
-							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="iron"><img alt="" src="/images/x.gif" class="res iron"> {{explode(",",$report['ATTACK']['INFO'][0])[3]}}</span>
-							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="crop"><img alt="" src="/images/x.gif" class="res crop"> {{explode(",",$report['ATTACK']['INFO'][0])[4]}}</span>
-							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="cranny"><img alt="" src="/images/x.gif" class="building cranny">{{explode(" ",explode(",",$report['ATTACK']['INFO'][0])[5])[1]}}</span>
+							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Wood"><img alt="" src="/images/x.gif" class="res wood"> {{explode(",",$report['ATTACK']['INFO'][0])[1]}}</span>
+							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Clay"><img alt="" src="/images/x.gif" class="res clay"> {{explode(",",$report['ATTACK']['INFO'][0])[2]}}</span>
+							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Iron"><img alt="" src="/images/x.gif" class="res iron"> {{explode(",",$report['ATTACK']['INFO'][0])[3]}}</span>
+							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Crop"><img alt="" src="/images/x.gif" class="res crop"> {{explode(",",$report['ATTACK']['INFO'][0])[4]}}</span>
+							<span class="mx-2" data-toggle="tooltip" data-placement="top" title="Cranny"><img alt="" src="/images/x.gif" class="building cranny">{{explode(" ",explode(",",$report['ATTACK']['INFO'][0])[5])[1]}}</span>
 						@else
 						@foreach($report['ATTACK']['INFO'] as $info)
 							<p class="my-0 small">{{$info}}</p>
@@ -178,14 +178,14 @@
 						@if($report['STATS']['OFFENSE']['HERO'] == 0)
 							0
 						@else
-							<img alt="" src="/images/x.gif" class="hero"> {{$report['STATS']['DEFENSE']['LOSS']}}
+							<img alt="" src="/images/x.gif" class="hero"> {{number_format($report['STATS']['DEFENSE']['LOSS'])}}
 						@endif						 
 						</td>
 						<td class="py-0 small" colspan="2">
 						@if($report['STATS']['DEFENSE']['HERO'] == 0)
 							0 
 						@else
-							<img alt="" src="/images/x.gif" class="hero"> {{$report['STATS']['DEFENSE']['HERO']}} / {{$report['STATS']['OFFENSE']['LOSS']}} 
+							<img alt="" src="/images/x.gif" class="hero"> {{$report['STATS']['DEFENSE']['HERO']}} / {{number_format($report['STATS']['OFFENSE']['LOSS'])}} 
 						@endif 
 						</td>
 					</tr>	
