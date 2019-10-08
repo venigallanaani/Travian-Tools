@@ -40,10 +40,11 @@
                 			<strong>Reports Interval </strong><input type="text" size="5" name="intrl" required/><small>secs</small>
                 		</td>
                 		<td class="py-2">
-                			<strong>Scout Target </strong>
-                				<select name="target">
-									<option value="village">Village</option>
-									<option value="oasis">Oasis</option>
+                			<strong>Artifact </strong>
+                				<select name="arty">
+									<option value="1">No Artifact</option>
+									<option value="0.5">1/2 Diet</option>
+									<option value="0.75">3/4 Diet</option>
 								</select>
                     	</td> 
                 	</tr>
