@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
-use App/Units;
+use App\Units;
 
 class WheatScoutController extends Controller
 {
@@ -22,7 +22,7 @@ class WheatScoutController extends Controller
         
         session(['title'=>'Calculators']);        
         
-        $max=0; $cap=0; $min=10; $upkeep = 0;
+        $max=0; $cap=0; $min=10; 
         //Parsing the reports data
         $reports=array();        $result=array();
         $reports[0] = ParseReports(Input::get('report1'));
@@ -47,13 +47,15 @@ class WheatScoutController extends Controller
             return view('Calculators.WheatScout.display'); 
             
         }else{
-            
+            //dd($reports[1]);
             $result['crop1']=$reports[0]['ATTACKER']['INFORMATION']['4'];
             $result['crop2']=$reports[1]['ATTACKER']['INFORMATION']['4'];
             
             $result['diff']=($result['crop1']-$result['crop2']);
             $result['cons']=($result['diff']/$intrl)*3600;            
-                        
+            
+            $result['defUp']=0; $result['reinUp']=0;
+            
             $defender=$reports[1]['DEFENDER']['UNITS'];
             
             $rows = Units::all();
@@ -62,22 +64,21 @@ class WheatScoutController extends Controller
             }
             
             for($i=0;$i<count($tribes[$reports[1]['DEFENDER']['TRIBE']]);$i++){                
-                $upkeep+=$reports[1]['DEFENDER']['UNITS'][$i]*$tribes[$reports[1]['DEFENDER']['TRIBE']][$i]->upkeep;                
+                $result['defUp']+=$reports[1]['DEFENDER']['UNITS'][$i]*$tribes[$reports[1]['DEFENDER']['TRIBE']][$i]->upkeep;                
             }
             
-            if(isset($results[1]['REINFORCEMENT'])){
-                foreach($results[1]['REINFORCEMENT'] as $reins){
-                    for($i=0;$i<count($tribes))
-                    
-                    
+            if(isset($reports[1]['REINFORCEMENT'])){
+                foreach($reports[1]['REINFORCEMENT'] as $reins){
+                    for($i=0;$i<count($tribes[$reins['TRIBE']]);$i++){
+                        $result['reinUp']+=$reins['UNITS'][$i]*$tribes[$reins['TRIBE']][$i]->upkeep;
+                    }
                 }
             }            
-            
-            //dd($result);
-            dd($reports[1]);
         }       
         
-        return view('Calculators.WheatScout.result');
+        //$result= array( 'crop1' => 15929, 'crop2' => 15000, 'diff' => 929, 'cons' => 167220, 'defUp' => 12, 'reinUp' => 10 );
+        
+        return view('Calculators.WheatScout.result')->with(['result'=>$result]);
         
     }
 }

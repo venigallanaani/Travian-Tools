@@ -2,6 +2,6 @@
 
 @section('result')
 
-	<p>Display here</p>
+	@php print_r($result) @endphp
 
 @endsection
