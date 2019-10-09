@@ -26,8 +26,20 @@
         			<td colspan="2" class="text-danger"><strong><h4>Troops Away</h4></strong></td>
         		</tr>
         		<tr>
-        			<td class="px-2"><img alt="" src="/images/x.gif" class="res upkeep"><strong> {{number_format(($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $result['CROP']['PROD'])/$result['ARTY'])}}</strong></td>
-        			<td class="px-2"><img alt="" src="/images/x.gif" class="res upkeep"><strong> {{number_format((($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $result['CROP']['PROD'])*1.25)/$result['ARTY'])}}</strong><span class="small font-italic text-primary"> (With Travian Plus)</span></td>
+        			<td class="px-2"><img alt="" src="/images/x.gif" class="res upkeep"><strong> 
+        			@if(number_format(($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $result['CROP']['PROD'])/$result['ARTY'])>0)
+        				{{number_format(($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $result['CROP']['PROD'])/$result['ARTY'])}}
+    				@else
+    					0
+					@endif
+        			</strong></td>
+        			<td class="px-2"><img alt="" src="/images/x.gif" class="res upkeep"><strong> 
+        			@if(number_format((($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $result['CROP']['PROD'])*1.25)/$result['ARTY'])>0)
+        				{{number_format((($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $result['CROP']['PROD'])*1.25)/$result['ARTY'])}}
+        			@else
+        				0
+    				@endif	
+    				</strong><span class="small font-italic text-primary"> (With Travian Plus)</span></td>
         		</tr>
         	</table>
         	@else
@@ -41,8 +53,20 @@
         		@foreach($result['CROP'] as $level)
         		<tr>
         			<td class="p-1">{{$level['FIELD']}}</td>
-        			<td class="p-1"><img alt="" src="/images/x.gif" class="res upkeep"> {{number_format(($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $level['PROD'])/$result['ARTY'])}}</td>
-        			<td class="p-1"><img alt="" src="/images/x.gif" class="res upkeep"> {{number_format((($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $level['PROD'])*1.25)/$result['ARTY'])}}</td>
+        			<td class="p-1"><img alt="" src="/images/x.gif" class="res upkeep"> 
+        				@if(number_format(($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $level['PROD'])/$result['ARTY'])>0)
+        					{{number_format(($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $level['PROD'])/$result['ARTY'])}}
+        				@else 
+        					0
+        				@endif
+    				</td>
+        			<td class="p-1"><img alt="" src="/images/x.gif" class="res upkeep"> 
+        				@if(number_format((($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $level['PROD'])*1.25)/$result['ARTY'])>0)
+        					{{number_format((($result['CONS'] - $result['DEFUP'] - $result['REINUP'] + $level['PROD'])*1.25)/$result['ARTY'])}}
+    					@else
+    						0
+						@endif
+    				</td>
         		</tr>
         		@endforeach
         	</table>       	

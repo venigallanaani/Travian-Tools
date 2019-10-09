@@ -68,24 +68,21 @@ class WheatScoutController extends Controller
                     }
                 }
             } 
-        }
-        
-        $prod = array(3,7,13,21,31,46,70,98,140,203,280,392,525,691,889,1120,1400,1820,2240,2800,3430,4270);
-        
-        if($cap==1){
-            $z=0;
-            for($i=10;$i<=21;$i++){
-                $result['CROP'][$z]['FIELD']=$i;
-                $result['CROP'][$z]['PROD']=$fields*$prod[$i]*$oasis;
-                
-                $z++;
+            $prod = array(3,7,13,21,31,46,70,98,140,203,280,392,525,691,889,1120,1400,1820,2240,2800,3430,4270);
+            
+            if($cap==1){
+                $z=0;
+                for($i=10;$i<=21;$i++){
+                    $result['CROP'][$z]['FIELD']=$i;
+                    $result['CROP'][$z]['PROD']=$fields*$prod[$i]*$oasis;
+                    
+                    $z++;
+                }
+            }else{
+                $result['CROP']['PROD']=$fields*$prod[10]*$oasis;
             }
-        }else{
-            $result['CROP']['PROD']=$fields*$prod[10]*$oasis;
-        }        
-        
-        //dd($result);
-        return view('Calculators.WheatScout.result')->with(['result'=>$result]);
-                
+            
+            return view('Calculators.WheatScout.result')->with(['result'=>$result]);
+        }                        
     }
 }

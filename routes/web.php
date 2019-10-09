@@ -52,6 +52,9 @@ Route::post('/calculators/wheatScout','Calculators\WheatScoutController@calculat
 
 /* ------------------------------- Cropper page controller --------------------------------- */
 Route::get('/calculators/cropper','Calculators\CalculatorController@cropper')->name('cropper');     //Displays the cropper development calculator
+Route::get('/cropper',function(){
+    return redirect('/calculators/cropper');                    
+});                                                                //redirects the page to the cropper page in calculators menu
 
 /* ------------------------------------------------------------- */
 /* ---------------- Servers page controllers ------------------- */
