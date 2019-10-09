@@ -12,6 +12,9 @@
             	{{ csrf_field() }}
                 <table class="table table-borderless mt-2">
                     <tr>
+                    	<td colspan="2" class="text-danger font-italic px-2 py-1">Please Scout the villages for more accurate estimates.</td>
+                    </tr>
+                    <tr>
                         <td class="py-0">
                             <div class="">
                                 <strong>First Report</strong>
@@ -41,15 +44,27 @@
                 		</td>
                 		<td class="py-2">
                 			<strong>Artifact </strong>
-                				<select name="arty">
-									<option value="1">No Artifact</option>
-									<option value="0.5">1/2 Diet</option>
-									<option value="0.75">3/4 Diet</option>
-								</select>
+            				<select name="arty">
+								<option value="1">No Artifact</option>
+								<option value="0.5">1/2 Diet</option>
+								<option value="0.75">3/4 Diet</option>
+							</select>                			
                     	</td> 
                 	</tr>
                 	<tr>
                     	<td class="py-2" colspan="2">
+                    		<span class="px-3">
+                    			<strong>Crop Fields </strong>
+                    				<select name="fields">
+                    					<option value="6">6 Crop</option>
+                    					<option value="7">7 Crop</option>
+                    					<option value="9">9 Crop</option>
+                    					<option value="15">15 Crop</option>
+                    				</select>
+                    		</span>
+                    		<span class="px-3">
+	                			<input type="checkbox" name="cap"/><strong> Capital</strong>
+                    		</span>
                     		<span class="px-3">
                     			<strong>Oasis</strong>                    				                			
                     				<select name="oasis">
@@ -61,12 +76,6 @@
         								<option value="1.25">125%</option>
         								<option value="1.5">150%</option>
         							</select>
-                    		</span>
-                    		<span class="px-3">
-                    			<input type="checkbox" name="cap"/><strong> Capital</strong>
-                    		</span>
-                    		<span class="px-3">
-                    			<strong>Min Crop field lvl </strong><input type="text" size="5" name="minLvl"/>
                     		</span>
                     	</td>                    	
                     </tr>

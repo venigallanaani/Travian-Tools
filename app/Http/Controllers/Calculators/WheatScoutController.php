@@ -22,25 +22,17 @@ class WheatScoutController extends Controller
         
         session(['title'=>'Calculators']);        
         
-        $max=0; $cap=0; $min=10; 
+        $max=0; $cap=0; $crop=0;
         //Parsing the reports data
         $reports=array();        $result=array();
         $reports[0] = ParseReports(Input::get('report1'));
         $reports[1] = ParseReports(Input::get('report2'));
         
-        $oasis = 1+Input::get('oasis');        
+        $oasis = 1.5+Input::get('oasis');        
         if(!(Input::get('cap'))==null){   $cap=1;     }        
-        if(!(Input::get('minLvl'))==null){    $min=Input::get('minLvl');  }
         
-        $arty = Input::get('arty');
-        
-        if($cap==0){
-            if($min>10){    $min=10;    }            
-            $max=10;
-        }else{
-            $max=21;
-        }
-        
+        $result['ARTY'] = Input::get('arty');
+        $fields=Input::get('fields');                
         $intrl=Input::get('intrl');
         
         if($reports[0]==null || $reports[1]==null){
@@ -50,37 +42,50 @@ class WheatScoutController extends Controller
             
         }else{
             //dd($reports[1]);
-            $result['crop1']=$reports[0]['ATTACKER']['INFORMATION']['4'];
-            $result['crop2']=$reports[1]['ATTACKER']['INFORMATION']['4'];
+            $result['CROP1']=$reports[0]['ATTACKER']['INFORMATION']['4'];
+            $result['CROP2']=$reports[1]['ATTACKER']['INFORMATION']['4'];
             
-            $result['diff']=($result['crop1']-$result['crop2']);
-            $result['cons']=round(($result['diff']/($intrl*$arty))*3600);            
+            $result['DIFF']=($result['CROP1']-$result['CROP2']);
+            $result['CONS']=round(($result['DIFF']/$intrl)*3600);            
             
-            $result['defUp']=0; $result['reinUp']=0;
+            $result['DEFUP']=0; $result['REINUP']=0;
             
-//            $defender=$reports[1]['DEFENDER']['UNITS'];
+           $defender=$reports[1]['DEFENDER']['UNITS'];
             
-//             $rows = Units::all();
-//             foreach($rows as $row){
-//                 $tribes[strtoupper($row->tribe)][]=$row;
-//             }
+            $rows = Units::all();
+            foreach($rows as $row){
+                $tribes[strtoupper($row->tribe)][]=$row;
+            }
             
-//             for($i=0;$i<count($tribes[$reports[1]['DEFENDER']['TRIBE']]);$i++){                
-//                 $result['defUp']+=$reports[1]['DEFENDER']['UNITS'][$i]*$tribes[$reports[1]['DEFENDER']['TRIBE']][$i]->upkeep;                
-//             }
+            for($i=0;$i<count($tribes[$reports[1]['DEFENDER']['TRIBE']]);$i++){                
+                $result['DEFUP']+=$reports[1]['DEFENDER']['UNITS'][$i]*$tribes[$reports[1]['DEFENDER']['TRIBE']][$i]->upkeep;                
+            }
             
-//             if(isset($reports[1]['REINFORCEMENT'])){
-//                 foreach($reports[1]['REINFORCEMENT'] as $reins){
-//                     for($i=0;$i<count($tribes[$reins['TRIBE']]);$i++){
-//                         $result['reinUp']+=$reins['UNITS'][$i]*$tribes[$reins['TRIBE']][$i]->upkeep;
-//                     }
-//                 }
-//             } 
-        }       
+            if(isset($reports[1]['REINFORCEMENT'])){
+                foreach($reports[1]['REINFORCEMENT'] as $reins){
+                    for($i=0;$i<count($tribes[$reins['TRIBE']]);$i++){
+                        $result['REINUP']+=$reins['UNITS'][$i]*$tribes[$reins['TRIBE']][$i]->upkeep;
+                    }
+                }
+            } 
+        }
         
-        //$result= array( 'crop1' => 15929, 'crop2' => 15000, 'diff' => 929, 'cons' => 167220, 'defUp' => 12, 'reinUp' => 10 );
+        $prod = array(3,7,13,21,31,46,70,98,140,203,280,392,525,691,889,1120,1400,1820,2240,2800,3430,4270);
         
+        if($cap==1){
+            $z=0;
+            for($i=10;$i<=21;$i++){
+                $result['CROP'][$z]['FIELD']=$i;
+                $result['CROP'][$z]['PROD']=$fields*$prod[$i]*$oasis;
+                
+                $z++;
+            }
+        }else{
+            $result['CROP']['PROD']=$fields*$prod[10]*$oasis;
+        }        
+        
+        //dd($result);
         return view('Calculators.WheatScout.result')->with(['result'=>$result]);
-        
+                
     }
 }
