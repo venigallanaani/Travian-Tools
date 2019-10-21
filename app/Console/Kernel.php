@@ -42,13 +42,13 @@ class Kernel extends ConsoleKernel
         $schedule->command('process:CleanUp')
             ->dailyAt('01:00')
             //->everyminute()
-            ->appendOutputTo(storage_path('logs/processLoads.log'));
+            ->appendOutputTo(storage_path('logs/cleanUp.log'));
         
         // Deletes the reports which are not used for 100 days
-        $schedule->command('Delete:Reports')
-            ->dailyAt('12:00')
-            //->everyminute()
-            ->appendOutputTo(storage_path('logs/cleanUp.log')); 
+//         $schedule->command('Delete:Reports')
+//             ->dailyAt('12:00')
+//             //->everyminute()
+//             ->appendOutputTo(storage_path('logs/cleanUp.log')); 
          
         //Clears data from the storage folder    
         $schedule->command('Clear:Storage')

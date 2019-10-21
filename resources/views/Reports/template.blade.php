@@ -39,7 +39,7 @@
 				</table>
     			<div class="py-2 align-middle">
     				<button class="btn btn-info px-5" type="submit">Convert</button> 
-    				<span class="align-right small px-5"><i>*The report will be deleted if not viewed for 100 days.</i></span>
+<!--     				<span class="align-right small px-5"><i>*The report will be deleted if not viewed for 100 days.</i></span> -->
     			</div>
 			</form>
 		</div>	
