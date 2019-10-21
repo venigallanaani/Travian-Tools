@@ -21,7 +21,7 @@ class WheatScoutController extends Controller
     public function calculate(Request $request){
         
         session(['title'=>'Calculators']);        
-        
+                
         $max=0; $cap=0; $crop=0;
         //Parsing the reports data
         $reports=array();        $result=array();
@@ -33,7 +33,8 @@ class WheatScoutController extends Controller
         
         $result['ARTY'] = Input::get('arty');
         $fields=Input::get('fields');                
-        $intrl=Input::get('intrl');
+        $intrl=Input::get('intrl');        
+        if(strtoupper(Input::get('tar'))=='OASIS'){   $tar=10;   } else {  $tar=1;    }
         
         if($reports[0]==null || $reports[1]==null){
             
@@ -41,11 +42,11 @@ class WheatScoutController extends Controller
             return view('Calculators.WheatScout.display'); 
             
         }else{
-            //dd($reports[1]);
+
             $result['CROP1']=$reports[0]['ATTACKER']['INFORMATION']['4'];
             $result['CROP2']=$reports[1]['ATTACKER']['INFORMATION']['4'];
             
-            $result['DIFF']=($result['CROP1']-$result['CROP2']);
+            $result['DIFF']=($result['CROP1']-$result['CROP2'])*$tar;
             $result['CONS']=round(($result['DIFF']/$intrl)*3600);            
             
             $result['DEFUP']=0; $result['REINUP']=0;
@@ -68,6 +69,7 @@ class WheatScoutController extends Controller
                     }
                 }
             } 
+            
             $prod = array(3,7,13,21,31,46,70,98,140,203,280,392,525,691,889,1120,1400,1820,2240,2800,3430,4270);
             
             if($cap==1){

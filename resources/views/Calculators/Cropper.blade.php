@@ -443,28 +443,28 @@
             		if (cap==1 && field.lowest()==10)
             			return;
             		output = output + field.uplowest();
-            		return "Upgrade a crop field to level " + output + ". </td>";
+            		return "<td>Upgrade a crop field to level " + output + ". </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
             	}
             	if (lowest == 1)
             	{
             		if (cap==1 && field.lowest()==10)
             			return;
             		field.uphighest();
-            		return '<b>Upgrade a crop field to level ' + field.fields[0] + "</span></b>. </td>";
+            		return '<td><b>Upgrade a crop field to level ' + field.fields[0] + "</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
             	}
             	if (lowest == 2)
             	{
             		mill++;
-            		return '<b><span class="text-warning">Upgrade the Flour Mill to level ' + mill + "</span></b>. </td>";
+            		return '<td><b><span class="text-warning">Upgrade the Flour Mill to level ' + mill + "</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
             	}
             	if (lowest == 3)
             	{
             		bake++;
-            		return '<b><span class="text-info">Upgrade the Bakery to level ' + bake + "</span></b>. </td>";
+            		return '<td><b><span class="text-info">Upgrade the Bakery to level ' + bake + "</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
             	}
             	if (lowest == 4)
             	{
-            		return "<b><span class='text-danger'>Upgrade the Hero Mansion to level " + hm + " and capture your oasis</span></b>. </td>";
+            		return "<td><b><span class='text-danger'>Upgrade the Hero Mansion to level " + hm + " and capture oasis</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
             	}
             }
             
@@ -473,19 +473,17 @@
             	reset();
             	z=document.getElementById("steps");  // nothing
             	z.innerHTML="Calculating...";   
-            	var j=1;
             	var output='<div class="card float-md-left mb-5 p-0 col-md-12 shadow"><div class="card-header h4 py-2 bg-primary text-white"><strong>Cropper Development Sequence</strong></div>';
             	output=output+'<div class="card-text mx-auto text-center"><table class="table table-hover table-sm small"><tr class="h6 text-primary">';
-            	output=output+'<th>#</th><th>[<img alt="" src="/images/x.gif" class="build fm">,<img alt="" src="/images/x.gif" class="build bkry">,<img alt="" src="/images/x.gif" class="build hm">]</th>';
-            	output=output+'<th>Fields</th><th>Production</th><th>Action</th><tr>';
+            	output=output+'<th>[F,B,H]</th>';
+            	output=output+'<th>Fields</th><th>Production</th><th>Action</th><th>ROI</th><tr>';
             	var i=0;
             	if (cap == 0)
             	{
             	while(field.lowest()<21)
             	{
             		i = i+1;
-            		output=output+"<tr><td>"+j+"</td><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td>"+Math.round(totalprod()*gold)+"</td><td>"+getNextStep()+"</td></tr>";
-            		j = j+1;
+            		output=output+"<tr><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td><b>"+Math.round(totalprod()*gold)+"</b></td>"+getNextStep()+"</tr>";
             	}
             	}
             	else if (cap == 1)
@@ -494,12 +492,11 @@
             	while(field.lowest()<10||mill<5||bake<5||(hm<10&&o1!=0)||(hm<15&&o1!=0&&o2!=0)||(hm<20&&o1!=0&&o2!=0&&o3!=0))
             	{
             		i = i+1;
-            		output=output+"<tr><td>"+j+"</td><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td>"+Math.round(totalprod()*gold)+"</td><td>"+getNextStep()+"</td></tr>";
-            		j = j+1;
+            		output=output+"<tr><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td><b>"+Math.round(totalprod()*gold)+"</b></td>"+getNextStep()+"</tr>";
             	}
             	}
             	
-            	output=output+"<tr><td>"+j+"</td><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td>"+Math.round(totalprod()*gold)+'</td><td class="text-success"><b>Done. Congrats!!</b></td></table></div>';
+            	output=output+"<tr><td>["+mill+","+bake+","+hm+"]</td>"+"<td>["+field.fields+"]</td>"+"<td><b>"+Math.round(totalprod()*gold)+'</b></td><td class="text-success"><b>Done. Congrats!!</b></td><td></td></tr></table></div>';
             	x=document.getElementById("steps");  // Find the element
             	x.innerHTML=output;   // Change the content
             

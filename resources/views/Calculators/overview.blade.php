@@ -16,7 +16,7 @@
                 </tr>
                 <tr>
                     <td class="align-middle"><a href="{{route('wheatScout')}}" class="text-primary"><strong>Wheat Scout</strong></a></td>
-                    <td class="font-italic">Helps in determining the troops outside of the village based on the crop consumption reports.</td>
+                    <td class="font-italic">Helps in determining the troops away from the village based on the crop consumption reports.</td>
                 </tr>                  
             </table>
         </div>

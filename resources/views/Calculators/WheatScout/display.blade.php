@@ -43,11 +43,10 @@
                 			<strong>Reports Interval </strong><input type="text" size="5" name="intrl" required/><small>secs</small>
                 		</td>
                 		<td class="py-2">
-                			<strong>Artifact </strong>
-            				<select name="arty">
-								<option value="1">No Artifact</option>
-								<option value="0.5">1/2 Diet</option>
-								<option value="0.75">3/4 Diet</option>
+                			<strong>Target </strong>
+            				<select name="tar">
+								<option value="village">Village</option>
+								<option value="oasis">Oasis</option>
 							</select>                			
                     	</td> 
                 	</tr>
@@ -80,10 +79,16 @@
                     	</td>                    	
                     </tr>
                     <tr>
-                    	<td colspan="2">
-                	    	<div  class="py-1">
-                                <button class="btn btn-outline-primary px-5" type="submit"><strong>Calculate</strong></button>
-                            </div>
+                		<td class="py-2">
+                			<strong>Artifact </strong>
+            				<select name="arty">
+								<option value="1">No Artifact</option>
+								<option value="0.5">1/2 Diet</option>
+								<option value="0.75">3/4 Diet</option>
+							</select>                			
+                    	</td> 
+                    	<td>
+                            <button class="btn btn-outline-primary px-5" type="submit"><strong>Calculate</strong></button>
                         </td>
                     </tr>
                 </table>
