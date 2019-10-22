@@ -47,8 +47,8 @@ Route::post('/finders/neighbour','Finders\NeighbourFinderController@processNeigh
 Route::get('/calculators','Calculators\CalculatorController@overview')->name('calculators'); // Displays the Calculators overview page
 
 /* ------------------------------- wheat scout page controller --------------------------------- */
-Route::get('/calculators/wheatScout','Calculators\WheatScoutController@display')->name('wheatScout');   //Displays wheat scout menu page
-Route::post('/calculators/wheatScout','Calculators\WheatScoutController@calculate');                    //Calculates and Displays wheat scout results
+Route::get('/calculators/wheatscout','Calculators\WheatScoutController@display')->name('wheatScout');   //Displays wheat scout menu page
+Route::post('/calculators/wheatscout','Calculators\WheatScoutController@calculate');                    //Calculates and Displays wheat scout results
 
 /* ------------------------------- Cropper page controller --------------------------------- */
 Route::get('/calculators/cropper','Calculators\CalculatorController@cropper')->name('cropper');     //Displays the cropper development calculator

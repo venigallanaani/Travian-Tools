@@ -29,7 +29,9 @@ class WheatScoutController extends Controller
         $reports[1] = ParseReports(Input::get('report2'));
         
         $oasis = 1.5+Input::get('oasis');        
-        if(!(Input::get('cap'))==null){   $cap=1;     }        
+        if(!(Input::get('cap'))==null){   $cap=1;     } 
+        
+        if(!(Input::get('pop'))==null){ $result['POP'] = Input::get('pop'); }   else    {   $result['POP'] =0;  }
         
         $result['ARTY'] = Input::get('arty');
         $fields=Input::get('fields');                

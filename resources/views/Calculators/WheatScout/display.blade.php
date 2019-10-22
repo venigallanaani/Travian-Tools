@@ -12,9 +12,6 @@
             	{{ csrf_field() }}
                 <table class="table table-borderless mt-2">
                     <tr>
-                    	<td colspan="2" class="text-danger font-italic px-2 py-1">Please Scout the villages for more accurate estimates.</td>
-                    </tr>
-                    <tr>
                         <td class="py-0">
                             <div class="">
                                 <strong>First Report</strong>
@@ -39,16 +36,21 @@
                         </td>
                     </tr>
                     <tr>
-                    	<td class="py-2">
-                			<strong>Reports Interval </strong><input type="text" size="5" name="intrl" required/><small>secs</small>
-                		</td>
-                		<td class="py-2">
-                			<strong>Target </strong>
-            				<select name="tar">
-								<option value="village">Village</option>
-								<option value="oasis">Oasis</option>
-							</select>                			
-                    	</td> 
+                    	<td class="py-2" colspan="2">
+                        	<span class="px-2">
+                    			<strong>Reports Interval </strong><input type="text" size="3" name="intrl" required/><small>secs</small>
+                    		</span>
+                    		<span class="px-2">
+                    			<strong>Population </strong><input type="text" size="3" name="pop"/>
+                    		</span>
+                    		<span class="px-2">
+                    			<strong>Target </strong>
+                				<select name="tar">
+        							<option value="village">Village</option>
+        							<option value="oasis">Oasis</option>
+        						</select>                			
+                        	</span> 
+                    	</td>
                 	</tr>
                 	<tr>
                     	<td class="py-2" colspan="2">
@@ -83,8 +85,10 @@
                 			<strong>Artifact </strong>
             				<select name="arty">
 								<option value="1">No Artifact</option>
-								<option value="0.5">1/2 Diet</option>
-								<option value="0.75">3/4 Diet</option>
+								<option value="0.5">1/2 X Diet</option>
+								<option value="0.75">3/4 X Diet</option>
+								<option value="1.5">1.5 X Fool</option>
+								<option value="2">2 X Fool</option>
 							</select>                			
                     	</td> 
                     	<td>
