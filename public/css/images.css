@@ -37,6 +37,13 @@ img.res{
 .clock { width:16px; height:12px; background-image:url("../images/clock.png");	}
 
 
+
+img.building{ 
+	background-repeat:no-repeat;	
+	}
+.cranny {width:25px; height:25px; background-position: -75px -50px; background-image:url("../images/buildings.png");}
+
+
 /* Races */
 img.tribe{
 	width:22px; height:22px;
@@ -58,6 +65,10 @@ img.build{
 	background-repeat:no-repeat;
 }
 .tsq{	background-position: -50px -25px;	}
+.fm{	background-position: -175px 0px;	}
+.bkry{	background-position: -200px 0px;	}
+.hm{	background-position: -275px -25px;	}
+
 
 
 /* Statistics */
@@ -70,6 +81,21 @@ img.stats{
 .def{	background-position:-75px 0px;	}
 .dinf{	background-position:-100px 0px;	}
 .dcav{	background-position:-125px 0px;	}
+.carry{	background-position:-225px 0px;}
+
+/* Hero */
+img.exp{
+	width:16px;	height:16px;
+	background-repeat:no-repeat;
+	background-image:url("../images/experience.png");
+}
+
+img.hero{
+	width:18px; height:16px;
+	background-image:url("../images/specials.png");
+	background-repeat:no-repeat;
+	background-position:-36px 0px; 
+}
 
 
 

@@ -55,10 +55,11 @@ class NeighbourFinderController extends Controller
                     ->paginate(50);    */    
 
         if(count($villages)==0){
-            return view('Finders.Neighbour.noNeighbours');
+            return view('Finders.Neighbour.noNeighbours')
+                ->with(['xCor'=>$xCor, 'yCor'=>$yCor, 'dist'=>$dist, 'pop'=>$pop]);
         }else{
             return view('Finders.Neighbour.neighboursList')->with(['villages'=>$villages])
-            ->with(['x'=>$xCor])->with(['y'=>$yCor])->with(['dist'=>$dist]);
+                ->with(['xCor'=>$xCor, 'yCor'=>$yCor, 'dist'=>$dist, 'pop'=>$pop]);
         }
     }
 }

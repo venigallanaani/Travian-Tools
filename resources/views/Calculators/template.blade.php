@@ -1,34 +1,19 @@
 @extends('Layouts.general')
 
 @section('content')
-    <header id="main-header" class="py-1 bg-success text-white">
+    <header id="main-header" class="py-1 bg-primary text-white">
         <div class="container">
-            <p class="h3 font-weight-bold d-inline-block">Calculators</p>
-            <div class="float-right">
-                <div class="btn btn-light dropdown d-inline-block">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
-                    	@if(Session::has('server'))
-                    		{{ Session::get('server.url')}}
-                    	@else 	{{ ' Select Server '}}
-                    	@endif
-    				</a>
-                    <div class="dropdown-menu">
-                        <a href="{{route('server')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
-                    </div>              
-                </div>
-            @if(Session::has('server'))
-            	<p class="h6 d-inline-block px-2" data-toggle="tooltip" data-placement="top" title="Server Time"><span id="clock"></span></p>
-        	@endif
-            </div>
+            <p class="h3 font-weight-bold d-inline-block">Calculators</p>            
         </div>
     </header>
-    
+        
     <div class="container">
         <div class="d-inline">
             <!-- ======================================= Finders Side menu =================================== -->
             <div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
-                <a class="list-group-item py-1 bg-dark h4">Calculators</a>
-                <a href="/calculators/distance" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Distance Calculator</a>
+                <a class="list-group-item py-1 bg-dark h4">Calculators Menu</a>
+                <a href="{{route('cropper')}}" class="list-group-item py-1 list-group-item-action bg-primary text-white h5">Cropper Development</a>
+                <a href="{{route('wheatScout')}}" class="list-group-item py-1 list-group-item-action bg-primary text-white h5">Wheat Scout</a>                
             </div>                      
         </div>
         <div class="float-md-left col-md-9 mt-1 p-0">
@@ -46,5 +31,4 @@
         
         </div>
     </div>
-	@stack('scripts')
 @endsection

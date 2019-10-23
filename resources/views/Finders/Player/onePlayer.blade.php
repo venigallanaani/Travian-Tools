@@ -3,7 +3,7 @@
 @section('result')
 <!-- =========================== Player Finder Output -- Single player ====================================== -->
 
-    <div class="card float-md-left shadow col-md-12 px-0 mb-1">
+    <div class="card float-md-left shadow col-md-12 px-0 mb-5">
         <div class="card-header h4 py-2 bg-success text-white">
             <strong>Player Details</strong>
         </div>
@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <td class="py-1"><strong><span class="text-success">Alliance</span></strong></td>
-                        <td class="py-1">: <a href="/finder/alliance/{{ $player['alliance'] }}/1">{{ $player['alliance'] }}</a></td>
+                        <td class="py-1">: <a href="/finders/alliance/{{ $player['alliance'] }}/1">{{ $player['alliance'] }}</a></td>
                     </tr>
                     <tr>
                         <td class="py-1"><strong><span class="text-success">Rank</span></strong></td>
@@ -59,10 +59,10 @@
                             <th colspan="4" class="h5 text-white bg-success"><strong>Villages</strong></th>
                         </tr>
                         <tr>
-                            <th class="col-md-1">#</th>
-                            <th class="col-md-6">Village Name</th>
-                            <th class="col-md-2">Population</th>
-                            <th class="col-md-2">Coordinates</th>
+                            <th class="">#</th>
+                            <th class="">Village Name</th>
+                            <th class="">Population</th>
+                            <th class="">Coordinates</th>
                         </tr>
                     </thead>
                     @foreach($villages as $index => $village)

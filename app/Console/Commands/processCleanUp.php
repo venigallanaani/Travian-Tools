@@ -40,7 +40,7 @@ class processCleanUp extends Command
             
             Alliances::where('table_id','<>',$server->table_id)
                         ->where('server_id',$server->server_id)->delete();
-            echo "Allainces table cleanup completed"."\n";
+            echo "Alliances table cleanup completed"."\n";
 
             Players::where('table_id','<>',$server->table_id)
                         ->where('server_id',$server->server_id)->delete();
@@ -53,18 +53,22 @@ class processCleanUp extends Command
             $maps = Map::where('server_id',$server->server_id)
                         ->where('status','ACTIVE')->orderBy('created_at','desc')->get();
             if(count($maps)>10){
-                for($i=10;$i<count($maps);$i++){              
-                    
+                for($i=10;$i<count($maps);$i++){                    
+                // Updates the maps table status  
                     Map::where('server_id',$server->server_id)
-                        ->where('map_id',$maps[$i]['map_id'])
-                        ->update(['status'=>'TRUNCATED']);
+                                ->where('map_id',$maps[$i]->map_id)
+                                ->update(['status'=>'ARCHIVE']);
                     
-                    MapData::where('server_id',$server->server_id)
-                        ->where('table_id',$maps[$i]['map_id'])->delete();
+                //Delete maps data
+                    MapData::where('table_id','=',$maps[$i]->map_id)->delete();
                     
-                }  
-                echo 'Truncated old maps data';
-            }        
+                //Delete files
+                    //unlink(env("DOWNLOAD_LOCATION","app/Downloads/").$maps[$i]->map_id);
+                    
+                }                
+            }  
+            echo "Maps table cleanup completed"."\n";
+            
             echo "\n".'**************************************************************************'."\n";
         }
     }

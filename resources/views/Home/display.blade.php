@@ -25,38 +25,52 @@
         <div class="card-columns">
             <div class="card shadow">
                 <div class="card-body">
-                    <p class="h5">Welcome to Travian Tools, </p>
+                @if(Auth::check())
+                	<p class="h5">Welcome {{Auth::user()->name}}</p>
+                @else
+                	<p class="h5">Welcome to Travian Tools</p>
+                @endif
                 </div>
             </div>
             <div class="card shadow">
                 <p class="card-header h4 text-success font-weight-bold">Finders</p>
                 <div class="card-body">                 
-                    <p>Finders help you search the Travian to find different points you need.</p>
+                    <p>Finders help you search the Travian to find different objects you need.</p>
                     <table>
-                        <tr><td><a href="/finder/player" class="text-success font-weight-bold">Player Finder</a></td></tr>
-                        <tr><td><a href="/finder/alliance" class="text-success font-weight-bold">Alliance Finder</a></td></tr>
-                        <tr><td><a href="/finder/inactive" class="text-success font-weight-bold">Inactive Finder</a></td></tr>
-                        <tr><td><a href="/finder/natar" class="text-success font-weight-bold">Natar Finder</a></td></tr>
-                        <tr><td><a href="/finder/neighbour" class="text-success font-weight-bold">Neighbour Finder</a></td></tr>
+                        <tr><td><a href="{{route('findPlayer')}}" class="text-success font-weight-bold">Player Finder</a></td></tr>
+                        <tr><td><a href="{{route('findAlliance')}}" class="text-success font-weight-bold">Alliance Finder</a></td></tr>
+                        <tr><td><a href="{{route('findInactive')}}" class="text-success font-weight-bold">Inactive Finder</a></td></tr>
+                        <tr><td><a href="{{route('findNatar')}}" class="text-success font-weight-bold">Natar Finder</a></td></tr>
+                        <tr><td><a href="{{route('findNeighbour')}}" class="text-success font-weight-bold">Neighbour Finder</a></td></tr>
                     </table>
                 </div>
             </div>
             <div class="card shadow">
-                <p class="card-header h4 text-info font-weight-bold">Plus</p>
-                <div class="card-body">
-                   	@guest
-                    	<p><a href="/login"><strong>Sign In</strong></a> to access the Plus group</p>
-                    @endguest
-                    <p> Plus menu offers different options and tasks for the group to work efficiently.</p>
+                <p class="card-header h4 text-primary font-weight-bold">Calculators</p>
+                <div class="card-body">                 
+                    <p>Calculators to help with different aspects of the game</p>
                     <table>
-                        <tr><td><a href="/plus/members" class="text-info font-weight-bold">Member Details</a></td></tr>
-                        <tr><td><a href="/plus/incoming" class="text-info font-weight-bold">Enter Incomings</a></td></tr>
-                        <tr><td><a href="/plus/defense" class="text-info font-weight-bold">Defense Tasks</a></td></tr>
-                        <tr><td><a href="/plus/offense" class="text-info font-weight-bold">Offense Tasks</a></td></tr>
-                        <tr><td><a href="/plus/resource" class="text-info font-weight-bold">Resource Tasks</a></td></tr>
+                        <tr><td><a href="{{route('cropper')}}" class="text-primary font-weight-bold">Cropper Development</a></td></tr>
+                        <tr><td><a href="{{route('wheatScout')}}" class="text-primary font-weight-bold">Wheat Scout</a></td></tr>
                     </table>
                 </div>
             </div>
+<!--             <div class="card shadow"> -->
+<!--                 <p class="card-header h4 text-info font-weight-bold">Plus</p> -->
+<!--                 <div class="card-body"> -->
+<!--                    	@guest -->
+<!--                     	<p><a href="/login"><strong>Sign In</strong></a> to access the Plus group</p> -->
+<!--                     @endguest -->
+<!--                     <p> Plus menu offers different options and tasks for the group to work efficiently.</p> -->
+<!--                     <table> -->
+<!--                         <tr><td><a href="/plus/members" class="text-info font-weight-bold">Member Details</a></td></tr> -->
+<!--                         <tr><td><a href="/plus/incoming" class="text-info font-weight-bold">Enter Incomings</a></td></tr> -->
+<!--                         <tr><td><a href="/plus/defense" class="text-info font-weight-bold">Defense Tasks</a></td></tr> -->
+<!--                         <tr><td><a href="/plus/offense" class="text-info font-weight-bold">Offense Tasks</a></td></tr> -->
+<!--                         <tr><td><a href="/plus/resource" class="text-info font-weight-bold">Resource Tasks</a></td></tr> -->
+<!--                     </table> -->
+<!--                 </div> -->
+<!--             </div> -->
             <div class="card shadow">
                 <p class="card-header h4 text-warning font-weight-bold">Account</p>
                 <div class="card-body">
@@ -72,19 +86,19 @@
                     </table>
                 </div>
             </div>  
-            <div class="card shadow">
-                <p class="card-header h4 text-secondary font-weight-bold">Useful Links</p>
-                <div class="card-body">
-                    <p>External links to help you.</p>
-                    <table>
-                        <tr><td><a href="http://travian.kirilloid.ru/warsim2.php" target="_blank" class="text-primary font-weight-bold">Combat Simulator</a></td></tr>
-                        <tr><td><a href="http://travian.kirilloid.ru/war.php#s=1.44&func=cu%2Ft" target="_blank" class="text-primary font-weight-bold">Unit Attributes</a></td></tr>
-                        <tr><td><a href="http://travian.kirilloid.ru/build.php#mb=1&s=1.44" target="_blank" class="text-primary font-weight-bold">Building Calculator</a></td></tr>
-                        <tr><td><a href="" target="_blank" class="text-primary font-weight-bold">Cropper Development</a></td></tr>
-                        <tr><td><a href="http://travian.kirilloid.ru/villages_res.php#s=1.44&fl=10,10,10,10&fs=31" target="_blank" class="text-primary font-weight-bold">Resource Calculator</a></td></tr>
-                    </table>
-                </div>
-            </div>                      
+<!--             <div class="card shadow"> -->
+<!--                 <p class="card-header h4 text-secondary font-weight-bold">Useful Links</p> -->
+<!--                 <div class="card-body"> -->
+<!--                     <p>External links to help you.</p> -->
+<!--                     <table> -->
+<!--                         <tr><td><a href="http://travian.kirilloid.ru/warsim2.php" target="_blank" class="text-primary font-weight-bold">Combat Simulator</a></td></tr> -->
+<!--                         <tr><td><a href="http://travian.kirilloid.ru/war.php#s=1.44&func=cu%2Ft" target="_blank" class="text-primary font-weight-bold">Unit Attributes</a></td></tr> -->
+<!--                         <tr><td><a href="http://travian.kirilloid.ru/build.php#mb=1&s=1.44" target="_blank" class="text-primary font-weight-bold">Building Calculator</a></td></tr> -->
+<!--                         <tr><td><a href="" target="_blank" class="text-primary font-weight-bold">Cropper Development</a></td></tr> -->
+<!--                         <tr><td><a href="http://travian.kirilloid.ru/villages_res.php#s=1.44&fl=10,10,10,10&fs=31" target="_blank" class="text-primary font-weight-bold">Resource Calculator</a></td></tr> -->
+<!--                     </table> -->
+<!--                 </div> -->
+<!--             </div>                       -->
         </div>
     </div>  
     

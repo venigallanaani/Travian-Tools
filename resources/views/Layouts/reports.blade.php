@@ -9,41 +9,68 @@
         <!-- Fonts -->
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/images.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
-		
+        <link href="{{ asset('css/footer.css') }}" rel="stylesheet">		
         @stack('extensions')        
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         
     </head>
-    <body onload="displayTime()">
-        <header id="main-header" class="py-1 bg-dark text-white">
+    <body>
+		<nav class="navbar p-0 font-weight-bold navbar-expand-md navbar-dark bg-dark align-middle">
             <div class="container">
-                <p class="h3 font-weight-bold text-center">
-                	<span class="h3">Travian Tools</span>
-                	<span class="h6"> Reports </span>
-                </p>                
-            </div>
-        </header> 
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>                
+                <a href="/" class="navbar-brand mr-3">
+            		<img id="logo" alt="" src="{{{ asset('images/favicon.png') }}}" width="42" height="30"> 	
+            		<span class="h3">Travian Tools </span><small class="align-bottom">1.2</small>
+        		</a>
 
-        <div class="container">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item px-2">
+                            <a href="{{ route('home') }}" class="nav-link">Tools</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a href="{{ route('reports') }}" class="nav-link">Reports</a>
+                        </li>
+                    </ul> 
+                </div>
+            </div>
+        </nav>
 	@foreach(['danger','success','warning','info'] as $msg)
 		@if(Session::has($msg))
+		<div class="container">
         	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>{{ Session::get($msg) }}
             </div>
+        </div> 
         @endif
     @endforeach	
-        	@yield('content')
-        </div>            
+    
+    	@yield('content')
+        	
+       <div class="footer bg-secondary">
+            <div class="container py-0">
+                <table class="col-md-12 col-12">
+                    <tr class="font-weight-bold">
+                        <td><a href="{{ route('about') }}" class="text-white">About</a></td>
+                        <td><a href="{{ route('support') }}" class="text-white">Support</a></td>        
+                        
+                        <td class="col-md-6 text-white text-right"><small>All rights to images belongs to Travian Games Gmbh.</small></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
 <!-- == Bootstrap additions == -->
 		       
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>        
+        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>   
+        @stack('scripts')     
     </body>
-    @stack('scripts')
+    
 </html>

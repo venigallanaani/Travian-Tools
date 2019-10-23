@@ -16,33 +16,45 @@ class Kernel extends ConsoleKernel
     {
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Load:Maps')
-			->everyminute()
-            //->daily()
+            ->dailyAt('00:00')
+            //->everyminute()
             ->appendOutputTo(storage_path('logs/processLoads.log')); 
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Load:Diff')
-			->everyminute()
-            //->dailyAt('00:15')
+            ->dailyAt('00:15')
+            //->everyminute()
             ->appendOutputTo(storage_path('logs/processLoads.log')); 
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Process:Players')
-			->everyminute()
-            //->dailyAt('00:30')
+            ->dailyAt('00:30')
+            //->everyminute()
             ->appendOutputTo(storage_path('logs/processLoads.log'));   
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('Process:Alliances')
-			->everyminute()
-            //->dailyAt('00:45')
+            ->dailyAt('00:45')
+            //->everyminute()
             ->appendOutputTo(storage_path('logs/processLoads.log'));   
         
         // Loads all th commands from the map.sql files of all the active servers.
         $schedule->command('process:CleanUp')
-			->everyminute()
-            //->dailyAt('01:00')
-            ->appendOutputTo(storage_path('logs/processLoads.log')); 
+            ->dailyAt('01:00')
+            //->everyminute()
+            ->appendOutputTo(storage_path('logs/cleanUp.log'));
+        
+        // Deletes the reports which are not used for 100 days
+//         $schedule->command('Delete:Reports')
+//             ->dailyAt('12:00')
+//             //->everyminute()
+//             ->appendOutputTo(storage_path('logs/cleanUp.log')); 
+         
+        //Clears data from the storage folder    
+        $schedule->command('Clear:Storage')
+            ->dailyAt('23:00')
+            //->everyminute()
+            ->appendOutputTo(storage_path('logs/cleanUp.log')); 
     }
     
     protected function commands()

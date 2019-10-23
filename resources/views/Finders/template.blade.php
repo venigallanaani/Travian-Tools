@@ -16,9 +16,6 @@
                         <a href="{{route('server')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
-            @if(Session::has('server'))
-            	<p class="h6 d-inline-block px-2" data-toggle="tooltip" data-placement="top" title="Server Time"><span id="clock"></span></p>
-        	@endif
             </div>
         </div>
     </header>
@@ -28,11 +25,11 @@
             <!-- ======================================= Finders Side menu =================================== -->
             <div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
                 <a class="list-group-item py-1 bg-dark h4">Finders Menu</a>
-                <a href="/finder/player" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Player Finder</a>
-                <a href="/finder/alliance" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Alliance Finder</a>
-                <a href="/finder/inactive" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Inactive Finder</a>
-                <a href="/finder/natar" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Natar Finder</a>
-                <a href="/finder/neighbour" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Neighbour Finder</a>
+                <a href="{{route('findPlayer')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Player Finder</a>
+                <a href="{{route('findAlliance')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Alliance Finder</a>
+                <a href="{{route('findInactive')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Inactive Finder</a>
+                <a href="{{route('findNatar')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Natar Finder</a>
+                <a href="{{route('findNeighbour')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Neighbour Finder</a>
             </div>                      
         </div>
         <div class="float-md-left col-md-9 mt-1 p-0">

@@ -8,13 +8,13 @@
             <strong>Alliance Finder</strong>
         </div>
         <div class="card-text mx-auto text-center">
-            <form action="/finder/alliance" method="POST">
+            <form action="{{route('findAlliance')}}" method="POST">
             	{{ csrf_field() }}
                 <table class="table table-borderless mt-2">
                     <tr>
-                        <td class="col-md-5">
+                        <td class="">
                             <div class="p-2">
-                                <strong>Alliance Name: </strong><input type="text" size="15" name="allyNm" value="{{old('allyNm')}}" required/>
+                                <strong>Alliance Name: </strong><input type="text" size="15" name="allyNm" value="{{isset($allyNm)? $allyNm : ''}}" required/>
                             </div>
                             <div  class="p-2">
                                 <button class="btn btn-outline-warning px-5" type="submit"><strong>Search Alliance</strong></button>

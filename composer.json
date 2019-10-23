@@ -30,7 +30,7 @@
 			"App\\" : "app/"
 		},
 		"files" : [
-			"app/Helpers/Parsers.php",
+			"app/Helpers/Parsers/ReportParser.php",
 			"app/Helpers/Graphics.php"
 		]
 	},

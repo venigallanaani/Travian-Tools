@@ -17,7 +17,7 @@
     		<div class="container">
     			<a href="/" class="navbar-brand mr-3">
     				<img id="logo" alt="" src="{{{ asset('images/favicon.png') }}}" width="42" height="30">
-    				<span class="h3">Travian Tools </span><small class="align-bottom"><small>1.0</small></small>
+    				<span class="h3">Travian Tools </span><small class="align-bottom"><small>1.2</small></small>
 				</a>
 	        @guest
                 <ul class="navbar-nav ml-auto">

@@ -24,7 +24,7 @@
                 <!-- <a href="/" class="navbar-brand mr-3"><span class="h3">Travian Tools </span><small class="align-bottom"><small>1.0</small></small></a> -->
                 <a href="/" class="navbar-brand mr-3">
             		<img id="logo" alt="" src="{{{ asset('images/favicon.png') }}}" width="42" height="30"> 	
-            		<span class="h3">Travian Tools </span><small class="align-bottom"><small>dev</small></small>
+            		<span class="h3">Travian Tools </span><small class="align-bottom"><small>1.2</small></small>
         		</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
@@ -32,14 +32,17 @@
                             <a href="{{ route('home') }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a href="{{ route('finder') }}" class="nav-link">Finders</a>
+                            <a href="{{ route('finders') }}" class="nav-link">Finders</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a href="{{ route('account') }}" class="nav-link">Account</a>
+                            <a href="{{ route('calculators') }}" class="nav-link">Calculators</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a href="{{ route('plus') }}" class="nav-link">Plus</a>
+                            <a href="/account" class="nav-link">Account</a>
                         </li>
+<!--                         <li class="nav-item px-2"> -->
+<!--                             <a href="/plus" class="nav-link">Plus</a> -->
+<!--                         </li> -->
                         <li class="nav-item px-2">
                             <a href="{{ route('reports') }}" class="nav-link">Reports</a>
                         </li>
@@ -68,21 +71,23 @@
         </nav>
 
         @yield('content')
-
-  <!--      
-        <div class="footer bg-secondary">
-            <div class="container py-0">
-                <table>
+        
+       <div class="footer bg-secondary">
+            <div class="container py-2">
+                <table class="col-md-12 col-12">
                     <tr class="font-weight-bold">
-                        <td class="col-md-3"><a href="/about" class="text-white">About</a></td>
-                        <td class="col-md-3"><a href="/help" class="text-white">Help</a></td>
-                        <td class="col-md-3"><a href="/support" class="text-white">Suggestions</a></td>
+                        <td><a href="{{ route('about') }}" class="text-white">About</a></td>
+                        <td><a href="{{ route('support') }}" class="text-white">Support</a></td> 
+                        <td class="col-md-6 text-white text-right"><small>All rights to images belongs to Travian Games Gmbh.</small></td>
                     </tr>
                 </table>
             </div>
         </div>
         
- == Bootstrap additions == -->
+        
+
+        
+<!-- == Bootstrap additions == -->
       
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>

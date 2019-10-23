@@ -25,7 +25,7 @@ class AllianceFinderController extends Controller
             if($id==null){
                 $alliances=Alliances::where('alliance','like','%'.$name.'%')
                             ->where('server_id',$request->session()->get('server.id'))
-                            ->orderBy('rank','asc')->paginate(5);
+                            ->orderBy('rank','asc')->paginate(10);
             }else{
                 $alliances=Alliances::where('alliance','=',$name)
                             ->where('server_id',$request->session()->get('server.id'))->get();
@@ -33,12 +33,12 @@ class AllianceFinderController extends Controller
             
             if(count($alliances)==0){
                 // no players are found in search results
-                return view('Finders.Alliance.noAlliance')->with('alliance',$name);
+                return view('Finders.Alliance.noAlliance')->with('allyNm',$name);
                 
             }elseif(count($alliances)>1){
                 // more than one player is found in search results
                 //dd($players);
-                return view('Finders.Alliance.manyAlliances')->with(['alliances'=>$alliances]);                
+                return view('Finders.Alliance.manyAlliances')->with(['alliances'=>$alliances])->with('allyNm',$name);                
             }else{
                 //one player is found in the search results
                 // fetching the villages details from diff table
@@ -47,7 +47,7 @@ class AllianceFinderController extends Controller
                             ->orderBy('population','desc')->get();
                 //dd($villages);
                 return view('Finders.Alliance.oneAlliance')->with(['alliance'=>$alliances[0]])
-                            ->with(['players'=>$players]);
+                            ->with(['players'=>$players])->with('allyNm',$name);
             }
         }
     }
@@ -55,7 +55,7 @@ class AllianceFinderController extends Controller
     public function processAlliance(){
         // converts the alliance finder post call into get
         $name  = Input::get('allyNm') ;
-        return Redirect::to('/finder/alliance/'.$name) ;
+        return Redirect::to('/finders/alliance/'.$name) ;
     }   
 
 }

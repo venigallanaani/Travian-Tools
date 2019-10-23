@@ -4,7 +4,7 @@
 
 <!-- ========================================= Natar Finder -- Village found ======================================================== -->
 
-    <div class="card float-md-left my-1 p-0 col-md-12 shadow">
+    <div class="card float-md-left my-1 p-0 col-md-12 shadow mb-5">
         <div class="card-header h4 py-2 bg-success text-white">
             <strong>Natar Results</strong>
         </div>
@@ -17,7 +17,7 @@
                 </tr>
                 @foreach($natars as $natar)
                     <tr>
-                        <td class="py-0">{{round(sqrt(pow(($x-$natar->x),2)+pow(($y-$natar->y),2)),1)}}</td>
+                        <td class="py-0">{{round(sqrt(pow(($xCor-$natar->x),2)+pow(($yCor-$natar->y),2)),1)}}</td>
                         <td class="py-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$natar->x}}&y={{$natar->y}}" target="_blank">{{$natar->village}}</td>
                         <td class="py-0">{{$natar->population}}</td>
                     </tr>

@@ -20,7 +20,7 @@ class PlayerFinderController extends Controller
     public function processPlayer(){
         // converts the player finder post into get call
         $name  = Input::get('plrNm') ;
-        return Redirect::to('/finder/player/'.$name) ;
+        return Redirect::to('/finders/player/'.$name) ;
     }
     
     public function player($name=null,$id=null, Request $request){
@@ -32,7 +32,7 @@ class PlayerFinderController extends Controller
             if($id==null){
                 $players=Players::where('player','like','%'.$name.'%')
                     ->where('server_id',$request->session()->get('server.id'))
-                    ->orderBy('rank','asc')->paginate(50);
+                    ->orderBy('rank','asc')->paginate(20);
             }else{
                 $players=Players::where('player','=',$name)
                     ->where('server_id',$request->session()->get('server.id'))->get();
@@ -40,12 +40,12 @@ class PlayerFinderController extends Controller
             
             if(count($players)==0){
                 // no players are found in search results
-                return view('Finders.Player.noPlayers')->with('player',$name);
+                return view('Finders.Player.noPlayers')->with('plrNm',$name);
                 
             }elseif(count($players)>1){
                 // more than one player is found in search results
                 //dd($players);
-                return view('Finders.Player.manyPlayers')->with(['players'=>$players]);
+                return view('Finders.Player.manyPlayers')->with(['players'=>$players])->with('plrNm',$name);
                 
             }else{
                 //one player is found in the search results
@@ -55,7 +55,7 @@ class PlayerFinderController extends Controller
                     ->orderBy('population','desc')->get();
                 //dd($villages);
                 return view('Finders.Player.onePlayer')->with(['player'=>$players[0]])
-                            ->with(['villages'=>$villages]);
+                ->with(['villages'=>$villages])->with('plrNm',$name);
             }            
         }
     }   

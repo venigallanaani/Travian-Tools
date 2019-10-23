@@ -2,7 +2,7 @@
 
 @section('result')    
 <!-- =========================== alliance Finder Output -- Single alliance ====================================== -->
-    <div class="card float-md-left shadow col-md-12 px-0 mb-1">
+    <div class="card float-md-left shadow col-md-12 px-0 mb-5">
         <div class="card-header h4 py-2 bg-success text-white">
             <strong>Alliance Details</strong>
         </div>
@@ -53,18 +53,18 @@
                             <th colspan="6" class="h5 text-white bg-success"><strong>Players</strong></th>
                         </tr>
                         <tr>
-                            <th class="col-md-1">#</th>
-                            <th class="col-md-3">Player</th>
-                            <th class="col-md-1">Rank</th>
-                            <th class="col-md-1">Tribe</th>                            
-                            <th class="col-md-2">Population</th>
-                            <th class="col-md-1">Villages</th>
+                            <th class="">#</th>
+                            <th class="">Player</th>
+                            <th class="">Rank</th>
+                            <th class="">Tribe</th>                            
+                            <th class="">Population</th>
+                            <th class="">Villages</th>
                         </tr>
                     </thead>
                     @foreach($players as $index=>$player)
                         <tr>
                             <td class="py-0">{{ $index+1 }}</td>
-                            <td class="py-0"><a href="/finder/player/{{$player['player']}}/1"><strong>{{$player['player']}}</strong></a></td>
+                            <td class="py-0"><a href="/finders/player/{{$player['player']}}/1"><strong>{{$player['player']}}</strong></a></td>
                             <td class="py-0">{{$player['rank']}}</td>
                             <td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$player->tribe}}"><img alt="" src="/images/x.gif" class="tribe {{$player->tribe}}"></td>
                             <td class="py-0">{{$player['population']}} <span class="small text-@if($player['diffpop'] >0 ){{'success'}}@else{{'danger'}}@endif"

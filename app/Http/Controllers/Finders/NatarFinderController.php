@@ -36,10 +36,11 @@ class NatarFinderController extends Controller
         $natars= DB::select(DB::raw($sqlStr));        
         //dd($natars);
         if(count($natars)==0){
-            return view('Finders.Natar.noNatar');
+            return view('Finders.Natar.noNatar')
+                    ->with(['xCor'=>$xCor,'yCor'=>$yCor,'dist'=>$dist]);
         }else{
             return view('Finders.Natar.natarList')->with(['natars'=>$natars])
-                    ->with(['x'=>$xCor])->with(['y'=>$yCor])->with(['dist'=>$dist]);
+                    ->with(['xCor'=>$xCor,'yCor'=>$yCor,'dist'=>$dist]);
         }                
     }
 

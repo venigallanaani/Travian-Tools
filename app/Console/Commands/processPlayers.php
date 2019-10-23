@@ -48,8 +48,10 @@ class processPlayers extends Command
                 
                 $population = 0; $diffPop = 0;
                 $status = 'Inactive';
-                foreach($details as $detail){                    
+                $villages = 0;
+                foreach($details as $detail){ 
                     
+                    $villages++;
                     $population+=$detail->population;
                     $diffPop+=$detail->diffPop;
                     if($detail->diffPop > 0){
@@ -70,7 +72,7 @@ class processPlayers extends Command
                         'uid'=>$uid,
                         'player'=>$details[0]->player,
                         'tribe'=>$tribe,
-                        'villages'=>count($details),
+                        'villages'=>$villages,
                         'population'=>$population,
                         'diffpop'=>$diffPop,
                         'aid'=>$details[0]->aid,
