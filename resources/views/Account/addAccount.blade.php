@@ -18,7 +18,7 @@
                 @endif
             @endforeach        
       				
-					<form action="/account/add" method="POST" class="col-md-10 mx-auto text-center">
+					<form action="{{route('account')}}/add" method="POST" class="col-md-10 mx-auto text-center">
 						{{ csrf_field() }}        						
 						<p class="my-2">
 							<strong>Travian Account Name: <input type="text" name="player" size="15" required></strong>

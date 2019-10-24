@@ -13,7 +13,7 @@
                     	@endif
     				</a>
                     <div class="dropdown-menu">
-                        <a href="{{route('server')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
+                        <a href="{{route('servers')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
             </div>
@@ -37,7 +37,7 @@
             <div class="alert alert-warning text-center my-1" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>You have not selected a server, <a href="{{route('server')}}" class="text-weight-bold"><strong>Select Server</strong></a>            
+                </button>You have not selected a server, <a href="{{route('servers')}}" class="text-weight-bold"><strong>Select Server</strong></a>            
             </div>
 		@endif
 		@foreach(['danger','success','warning','info'] as $msg)

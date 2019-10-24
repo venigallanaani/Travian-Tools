@@ -14,7 +14,7 @@
                     	@endif
     				</a>
                     <div class="dropdown-menu">
-                        <a href="{{route('server')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
+                        <a href="{{route('servers')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
             @if(Session::has('server'))
@@ -46,11 +46,11 @@
           <!-- ======================================= Account Side menu =================================== -->
   			<div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
 				<a class="list-group-item py-1 bg-dark h4">Account Menu</a>
-				<a href="/account" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
-				<a href="/account/support" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Sitters & Duals</a>
-				<a href="/account/troops" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Details</a>
-				<a href="/account/hero" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Hero Details</a>
-				<a href="/account/alliance" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Alliance</a>
+				<a href="{{route('account')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
+				<a href="{{route('accountSupport')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Sitters & Duals</a>
+				<a href="{{route('accountTroops')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Details</a>
+				<a href="{{route('accountHero')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Hero Details</a>
+				<a href="{{route('accountAlliance')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Alliance</a>
   			</div>	
 	    </div> 
 	    	

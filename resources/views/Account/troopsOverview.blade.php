@@ -47,17 +47,17 @@
 						<tr id="{{$troop['vid']}}">
 							<td class="p-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$troop['x']}}&y={{$troop['y']}}" target="_blank">
 								{{$troop['village']}}</a></td>
-							<td class="p-0 unit01" contenteditable="true">{{$troop['unit01']}}</td>
-							<td class="p-0 unit02" contenteditable="true">{{$troop['unit02']}}</td>
-							<td class="p-0 unit03" contenteditable="true">{{$troop['unit03']}}</td>
-							<td class="p-0 unit04" contenteditable="true">{{$troop['unit04']}}</td>
-							<td class="p-0 unit05" contenteditable="true">{{$troop['unit05']}}</td>
-							<td class="p-0 unit06" contenteditable="true">{{$troop['unit06']}}</td>
-							<td class="p-0 unit07" contenteditable="true">{{$troop['unit07']}}</td>
-							<td class="p-0 unit08" contenteditable="true">{{$troop['unit08']}}</td>
-							<td class="p-0 unit09" contenteditable="true">{{$troop['unit09']}}</td>
-							<td class="p-0 unit10" contenteditable="true">{{$troop['unit10']}}</td>
-							<td class="p-0">{{$troop['upkeep']}}</td>
+							<td class="p-0 unit01" contenteditable="true">{{number_format($troop['unit01'])}}</td>
+							<td class="p-0 unit02" contenteditable="true">{{number_format($troop['unit02'])}}</td>
+							<td class="p-0 unit03" contenteditable="true">{{number_format($troop['unit03'])}}</td>
+							<td class="p-0 unit04" contenteditable="true">{{number_format($troop['unit04'])}}</td>
+							<td class="p-0 unit05" contenteditable="true">{{number_format($troop['unit05'])}}</td>
+							<td class="p-0 unit06" contenteditable="true">{{number_format($troop['unit06'])}}</td>
+							<td class="p-0 unit07" contenteditable="true">{{number_format($troop['unit07'])}}</td>
+							<td class="p-0 unit08" contenteditable="true">{{number_format($troop['unit08'])}}</td>
+							<td class="p-0 unit09" contenteditable="true">{{number_format($troop['unit09'])}}</td>
+							<td class="p-0 unit10" contenteditable="true">{{number_format($troop['unit10'])}}</td>
+							<td class="p-0">{{number_format($troop['upkeep'])}}</td>
 							<td class="p-0 tsq" contenteditable="true">{{$troop['Tsq']}}</td>
 							<td class="py-0">{{$troop['type']}}</td>
 							<td class="p-0" data-toggle="tooltip" data-placement="top" title="save">
@@ -67,17 +67,17 @@
 					@endforeach
 						<tr class="font-weight-bold">
 							<td class="px-0">Total</td>
-							<td class="px-0">{{$stats['unit01']}}</td>
-							<td class="px-0">{{$stats['unit02']}}</td>
-							<td class="px-0">{{$stats['unit03']}}</td>
-							<td class="px-0">{{$stats['unit04']}}</td>
-							<td class="px-0">{{$stats['unit05']}}</td>
-							<td class="px-0">{{$stats['unit06']}}</td>
-							<td class="px-0">{{$stats['unit07']}}</td>
-							<td class="px-0">{{$stats['unit08']}}</td>
-							<td class="px-0">{{$stats['unit09']}}</td>
-							<td class="px-0">{{$stats['unit10']}}</td>
-							<td class="px-0" colspan="2">{{$stats['upkeep']}}</td>
+							<td class="px-0">{{number_format($stats['unit01'])}}</td>
+							<td class="px-0">{{number_format($stats['unit02'])}}</td>
+							<td class="px-0">{{number_format($stats['unit03'])}}</td>
+							<td class="px-0">{{number_format($stats['unit04'])}}</td>
+							<td class="px-0">{{number_format($stats['unit05'])}}</td>
+							<td class="px-0">{{number_format($stats['unit06'])}}</td>
+							<td class="px-0">{{number_format($stats['unit07'])}}</td>
+							<td class="px-0">{{number_format($stats['unit08'])}}</td>
+							<td class="px-0">{{number_format($stats['unit09'])}}</td>
+							<td class="px-0">{{number_format($stats['unit10'])}}</td>
+							<td class="px-0" colspan="2">{{number_format($stats['upkeep'])}}</td>
 							<!-- <td></td>
 							<td></td>  -->
 						</tr>
@@ -86,7 +86,7 @@
 			</div>	
 
 			<div class="col-md-8 mx-auto rounded mb-5 pt-2" style="background-color:#dbeef4;">
-				<form method="post" action="/account/troops/parse">	
+				<form method="post" action="{{route('accountTroops')}}/parse">	
 					{{ csrf_field() }}
     				<table>
     					<tr>
@@ -131,7 +131,7 @@
                 
             $.ajax({
                type:'POST',
-               url:'/account/troops/update',
+               url:'{{route("accountTroops")}}/update',
                data:{	vid:vid, 		tsq:tsq,	
             	   		unit01:unit01,	unit02:unit02,
             	   		unit03:unit03,	unit04:unit04,

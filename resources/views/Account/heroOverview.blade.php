@@ -23,9 +23,9 @@
                     </button>Hero data not added yet
                 </div>
             @else
-    			<table class="p-0 m-0 col-md-10 mx-auto">
+    			<table class="p-0 m-0 mx-auto">
     				<tr>
-    					<td class="col-md-6">
+    					<td class="px-2">
     						<table class="mx-auto">
         						<tr>
         							<td class="p-0 text-primary"><strong>Name</strong></td><td>: {{$hero->name}}</td>
@@ -50,8 +50,8 @@
         						</tr>
         					</table>
     					</td>
-    					<td class="col-md-6">
-    		        		<div id="heroPieChart" style="width: 100%; height: 100%;" class="m-2">        			
+    					<td class="">
+    		        		<div id="heroPieChart" style="width: 100%; height: 100%;" class="">        			
                     		</div>
     					</td>
     				</tr>
@@ -59,15 +59,15 @@
 			@endif					
     		</div>        		
     		<div class="col-md-9 mx-auto rounded my-3" style="background-color:#dbeef4;">
-    			<form action="/account/hero/update" method="post">
+    			<form action="{{route('accountHero')}}" method="post">
     			{{csrf_field()}}
         			<table class="mx-auto">
         				<tr>
-        					<td colspan="2"><p class="h4 text-primary text-center"><strong>Input Hero Details</strong></p></td>
+        					<td colspan="2"><p class="h4 text-primary text-center py-2"><strong>Input Hero Details</strong></p></td>
         				</tr>
         				<tr>
-        					<td class="align-middle px-2"><p><textarea rows="3" cols="25" name="heroStr" required></textarea></td>
-        					<td class="align-middle px-2 small font-italic"><p>Enter the Troops page data here</p></td>
+        					<td class="align-middle px-2"><p><textarea rows="5" cols="25" name="heroStr" required></textarea></td>
+        					<td class="align-middle px-2 font-italic">Enter the Hero page here <small>(Expand the Attributes page)</small></td>
         				</tr>
         				<tr>
         					<td colspan="2" class="text-center pb-3"><button class="btn btn-primary px-4" type="submit"><strong>Update Hero</strong></button></td>

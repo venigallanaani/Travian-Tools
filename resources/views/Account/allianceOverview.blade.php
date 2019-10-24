@@ -2,7 +2,7 @@
 
 @section('body')
 <!-- =================================== Account Overview screen================================== -->
-	<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+	<div class="card float-md-left col-md-9 mt-1 p-0 shadow mb-5">
         <div class="card-header h4 py-2 bg-warning text-white">
             <strong>Alliance Details</strong>
         </div>
@@ -54,26 +54,26 @@
                         </tr>
                         <tr>
                             <th>#</th>
-                            <th class="col-md-3">Player</th>
-                            <th class="col-md-1">Tribe</th>
-                            <th class="col-md-1">Rank</th>
-                            <th class="col-md-2">Population</th>
-                            <th class="col-md-1">Villages</th>
-                            <th class="col-md-2">Sitter 1</th>
-                            <th class="col-md-2">Sitter 2</th>
+                            <th class="">Player</th>
+                            <th class="">Tribe</th>
+                            <th class="">Rank</th>
+                            <th class="">Population</th>
+                            <th class="">Villages</th>
+                            <th class="">Sitter 1</th>
+                            <th class="">Sitter 2</th>
                         </tr>
                     </thead>
                     @foreach($players as $index=>$player)
                     <tr>
                         <td>{{$index+1}}</td>
-                        <td><a href="/finder/player/{{$player['player']}}/1" target="_blank"><strong>{{$player['player']}}</strong></a></td>
+                        <td><a href="{{route('findPlayer')}}/{{$player['player']}}/1" target="_blank"><strong>{{$player['player']}}</strong></a></td>
                         <td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$player['tribe']}}">
                         	<img alt="" src="/images/x.gif" class="tribe {{$player['tribe']}}"></td>
                         <td>{{$player['rank']}}</td>
                         <td>{{$player['population']}} <small>({{$player['diffpop']}})</small></td>
                         <td>{{$player['villages']}}</td>
-                        <td><a href="/finder/player/{{$player['sitter1']}}/1">{{$player['sitter1']}}</a></td>
-                        <td><a href="/finder/player/{{$player['sitter2']}}/1">{{$player['sitter2']}}</a></td>
+                        <td><a href="{{route('findPlayer')}}/{{$player['sitter1']}}/1">{{$player['sitter1']}}</a></td>
+                        <td><a href="{{route('findPlayer')}}/{{$player['sitter2']}}/1">{{$player['sitter2']}}</a></td>
                     </tr>                   
                     @endforeach
                 </table>

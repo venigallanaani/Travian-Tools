@@ -14,7 +14,7 @@
                     	@endif
     				</a>
                     <div class="dropdown-menu">
-                        <a href="{{route('server')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
+                        <a href="{{route('servers')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
             @if(Session::has('server'))
@@ -34,7 +34,7 @@
     @endforeach
     <div class="container">
     	<p class="h4 py-2">Select Server</p>
-    	<form action="/servers" method="POST">
+    	<form action="{{route('servers')}}" method="POST">
     		{{ csrf_field() }}
     		@foreach($servers as $index=>$country)
         		<div class="py-2">

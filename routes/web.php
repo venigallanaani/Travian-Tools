@@ -79,14 +79,14 @@ Route::post('/account/troops/update','Account\TroopsController@updateTroops');
 
 /* ------------------ Account Hero page --------------------------------*/
 Route::get('/account/hero','Account\HeroController@heroOverview')->name('accountHero');
-Route::post('/account/hero/update','Account\HeroController@processHero');
+Route::post('/account/hero','Account\HeroController@processHero');
 
-Route::get('/account/alliance','Account\AllianceController@allianceOverview');
+Route::get('/account/alliance','Account\AllianceController@allianceOverview')->name('accountAlliance');
 
 /* ------------------------ Account Support page --------------------------------- */
-Route::get('/account/support','Account\SupportController@overview');
-Route::post('/account/sitter/update', 'Account\SupportController@updateSitters');
-Route::post('/account/dual/update', 'Account\SupportController@updateDuals');
+Route::get('/account/support','Account\SupportController@overview')->name('accountSupport');
+Route::post('/account/sitter/update', 'Account\SupportController@updateSitters')->name('accountSitter');
+Route::post('/account/dual/update', 'Account\SupportController@updateDuals')->name('accountDual');
 
 
 /*----------------------------------------------------------------------------------*/

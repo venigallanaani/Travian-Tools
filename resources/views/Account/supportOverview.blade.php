@@ -22,15 +22,15 @@
     				<div class="card-text">
     					<table class="table table-hover col-md-6 text-center mx-auto">
     						<tr>
-    							<td class="text-right col-md-6">Sitter 1 :</td>
-    							<td contenteditable="true" class="text-left col-md-6" id="sitter1Edit">{{$account->sitter1}}</td>
+    							<td class="text-right">Sitter 1 :</td>
+    							<td contenteditable="true" class="text-left" id="sitter1Edit">{{$account->sitter1}}</td>
     						</tr>
     						<tr>
-    							<td class="text-right col-md-6">Sitter 2 :</td>
-    							<td contenteditable="true" class="text-left col-md-6" id="sitter2Edit">{{$account->sitter2}}</td>
+    							<td class="text-right">Sitter 2 :</td>
+    							<td contenteditable="true" class="text-left" id="sitter2Edit">{{$account->sitter2}}</td>
     						</tr>
     					</table>
-    					<form id="form" action="/account/sitter/update" method="POST" onsubmit="return updateSitter()" class="text-center pb-3">
+    					<form id="form" action="{{route('accountSitter')}}" method="POST" onsubmit="return updateSitter()" class="text-center pb-3">
     						{{ csrf_field() }}
     						<input id="sitter1" name="sitter1" style="display:none">
     						<input id="sitter2" name="sitter2" style="display:none">    						
@@ -39,7 +39,7 @@
     				</div>			
     			</div> 
     			
-    			<div class="card shadow col-md-12 p-0 mt-3 mx-auto">
+    			<div class="card shadow col-md-12 p-0 mt-3 mb-5 mx-auto">
     				<div class="card-header h4 py-2 bg-warning text-white text-center">
     					<strong>Dual Details</strong>
     				</div>  
@@ -49,7 +49,7 @@
     					</div>
     					<div class="text-center col-md-8 mx-auto rounded p-2 mb-2" style="background-color:#dbeef4">
     						<p>Enter Dual Passcode to link the Travian profiles</p>
-    						<form action="/account/dual/update" method="post">
+    						<form action="{{route('accountDual')}}" method="post">
     							{{csrf_field()}}
     							<p><input name="dualpass" type="text" required>
     								<button class="btn btn-warning btn-sm" type="submit" name="dualUpdate"><strong>Update</strong></button></p>
@@ -69,9 +69,9 @@
 						@foreach($duals as $dual)
     						<tr>
     							<td>{{$dual->user_name}}</td>
-    							<td>{{$dual->status}}</td>							
+    							<td>{{ucfirst(strtolower($dual->status))}}</td>							
     							<td>
-    								<form action="/account/dual/update" method="post">
+    								<form action="{{route('accountDual')}}" method="post">
     									{{csrf_field()}}    									
 									@if($account->status=="PRIMARY")
 										@if(!$account->user_id==$dual->user_id)

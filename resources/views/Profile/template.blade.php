@@ -14,7 +14,7 @@
                     	@endif
     				</a>
                     <div class="dropdown-menu">
-                        <a href="{{route('server')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
+                        <a href="{{route('servers')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
             @if(Session::has('server'))
@@ -30,8 +30,8 @@
           <!-- ======================================= Account Side menu =================================== -->
   			<div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
 				<a class="list-group-item py-1 bg-dark h4">Profile Menu</a>
-				<a href="/profile" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
-				<a href="/profile/servers" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Servers</a>
+				<a href="{{route('profile')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
+				<a href="{{route('profileServers')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Servers</a>
   			</div>	
 	    </div> 
 		@foreach(['danger','success','warning','info'] as $msg)
