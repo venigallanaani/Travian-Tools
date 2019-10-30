@@ -23,25 +23,25 @@
 				<div class="card-text">
 					<table class="table table-hover col-md-8 mx-auto text-center">
 						<tr>
-							<td class="text-right ">Skype :</td>
+							<td class="text-right "><strong>Skype :</strong></td>
 							<td contenteditable="true" class="text-left " id="skypeEdit">{{ $contact['skype'] }}</td>
 						</tr>
 						<tr>
-							<td class="text-right ">Discord :</td>
+							<td class="text-right "><strong>Discord :</strong></td>
 							<td contenteditable="true" class="text-left " id="discordEdit">{{ $contact['discord'] }}</td>
 						</tr>
 						<tr>
-							<td class="text-right ">Phone :</td>
-							<td contenteditable="true" class="text-left " id="phoneEdit">{{ $contact['phone'] }}</td>
+							<td class="text-right "></td>
+							<td class="text-right ">
+								<form id="form" action="{{route('profileContact')}}" method="POST" onsubmit="return getContent()" class="text-center pb-3">
+            						{{ csrf_field() }}
+            						<input id="skype" name="skype" style="display:none">
+            						<input id="discord" name="discord" style="display:none">
+            						<button class="btn btn-warning btn-lg px-5" type="submit">Save</button>						
+            					</form>							
+							</td>							
 						</tr>
-					</table>
-					<form id="form" action="{{route('profileContact')}}" method="POST" onsubmit="return getContent()" class="text-center pb-3">
-						{{ csrf_field() }}
-						<input id="skype" name="skype" style="display:none">
-						<input id="discord" name="discord" style="display:none">
-						<input id="phone" name="phone" style="display:none">
-						<button class="btn btn-warning btn-lg px-5" type="submit">Save</button>						
-					</form>					
+					</table>			
 				</div>			
 			</div>
 		</div>

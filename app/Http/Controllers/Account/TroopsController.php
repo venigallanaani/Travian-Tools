@@ -177,8 +177,8 @@ class TroopsController extends Controller
                         ->orderBy('id','asc')->get();
             
             $villages = Diff::where('server_id',$request->session()->get('server.id'))
-                        ->where('uid',$account->uid)
-                        ->orderBy('village','asc')->get();
+                                ->where('uid',$account->uid)
+                                ->orderBy('village','asc')->get();
             for($i=0;$i<count($troopsData);$i++){
                 
                 $upkeep = $troopsData[$i]['UNITS'][0]*$units[0]['upkeep'] + $troopsData[$i]['UNITS'][1]*$units[1]['upkeep'] +
@@ -303,7 +303,7 @@ class TroopsController extends Controller
             }            
             Session::flash('success',"Troops details are successfully updated");            
         }        
-        return Redirect::to('/account/troops');        
+        return Redirect::back();        
     } 
     
     public function updateTroops(Request $request){
@@ -319,7 +319,7 @@ class TroopsController extends Controller
                         ->where('user_id',Auth::user()->id)->first();
                 
         $units = Units::where('tribe',$account->tribe)
-                ->orderBy('id','asc')->get();
+                    ->orderBy('id','asc')->get();
         
         $defense=0; $offense=0; $support=0; $type='NONE';
         
@@ -370,18 +370,62 @@ class TroopsController extends Controller
                 $type='Support';
             }
         }
-            
+        
+        //check for the village
+        
         $village=Troops::where('server_id',$request->session()->get('server.id'))
-                ->where('account_id',$account->account_id)
-                ->where('vid',$vid)
-                ->update([  'unit01'=>$unit01,      'unit02'=>$unit02,
-                            'unit03'=>$unit03,      'unit04'=>$unit04,
-                            'unit05'=>$unit05,      'unit06'=>$unit06,
-                            'unit07'=>$unit07,      'unit08'=>$unit08,
-                            'unit09'=>$unit09,      'unit10'=>$unit10,
-                            'Tsq'=>$tsq,            'upkeep'=>$upkeep,
-                            'type'=>$type
-                        ]);                
+                            ->where('account_id',$account->account_id)
+                            ->where('vid',$vid)->first();
+        if($village==null){
+            
+            $vid = $request->vid;       $tsq=$request->tsq;
+            $unit01=$request->unit01;   $unit02=$request->unit02;
+            $unit03=$request->unit03;   $unit04=$request->unit04;
+            $unit05=$request->unit05;   $unit06=$request->unit06;
+            $unit07=$request->unit07;   $unit08=$request->unit08;
+            $unit09=$request->unit09;   $unit10=$request->unit10;
+            
+            $village = Diff::where('server_id',$request->session()->get('server.id'))
+                                ->where('vid',$vid)->first();
+            
+            $troops = new Troops;
+            
+            $troops->account_id=$account->account_id;
+            $troops->plus_id=$account->plus;
+            $troops->server_id=$request->session()->get('server.id');
+            $troops->vid=$vid;
+            $troops->village=$village->village;
+            $troops->x=$village->x;
+            $troops->y=$village->y;
+            $troops->unit01=$unit01;
+            $troops->unit02=$unit02;
+            $troops->unit03=$unit03;
+            $troops->unit04=$unit04;
+            $troops->unit05=$unit05;
+            $troops->unit06=$unit06;
+            $troops->unit07=$unit07;
+            $troops->unit08=$unit08;
+            $troops->unit09=$unit09;
+            $troops->unit10=$unit10;
+            $troops->upkeep=$upkeep;
+            $troops->Tsq=0;
+            $troops->type=$type;
+            
+            $troops->save();
+            
+        }else{
+            Troops::where('server_id',$request->session()->get('server.id'))
+                            ->where('account_id',$account->account_id)
+                            ->where('vid',$vid)
+                            ->update([  'unit01'=>$unit01,      'unit02'=>$unit02,
+                                        'unit03'=>$unit03,      'unit04'=>$unit04,
+                                        'unit05'=>$unit05,      'unit06'=>$unit06,
+                                        'unit07'=>$unit07,      'unit08'=>$unit08,
+                                        'unit09'=>$unit09,      'unit10'=>$unit10,
+                                        'Tsq'=>$tsq,            'upkeep'=>$upkeep,
+                                        'type'=>$type
+                                    ]); 
+        }
                 
         $resp = 'Updated Successfully';
         return response()->json(['success'=>$resp, 'upkeep'=>$upkeep]);        

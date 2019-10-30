@@ -21,12 +21,12 @@
     				<p class="h4 text-center text-primary"><strong>Summary</strong></p>
         			<table class="table table-borderless">					
         				<tr>
-        					<td class="py-1"><strong>Total Troops : </strong>{{$stats['upkeep']}}</td>
+        					<td class="py-1"><strong>Total Troops : </strong>{{number_format($stats['upkeep'])}}</td>
         					<td class="py-1"><strong>Troop/Pop Ratio : </strong>{{round($stats['upkeep']/$stats['pop'],1)}} : 1</td>
         				</tr>
         				<tr>
-        					<td class="py-1"><strong>Offense Troops : </strong>{{$stats['offense']}} ({{$stats['offratio']}}%)</td>
-        					<td class="py-1"><strong>Defense Troops : </strong>{{$stats['defense']}} ({{$stats['defratio']}}%)</td>
+        					<td class="py-1"><strong>Offense Troops : </strong>{{number_format($stats['offense'])}} ({{$stats['offratio']}}%)</td>
+        					<td class="py-1"><strong>Defense Troops : </strong>{{number_format($stats['defense'])}} ({{$stats['defratio']}}%)</td>
         				</tr>
         			</table>
     			</div>
@@ -47,16 +47,16 @@
 						<tr id="{{$troop['vid']}}">
 							<td class="p-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$troop['x']}}&y={{$troop['y']}}" target="_blank">
 								{{$troop['village']}}</a></td>
-							<td class="p-0 unit01" contenteditable="true">{{number_format($troop['unit01'])}}</td>
-							<td class="p-0 unit02" contenteditable="true">{{number_format($troop['unit02'])}}</td>
-							<td class="p-0 unit03" contenteditable="true">{{number_format($troop['unit03'])}}</td>
-							<td class="p-0 unit04" contenteditable="true">{{number_format($troop['unit04'])}}</td>
-							<td class="p-0 unit05" contenteditable="true">{{number_format($troop['unit05'])}}</td>
-							<td class="p-0 unit06" contenteditable="true">{{number_format($troop['unit06'])}}</td>
-							<td class="p-0 unit07" contenteditable="true">{{number_format($troop['unit07'])}}</td>
-							<td class="p-0 unit08" contenteditable="true">{{number_format($troop['unit08'])}}</td>
-							<td class="p-0 unit09" contenteditable="true">{{number_format($troop['unit09'])}}</td>
-							<td class="p-0 unit10" contenteditable="true">{{number_format($troop['unit10'])}}</td>
+							<td class="p-0 unit01" contenteditable="true">{{($troop['unit01'])}}</td>
+							<td class="p-0 unit02" contenteditable="true">{{($troop['unit02'])}}</td>
+							<td class="p-0 unit03" contenteditable="true">{{($troop['unit03'])}}</td>
+							<td class="p-0 unit04" contenteditable="true">{{($troop['unit04'])}}</td>
+							<td class="p-0 unit05" contenteditable="true">{{($troop['unit05'])}}</td>
+							<td class="p-0 unit06" contenteditable="true">{{($troop['unit06'])}}</td>
+							<td class="p-0 unit07" contenteditable="true">{{($troop['unit07'])}}</td>
+							<td class="p-0 unit08" contenteditable="true">{{($troop['unit08'])}}</td>
+							<td class="p-0 unit09" contenteditable="true">{{($troop['unit09'])}}</td>
+							<td class="p-0 unit10" contenteditable="true">{{($troop['unit10'])}}</td>
 							<td class="p-0">{{number_format($troop['upkeep'])}}</td>
 							<td class="p-0 tsq" contenteditable="true">{{$troop['Tsq']}}</td>
 							<td class="py-0">{{$troop['type']}}</td>
