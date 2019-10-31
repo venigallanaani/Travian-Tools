@@ -377,14 +377,7 @@ class TroopsController extends Controller
                             ->where('account_id',$account->account_id)
                             ->where('vid',$vid)->first();
         if($village==null){
-            
-            $vid = $request->vid;       $tsq=$request->tsq;
-            $unit01=$request->unit01;   $unit02=$request->unit02;
-            $unit03=$request->unit03;   $unit04=$request->unit04;
-            $unit05=$request->unit05;   $unit06=$request->unit06;
-            $unit07=$request->unit07;   $unit08=$request->unit08;
-            $unit09=$request->unit09;   $unit10=$request->unit10;
-            
+   
             $village = Diff::where('server_id',$request->session()->get('server.id'))
                                 ->where('vid',$vid)->first();
             

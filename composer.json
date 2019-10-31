@@ -31,6 +31,8 @@
 		},
 		"files" : [
 			"app/Helpers/Parsers/ReportParser.php",
+			"app/Helpers/Parsers/HeroParser.php",
+			"app/Helpers/Parsers/TroopsParser.php",
 			"app/Helpers/Graphics.php"
 		]
 	},

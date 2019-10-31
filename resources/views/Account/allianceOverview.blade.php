@@ -26,7 +26,7 @@
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-warning">Population</span></strong></td>
-                                    <td class="py-1">: {{$alliance->population}}</td>
+                                    <td class="py-1">: {{number_format($alliance->population)}}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-warning">Villages</span></strong></td>
@@ -70,7 +70,16 @@
                         <td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$player['tribe']}}">
                         	<img alt="" src="/images/x.gif" class="tribe {{$player['tribe']}}"></td>
                         <td>{{$player['rank']}}</td>
-                        <td>{{$player['population']}} <small>({{$player['diffpop']}})</small></td>
+                        <td>{{number_format($player['population'])}} 
+                        	<small>
+                        	@if($player['diffpop']>0)
+                        		<span class="text-success">({{$player['diffpop']}})</span>
+                    		@else
+                    			<span class="text-danger">({{$player['diffpop']}})</span>
+                    		@endif
+                        	</small>
+                        
+                        </td>
                         <td>{{$player['villages']}}</td>
                         <td><a href="{{route('findPlayer')}}/{{$player['sitter1']}}/1">{{$player['sitter1']}}</a></td>
                         <td><a href="{{route('findPlayer')}}/{{$player['sitter2']}}/1">{{$player['sitter2']}}</a></td>

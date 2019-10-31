@@ -34,7 +34,7 @@
         							<td class="p-0 text-primary"><strong>Level</strong></td><td>: {{$hero->level}}</td>
         						</tr>
         						<tr>
-        							<td class="p-0 text-primary"><strong>Experience</strong></td><td>: {{$hero->exp}}</td>
+        							<td class="p-0 text-primary"><strong>Experience</strong></td><td>: {{number_format($hero->exp)}}</td>
         						</tr>
         						<tr>
         							<td class="p-0 text-primary"><strong>Fighting Strength</strong></td><td>: {{$hero->fs}} ({{$hero->fp}})</td>

@@ -30,16 +30,23 @@ class AccountController extends Controller
     	    
     	    $account=Account::where('server_id',$request->session()->get('server.id'))
     	                   ->where('user_id',Auth::user()->id)->first();
-    	    
+    	    //dd($account);
     	    if($account!= null){
     	        $player = Players::where('server_id',$request->session()->get('server.id'))
     	                   ->where('uid',$account->uid)->first();
     	        
-    	        $villages = Diff::where('server_id',$request->session()->get('server.id'))
-    	                   ->where('uid',$account->uid)->get();    	        
-                
-    	        return view('Account.overview')->with(['account'=>$account])
-    	                   ->with(['player'=>$player])->with(['villages'=>$villages]);
+    	        if($player==null){ 
+    	            
+    	            Session::flash('warning', 'Player '.$account->account.' is no longer on travian server. Please add new account.');
+    	            return view('Account.addAccount');   
+    	            
+    	        }else{
+    	            $villages = Diff::where('server_id',$request->session()->get('server.id'))
+    	                               ->where('uid',$account->uid)->get();
+    	            
+    	            return view('Account.overview')->with(['account'=>$account])
+    	                               ->with(['player'=>$player])->with(['villages'=>$villages]);
+    	        }
     	        
     	    }else{    	        
     	        Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));

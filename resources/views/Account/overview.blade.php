@@ -11,7 +11,7 @@
         			<table class="table table-borderless table-sm col-md-5 mx-auto my-3">
 						<tr>
 							<td class="py-0"><strong><span class="text-warning">Profile Name</span></strong></td>
-							<td class="py-0">: <a href="{{route('findPlayer')}}/{{$player->player}}/1" target="_blank"><strong>{{$player->player}}</strong></a></td>
+							<td class="py-0">: <strong>{{$player->player}}</strong></td>
 						</tr>
 						<tr>
 							<td class="py-0"><strong><span class="text-warning">Rank</span></strong></td>
@@ -19,7 +19,15 @@
 						</tr>
 						<tr>
 							<td class="py-0"><strong><span class="text-warning">Population</span></strong></td>
-							<td class="py-0">: {{$player->population}} <small>({{$player->diffpop}})</small></td>
+							<td class="py-0">: {{$player->population}}
+                            	<small>
+                            	@if($player->diffpop>0)
+                            		<span class="text-success">({{$player->diffpop}})</span>
+                        		@else
+                        			<span class="text-danger">({{$player->diffpop}})</span>
+                        		@endif
+                            	</small>
+							</td>
 						</tr>
 						<tr>
 							<td class="py-0"><strong><span class="text-warning">Villages</span></strong></td>
@@ -69,7 +77,15 @@
             				<tr>
             					<td>{{$index+1}}</td>
             					<td class="">{{$village->village}}</td>
-            					<td>{{$village->population}} <small>({{$village->diffPop}})</small></td>
+            					<td>{{$village->population}} 
+									<small>
+									@if($village->diffPop>0)
+										<span class="text-success">({{$village->diffPop}})</span>
+									@else
+										<span class="text-danger">({{$village->diffPop}})</span>
+									@endif
+									</small>
+								</td>
             					<td><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village->x}}&y={{$village->y}}" target="_blank">
             						{{$village->x}}|{{$village->y}}</a></td>
         					</tr>
