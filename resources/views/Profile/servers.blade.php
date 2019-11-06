@@ -6,9 +6,6 @@
 			<strong>Servers Overview</strong>
 		</div>
 		<div class="card-text p-4">
-			<div class="h3 container text-warning font-weight-bold">
-				<p>Your Servers</p>
-			</div>
 		@if(count($profiles)>0)
 			<form action="{{route('profileServers')}}/load" method="POST" class="col-md-12 mx-auto">
 				{{csrf_field()}}
@@ -44,38 +41,7 @@
 			</div>
 		@endif		
 
-		@if(count($servers)>0)
-			<div class="h3 container text-warning font-weight-bold">
-				<p>Available Servers</p>
-			</div>
-			<form action="{{route('profileServers')}}/load" method="POST" class="col-md-12 mx-auto">
-				{{csrf_field()}}
-				<table class="table table-hover table-small">
-					<thead>
-						<tr>
-							<th>Server Name</th>
-							<th>Country</th>
-							<th>Start Date</th>
-							<th>Days</th>
-							<th>Time Zone</th>
-							<th></th>
-						</tr>
-					</thead>
-				@foreach($servers as $server)
-					<tr>
-						<td>{{$server->url}}</td>
-						<td>{{$server->country}}</td>
-						<td>{{$server->start_date}}</td>
-						<td>{{$server->days}}</td>
-						<td>{{$server->timezone}}</td>
-						<td><button class="btn btn-warning btn-sm" name="server" value="{{$server->server_id}}">
-    							<i class="fa fa-angle-double-right"></i> Load Server</button>
-						</td>
-					</tr>
-				@endforeach
-				</table>			
-			</form>	
-		@endif
+
 		</div>
 	</div>
 	

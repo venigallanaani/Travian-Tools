@@ -19,27 +19,35 @@ class HeroController extends Controller
         $account=Account::where('server_id',$request->session()->get('server.id'))
                     ->where('user_id',Auth::user()->id)->first();
         
-        $hero = Hero::where('server_id',$request->session()->get('server.id'))
-                    ->where('account_id',$account->account_id)->first();     
-        
-        if(!$hero==null){            
-            $points[0]=array('Attributes','Points');
-            $points[1]=array('Fighting Strength',$hero->fp);
-            $points[2]=array('Off Bonus',$hero->off);
-            $points[3]=array('Def Bonus',$hero->def);
-            $points[4]=array('Resources',$hero->res);
+        if($account==null){
             
-            $pieData=array(
-                    'name'=>'heroPieChart',
-                    'title'=>'Hero Points Distribution',
-                    'data'=>$points
-                    );            
+            Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));
+            return view('Account.addAccount')->with(['players'=>null]);
+            
         }else{
-            $pieData = null;
-        }       
-    
-        return view('Account.heroOverview')->with(['hero'=>$hero])
-                        ->with(['pieData'=>$pieData]);
+        
+            $hero = Hero::where('server_id',$request->session()->get('server.id'))
+                        ->where('account_id',$account->account_id)->first();     
+            
+            if(!$hero==null){            
+                $points[0]=array('Attributes','Points');
+                $points[1]=array('Fighting Strength',$hero->fp);
+                $points[2]=array('Off Bonus',$hero->off);
+                $points[3]=array('Def Bonus',$hero->def);
+                $points[4]=array('Resources',$hero->res);
+                
+                $pieData=array(
+                        'name'=>'heroPieChart',
+                        'title'=>'Hero Points Distribution',
+                        'data'=>$points
+                        );            
+            }else{
+                $pieData = null;
+            }       
+        
+            return view('Account.heroOverview')->with(['hero'=>$hero])
+                            ->with(['pieData'=>$pieData]);
+        }
     }
     
     public function processHero(Request $request){

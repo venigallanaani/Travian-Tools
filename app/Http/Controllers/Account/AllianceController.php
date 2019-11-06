@@ -23,51 +23,58 @@ class AllianceController extends Controller
         $account=Account::where('server_id',$request->session()->get('server.id'))
                     ->where('user_id',Auth::user()->id)->first();
         
-        $aid = Players::where('server_id',$request->session()->get('server.id'))
-                    ->where('uid',$account->uid)->pluck('aid')->first();
-        
-                    
-        if($aid==null){
-            Session::flash('warning', 'You are not in an Alliance');
-            return view('Account.template');
+        if($account==null){
+            
+            Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));
+            return view('Account.addAccount')->with(['players'=>null]);
+            
         }else{
-            $alliance=Alliances::where('server_id',$request->session()->get('server.id'))
-                            ->where('aid',$aid)->first();
+            $aid = Players::where('server_id',$request->session()->get('server.id'))
+                        ->where('uid',$account->uid)->pluck('aid')->first();
             
-            $players=Players::where('aid',$aid)
-                            ->where('server_id',$request->session()->get('server.id'))
-                            ->orderBy('population','desc')->get();
-            
-            $list = array();
-            $i=0;
-            foreach($players as $player){
+                        
+            if($aid==null){
+                Session::flash('warning', 'You are not in an Alliance');
+                return view('Account.template');
+            }else{
+                $alliance=Alliances::where('server_id',$request->session()->get('server.id'))
+                                ->where('aid',$aid)->first();
                 
-                $data=Account::where('server_id',$request->session()->get('server.id'))
-                            ->where('uid',$player->uid)
-                            ->where('status','=','PRIMARY')->first();
+                $players=Players::where('aid',$aid)
+                                ->where('server_id',$request->session()->get('server.id'))
+                                ->orderBy('population','desc')->get();
                 
-                if($data == null){                    
-                      $sitter1='';
-                      $sitter2='';
-                }else{
-                      $sitter1=$data->sitter1;
-                      $sitter2=$data->sitter2;
-                }
-                $list[$i]=array(
-                    "player"=>$player->player,
-                    "rank"=>$player->rank,
-                    "tribe"=>$player->tribe,
-                    "population"=>$player->population,
-                    "villages"=>$player->villages,
-                    "diffpop"=>$player->diffpop,
-                    "sitter1"=>$sitter1,
-                    "sitter2"=>$sitter2);
-                $i++;
-            }            
-            //dd($list);   
-            
-            return view('Account.allianceOverview')->with(['players'=>$list])
-                                ->with(['alliance'=>$alliance]);
+                $list = array();
+                $i=0;
+                foreach($players as $player){
+                    
+                    $data=Account::where('server_id',$request->session()->get('server.id'))
+                                ->where('uid',$player->uid)
+                                ->where('status','=','PRIMARY')->first();
+                    
+                    if($data == null){                    
+                          $sitter1='';
+                          $sitter2='';
+                    }else{
+                          $sitter1=$data->sitter1;
+                          $sitter2=$data->sitter2;
+                    }
+                    $list[$i]=array(
+                        "player"=>$player->player,
+                        "rank"=>$player->rank,
+                        "tribe"=>$player->tribe,
+                        "population"=>$player->population,
+                        "villages"=>$player->villages,
+                        "diffpop"=>$player->diffpop,
+                        "sitter1"=>$sitter1,
+                        "sitter2"=>$sitter2);
+                    $i++;
+                }            
+                //dd($list);   
+                
+                return view('Account.allianceOverview')->with(['players'=>$list])
+                                    ->with(['alliance'=>$alliance]);
+            }
             
         }
     }

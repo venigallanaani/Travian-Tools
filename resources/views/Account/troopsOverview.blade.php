@@ -1,7 +1,7 @@
 @extends('Account.template')
 
 @section('body')
-<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
 			<div class="card-header h4 py-2 bg-warning text-white">
 				<strong>Troops Details</strong>
 			</div>
@@ -17,7 +17,7 @@
                 </div>
             @endif
         @endforeach
-    			<div class="col-md-8 mx-auto my-4 rounded" style="background-color:#dbeef4;">
+    			<div class="col-md-8 mx-auto py-2 my-4 rounded" style="background-color:#dbeef4;">
     				<p class="h4 text-center text-primary"><strong>Summary</strong></p>
         			<table class="table table-borderless">					
         				<tr>

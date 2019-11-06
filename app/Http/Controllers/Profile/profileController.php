@@ -48,7 +48,7 @@ class profileController extends Controller
             
         }
                     
-        return Redirect::to('/profile');
+        return Redirect::back();
     }
     
     
@@ -74,11 +74,9 @@ class profileController extends Controller
                     'tribe'=>$account->tribe,
                     'status'=>$account->status
                 );
-            }else{
-                $servers[]=$row;
             }            
         }        
-        return view('Profile.servers')->with(['profiles'=>$profiles])->with(['servers'=>$servers]);
+        return view('Profile.servers')->with(['profiles'=>$profiles]);
     }
    
     

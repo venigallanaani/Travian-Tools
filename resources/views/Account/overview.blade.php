@@ -7,6 +7,15 @@
 				<strong>Account Overview</strong>
 			</div>
 			<div class="card-text">
+		@foreach(['danger','success','warning','info'] as $msg)
+			@if(Session::has($msg))
+	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>{{ Session::get($msg) }}
+                </div>
+            @endif
+        @endforeach  
         		<div>
         			<table class="table table-borderless table-sm col-md-5 mx-auto my-3">
 						<tr>

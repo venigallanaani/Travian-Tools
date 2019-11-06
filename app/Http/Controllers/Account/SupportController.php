@@ -22,12 +22,21 @@ class SupportController extends Controller
         $account=Account::where('server_id',$request->session()->get('server.id'))
                     ->where('user_id',Auth::user()->id)->first();
         
-        $duals=Account::where('server_id',$request->session()->get('server.id'))
-                    ->where('account_id',$account->account_id)
-                    ->orderBy('status','desc')->get();
-                    
-        return view('Account.supportOverview')->with(['account'=>$account])
-                        ->with(['duals'=>$duals]);
+        if($account==null){
+            
+            Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));
+            return view('Account.addAccount')->with(['players'=>null]);   
+            
+        }else{
+            
+            $duals=Account::where('server_id',$request->session()->get('server.id'))
+                            ->where('account_id',$account->account_id)
+                            ->orderBy('status','desc')->get();
+            
+            return view('Account.supportOverview')->with(['account'=>$account])
+                            ->with(['duals'=>$duals]);
+        }
+
     }
 
     public function updateSitters(Request $request){

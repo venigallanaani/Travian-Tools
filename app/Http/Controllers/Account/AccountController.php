@@ -50,7 +50,7 @@ class AccountController extends Controller
     	        
     	    }else{    	        
     	        Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));
-    	        return view('Account.addAccount');    	        
+    	        return view('Account.addAccount')->with(['players'=>null]);    	        
     	    }    	    
     	}else{
     	       return view('Account.template');
@@ -58,15 +58,41 @@ class AccountController extends Controller
     }
     
 // Process to add new travian profile to account
+    public function findAccount(Request $request){
+       
+       session(['title'=>'Account']);
+       $players=null;
+       
+       $rows = Players::where('server_id',$request->session()->get('server.id'))
+                    ->where('player','like','%'.Input::get('player').'%')->get();
+       
+       if($rows->count() > 0){
+           $i=0;
+           foreach($rows as $row){
+               
+               $players[$i]['ACCOUNT']=$row->player;
+               $players[$i]['TRIBE']=$row->tribe;
+               $players[$i]['POP']=$row->population;
+               $players[$i]['UID']=$row->uid;
+               
+               $i++;               
+           }
+                      
+       }else{           
+           Session::flash('danger','Travian account with name '.Input::get('player').' not found');           
+       }  
+       
+       return view('Account.addAccount')->with(['players'=>$players]);
+   }
+   
+// Process to add new travian profile to account
    public function addAccount(Request $request){
        
        session(['title'=>'Account']);
        
        $player = Players::where('server_id',$request->session()->get('server.id'))
-                    ->where('player',Input::get('player'))->first();
-       
-       if($player->count() > 0){           
-           
+                        ->where('uid',Input::get('player'))->first();
+                  
            $account = new Account;
            $account->uid = $player->uid;
            $account->account = $player->player;
@@ -78,15 +104,10 @@ class AccountController extends Controller
            $account->account_id = $player->uid.Auth::user()->id;
            $account->token = str_random(5);
            
-           $account->save();          
+           $account->save();
            
-           Session::flash('success','Travian account with name '.Input::get('player').' is added successfully');
+           Session::flash('success','Travian account with name '.$player->player.' is added successfully');
            return Redirect::to('/account');
-           
-       }else{
-           
-           Session::flash('danger','Travian account with name '.Input::get('player').' not found');           
-           return Redirect::to('/account');
-       }       
+
    }
 }
