@@ -67,8 +67,8 @@ Route::get('/cropper',function(){
 
 
 /*----------------------------------------------------------------------------------*/
-    /* -------------------------- Controller for Account Page -------------------------- */
-    /*----------------------------------------------------------------------------------*/
+/* -------------------------- Controller for Account Page -------------------------- */
+/*----------------------------------------------------------------------------------*/
 Route::get('/account','Account\AccountController@overview')->name('account');			// Account main page
 Route::post('/account/find','Account\AccountController@findAccount');
 Route::post('/account/add','Account\AccountController@addAccount');

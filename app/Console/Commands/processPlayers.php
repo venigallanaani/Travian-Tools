@@ -54,18 +54,17 @@ class processPlayers extends Command
                     $villages++;
                     $population+=$detail->population;
                     $diffPop+=$detail->diffPop;
-                    if($detail->diffPop > 0){
-                        $status='Active';
-                    }                    
+                    if($detail->diffPop > 0){    $status='Active';  }
+                    
                 }
-                    if($details[0]->id==1){ $tribe = 'Roman';}
-                    elseif($details[0]->id==2){ $tribe = 'Teuton';}
-                    elseif($details[0]->id==3){ $tribe = 'Gaul';}
-                    elseif($details[0]->id==4){ $tribe = 'Nature';}
-                    elseif($details[0]->id==5){ $tribe = 'Natar';}
-                    elseif($details[0]->id==6){ $tribe = 'Egyptian';}
-                    elseif($details[0]->id==7){ $tribe = 'Hun';}
-                    else{$tribe='Natar';}   
+                    if($details[0]->id==1){ $tribe = 'Roman';   }
+                    elseif($details[0]->id==2){ $tribe = 'Teuton';  }
+                    elseif($details[0]->id==3){ $tribe = 'Gaul';    }
+                    elseif($details[0]->id==4){ $tribe = 'Nature';  }
+                    elseif($details[0]->id==5){ $tribe = 'Natar';   }
+                    elseif($details[0]->id==6){ $tribe = 'Egyptian';    }
+                    elseif($details[0]->id==7){ $tribe = 'Hun'; }
+                    else{   $tribe='Natar'; }   
                     
                     Players::updateOrCreate([
                         'server_id'=>$server->server_id,

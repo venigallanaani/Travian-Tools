@@ -26,7 +26,7 @@ class LoadDiff extends Command
     public function handle()
     {
         $servers=Servers::where('status','=','ACTIVE')->get();        
-        echo "\n".'*************************************LOAD MAPS PROCESS******************************************'."\n";
+        echo "\n".'*************************************CALCULATE DIFF PROCESS******************************************'."\n";
         foreach($servers as $server){
             echo "\n".'***********************Server: '.$server->url.'***************************'."\n";
             echo "New load Diff table job started at ".Carbon::now()."\n";
@@ -39,7 +39,7 @@ class LoadDiff extends Command
                         
             echo "Updating the diff table with latest maps data"."\n";
             
-            foreach($villages as $village){                
+            foreach($villages as $village){ 
           
                 $diff=Diff::firstOrCreate(
 					['server_id'=>$village->server_id,
