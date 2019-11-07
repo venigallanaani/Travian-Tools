@@ -38,11 +38,11 @@
                             <a href="{{ route('finders') }}" class="nav-link">Finders</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a href="/account" class="nav-link">Account</a>
+                            <a href="{{ route('account')}}" class="nav-link">Account</a>
                         </li>
-<!--                         <li class="nav-item px-2"> -->
-<!--                             <a href="/plus" class="nav-link">Plus</a> -->
-<!--                         </li> -->
+                        <li class="nav-item px-2">
+                            <a href="{{ route('plus')}}" class="nav-link">Plus</a>
+                        </li>
                         <li class="nav-item px-2">
                             <a href="{{ route('reports') }}" class="nav-link">Reports</a>
                         </li>

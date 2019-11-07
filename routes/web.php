@@ -107,3 +107,55 @@ Route::post('/profile/servers/load','ServersController@process');
 /* ------------------------------------------------------------- */
 Route::get('/servers','ServersController@index')->name('servers');
 Route::post('/servers','ServersController@process');
+
+
+
+
+
+
+
+
+
+
+
+
+/*----------------------------------------------------------------------------------*/
+/* --------------------------------- Plus Page Routes ----------------------------- */
+/*----------------------------------------------------------------------------------*/
+Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu main page
+
+/*-----------------------------------------------   Plus overview routes --------------------------------------------------*/
+Route::get('/plus/members','Plus\PlusController@members');                  // Plus members list
+Route::get('/plus/member/{id}','Plus\PlusController@member');               // Plus member details 
+
+
+
+/* ---------------------------------------------- Controller for Plus leader routes -------------------------------------- */
+Route::get('/leader/access','Plus\Leader\LeaderController@access');
+Route::post('/leader/access/add','Plus\Leader\LeaderController@addAccess');
+Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@updateAccess');
+
+Route::get('/leader/rankings','Plus\Leader\LeaderController@showRankings');
+
+Route::get('/leader/subscription','Plus\Leader\LeaderController@subscriptions');
+Route::post('/leader/subscription/message','Plus\Leader\LeaderController@messageUpdate');
+
+/* -------------------------------------------- Plus Resoruces Routes ---------------------------------------------------- */
+
+/* --------------- Resource Member routes --------------- */
+Route::get('/plus/resource','Plus\Resources\ResourceController@showTaskList')->name('plusRes');
+Route::get('/plus/resource/{id}','Plus\Resources\ResourceController@showTask');
+Route::post('/plus/resource/{id}','Plus\Resources\ResourceController@updateTask');
+
+/* --------------- Resource Leader routes  --------------- */
+Route::get('/resource','Plus\Resources\LeaderResourceController@resourceTaskList')->name('plusResLdr');
+Route::get('/resource/{id}','Plus\Resources\LeaderResourceController@resourceTask');
+Route::post('/resource/create','Plus\Resources\LeaderResourceController@createResourceTask');
+Route::post('/resource/update','Plus\Resources\LeaderResourceController@processResourceTask');	
+
+
+
+
+
+
+
