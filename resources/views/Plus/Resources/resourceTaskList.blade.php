@@ -30,6 +30,7 @@
     							<th class="">Pref</th>    							
     							<th class="">%</th>
     							<th class="">Target Time</th>
+    							<th class="">Time left</th>
     							<th class=""></th>    							
     						</tr>
 						</thead>
@@ -42,6 +43,7 @@
     							<td data-toggle="tooltip" data-placement="top" title="{{$task->type}}"><img alt="all" src="/images/x.gif" class="res {{$task->type}}"></td>							
     							<td>{{$task->res_percent}}%</td>
     							<td>{{$task->target_time}}</td>
+    							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
     							<td><a class="btn btn-outline-secondary" href="/plus/resource/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
@@ -54,3 +56,14 @@
 			</div>
 		</div>
 @endsection
+
+@push('scripts')
+	@if(count($tasks)>0)	
+	<script>
+		@foreach($tasks as $task)
+			countDown("{{$task->task_id}}","{{$task->target_time}}");
+		@endforeach
+	</script>
+	@endif
+
+@endpush

@@ -132,6 +132,7 @@ Route::get('/plus/member/{id}','Plus\PlusController@member');               // P
 Route::get('/plus/rankings','Plus\PlusController@tdbRoute');
 Route::get('/plus/incoming','Plus\PlusController@tdbRoute');
 Route::get('/plus/offense','Plus\PlusController@tdbRoute');
+Route::get('/defense/incoming','Plus\PlusController@tdbRoute');
 
 
 /* --------------------- Join Plus Group -------------------------- */

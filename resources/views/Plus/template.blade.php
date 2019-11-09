@@ -122,8 +122,8 @@
         @endif
 		@if(Session::get('plus.wonder')==1)
             <!-- =================================== Artifacts menu ================================== -->
-            <div class="list-group text-center text-white mt-1">
-                <a class="list-group-item py-1 bg-dark h4">Artifacts Menu</a>                
+            <div class="list-group text-center text-white mt-1 mb-5">
+                <a class="list-group-item py-1 bg-dark h4">Wonder Menu</a>                
                 <a href="/wonder" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
                 <a href="/wonder/crop" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Crop Tool</a>
                 <a href="/wonder/defense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Wonder Defense</a>                
