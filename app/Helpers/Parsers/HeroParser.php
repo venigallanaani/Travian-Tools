@@ -18,6 +18,8 @@ if(!function_exists('ParseHero')){
       }
       $result = array();
       
+      //dd($heroStrs);
+      
       for($x=0;$x<count($heroStrs);$x++){
           if(strpos($heroStrs[$x],'level')){
               $result['LEVEL']=trim(substr(strrchr($heroStrs[$x], " "), 1));
@@ -26,7 +28,10 @@ if(!function_exists('ParseHero')){
               $result['EXPERIENCE'] = trim(substr($heroStrs[$x],11));
           }
           if(strpos($heroStrs[$x],'Fighting strength')!==FALSE){
-              $fsValue=trim(substr(strrchr(trim($heroStrs[$x]), "    "), 9));
+              $fsValue=trim(substr(strrchr(trim($heroStrs[$x]), "    "), 1));
+              if(strpos(strtoupper($fsValue),'STRENGTH')!==FALSE){
+                  $fsValue=substr($fsValue,8);
+              }
               $result['FS_VALUE']=trim(preg_replace('/[^a-z0-9 -]+/', '', $fsValue));
               $result['FS_POINTS']=trim($heroStrs[$x+1]);
           }

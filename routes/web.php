@@ -129,16 +129,27 @@ Route::get('/plus/members','Plus\PlusController@members');                  // P
 Route::get('/plus/member/{id}','Plus\PlusController@member');               // Plus member details 
 
 
+Route::get('/plus/rankings','Plus\PlusController@tdbRoute');
+Route::get('/plus/incoming','Plus\PlusController@tdbRoute');
+Route::get('/plus/offense','Plus\PlusController@tdbRoute');
+
+
+/* --------------------- Join Plus Group -------------------------- */
+Route::get('/plus/join/{link}','Plus\Leader\LeaderController@joinPlusGroup');
+Route::post('/plus/join','Plus\Leader\SubscriptionController@refreshLink');
+Route::post('/plus/leave','Plus\Leader\LeaderController@leavePlusGroup');
+
 
 /* ---------------------------------------------- Controller for Plus leader routes -------------------------------------- */
 Route::get('/leader/access','Plus\Leader\LeaderController@access');
 Route::post('/leader/access/add','Plus\Leader\LeaderController@addAccess');
 Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@updateAccess');
 
-Route::get('/leader/rankings','Plus\Leader\LeaderController@showRankings');
+//Route::get('/leader/rankings','Plus\Leader\LeaderController@showRankings');
+Route::get('/leader/rankings','Plus\PlusController@tdbRoute');
 
-Route::get('/leader/subscription','Plus\Leader\LeaderController@subscriptions');
-Route::post('/leader/subscription/message','Plus\Leader\LeaderController@messageUpdate');
+Route::get('/leader/subscription','Plus\Leader\SubscriptionController@subscriptions');
+Route::post('/leader/subscription/message','Plus\Leader\SubscriptionController@messageUpdate');
 
 /* -------------------------------------------- Plus Resoruces Routes ---------------------------------------------------- */
 
@@ -153,9 +164,21 @@ Route::get('/resource/{id}','Plus\Resources\LeaderResourceController@resourceTas
 Route::post('/resource/create','Plus\Resources\LeaderResourceController@createResourceTask');
 Route::post('/resource/update','Plus\Resources\LeaderResourceController@processResourceTask');	
 
+/* -------------------------------------------- Plus Defense Routes ---------------------------------------------------- */
 
-
-
+/* --------------- Plus group member CFD routes  --------------- */
+Route::get('/plus/defense','Plus\Defense\CFD\CFDController@defenseTaskList');
+Route::get('/plus/defense/{id}','Plus\Defense\CFD\CFDController@defenseTask');
+Route::post('/plus/defense/{id}','Plus\Defense\CFD\CFDController@updateDefenseTask');
+/* --------------- Plus leader CFD options routes  --------------- */
+Route::get('/defense/cfd','Plus\Defense\CFD\LeaderCFDController@CFDList');
+Route::get('/defense/cfd/{id}','Plus\Defense\CFD\LeaderCFDController@CFDDetail');
+Route::get('/defense/cfd/troops/{id}/{uid}','Plus\Defense\CFD\LeaderCFDController@CFDTroops');
+Route::post('/defense/cfd/create','Plus\Defense\CFD\LeaderCFDController@createCFD');
+Route::post('/defense/cfd/update','Plus\Defense\CFD\LeaderCFDController@processCFD');
+/* -------------------- Plus Search Defense -----------------------*/
+Route::get('/defense/search','Plus\Defense\Search\DefenseController@show');
+Route::post('/defense/search','Plus\Defense\Search\DefenseController@process');
 
 
 

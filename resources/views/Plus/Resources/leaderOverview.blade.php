@@ -2,7 +2,7 @@
 
 @section('body')
 
-<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
 			<div class="card-header h4 py-2 bg-info text-white"><strong>Resource Status</strong></div>
 			<div class="card-text">
 		<!-- ========================== Create CFD Options ============================== -->
@@ -25,7 +25,7 @@
         						<p class="my-2">
         							<strong>Target Time: <input type="text" name="targetTime" size="20" class="dateTimePicker"></strong>
         						</p>
-    						    <p class="my-2 col-md-12">
+    						    <p class="my-2">
         							<strong>Resource Type: </strong>
         								<input type="radio" name="resType" value="ALL" checked> <img alt="all" src="/images/x.gif" class="res all"> 
         								<input type="radio" name="resType" value="WOOD"> <img alt="wood" src="/images/x.gif" class="res wood"> 
@@ -56,19 +56,19 @@
         
     		@if(count($tasks)==0)
     			<p class="text-center h5 py-2">No resource tasks are active currently.</p>				
-    		@endif
-    <!-- ==================================== List of CFD is progress ======================================= -->		
+    		@else
+    <!-- ==================================== List of Resources tasks is progress ======================================= -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
 					<table class="table align-middle small">
 						<thead class="thead-inverse">
     						<tr>
-    							<th class="col-md-1">Target</th>
-    							<th class="col-md-1">Resources</th>
-    							<th class="col-md-1">Pref</th>
-    							<th class="col-md-1">Status</th>
-    							<th class="col-md-1">%</th>
-    							<th class="col-md-1">Target Time</th>
-    							<th class="col-md-1"></th>    							
+    							<th class="">Target</th>
+    							<th class="">Resources</th>
+    							<th class="">Pref</th>
+    							<th class="">Status</th>
+    							<th class="">%</th>
+    							<th class="">Target Time</th>
+    							<th class=""></th>    							
     						</tr>
 						</thead>
 							@foreach($tasks as $task)
@@ -76,9 +76,9 @@
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player }} ({{$task->village}})</strong></a>
     							</td>
-    							<td>{{$task->res_total}}</td>
+    							<td>{{number_format($task->res_total)}}</td>
     							<td data-toggle="tooltip" data-placement="top" title="{{$task->type}}"><img alt="all" src="/images/x.gif" class="res {{$task->type}}"></td>							
-    							<td>{{$task->status}}</td>
+    							<td>{{ucfirst(strtolower($task->status))}}</td>
     							<td>{{$task->res_percent}}%</td>
     							<td>{{$task->target_time}}</td>
     							<td><a class="btn btn-outline-secondary" href="/resource/{{$task->task_id}}">
@@ -88,6 +88,7 @@
 						@endforeach						
 					</table>
 				</div>
+			@endif
 			</div>
 		</div>
 @endsection

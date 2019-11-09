@@ -9,23 +9,23 @@
         </div>
         <div class="card-text">
             <div class="text-center col-md-11 mx-auto my-2 p-0">
-					<table class="table table-hover table-sm table-bordered align-middle small">
+					<table class="table table-hover table-sm table-bordered align-middle">
 						<thead class="bg-dark text-white">
     						<tr>
-    							<th class="col-md-2">Player</th>
-    							<th class="col-md-2">TT Account</th>
-    							<th class="col-md-2">Alliance</th>
-    							<th class="col-md-2">Sitter 1</th>
-    							<th class="col-md-2">Sitter 2</th>    							
+    							<th class="">Player</th>
+    							<th class="">TT Account</th>
+    							<th class="">Alliance</th>
+    							<th class="">Sitter 1</th>
+    							<th class="">Sitter 2</th>    							
     						</tr>
 						</thead>
 						@foreach($members as $member)
     						<tr class="">
-    							<td><a href="/finder/player/{{$member['player']}}/1" target="_blank">{{$member['player']}}</a></td>
+    							<td><a href="{{route('findPlayer')}}/{{$member['player']}}/1" target="_blank">{{$member['player']}}</a></td>
     							<td><a href="/plus/member/{{$member['account']}}">{{$member['account']}}</a></td>
-    							<td><a href="/finder/alliance/{{$member['alliance']}}/1" target="_blank">{{$member['alliance']}}</a></td>
-    							<td><a href="/finder/player/{{$member['sitter1']}}/1" target="_blank">{{$member['sitter1']}}</a></td>
-    							<td><a href="/finder/player/{{$member['sitter2']}}/1" target="_blank">{{$member['sitter2']}}</a></td>    														
+    							<td><a href="{{route('findAlliance')}}/{{$member['alliance']}}/1" target="_blank">{{$member['alliance']}}</a></td>
+    							<td><a href="{{route('findPlayer')}}/{{$member['sitter1']}}/1" target="_blank">{{$member['sitter1']}}</a></td>
+    							<td><a href="{{route('findPlayer')}}/{{$member['sitter2']}}/1" target="_blank">{{$member['sitter2']}}</a></td>    														
     						</tr>
 						@endforeach
 					</table>

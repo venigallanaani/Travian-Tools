@@ -13,7 +13,7 @@
                     	@endif
     				</a>
                     <div class="dropdown-menu">
-                        <a href="{{route('server')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
+                        <a href="{{route('servers')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
             @if(Session::has('server'))
@@ -39,7 +39,7 @@
         <div class="alert alert-warning text-center my-1" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
-            </button>You have not selected a server, <a href="{{route('server')}}" class="text-weight-bold"><strong>Select Server</strong></a>            
+            </button>You have not selected a server, <a href="{{route('servers')}}" class="text-weight-bold"><strong>Select Server</strong></a>            
         </div>
     </div>
 @else
@@ -84,7 +84,7 @@
 <!--                 <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a> -->
             </div>
         @endif   
-        @if(Session::get('plus.defense')==2) 
+        @if(Session::get('plus.defense')==1) 
             <!-- =================================== Defense menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Defense Menu</a>
@@ -93,14 +93,14 @@
                 <a href="/defense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Defense</a>                
             </div>
   		@endif
-  		@if(Session::get('plus.offense')==2)
+  		@if(Session::get('plus.offense')==1)
             <!-- =================================== Offense menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Offense Menu</a>                 
                 <a href="/offense/status" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Ops Status</a>
                 <a href="/offense/troops" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Troops Details</a>
                 <a href="/offense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Offense</a>
-                <a href="/offense/archive" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Archive</a>                  
+                <a href="/offense/archive" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Ops Archive</a>                  
             </div>
         @endif
 		@if(Session::get('plus.resources')==1)
@@ -110,7 +110,7 @@
                 <a href="/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Push Status</a>
             </div> 
         @endif
-		@if(Session::get('plus.artifact')==2)
+		@if(Session::get('plus.artifact')==1)
             <!-- =================================== Artifacts menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Artifacts Menu</a>                
@@ -118,6 +118,15 @@
                 <a href="/artifact/list" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Artifact List</a>
                 <a href="/artifact/request" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Requests</a>
                 <a href="/artifact/capture" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Capture Plan</a>
+            </div> 
+        @endif
+		@if(Session::get('plus.wonder')==1)
+            <!-- =================================== Artifacts menu ================================== -->
+            <div class="list-group text-center text-white mt-1">
+                <a class="list-group-item py-1 bg-dark h4">Artifacts Menu</a>                
+                <a href="/wonder" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
+                <a href="/wonder/crop" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Crop Tool</a>
+                <a href="/wonder/defense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Wonder Defense</a>                
             </div> 
         @endif
         </div>

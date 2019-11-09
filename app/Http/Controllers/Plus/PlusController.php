@@ -1,13 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Plus;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Redirect;
 use App\Plus;
 use App\ResTask;
 use App\CFDTask;
@@ -17,7 +15,6 @@ use App\Players;
 use App\OPSWaves;
 use App\Subscription;
 use App\Incomings;
-
 class PlusController extends Controller
 {
     //Displays the Plus Home page
@@ -60,9 +57,9 @@ class PlusController extends Controller
                         ->where('server_id',$request->session()->get('server.id'))
                         ->where('status','ACTIVE')->get();               
                
-                $off = OPSWaves::where('plus_id',$plus->plus_id)
-                        ->where('server_id',$request->session()->get('server.id'))
-                        ->where('a_uid',$account->uid)->get();
+//                 $off = OPSWaves::where('plus_id',$plus->plus_id)
+//                         ->where('server_id',$request->session()->get('server.id'))
+//                         ->where('a_uid',$account->uid)->get();
                
                 $subscription = Subscription::where('id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))->first();
@@ -71,7 +68,7 @@ class PlusController extends Controller
                    'inc'=>$inc,
                    'res'=>count($res),
                    'def'=>count($def),
-                   'off'=>count($off)
+                   'off'=>0
                 );  
                 return view('Plus.General.overview')->with(['counts'=>$counts])->with(['subscription'=>$subscription]);
             }else{
@@ -118,15 +115,24 @@ class PlusController extends Controller
         
         $contact=Contacts::where('id',Auth::user()->id)->first();
         
+        $skype=null;
+        $discord=null;
+        
+        if($contact!=null){
+            
+            $skype=$contact->skype;
+            $discord=$contact->discord;
+            
+        }
+        
         $name=Plus::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->pluck('account')->first();
         
-        return view('Plus.General.member')->with(['contact'=>$contact])
+        return view('Plus.General.member')->with(['skype'=>$skype])->with(['discord'=>$discord])
                     ->with(['name'=>$name]);
         
     }
-
     public function rankings(Request $request){
         
         session(['title'=>'Plus']);
@@ -194,7 +200,11 @@ class PlusController extends Controller
         );
         
         return view('Plus.General.rankings')->with(['ranking'=>$ranking]);        
-    }
+    }       
     
+    public function tdbRoute(Request $request){
+        session(['title'=>'Plus']);
+        
+        return view('Plus.TBD');
+    }
 }
-

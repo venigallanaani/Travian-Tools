@@ -53,9 +53,9 @@
 							@foreach($players as $index=> $player)
     							<tr>		
     								<td class="py-1">{{$index+1}}</td>
-    								<td class="py-1"><a href="/finder/player/{{$player->player}}/1"><strong>{{$player->player}}</strong></a></td>
+    								<td class="py-1"><a href="{{route('findPlayer')}}/{{$player->player}}/1"><strong>{{$player->player}}</strong></a></td>
     								<td class="py-1">{{$player->percent}}%</td>
-    								<td class="py-1">{{$player->resources}}</td>
+    								<td class="py-1">{{number_format($player->resources)}}</td>
     							</tr>
 							@endforeach
 						</table>

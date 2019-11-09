@@ -17,8 +17,44 @@
                 </div>
             @endif
         @endforeach
+        <!-- =========================== Subscription details ================================ -->
+				<div class="col-md-10 mx-auto my-2 py-0">
+        			<div class="card shadow p-0 mx-auto">
+            			<div class="card-header h4 py-2 text-info">
+            				<strong>Subscription Details</strong>
+            			</div>
+            			<div class="card-text h6 py-2">
+            				<table class="table table-borderless">
+            					<tr>            						
+            						<td class="text-center py-1"><strong>Group Owner</strong></td>
+            						<td class="text-left py-1">: {{$subscription->owner}} </td>
+            					</tr>
+            					<tr>            						
+            						<td class="text-center py-1"><strong>Duration</strong></td>
+            						<td class="text-left py-1">: {{$subscription->duration}} <small>days</small></td>
+            					</tr>
+            					<tr>            						
+            						<td class="text-center py-1"><strong>End Date</strong></td>
+            						<td class="text-left py-1">: {{$subscription->end_date}} </td>
+            					</tr>
+            				</table>				
+            			</div>			
+        			</div>
+				</div>	
+        <!-- =========================== Add to group link ================================ -->
+        		<div class="col-md-11 mx-auto py-3">
+            		<div class="mx-auto container rounded p-3" style="background-color:#dbeef4">            							
+            			<strong><span class="blockquote">Plus Group Link: </span></strong><input type="text" id ="link" name="link" value="https://www.travian-tools.com/plus/join/{{$subscription->link}}" class="w-50"/>
+            			<button class="btn btn-primary btn-sm px-2" onclick="copyLink()"> Copy Link </button>
+            			<form action="/plus/join" method="post">
+            				{{csrf_field()}}
+            				<br/>
+            				<button class="btn btn-warning px-3"><strong> Create New Link </strong></button>
+        				</form>
+            		</div>	     		
+        		</div>
 		<!-- =========================== leadership Options control panel ================================ -->		
-				<div class="col-md-11 mx-auto my-2 p-0">
+				<div class="col-md-11 mx-auto mb-5 p-0">
         			<div class="card shadow col-md-8 p-0 mx-auto">
             			<div class="card-header h4 py-2 text-info">
             				<strong>Message of the day</strong>
@@ -49,4 +85,11 @@
                 document.getElementById("message").value = message;               
             }
     	</script>
+    	<script>
+            function copyLink() {
+              var copyText = document.getElementById("link");
+              copyText.select();
+              document.execCommand("copy");
+            }
+        </script>
 @endpush

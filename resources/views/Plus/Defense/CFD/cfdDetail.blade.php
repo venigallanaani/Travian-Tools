@@ -2,7 +2,7 @@
 
 @section('body')
 
-		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
 			<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Call Details</strong></div>
 			<div class="card-text">				
         <!-- ==================================== Defense Tasks Status ======================================= -->		
@@ -29,7 +29,7 @@
 									<p class="py-0"><strong>Land Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task->target_time}}" class="dateTimePicker"/></p>
 									<p class="py-0"><strong>Defense Priority:</strong> 
     													<select name="priority">
-    														<option value="{{$task->priority}}">{{$task->priority}}</option>
+    														<option value="{{$task->priority}}">{{ucfirst($task->priority)}}</option>
     														<option value="high">High</option>
     														<option value="medium">Medium</option>
     														<option value="low">Low</option>
@@ -37,7 +37,7 @@
     													</select></p>
 	    							<p class="py-0"><strong>Defense Type:</strong> 
     													<select name="type">
-    														<option value="{{$task->type}}">{{$task->type}}</option>
+    														<option value="{{$task->type}}">{{ucfirst($task->type)}}</option>
     														<option value="defend">Defend</option>
     														<option value="snipe">Snipe</option>
     														<option value="scout">Scout</option>
@@ -58,14 +58,14 @@
 						</form>
 					  	<tr class="py-2">
 							<td class="py-0">								
-								<p class="py-0 my-1"><strong>Defense Received(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{$task->def_received}} ({{$task->def_percent}}%)</p>
-								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Total Defense"><img alt="" src="/images/x.gif" class="stats def">: {{$task->def_inf + $task->def_cav}}</p>
-								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Infantry Defense"><img alt="" src="/images/x.gif" class="stats dinf">: {{$task->def_inf}}</p>
+								<p class="py-0 my-1"><strong>Defense Received(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{number_format($task->def_received)}} ({{$task->def_percent}}%)</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Total Defense"><img alt="" src="/images/x.gif" class="stats def">: {{number_format($task->def_inf + $task->def_cav)}}</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Infantry Defense"><img alt="" src="/images/x.gif" class="stats dinf">: {{number_format($task->def_inf)}}</p>
 							</td>
 							<td class="py-0">								
-								<p class="py-0 my-1"><strong>Defense Remaining(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{$task->def_remain}}</p>
-								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Resources"><img alt="" src="/images/x.gif" class="res all"> : {{$task->resources}}</p>
-								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Cavalry Defense"><img alt="" src="/images/x.gif" class="stats dcav">: {{$task->def_cav}}</p>
+								<p class="py-0 my-1"><strong>Defense Remaining(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{number_format($task->def_remain)}}</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Resources"><img alt="" src="/images/x.gif" class="res all"> : {{number_format($task->resources)}}</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Cavalry Defense"><img alt="" src="/images/x.gif" class="stats dcav">: {{number_format($task->def_cav)}}</p>
 							</td>
 						</tr>					
 					</table>
@@ -97,16 +97,16 @@
 									<th class="p-0" data-toggle="tooltip" data-placement="top" title="{{$units[$tribe['tribe_id']][9]['name']}}"><img alt="" src="/images/x.gif" class="units {{$units[$tribe['tribe_id']][9]['image']}}"></th> 
     							</tr>
     							<tr>
-    								<td class="py-1">{{$tribe['unit_01']}}</td>
-    								<td class="py-1">{{$tribe['unit_02']}}</td>
-    								<td class="py-1">{{$tribe->unit_03}}</td>
-    								<td class="py-1">{{$tribe->unit_04}}</td>
-    								<td class="py-1">{{$tribe->unit_05}}</td>
-    								<td class="py-1">{{$tribe->unit_06}}</td>
-    								<td class="py-1">{{$tribe->unit_07}}</td>
-    								<td class="py-1">{{$tribe->unit_08}}</td>
-    								<td class="py-1">{{$tribe->unit_09}}</td>
-    								<td class="py-1">{{$tribe->unit_10}}</td>
+    								<td class="py-1">{{number_format($tribe['unit_01'])}}</td>
+    								<td class="py-1">{{number_format($tribe['unit_02'])}}</td>
+    								<td class="py-1">{{number_format($tribe->unit_03)}}</td>
+    								<td class="py-1">{{number_format($tribe->unit_04)}}</td>
+    								<td class="py-1">{{number_format($tribe->unit_05)}}</td>
+    								<td class="py-1">{{number_format($tribe->unit_06)}}</td>
+    								<td class="py-1">{{number_format($tribe->unit_07)}}</td>
+    								<td class="py-1">{{number_format($tribe->unit_08)}}</td>
+    								<td class="py-1">{{number_format($tribe->unit_09)}}</td>
+    								<td class="py-1">{{number_format($tribe->unit_10)}}</td>
     							</tr>
 							@endforeach
 						</table>
@@ -126,11 +126,11 @@
 							</tr>
 							@foreach($players as $index=>$player)
 							<tr>		
-								<td class="">{{$index+1}}</td>
-								<td class="" href="/finder/player/{{$player->player}}/1" target="_blank">{{$player->player}}</td>
-								<td class="">{{$player->upkeep}}</td>
-								<td class="">{{$player->res}}</td>
-								<td class=""><a class="btn btn-sm btn-outline-secondary" href="/defense/cfd/troops/{{$task->task_id}}/{{$player->uid}}">
+								<td class="py-1">{{$index+1}}</td>
+								<td class="py-1"><a href="{{route('findPlayer')}}/{{$player->player}}/1" target="_blank">{{$player->player}}</a></td>
+								<td class="py-1">{{number_format($player->upkeep)}}</td>
+								<td class="py-1">{{number_format($player->res)}}</td>
+								<td class="py-1"><a class="btn btn-sm btn-outline-secondary" href="/defense/cfd/troops/{{$task->task_id}}/{{$player->uid}}">
     								<i class="fa fa-angle-double-right"></i> troops</a></td>
 							</tr>
 							@endforeach

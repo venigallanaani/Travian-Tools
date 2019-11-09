@@ -64,21 +64,21 @@
         
     		@if(count($tasks)==0)
     			<p class="text-center h5 py-2">No defense tasks are active currently.</p>				
-    		@endif
+    		@else
     <!-- ==================================== List of CFD is progress ======================================= -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
 					<table class="table align-middle small">
 						<thead class="thead-inverse">
     						<tr>
-    							<th class="col-md-1">Player</th>
-    							<th class="col-md-1">Defense</th>
-    							<th class="col-md-1">Type</th>
-    							<th class="col-md-1">Status</th>
-    							<th class="col-md-1">Priority</th>
-    							<th class="col-md-1">%</th>
-    							<th class="col-md-1">Land time</th>
-    							<th class="col-md-1">Time left</th>
-    							<th class="col-md-1"></th>    							
+    							<th class="">Player</th>
+    							<th class="">Defense</th>
+    							<th class="">Type</th>
+    							<th class="">Status</th>
+    							<th class="">Priority</th>
+    							<th class="">%</th>
+    							<th class="">Land time</th>
+    							<th class="">Time left</th>
+    							<th class=""></th>    							
     						</tr>
 						</thead>
 						@foreach($tasks as $task)
@@ -95,10 +95,10 @@
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>
-    							<td>{{$task->def_total}}</td>
-    							<td><strong>{{$task->type}}</strong></td>
-    							<td>{{$task->status}}</td>
-    							<td class="{{$color}}"><strong>{{$task->priority}}</strong></td>    							
+    							<td>{{number_format($task->def_total)}}</td>
+    							<td><strong>{{ucfirst($task->type)}}</strong></td>
+    							<td>{{ucfirst(strtolower($task->status))}}</td>
+    							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    							
     							<td>{{$task->def_percent}}%</td>
     							<td>{{$task->target_time}}</td>
     							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
@@ -109,6 +109,7 @@
 						@endforeach
 					</table>
 				</div>
+				@endif
 			</div>
 		</div>
 

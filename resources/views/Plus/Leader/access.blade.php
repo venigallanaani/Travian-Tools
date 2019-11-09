@@ -44,24 +44,24 @@
 					<table class="table table-hover table-sm table-bordered align-middle small">
 						<thead class="bg-info text-white">
     						<tr>
-    							<th class="col-md-2 align-middle" rowspan="2">Player</th>
-    							<th class="col-md-2 align-middle" rowspan="2">Account</th>
-    							<th class="col-md-2 align-middle" rowspan="2">Alliance</th>
-    							<th class="col-md-1 align-middle" rowspan="2">Plus</th>
+    							<th class="align-middle" rowspan="2">Player</th>
+    							<th class="align-middle" rowspan="2">Account</th>
+    							<th class="align-middle" rowspan="2">Alliance</th>
+    							<th class="align-middle" rowspan="2">Plus</th>
     							<th colspan="6">Leadership Options</th>
     						</tr>
     						<tr class="">
-    							<th class="col-md-1">Leader</th>
-    							<th class="col-md-1">Defense</th>
-    							<th class="col-md-1">Offense</th>
-    							<th class="col-md-1">Resources</th>
-    							<th class="col-md-1">Artifacts</th>
-    							<th class="col-md-1">Wonder</th>
+    							<th class="">Leader</th>
+    							<th class="">Defense</th>
+    							<th class="">Offense</th>
+    							<th class="">Resources</th>
+    							<th class="">Artifacts</th>
+    							<th class="">Wonder</th>
     						</tr>
 						</thead>
 					@foreach($players as $player)
 						<tr>											
-							<td><a href="/finder/player/{{$player['account']}}/1">{{$player['account']}}</a></td>
+							<td><a href="{{route('findPlayer')}}/{{$player['account']}}/1">{{$player['account']}}</a></td>
 							<td><a href="/plus/member/{{$player['user']}}">{{$player['user']}}</a></td>
 							<td><a href="/finder/alliance/{{$player['alliance']}}/1">{{$player['alliance']}}</a></td>					
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'plus')">
