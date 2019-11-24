@@ -16,12 +16,14 @@ use App\MapData;
 
 class NeighbourFinderController extends Controller
 {
-    public function neighbour(){        
+    public function neighbour(){       
+        session(['title'=>'Finders']);
         //Displays the neighbour finder
         return view('Finders.Neighbour.neighbourFinder');
     }
     
     public function processNeighbour(Request $request){
+        session(['title'=>'Finders']);
         //Process the Neighbour finder form
         
         $xCor=Input::get('xCor');

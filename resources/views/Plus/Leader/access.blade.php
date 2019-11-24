@@ -28,22 +28,22 @@
     							<th class="align-middle" rowspan="2">Account</th>
     							<th class="align-middle" rowspan="2">Alliance</th>
     							<th class="align-middle" rowspan="2">Plus</th>
-    							<th colspan="6">Leadership Options</th>
+    							<th colspan="6">Leadership Access</th>
     						</tr>
     						<tr class="">
     							<th class="">Leader</th>
     							<th class="">Defense</th>
     							<th class="">Offense</th>
-    							<th class="">Resources</th>
-    							<th class="">Artifacts</th>
+    							<th class="">Resource</th>
+    							<th class="">Artifact</th>
     							<th class="">Wonder</th>
     						</tr>
 						</thead>
 					@foreach($players as $player)
 						<tr>											
 							<td><a href="{{route('findPlayer')}}/{{$player['account']}}/1">{{$player['account']}}</a></td>
-							<td><a href="/plus/member/{{$player['user']}}">{{$player['user']}}</a></td>
-							<td><a href="{{route('findAlliance')}}/{{$player['alliance']}}/1">{{$player['alliance']}}</a></td>					
+							<td><a href="/plus/member/{{$player['id']}}">{{$player['user']}}</a></td>
+							<td><a href="{{route('findAlliance')}}/{{$player['alliance']}}/1" target="_blank">{{$player['alliance']}}</a></td>					
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'plus')">
             							<input type="checkbox" @if($player['plus']==1) checked @endif/></a></td>
             				<td><a href="javascript:void(0)" onClick="updPlus({{$player['id']}},'leader')">

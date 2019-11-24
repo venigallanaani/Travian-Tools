@@ -36,7 +36,7 @@
 				@foreach($troops as $index=>$troop)
 					<tr>
 						<td rowspan="2" class="align-middle">{{$index+1}}</td>
-						<td rowspan="2" class="align-middle"><a href="/finder/player/{{$troop['player']}}/1" target="_blank">
+						<td rowspan="2" class="align-middle"><a href="{{route('findPlayer')}}/{{$troop['player']}}/1" target="_blank">
 							<strong>{{$troop['player']}}</strong></a></td>
 						<td rowspan="2" class="align-middle"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$troop['x']}}&y={{$troop['y']}}" target="_blank">
 							<strong>{{$troop['village']}} ({{$troop['x']}}|{{$troop['y']}})</strong></a></td>						
@@ -60,7 +60,7 @@
 							<img alt="" src="/images/x.gif" class="units {{$tribes[$troop['tribe']][8]['image']}}"></td>
 						<td class="px-1 py-0" data-toggle="tooltip" data-placement="top" title="{{$tribes[$troop['tribe']][9]['name']}}">
 							<img alt="" src="/images/x.gif" class="units {{$tribes[$troop['tribe']][9]['image']}}"></td>
-						<td rowspan="2" class="align-middle"><strong>{{$troop['upkeep']}}</strong></td>						
+						<td rowspan="2" class="align-middle"><strong>{{number_format($troop['upkeep'])}}</strong></td>						
 						<td rowspan="2" class="align-middle">{{$troop['tsq']}}</td>
 						<td rowspan="2" class="align-middle">{{$troop['update']}}</td>
 					</tr>

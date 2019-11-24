@@ -18,6 +18,7 @@ class AllianceFinderController extends Controller
 {
 
     public function alliance($name=null,$id=null,Request $request){
+        session(['title'=>'Finders']);
         //Displays the alliance finder
         if($id==null && $name==null){
             return view('Finders.Alliance.allianceFinder');
@@ -53,6 +54,8 @@ class AllianceFinderController extends Controller
     }
     
     public function processAlliance(){
+        session(['title'=>'Finders']);
+        
         // converts the alliance finder post call into get
         $name  = Input::get('allyNm') ;
         return Redirect::to('/finders/alliance/'.$name) ;

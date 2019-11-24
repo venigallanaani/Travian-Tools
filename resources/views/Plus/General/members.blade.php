@@ -22,7 +22,7 @@
 						@foreach($members as $member)
     						<tr class="">
     							<td><a href="{{route('findPlayer')}}/{{$member['player']}}/1" target="_blank">{{$member['player']}}</a></td>
-    							<td><a href="/plus/member/{{$member['account']}}">{{$member['account']}}</a></td>
+    							<td><a href="/plus/member/{{$member['id']}}">{{$member['account']}}</a></td>
     							<td><a href="{{route('findAlliance')}}/{{$member['alliance']}}/1" target="_blank">{{$member['alliance']}}</a></td>
     							<td><a href="{{route('findPlayer')}}/{{$member['sitter1']}}/1" target="_blank">{{$member['sitter1']}}</a></td>
     							<td><a href="{{route('findPlayer')}}/{{$member['sitter2']}}/1" target="_blank">{{$member['sitter2']}}</a></td>    														

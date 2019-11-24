@@ -40,7 +40,6 @@
 							@endforeach
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></td> 
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Tournament Square"><img alt="" src="/images/x.gif" class="build tsq"></td>
-							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Village Type">Type</td>
 							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Icons"></td>
 						</tr>
 					@foreach($troops as $index=>$troop)
@@ -59,7 +58,6 @@
 							<td class="p-0 unit10" contenteditable="true">{{($troop['unit10'])}}</td>
 							<td class="p-0">{{number_format($troop['upkeep'])}}</td>
 							<td class="p-0 tsq" contenteditable="true">{{$troop['Tsq']}}</td>
-							<td class="py-0">{{$troop['type']}}</td>
 							<td class="p-0" data-toggle="tooltip" data-placement="top" title="save">
             					<button class="badge badge-primary" type="button" id="update"><i class="far fa-save"></i></button>																						
 							</td>

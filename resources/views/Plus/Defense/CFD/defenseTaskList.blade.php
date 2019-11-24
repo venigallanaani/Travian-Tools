@@ -44,7 +44,7 @@
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>
-    							<td>{{number_format($task->def_total)}}</td>
+    							<td>{{number_format($task->def_remain)}}</td>
     							<td><strong>{{ucfirst($task->type)}}</strong></td>
     							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>
     							<td>{{$task->target_time}}</td>

@@ -18,11 +18,13 @@ class NatarFinderController extends Controller
 {
  
     public function natar(){ 
+        session(['title'=>'Finders']);
         //Displays the natar finder
         return view('Finders.Natar.natarFinder'); 
     }
     
     public function processNatar(Request $request){
+        session(['title'=>'Finders']);
         //Process the Natar finder form
         
         $xCor=Input::get('xCor');

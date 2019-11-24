@@ -68,11 +68,16 @@
     							<th class="">Status</th>
     							<th class="">%</th>
     							<th class="">Target Time</th>
+    							<th class="">Time Left</th>
     							<th class=""></th>    							
     						</tr>
 						</thead>
 							@foreach($tasks as $task)
-    						<tr>
+							@php
+								if($task->status != 'ACTIVE'){$status="table-secondary";}
+								else{$status='';}
+							@endphp
+    						<tr class="{{$status}}">
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player }} ({{$task->village}})</strong></a>
     							</td>
@@ -81,6 +86,7 @@
     							<td>{{ucfirst(strtolower($task->status))}}</td>
     							<td>{{$task->res_percent}}%</td>
     							<td>{{$task->target_time}}</td>
+    							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
     							<td><a class="btn btn-outline-secondary" href="/resource/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
@@ -101,7 +107,16 @@
             format: "yyyy-mm-dd hh:ii:ss",
             showSecond:true
         });
-	</script>            
+	</script>         
+	
+	
+	@if(count($tasks)>0)	
+	<script>
+		@foreach($tasks as $task)
+			countDown("{{$task->task_id}}","{{$task->target_time}}");
+		@endforeach
+	</script>
+	@endif   
 
 @endpush
 

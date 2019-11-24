@@ -44,19 +44,19 @@
 					<table class="table align-middle small table-hover">
 						<thead class="thead-inverse">
     						<tr>
-    							<th class="col-md-1">Name</th>    							
-    							<th class="col-md-1">Status</th>
-    							<th class="col-md-1">Attackers</th>
-    							<th class="col-md-1">Targets</th>
-    							<th class="col-md-1">Waves</th>
-    							<th class="col-md-1">Created By</th>
-    							<th class="col-md-1"></th>    							
+    							<th class="">Plan Name</th>    							
+    							<th class="">Status</th>
+    							<th class="">Attackers</th>
+    							<th class="">Targets</th>
+    							<th class="">Waves</th>
+    							<th class="">Created By</th>
+    							<th class=""></th>    							
     						</tr>
 						</thead>
 						@foreach($plans as $plan)
     						<tr class="">
     							<td><strong>{{$plan->name}}</strong></td>
-    							<td>{{$plan->status}}</td>
+    							<td>{{ucfirst(strtolower($plan->status))}}</td>
     							<td>{{$plan->attackers}}</td>
     							<td>{{$plan->targets}}</td>
     							<td><strong><span class="text-danger">{{$plan->real}}</span> | <span class="text-primary">{{$plan->fake}}</span></strong></td>    							

@@ -34,7 +34,7 @@
                                 <td class="py-1  text-info"><strong>Your Contribution:</strong> {{number_format($player['resources']) ?? 0}}</td>
                             </tr>
                             <tr>
-                                <td><button class="btn btn-warning px-5" name="update" value="{{$task['task_id']}}">Submit</button></td>
+                                <td><button class="btn btn-warning px-5" name="update" value="{{$task['task_id']}}"><strong>Submit</strong></button></td>
                                 <td class="py-1 "><strong>Comments:</strong><small> {{$task['comments']}}</small></td>
                             </tr>
                         </table>

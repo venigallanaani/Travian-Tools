@@ -18,11 +18,13 @@ class InactiveFinderController extends Controller
 {
 
     public function inactive(){
+        session(['title'=>'Finders']);
         //Displays the inactive finder
         return view('Finders.Inactive.inactiveFinder');
     }
     
     public function processInactive(Request $request){
+        session(['title'=>'Finders']);
         //Displays the inactive finder        
         $xCor=Input::get('xCor');
         $yCor=Input::get('yCor');

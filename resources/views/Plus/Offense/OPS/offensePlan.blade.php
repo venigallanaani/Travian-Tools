@@ -21,7 +21,7 @@
                 	<table class="table table-borderless table-sm text-left">
                 		<tr>
                 			<td class="align-middle">
-                				<p><strong>Status : </strong>{{$plan->status}}</p>
+                				<p><strong>Status : </strong>{{ucfirst(strtolower($plan->status))}}</p>
                 				<p><strong>Created By : </strong>{{$plan->create_by}}</p>
                 				<p><strong>Updated By : </strong>{{$plan->update_by}}</p>
                 			</td>

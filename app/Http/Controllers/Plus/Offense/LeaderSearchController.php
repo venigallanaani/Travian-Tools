@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+use Carbon\Carbon;
 
 use App\Troops;
 use App\Units;
 use App\Diff;
+use App\Account;
 
 class LeaderSearchController extends Controller
 {
@@ -21,8 +25,8 @@ class LeaderSearchController extends Controller
         $tribes = null; $troops=array();
         
         $villages = Troops::where('server_id',$request->session()->get('server.id'))
-        ->where('plus_id',$request->session()->get('plus.plus_id'))
-        ->where('type','Offense')->orderBy('upkeep','desc')->get();
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('type','OFFENSE')->orderBy('upkeep','desc')->get();
         
         if(count($villages)>0){
             $rows = Units::select('tribe_id','name','image')->get();
@@ -64,11 +68,14 @@ class LeaderSearchController extends Controller
     
     public function show(){
         
+        session(['title'=>'Offense']);
         return view("Plus.Offense.Search.search");
         
     }
     
     public function search(Request $request){
+        
+        session(['title'=>'Offense']);
         
         $xCor=Input::get('xCor');
         $yCor=Input::get('yCor');
@@ -76,7 +83,7 @@ class LeaderSearchController extends Controller
         $siege=Input::get('siege');
         $cav=Input::get('cavalry');
         
-        dd($cav);
+        //dd($cav);
         
         date_default_timezone_set($request->session()->get('server.tmz'));
         $tribes = array(); $troops=array();
@@ -108,13 +115,13 @@ class LeaderSearchController extends Controller
                 
                 $sqlStr = "SELECT a.* FROM troops a, servers b WHERE a.server_id = b.server_id AND b.server_id='".$request->session()->get('server.id')."' AND".
                     " ((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) <= ".$dist."*".$dist.
-                    " AND a.account_id=".$account->account_id." AND a.type='Defense' AND a.upkeep >= ".$def." ".
+                    " AND a.account_id=".$account->account_id." AND a.type='OFFENSE' AND a.upkeep >= ".$def." ".
                     " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
                 
                 $villages= DB::select(DB::raw($sqlStr));
             }else{
                 $sqlStr = "SELECT a.* FROM troops a, servers b WHERE a.server_id = b.server_id AND b.server_id='".$request->session()->get('server.id')."' AND".
-                    " a.account_id=".$account->account_id." AND a.type='Defense' AND a.upkeep >= ".$def." ".
+                    " a.account_id=".$account->account_id." AND a.type='OFFENSE' AND a.upkeep >= ".$def." ".
                     " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
                 
                 $villages= DB::select(DB::raw($sqlStr));
@@ -261,8 +268,8 @@ class LeaderSearchController extends Controller
                 return $a['dist'] <=> $b['dist'];
             });                
         }        
-        return view("Plus.Defense.Search.results")->with(['troops'=>$troops])
-        ->with(['tribes'=>$tribes]);
+        return view("Plus.Offense.Search.results")->with(['troops'=>$troops])
+                        ->with(['tribes'=>$tribes]);
     }
     
     

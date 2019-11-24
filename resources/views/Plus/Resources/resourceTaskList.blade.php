@@ -22,7 +22,7 @@
                 @endforeach
                 
 				<div class="text-center col-md-11 my-2 p-0">
-					<table class="table align-middle small col-md-9 mx-auto">
+					<table class="table align-middle small col-md-10 mx-auto">
 						<thead class="thead-inverse">
     						<tr>
     							<th class="">Target</th>
@@ -39,7 +39,7 @@
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player }} ({{$task->village}})</strong></a>
     							</td>
-    							<td>{{$task->res_total}}</td>
+    							<td>{{number_format($task->res_total)}}</td>
     							<td data-toggle="tooltip" data-placement="top" title="{{$task->type}}"><img alt="all" src="/images/x.gif" class="res {{$task->type}}"></td>							
     							<td>{{$task->res_percent}}%</td>
     							<td>{{$task->target_time}}</td>

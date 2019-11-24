@@ -30,8 +30,8 @@
 									</p>
 								</td>
 								<td class="py-2">
-									<p class="py-0"><strong>Resource Received:</strong> {{$task[0]['res_received']}} ({{$task[0]['res_percent']}}%) </p>
-									<p class="py-0"><strong>Remaining Time: <span id="{{$task[0]['task_id']}}"></span></strong></p>
+									<p class="py-0"><strong>Resource Received:</strong> {{number_format($task[0]['res_received'])}} ({{$task[0]['res_percent']}}%) </p>
+									<p class="py-0"><strong>Time Left: <span id="{{$task[0]['task_id']}}"></span></strong></p>
 									<p class="py-0 my-2"><button class="btn btn-primary px-5" name="update" value="{{$task[0]['task_id']}}">Update Task</button></p>
 									<p class="py-0 my-2"><button class="btn btn-success px-5" name="complete" value="{{$task[0]['task_id']}}">Mark as Complete</button></p>
 									<p class="py-0 my-2"><button class="btn btn-warning px-5" name="delete" value="{{$task[0]['task_id']}}">Delete Task</button></p>

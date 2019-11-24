@@ -167,6 +167,9 @@ Route::post('/resource/update','Plus\Resources\LeaderResourceController@processR
 
 /* -------------------------------------------- Plus Defense Routes ---------------------------------------------------- */
 
+/* -------------- Incomings Route ----------------------------- */
+Route::get('/defense/incomings','Plus\PlusController@tdbRoute');
+
 /* --------------- Plus group member CFD routes  --------------- */
 Route::get('/plus/defense','Plus\Defense\CFD\CFDController@defenseTaskList');
 Route::get('/plus/defense/{id}','Plus\Defense\CFD\CFDController@defenseTask');
@@ -181,5 +184,36 @@ Route::post('/defense/cfd/update','Plus\Defense\CFD\LeaderCFDController@processC
 Route::get('/defense/search','Plus\Defense\Search\DefenseController@show');
 Route::post('/defense/search','Plus\Defense\Search\DefenseController@process');
 
+
+
+
+/* ---------------------------------------- Plus Offense Routes ------------------------------------------------- */
+
+/* -------------------- Plus member Offense Options -----------------------*/
+Route::get('/plus/offense','Plus\Offense\OffenseController@offenseTaskList');
+Route::post('/plus/offense/update','Plus\Offense\OffenseController@updateOffenseTask');
+
+/* -------------------- Plus Leader Offense Options -----------------------*/
+Route::get('/offense/status','Plus\Offense\LeaderOffenseController@offensePlanList');
+Route::post('/offense/create','Plus\Offense\LeaderOffenseController@createOffensePlan');
+
+Route::get('/offense/status/{id}','Plus\Offense\LeaderOffenseController@displayOffensePlan');
+Route::post('/offense/status/update','Plus\Offense\LeaderOffenseController@updateOffensePlan');
+
+Route::get('/offense/troops','Plus\Offense\LeaderSearchController@troopsList');
+Route::get('/offense/search','Plus\Offense\LeaderSearchController@show');
+Route::post('/offense/search','Plus\Offense\LeaderSearchController@search');
+
+/* ----------------------- Plus Leader Offense make and edit plan ------------------------ */
+Route::get('/offense/plan/edit/{id}','Plus\Offense\OffensePlanController@showPlanLayout');
+Route::post('/offense/plan/update','Plus\Offense\OffensePlanController@updatePlan');
+Route::post('/offense/plan/add','Plus\Offense\OffensePlanController@addWave');
+//Route::get('/offense/plan/add/{wave}','Plus\Offense\OffensePlanController@addWave');
+Route::get('/offense/plan/delete/{id}','Plus\Offense\OffensePlanController@deleteWave');
+
+/* ----------------------- Plus Leader Offense archive plan options ------------------------ */
+Route::get('/offense/archive','Plus\Offense\offenseArchiveController@archiveList');
+Route::get('/offense/archive/{id}','Plus\Offense\offenseArchiveController@displayArchivePlan');
+Route::post('/offense/archive/update','Plus\Offense\offenseArchiveController@updateArchivePlan');
 
 

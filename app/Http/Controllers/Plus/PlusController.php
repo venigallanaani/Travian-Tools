@@ -89,16 +89,18 @@ class PlusController extends Controller
         $rows=Plus::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->orderby('account','asc')->get();
+        
         $members = array();
         foreach($rows as $row){
             $account=Account::where('user_id',$row->id)
-                        ->where('server_id',$row->server_id)->first();
+                            ->where('server_id',$row->server_id)->first();
             $alliance=Players::where('server_id',$row->server_id)
-                        ->where('uid',$account->uid)
-                        ->pluck('alliance')->first();
+                            ->where('uid',$account->uid)
+                            ->pluck('alliance')->first();
             $members[]=array(
                 'player'=>$row->account,
                 'account'=>$row->user,
+                'id'=>$row->id,
                 'alliance'=>$alliance,
                 'sitter1'=>$account->sitter1,
                 'sitter2'=>$account->sitter2
@@ -109,11 +111,11 @@ class PlusController extends Controller
         
     }
     
-    public function member(Request $request){
+    public function member(Request $request, $id){
         
         session(['title'=>'Plus']);
         
-        $contact=Contacts::where('id',Auth::user()->id)->first();
+        $contact=Contacts::where('id',$id)->first();
         
         $skype=null;
         $discord=null;
@@ -133,6 +135,11 @@ class PlusController extends Controller
                     ->with(['name'=>$name]);
         
     }
+    
+    
+
+
+//Members ranking details -- only displayable with options from subscription page
     public function rankings(Request $request){
         
         session(['title'=>'Plus']);

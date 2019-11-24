@@ -18,12 +18,14 @@ class PlayerFinderController extends Controller
 {
     
     public function processPlayer(){
+        session(['title'=>'Finders']);
         // converts the player finder post into get call
         $name  = Input::get('plrNm') ;
         return Redirect::to('/finders/player/'.$name) ;
     }
     
     public function player($name=null,$id=null, Request $request){
+        session(['title'=>'Finders']);
         // displays the Player finder
         if($id==null && $name==null){
             // displays player finder form

@@ -37,7 +37,7 @@
 		</div>
 	</div>
 	<div class="d-inline float-md-left col-md-12 mx-auto text-center shadow rounded mt-2">
-		<table class="table table-hover table-sm small table-striped m-1" id="ops">
+		<table class="table table-hover table-sm small table-striped m-1 py-2" id="ops">
 			<thead>
     			<tr class="bg-info text-white">
     				<th class="">Attacker</th>
@@ -86,11 +86,11 @@
 			@endphp			
     			<tr id="{{$wave->id}}">
     				<td class="">
-    					<strong><a href="/finder/player/{{$wave->a_player}}/1" target="_blank">{{$wave->a_player}}</a></strong>
+    					<strong><a href="{{route('findPlayer')}}/{{$wave->a_player}}/1" target="_blank">{{$wave->a_player}}</a></strong>
     					<a href=""> ({{$wave->a_village}})</a>
     				</td>
     				<td class="">
-    					<strong><a href="/finder/player/{{$wave->d_player}}/1" target="_blank">{{$wave->d_player}}</a></strong>
+    					<strong><a href="{{route('findPlayer')}}/{{$wave->d_player}}/1" target="_blank">{{$wave->d_player}}</a></strong>
     					<a href=""> ({{$wave->d_village}})</a>
     				</td>
     				<td class="{{$color}}"><strong>{{$wave->type}}</strong></td>

@@ -21,11 +21,15 @@ class DefenseController extends Controller
 {
     public function show(){
         
+        session(['title'=>'Defense']);
+        
         return view("Plus.Defense.Search.search");
         
     }
     
     public function process(Request $request){
+        
+        session(['title'=>'Defense']);
         
         $xCor=Input::get('xCor');
         $yCor=Input::get('yCor');
@@ -61,18 +65,20 @@ class DefenseController extends Controller
                 
                 $sqlStr = "SELECT a.* FROM troops a, servers b WHERE a.server_id = b.server_id AND b.server_id='".$request->session()->get('server.id')."' AND".
                     " ((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) <= ".$dist."*".$dist.
-                    " AND a.account_id=".$account->account_id." AND a.type='Defense' AND a.upkeep >= ".$def." ".
+                    " AND a.account_id=".$account->account_id." AND a.type='DEFENSE' AND a.upkeep >= ".$def." ".
                     " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
                 
                 $villages= DB::select(DB::raw($sqlStr)); 
             }else{
                 $sqlStr = "SELECT a.* FROM troops a, servers b WHERE a.server_id = b.server_id AND b.server_id='".$request->session()->get('server.id')."' AND".
-                    " a.account_id=".$account->account_id." AND a.type='Defense' AND a.upkeep >= ".$def." ".
+                    " a.account_id=".$account->account_id." AND a.type='DEFENSE' AND a.upkeep >= ".$def." ".
                     " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
                 
-                $villages= DB::select(DB::raw($sqlStr)); 
+                $villages= DB::select(DB::raw($sqlStr));                
                 
-            }                        
+            }
+            
+            //dd($villages);
                 
             if(count($villages) > 0){
                 foreach($villages as $village){                        
@@ -97,7 +103,7 @@ class DefenseController extends Controller
                             'unit10'=>$village->unit10,
                             'upkeep'=>$village->upkeep,
                             'dist'=>$t_dist,
-                            'startTime'=>''
+                            'startTime'=>null
                         );
                     }else{
                     //Teuton Calculations
@@ -220,6 +226,6 @@ class DefenseController extends Controller
         //$troops = new Paginator::make($results, count($results), 50);
         
         return view("Plus.Defense.Search.results")->with(['troops'=>$troops])
-                        ->with(['tribes'=>$tribes]);        
+                        ->with(['tribes'=>$tribes])->with(['target'=>Input::get('targetTime')]);        
     }
 }

@@ -97,10 +97,10 @@
             <!-- =================================== Offense menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Offense Menu</a>                 
-                <a href="/offense/status" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Ops Status</a>
-                <a href="/offense/troops" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Troops Details</a>
+                <a href="/offense/status" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Offense Plans</a>
+                <a href="/offense/troops" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Hammers</a>
                 <a href="/offense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Offense</a>
-                <a href="/offense/archive" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Ops Archive</a>                  
+                <a href="/offense/archive" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Plans Archive</a>                  
             </div>
         @endif
 		@if(Session::get('plus.resources')==1)
@@ -110,7 +110,7 @@
                 <a href="/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Push Status</a>
             </div> 
         @endif
-		@if(Session::get('plus.artifact')==1)
+		@if(Session::get('plus.artifact')==2)
             <!-- =================================== Artifacts menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Artifacts Menu</a>                
@@ -120,15 +120,17 @@
                 <a href="/artifact/capture" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Capture Plan</a>
             </div> 
         @endif
-		@if(Session::get('plus.wonder')==1)
+		@if(Session::get('plus.wonder')==2)
             <!-- =================================== Artifacts menu ================================== -->
-            <div class="list-group text-center text-white mt-1 mb-5">
+            <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Wonder Menu</a>                
                 <a href="/wonder" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
                 <a href="/wonder/crop" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Crop Tool</a>
                 <a href="/wonder/defense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Wonder Defense</a>                
             </div> 
         @endif
+        	<div class="text-center text-white mb-5">
+        	</div>
         </div>
         
         @yield('body')

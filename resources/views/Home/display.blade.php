@@ -47,22 +47,6 @@
                     </table>
                 </div>
             </div>
-<!--             <div class="card shadow"> -->
-<!--                 <p class="card-header h4 text-info font-weight-bold">Plus</p> -->
-<!--                 <div class="card-body"> -->
-<!--                    	@guest -->
-<!--                     	<p><a href="/login"><strong>Sign In</strong></a> to access the Plus group</p> -->
-<!--                     @endguest -->
-<!--                     <p> Plus menu offers different options and tasks for the group to work efficiently.</p> -->
-<!--                     <table> -->
-<!--                         <tr><td><a href="/plus/members" class="text-info font-weight-bold">Member Details</a></td></tr> -->
-<!--                         <tr><td><a href="/plus/incoming" class="text-info font-weight-bold">Enter Incomings</a></td></tr> -->
-<!--                         <tr><td><a href="/plus/defense" class="text-info font-weight-bold">Defense Tasks</a></td></tr> -->
-<!--                         <tr><td><a href="/plus/offense" class="text-info font-weight-bold">Offense Tasks</a></td></tr> -->
-<!--                         <tr><td><a href="/plus/resource" class="text-info font-weight-bold">Resource Tasks</a></td></tr> -->
-<!--                     </table> -->
-<!--                 </div> -->
-<!--             </div> -->
             <div class="card shadow">
                 <p class="card-header h4 text-warning font-weight-bold">Account</p>
                 <div class="card-body">
@@ -78,6 +62,23 @@
                     </table>
                 </div>
             </div>  
+            <div class="card shadow">
+                <p class="card-header h4 text-info font-weight-bold">Plus</p>
+                <div class="card-body">
+                   	@guest
+                    	<p><a href="/login"><strong>Sign In</strong></a> to access the Plus group</p>
+                    @endguest
+                    <p> Plus menu offers different options and tasks for the group to work efficiently.</p>
+                    <table>
+                        <tr><td><a href="/plus/members" class="text-info font-weight-bold">Member Details</a></td></tr>
+                        <tr><td><a href="/plus/incoming" class="text-info font-weight-bold">Enter Incomings</a></td></tr>
+                        <tr><td><a href="/plus/defense" class="text-info font-weight-bold">Defense Tasks</a></td></tr>
+                        <tr><td><a href="/plus/offense" class="text-info font-weight-bold">Offense Tasks</a></td></tr>
+                        <tr><td><a href="/plus/resource" class="text-info font-weight-bold">Resource Tasks</a></td></tr>
+                    </table>
+                </div>
+            </div>
+
 <!--             <div class="card shadow"> -->
 <!--                 <p class="card-header h4 text-secondary font-weight-bold">Useful Links</p> -->
 <!--                 <div class="card-body"> -->
