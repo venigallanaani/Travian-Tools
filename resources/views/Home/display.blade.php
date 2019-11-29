@@ -25,6 +25,11 @@
                 </div>
             </div>
             <div class="card shadow">
+                <div class="card-body">
+					<p class="h3 text-center m-2"><a href="{{route('reports')}}" class="text-info font-weight-bold">Reports Converter</a></p>
+                </div>
+            </div>
+            <div class="card shadow">
                 <p class="card-header h4 text-success font-weight-bold">Finders</p>
                 <div class="card-body">                 
                     <p>Finders help you search the Travian to find different objects you need.</p>

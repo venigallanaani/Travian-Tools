@@ -110,9 +110,104 @@ class OffensePlanController extends Controller
 
     }
     
+    
     public function addWave(Request $request){
         
-        return response()->json(['success'=>'Created']);
+        $reponse = '-';
+        $data=explode('|',trim($request->input));
+        
+        $id = $data[0];
+        $a_x = $data[1];      $a_y = $data[2];
+        $d_x = $data[3];      $d_y = $data[4];
+        $type = $data[5];     $waves = $data[6];    $unit = $data[7];
+        $time = $data[8];     $comments = $data[9];
+        
+        
+        $plan=OPS::where('server_id',$request->session()->get('server.id'))
+                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                ->where('id',$id)->first();        
+
+    //Check plans
+        if(!$plan==null){
+            
+        //Find Coordinates
+            $attacker = Diff::where('server_id',$request->session()->get('server.id'))
+                            ->where('x',$a_x)->where('y',$a_y)->first();
+            $target = Diff::where('server_id',$request->session()->get('server.id'))
+                            ->where('x',$d_x)->where('y',$d_y)->first();
+            
+            $wave = new OPSWaves;
+                            
+            if(!$attacker==null && !$target==null){   
+                                
+                //plan data
+                $player = OPSWaves::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$plan->plus_id)->where('plan_id',$id)
+                                ->where('a_uid',$attacker->uid)->first();
+                if($player==null){
+                    $plan->attackers=$plan->attackers+1;
+                }
+                
+                $player = OPSWaves::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$plan->plus_id)->where('plan_id',$id)
+                                ->where('d_uid',$target->uid)->first();
+                if($player==null){
+                    $plan->targets=$plan->targets+1;
+                }
+                
+                $plan->waves=$plan->waves+$waves;
+                
+                
+                if(strtoupper($type)=='REAL'){
+                    $plan->real=$plan->real+$waves;
+                }else if(strtoupper($type)=='FAKE'){
+                    $plan->fake=$plan->fake+$waves;
+                }else{
+                    $plan->other=$plan->other+$waves;
+                }
+                
+            //wave data
+                $wave->plan_id=$id;
+                $wave->plus_id=$plan->plus_id;
+                $wave->server_id=$plan->server_id;
+                $wave->a_uid=$attacker->uid;
+                $wave->a_x=$a_x;
+                $wave->a_y=$a_y;
+                $wave->a_player=$attacker->player;
+                $wave->a_village=$attacker->village;
+                $wave->d_uid=$target->uid;
+                $wave->d_player=$target->player;
+                $wave->d_village=$target->village;
+                $wave->d_x=$d_x;
+                $wave->d_y=$d_y;
+                $wave->waves=$waves;            
+                $wave->type=ucfirst($type);
+                $wave->unit=$unit;
+                $wave->landtime=$time;
+                $wave->comments=$comments;
+                 
+            // save waves and plan
+                $wave->save();
+                $plan->save();
+                
+                $response = 'Wave successfully added';
+                //$response=$plan->targets;
+                //$response=$player;
+                
+            }else{
+                if(!$attacker==null){
+                    $response='No village found at Target coordinates '.$d_x.'|'.$d_y;
+                }else{
+                    $response='No village found at Attacker coordinates '.$a_x.'|'.$a_y;
+                } 
+            }
+            
+        }else{
+            $response = "Plan doesn't exist anymore. Please check Offense Menu for recent changes.";
+        }
+               
+        return response()->json(['success'=>$response]);     
+        
     }
 }
 

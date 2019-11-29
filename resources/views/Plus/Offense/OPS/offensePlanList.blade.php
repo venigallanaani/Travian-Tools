@@ -59,7 +59,7 @@
     							<td>{{ucfirst(strtolower($plan->status))}}</td>
     							<td>{{$plan->attackers}}</td>
     							<td>{{$plan->targets}}</td>
-    							<td><strong><span class="text-danger">{{$plan->real}}</span> | <span class="text-primary">{{$plan->fake}}</span></strong></td>    							
+    							<td><strong><span class="text-danger">{{$plan->real}}</span> | <span class="text-primary">{{$plan->fake}}</span> | {{$plan->other}}</strong></td>    							
     							<td><a href="/plus/member/{{$plan->create_by}}">{{$plan->create_by}}</a></td>    							
     							<td><a class="btn btn-outline-secondary" href="/offense/status/{{$plan->id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>

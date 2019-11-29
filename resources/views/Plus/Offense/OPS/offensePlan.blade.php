@@ -2,7 +2,7 @@
 
 @section('body')
 	<!-- ==================================== Main Content of the CFD tasks list ================================= -->
-		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+		<div class="card float-md-left col-md-9 mt-1 p-0 shadow mb-5">
 			<div class="card-header h4 py-2 bg-info text-white"><strong>Offense Plan - {{$plan->name}}</strong></div>
 			<div class="card-text">
     <!-- ==================================== List of CFD is progress ======================================= -->
@@ -56,24 +56,24 @@
             		<p class="h5 my-5">No attacks are planned yet</p>
             	</div>            
             @else	
-        		<div class="float-md-left p-2 shadow rounded" >
+        		<div class="float-md-left p-2 shadow rounded mx-auto" >
                 	<div class="mx-auto">
                 		<svg id="sankeyChart" width="800" height="300" style="margin:auto"></svg> 			 		
                 	</div>
                 </div>
-				<div class="text-center col-md-11 mx-auto my-2 p-0">
+				<div class="text-center col-md-11 mx-auto my-5 p-0">
 					<table class="table align-middle small">
 						<thead class="thead-inverse">
     						<tr>
-    							<th class="col-md-1">Attacker</th>
-    							<th class="col-md-1">Target</th>
-    							<th class="col-md-1">Type</th>
-    							<th class="col-md-1">Land Time</th>
-    							<th class="col-md-1">Waves</th>
-    							<th class="col-md-1">Troops</th>
-    							<th class="col-md-1">Status</th>    							
-    							<th class="col-md-2">Comments</th>
-    							<th class="col-md-1">Report</th>  							
+    							<th class="">Attacker</th>
+    							<th class="">Target</th>
+    							<th class="">Type</th>
+    							<th class="">Land Time</th>
+    							<th class="">Waves</th>
+    							<th class="">Units</th>
+    							<th class="">Status</th>    							
+    							<th class="">Comments</th>
+    							<th class="">Report</th>  							
     						</tr>
 						</thead>
 						@foreach($waves as $wave)
@@ -86,10 +86,10 @@
                             @endphp	
     						<tr>
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$wave->a_x}}&y={{$wave->a_y}}" target="_blank">
-    								<strong>{{$wave->a_player}} ({{$wave->a_village}})</strong></a>
+    								<strong>{{$wave->a_player}}</strong> ({{$wave->a_village}})</a>
     							</td>
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$wave->d_x}}&y={{$wave->d_y}}" target="_blank">
-    								<strong>{{$wave->d_player}} ({{$wave->d_village}})</strong></a>
+    								<strong>{{$wave->d_player}}</strong> ({{$wave->d_village}})</a>
     							</td>
     							<td class="{{$color}}"><strong>{{$wave->type}}</strong></td>
     							<td>{{$wave->landtime}}</td>
@@ -111,6 +111,9 @@
 @endsection
 @push('scripts')
     @if(!$sankeyData==null)
+    	<script type="text/javascript" src="{{ asset('js/d3.v3.js')	}}"></script>
+		<script type="text/javascript" src="{{ asset('js/sankey.js')}}"></script>
+		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     	{{	createSankey($sankeyData)	}}
 	@endif
 @endpush

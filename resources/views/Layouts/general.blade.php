@@ -78,7 +78,7 @@
                     <tr class="font-weight-bold">
                         <td><a href="{{ route('about') }}" class="text-white">About</a></td>
                         <td><a href="{{ route('support') }}" class="text-white">Support</a></td> 
-                        <td class="col-md-6 text-white text-right"><small>All rights to images belongs to Travian Games Gmbh.</small></td>
+                        <td class="text-white text-right"><small>All rights to images belongs to Travian Games Gmbh.</small></td>
                     </tr>
                 </table>
             </div>
