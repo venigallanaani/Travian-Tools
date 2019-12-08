@@ -27,8 +27,8 @@
     							<p class="text-center"><button class="btn btn-primary" type="submit">Enter Incomings</button></p>
     						</form>
     					</td>
-    					<td class="align-top px-2 small font-italic">
-    						<p>Enter the Rally point page data here</p>
+    					<td class="align-top px-2 font-italic">
+    						<p>Enter the Rally point page data here <a href="https://{{Session::get('server.url')}}/build.php?gid=16&tt=1&filter=1" target="_blank">Link</a></p>
     					</td>
     				</tr>			
     			</table>
@@ -105,7 +105,7 @@
 	<div class="col-md-12 mt-2 mx-auto text-center">
 		<p class="h4 text-dark py-2 my-0 bg-warning"><strong>Your Incomings</strong></p>
 		@if(count($saves)==0)			
-		<p class="h5 pb-5 pt-2"> No incoming attacks saved for this profile</p>			
+		<p class="text-center h5 py-5"> No incoming attacks saved for this profile</p>			
 		@else			
 		<table class="table small mx-auto col-md-11 table-hover table-sm">
 			<thead class="thead-inverse">
@@ -128,7 +128,7 @@
 				@endphp				
 						
     			<tr class="{{$color}}">
-    				<td><a href="/finder/player/{{$save->att_player}}/1"><strong>{{$save->att_player}} ({{$save->att_village}})</strong></a></td>
+    				<td><a href="{{route('findPlayer')}}/{{$save->att_player}}/1"><strong>{{$save->att_player}} ({{$save->att_village}})</strong></a></td>
     				<td><strong>{{$save->def_village}}</strong></td>
     				<td>{{$save->waves}}</td>
     				<td>{{$save->landTime}}</td>

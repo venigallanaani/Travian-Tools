@@ -7,7 +7,7 @@
 			<div class="card-text">
     <!-- ==================================== List of Ops in progress ======================================= -->
     		@if($ops==null)
-    			<p class="text-center h5 my-3">No offense plans are available</p>
+    			<p class="text-center h5 py-5">No offense plans are available</p>
     		@else
     			@foreach($ops as $plan)
     			<table class="text-center col-md-8 mx-auto my-3">

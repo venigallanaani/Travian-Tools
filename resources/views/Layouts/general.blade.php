@@ -93,17 +93,6 @@
         <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script> 
-        <script type="text/javascript" src="{{ asset('js/moment-timezone.min.js') }}"></script>  
-        <script type="text/javascript" src="{{ asset('js/moment-timezone-with-data.min.js') }}"></script> 
-        
-        <script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>          
-        <script>
-            $(function(){
-    	  		setInterval(function(){
-    		 		$('#clock').html(moment().format('YYYY-MM-DD HH:mm:ss'));    		 		
-    	  		},500);
-        	});	        	
-        </script>
 		@stack('scripts')
     </body>
 </html>

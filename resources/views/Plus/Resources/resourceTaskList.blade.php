@@ -39,7 +39,7 @@
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player }} ({{$task->village}})</strong></a>
     							</td>
-    							<td>{{number_format($task->res_total)}}</td>
+    							<td>{{number_format($task->res_remain)}}</td>
     							<td data-toggle="tooltip" data-placement="top" title="{{$task->type}}"><img alt="all" src="/images/x.gif" class="res {{$task->type}}"></td>							
     							<td>{{$task->res_percent}}%</td>
     							<td>{{$task->target_time}}</td>
@@ -61,7 +61,7 @@
 	@if(count($tasks)>0)	
 	<script>
 		@foreach($tasks as $task)
-			countDown("{{$task->task_id}}","{{$task->target_time}}");
+			countDown("{{$task->task_id}}","{{$task->target_time}}","{{Session::get('timezone')}}");
 		@endforeach
 	</script>
 	@endif

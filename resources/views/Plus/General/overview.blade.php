@@ -27,7 +27,7 @@
 				@if($counts['inc']>0)				
 					<p><strong>{{$counts['inc']}} <a href="/plus/incoming" class="text-info">Incoming attacks</strong></a> on your account</p>
 				@else
-					<p>No <span class="text-info"><strong>Incoming attacks</strong></span> on your account -- under development</p>
+					<p>No <span class="text-info"><strong>Incoming attacks</strong></span> on your account <span class="text-danger">-- under development</span></p>
 				@endif
 				
 				@if($counts['def']>0)				
@@ -39,7 +39,7 @@
 				@if($counts['off']>0)				
 					<p><strong>{{$counts['off']}} <a href="/plus/offense" class="text-info">Offense Plans</strong></a> are in progress</p>
 				@else
-					<p>No <span class="text-info"><strong>Offense plans</strong></span> are currently active -- under development</p>
+					<p>No <span class="text-info"><strong>Offense plans</strong></span> are currently active <span class="text-danger">-- under development</span></p>
 				@endif	
 				
 				@if($counts['res']>0)				

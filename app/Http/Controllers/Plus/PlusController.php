@@ -33,6 +33,9 @@ class PlusController extends Controller
             if($request->session()->has('plus')){
                $request->session()->forget('plus');
             }
+            if($request->session()->has('timezone')){
+                $request->session()->forget('timezone');
+            }
             if($plus!=null){
                 $request->session()->put('plus',$plus);
                
@@ -64,6 +67,8 @@ class PlusController extends Controller
                 $subscription = Subscription::where('id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))->first();
                 
+                $request->session()->put('timezone',$subscription->timezone);
+                        
                 $counts=array(
                    'inc'=>$inc,
                    'res'=>count($res),
@@ -116,23 +121,8 @@ class PlusController extends Controller
         session(['title'=>'Plus']);
         
         $contact=Contacts::where('id',$id)->first();
-        
-        $skype=null;
-        $discord=null;
-        
-        if($contact!=null){
-            
-            $skype=$contact->skype;
-            $discord=$contact->discord;
-            
-        }
-        
-        $name=Plus::where('server_id',$request->session()->get('server.id'))
-                    ->where('plus_id',$request->session()->get('plus.plus_id'))
-                    ->pluck('account')->first();
-        
-        return view('Plus.General.member')->with(['skype'=>$skype])->with(['discord'=>$discord])
-                    ->with(['name'=>$name]);
+                            
+        return view('Plus.General.member')->with(['contact'=>$contact]);
         
     }
     
@@ -143,6 +133,15 @@ class PlusController extends Controller
     public function rankings(Request $request){
         
         session(['title'=>'Plus']);
+        
+        $subscription = Subscription::where('id',$request->session()->get('plus.id'))
+                            ->where('server_id',$request->session()->get('server.id'))->first();
+        if($subscription->rank==0){
+            return view('Plus.General.rankings')->with(['ranking'=>null]);
+        }else{
+            return view('Plus.TBD');
+        }
+        
         
         $account=Account::where('server_id',$request->session()->get('server.id'))
                         ->where('user_id',$request->session()->get('plus.id'))->first();

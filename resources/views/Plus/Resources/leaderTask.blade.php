@@ -77,7 +77,7 @@
         });
 	</script>
 	<script>
-        countDown("{{$task[0]['task_id']}}","{{$task[0]['target_time']}}");
+        countDown("{{$task[0]['task_id']}}","{{$task[0]['target_time']}}","{{Session::get('timezone')}}");
 	</script>           
 
 @endpush

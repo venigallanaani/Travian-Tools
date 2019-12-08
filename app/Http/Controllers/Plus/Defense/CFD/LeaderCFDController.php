@@ -25,9 +25,18 @@ class LeaderCFDController extends Controller
         $tasks = CFDTask::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
                         ->get();
-        
-        // displays the list of resource tasks details
-        return view('Plus.Defense.CFD.cfdList')->with(['tasks'=>$tasks]);
+        $atasks=array();    $ctasks=array();
+        foreach($tasks as $task){
+            
+            if($task->status=="COMPLETE"){
+                $ctasks[]=$task;
+            }else{
+                $atasks[]=$task;
+            }            
+            
+        }
+
+        return view('Plus.Defense.CFD.cfdList')->with(['atasks'=>$atasks, 'ctasks'=>$ctasks]);
         
     }
     
@@ -144,6 +153,7 @@ class LeaderCFDController extends Controller
             }else{
                 $status='ACTIVE';
                 $percent=ceil($task->def_received/$def*100);
+                $remain=$def-$task->def_received;
             }
             CFDTask::where('server_id',$request->session()->get('server.id'))
                         ->where('task_id',$task_id)
@@ -151,6 +161,7 @@ class LeaderCFDController extends Controller
                                 'target_time'=>$time,
                                 'type'=>$type,
                                 'priority'=>$priority,
+                                'def_remain'=>$remain,
                                 'def_percent'=>$percent,
                                 'status'=>$status,
                                 'comments'=>$comments]);

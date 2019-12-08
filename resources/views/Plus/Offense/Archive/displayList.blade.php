@@ -18,7 +18,7 @@
         @endforeach
         
     		@if(count($plans)==0)
-    			<p class="text-center h5 py-2">No archive plans are available</p>				
+    			<p class="text-center h5 py-5">No offense plans are archived</p>				
     		@else
     <!-- ==================================== List of CFD is progress ======================================= -->		
 				<div class="text-center col-md-10 mx-auto my-2 p-0">

@@ -37,7 +37,7 @@
         @endforeach
         
     		@if(count($plans)==0)
-    			<p class="text-center h5 py-2">No Offense plans are active currently.</p>				
+    			<p class="text-center h5 py-5">No Offense plans are currently active.</p>				
     		@else
     <!-- ==================================== List of CFD is progress ======================================= -->		
 				<div class="text-center col-md-10 mx-auto my-2 p-0">

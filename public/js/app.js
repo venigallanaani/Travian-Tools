@@ -5,7 +5,7 @@ function checkTime(i) {
 }
 
 
-function countDown(elementId, date) {
+function countDown(elementId, date, zone) {
     // Set the date we're counting down to
     var countDownDate = new Date(date).getTime();
 
@@ -14,8 +14,11 @@ function countDown(elementId, date) {
     var x = setInterval(function() {
 
       // Get todays date and time
-      var now = new Date().getTime();
-
+      //var now = new Date().getTime();
+      var time=moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');
+      
+      var now= new Date(time).getTime();
+      
       // Find the distance between now an the count down date
       var distance = countDownDate - now;
 

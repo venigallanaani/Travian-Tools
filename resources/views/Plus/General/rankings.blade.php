@@ -7,6 +7,11 @@
         <div class="card-header h4 py-2 bg-info text-white">
             <strong>Your Rankings</strong>
         </div>
+    @if($ranking==null)
+        <div class="card-text">
+        	<p class="text-center h5 py-5 text-danger">Rankings are disabled for this group</p>        
+        </div>        
+    @else
         <div class="card-text">
             <div class="text-center col-md-10 mx-auto my-2 p-0">
 					<table class="table table-sm table-bordered align-middle small">
@@ -71,5 +76,6 @@
 					</table>
 				</div>
         </div>
+    @endif
     </div>
 @endsection

@@ -21,7 +21,7 @@
                 @endforeach	
                 	
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
-					<table class="table align-middle small">
+					<table class="table align-middle">
 						<thead class="thead-inverse">
     						<tr>
     							<th class="">Player</th>
@@ -38,14 +38,21 @@
 								if($task->priority=='high'){$color='text-danger';}
 								elseif($task->priority=='medium'){$color='text-warning';}
 								elseif($task->priority=='low'){$color='text-info';}
-								else{$color="";}
+								else{$color="";}								
+								
+								if($task->type=='defend'){$bgcolor = '#dbeef4';	}
+								elseif($task->type=='snipe'){$bgcolor = '#ffe6cc';	}
+								elseif($task->type=='scout'){$bgcolor = '#ffff99';	}
+								elseif($task->type=='stand'){$bgcolor = '#eeffcc';	}
+								else{$bgcolor ='#e6e6e6';	}
+								
 							@endphp
-    						<tr>
+    						<tr class="small" style="background-color:{{$bgcolor}};">
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>
     							<td>{{number_format($task->def_remain)}}</td>
-    							<td><strong>{{ucfirst($task->type)}}</strong></td>
+    							<td><strong>{{strtoupper($task->type)}}</strong></td>
     							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>
     							<td>{{$task->target_time}}</td>
     							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
@@ -65,7 +72,7 @@
 	@if(count($tasks)>0)	
 	<script>
 		@foreach($tasks as $task)
-			countDown("{{$task->task_id}}","{{$task->target_time}}");
+			countDown("{{$task->task_id}}","{{$task->target_time}}","{{Session::get('timezone')}}");
 		@endforeach
 	</script>
 	@endif

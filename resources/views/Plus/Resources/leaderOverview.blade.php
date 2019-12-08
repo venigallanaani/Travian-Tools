@@ -55,7 +55,7 @@
         @endforeach
         
     		@if(count($tasks)==0)
-    			<p class="text-center h5 py-2">No resource tasks are active currently.</p>				
+    			<p class="text-center h5 py-5">No resource tasks are currently active.</p>				
     		@else
     <!-- ==================================== List of Resources tasks is progress ======================================= -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
@@ -113,7 +113,7 @@
 	@if(count($tasks)>0)	
 	<script>
 		@foreach($tasks as $task)
-			countDown("{{$task->task_id}}","{{$task->target_time}}");
+			countDown("{{$task->task_id}}","{{$task->target_time}}","{{Session::get('timezone')}}");
 		@endforeach
 	</script>
 	@endif   

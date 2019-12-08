@@ -62,18 +62,21 @@
             @endif
         @endforeach
         
-    		@if(count($tasks)==0)
-    			<p class="text-center h5 py-2">No defense tasks are active currently.</p>				
+    		@if((count($ctasks)+count($atasks))==0)
+    			<p class="text-center h5 py-5">No CFDs are currently active.</p>				
     		@else
     <!-- ==================================== List of CFD is progress ======================================= -->		
+    			@if(count($atasks)>0)
+    			<div class="text-center py-3 h4">
+					<p>Active CFDs List</p>    			
+    			</div>
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
-					<table class="table align-middle small">
+					<table class="table align-middle">
 						<thead class="thead-inverse">
     						<tr>
     							<th class="">Player</th>
     							<th class="">Defense</th>
     							<th class="">Type</th>
-    							<th class="">Status</th>
     							<th class="">Priority</th>
     							<th class="">%</th>
     							<th class="">Land time</th>
@@ -81,23 +84,26 @@
     							<th class=""></th>    							
     						</tr>
 						</thead>
-						@foreach($tasks as $task)
+						@foreach($atasks as $task)
 							@php
 								if($task->priority=='high'){$color='text-danger';}
 								elseif($task->priority=='medium'){$color='text-warning';}
 								elseif($task->priority=='low'){$color='text-info';}
 								else{$color="";}
-								
-								if($task->status=='COMPLETE'){$status="table-secondary";}
-								else{$status='';}
+																					
+								if($task->type=='defend'){$bgcolor = '#dbeef4';	}
+								elseif($task->type=='snipe'){$bgcolor = '#ffe6cc';	}
+								elseif($task->type=='scout'){$bgcolor = '#ffff99';	}
+								elseif($task->type=='stand'){$bgcolor = '#eeffcc';	}
+								else{$bgcolor ='#e6e6e6';	}
+
 							@endphp
-    						<tr class="{{$status}}">
+    						<tr class="small" style="background-color:{{$bgcolor}};">
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>
     							<td>{{number_format($task->def_total)}}</td>
-    							<td><strong>{{ucfirst($task->type)}}</strong></td>
-    							<td>{{ucfirst(strtolower($task->status))}}</td>
+    							<td><strong>{{strtoupper($task->type)}}</strong></td>
     							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    							
     							<td>{{$task->def_percent}}%</td>
     							<td>{{$task->target_time}}</td>
@@ -110,6 +116,49 @@
 					</table>
 				</div>
 				@endif
+				
+				@if(count($ctasks)>0)
+    			<div class="text-center py-3 h4">
+					<p>Completed CFDs List</p>    			
+    			</div>
+				<div class="text-center col-md-11 mx-auto my-2 p-0">
+					<table class="table align-middle">
+						<thead class="thead-inverse">
+    						<tr>
+    							<th class="">Player</th>
+    							<th class="">Defense</th>
+    							<th class="">Type</th>
+    							<th class="">Priority</th>
+    							<th class="">%</th>
+    							<th class="">Land time</th>
+    							<th class=""></th>    							
+    						</tr>
+						</thead>
+						@foreach($ctasks as $task)
+							@php
+								if($task->priority=='high'){$color='text-danger';}
+								elseif($task->priority=='medium'){$color='text-warning';}
+								elseif($task->priority=='low'){$color='text-info';}
+								else{$color="";}
+							@endphp
+    						<tr class="small">
+    							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
+    								<strong>{{$task->player}} ({{$task->village}})</strong></a>
+    							</td>
+    							<td>{{number_format($task->def_total)}}</td>
+    							<td><strong>{{strtoupper($task->type)}}</strong></td>
+    							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    							
+    							<td>{{$task->def_percent}}%</td>
+    							<td>{{$task->target_time}}</td>
+    							<td><a class="btn btn-outline-secondary" href="/defense/cfd/{{$task->task_id}}">
+    								<i class="fa fa-angle-double-right"></i> Details</a>
+    							</td>
+    						</tr>
+						@endforeach
+					</table>
+				</div>
+				@endif				
+			@endif
 			</div>
 		</div>
 
@@ -125,10 +174,10 @@
         });
 	</script>    
 	
-	@if(count($tasks)>0)	
+	@if(count($atasks)>0)	
 	<script>
-		@foreach($tasks as $task)
-			countDown("{{$task->task_id}}","{{$task->target_time}}");
+		@foreach($atasks as $task)
+			countDown("{{$task->task_id}}","{{$task->target_time}}","{{Session::get('timezone')}}");
 		@endforeach
 	</script>
 	@endif     

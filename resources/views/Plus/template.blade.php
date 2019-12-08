@@ -16,8 +16,8 @@
                         <a href="{{route('servers')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
-            @if(Session::has('server'))
-            	<p class="h6 d-inline-block px-2" data-toggle="tooltip" data-placement="top" title="Server Time"><span id="clock"></span></p>
+            @if(Session::has('plus'))
+            	<p class="h6 d-inline-block px-2" data-toggle="tooltip" data-placement="top" title="Group Time"><span id="clock">...</span></p>
         	@endif
             </div>
         </div>
@@ -78,10 +78,10 @@
         @if(Session::get('plus.leader')==1)
             <!-- =================================== Plus Leader/Owner menu ================================== -->
             <div class="list-group text-center text-white mt-1">
-                <a class="list-group-item py-1 bg-dark h4">Leader Menu</a>
-                <a href="/leader/access" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Access</a>
+                <a class="list-group-item py-1 bg-dark h4">Leader Menu</a>                
                 <a href="/leader/subscription" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Subscription</a>
-<!--                 <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a> -->
+                <a href="/leader/access" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Access</a>
+                <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a>
             </div>
         @endif   
         @if(Session::get('plus.defense')==1) 
@@ -89,7 +89,7 @@
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Defense Menu</a>
                 <a href="/defense/incomings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Incomings</a>
-                <a href="/defense/cfd" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Defense Status</a>
+                <a href="/defense/cfd" class="list-group-item py-1 list-group-item-action bg-info text-white h5">CFD Status</a>
                 <a href="/defense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Defense</a>                
             </div>
   		@endif
@@ -140,6 +140,22 @@
 @endif
 @endif
 @endauth
+	@push('scripts')
+		<script type="text/javascript" src="{{ asset('js/moment.js') }}"></script> 
+        <script type="text/javascript" src="{{ asset('js/moment-timezone-with-data-2012-2022.min.js') }}"></script>         
+        
+        
+        <script> 
+        	
+            $(function(){                
+    	  		setInterval(function(){
+        	  		var now = moment().tz("{{Session::get('timezone')}}");
+        	  		//var now = moment();
+    		 		$('#clock').html(now.format('YYYY-MM-DD HH:mm:ss'));    		 		
+    	  		},1000);
+        	});
 
+         </script>
+    @endpush
 
 @endsection

@@ -29,15 +29,15 @@
 					<table class="table align-middle small">
 						<thead class="thead-inverse">
     						<tr>
-    							<th class="col-md-1">Attacker</th>
-    							<th class="col-md-1">Target</th>
-    							<th class="col-md-1">Type</th>
-    							<th class="col-md-1">Land Time</th>
-    							<th class="col-md-1">Waves</th>
-    							<th class="col-md-1">Troops</th>
-    							<th class="col-md-1">Status</th>    							
-    							<th class="col-md-2">Comments</th>
-    							<th class="col-md-1">Report</th>  							
+    							<th class="">Attacker</th>
+    							<th class="">Target</th>
+    							<th class="">Type</th>
+    							<th class="">Land Time</th>
+    							<th class="">Waves</th>
+    							<th class="">Troops</th>
+    							<th class="">Status</th>    							
+    							<th class="">Comments</th>
+    							<th class="">Report</th>  							
     						</tr>
 						</thead>
 						@foreach($waves as $wave)

@@ -15,9 +15,14 @@
                     <td class="font-italic">Displays the sequence of steps for the optimal development route for Crop tiles.</td>
                 </tr>
                 <tr>
+                    <td class="align-middle"><a href="{{route('calcRaid')}}" class="text-primary"><strong>Raid Calculator</strong></a></td>
+                    <td class="font-italic">Calculates the amount of each of the troops needed to raid all the resources in a village.</td>
+                </tr>  
+                <tr>
                     <td class="align-middle"><a href="{{route('wheatScout')}}" class="text-primary"><strong>Wheat Scout</strong></a></td>
                     <td class="font-italic">Helps in determining the troops away from the village based on the crop consumption reports.</td>
-                </tr>                  
+                </tr>    
+                  
             </table>
         </div>
     </div>

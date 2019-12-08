@@ -29,19 +29,18 @@
 									<p class="py-0"><strong>Land Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task->target_time}}" class="dateTimePicker"/></p>
 									<p class="py-0"><strong>Defense Priority:</strong> 
     													<select name="priority">
-    														<option value="{{$task->priority}}">{{ucfirst($task->priority)}}</option>
-    														<option value="high">High</option>
-    														<option value="medium">Medium</option>
-    														<option value="low">Low</option>
-    														<option value="none">None</option>
+    														<option value="high"  @php if($task->priority == 'high'){echo 'selected';} @endphp>High</option>
+    														<option value="medium" @php if($task->priority == 'medium'){echo 'selected';} @endphp>Medium</option>
+    														<option value="low" @php if($task->priority == 'low'){echo 'selected';} @endphp>Low</option>
+    														<option value="none" @php if($task->priority == 'none'){echo 'selected';} @endphp>None</option>
     													</select></p>
 	    							<p class="py-0"><strong>Defense Type:</strong> 
     													<select name="type">
-    														<option value="{{$task->type}}">{{ucfirst($task->type)}}</option>
-    														<option value="defend">Defend</option>
-    														<option value="snipe">Snipe</option>
-    														<option value="scout">Scout</option>
-    														<option value="other">Other</option>
+    														<option value="defend" @php if($task->type == 'defend'){echo 'selected';} @endphp>Defend</option>
+    														<option value="snipe" @php if($task->type == 'snipe'){echo 'selected';} @endphp>Snipe</option>
+    														<option value="stand" @php if($task->type == 'stand'){echo 'selected';} @endphp>Standing</option>
+    														<option value="scout" @php if($task->type == 'scout'){echo 'selected';} @endphp>Scout</option>
+    														<option value="other" @php if($task->type == 'other'){echo 'selected';} @endphp>Other</option>
 														</select></p>	
 									<p><strong><span class="align-top">Comments: </span></strong><textarea name="comments">{{$task->comments}}</textarea></p>							
 								</td>
@@ -153,7 +152,7 @@
         });
 	</script>
 	<script>
-        countDown("{{$task->task_id}}","{{$task->target_time}}");
+        countDown("{{$task->task_id}}","{{$task->target_time}}","{{Session::get('timezone')}}");
 	</script>        
 
 @endpush

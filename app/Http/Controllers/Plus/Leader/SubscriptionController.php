@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use lluminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+
 use Carbon\Carbon;
 use App\Subscription;
 use App\Plus;
+
 class SubscriptionController extends Controller
 {
     public function subscriptions(Request $request){
@@ -50,5 +52,24 @@ class SubscriptionController extends Controller
         return Redirect::to('/leader/subscription');
         
     }
+    
+    function optionsUpdate(Request $request){
+        
+        $rank=Input::get('rank');
+        if(Input::get('rank')== null){
+            $rank = 0;
+        }else{
+            $rank = 1;
+        }
+        $timezone=Input::get('zone');
+        
+        Subscription::where('id',$request->session()->get('plus.plus_id'))
+                    ->where('server_id',$request->session()->get('server.id'))
+                    ->update(['rank'=>$rank,
+                              'timezone'=>$timezone
+                            ]);
+        return Redirect::to('/leader/subscription');
+    }
+    
     
 }

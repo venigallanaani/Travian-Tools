@@ -19,7 +19,7 @@
 					<table class="table mx-auto col-md-8 table-borderless text-left">
 						<tr>
 							<td class="py-1"><strong>Target: <a href="https://{{Session::get('server.url')}}/karte.php?x={{$task['x']}}&y={{$task['y']}}" target="_blank">{{$task['player']}} ({{$task['village']}})</a></strong></td>
-							<td class="py-1"><strong>Defense </strong>(<img alt="upkeep" src="/images/x.gif" class="res upkeep">): {{number_format($task['def_total'])}}</td>							
+							<td class="py-1"><strong>Defense </strong>(<img alt="upkeep" src="/images/x.gif" class="res upkeep">): {{number_format($task['def_remain'])}}</td>							
 						</tr>
 						<tr>
 							<td class="py-1"><strong>Type:</strong> {{ucfirst($task['type'])}}</td>
@@ -141,7 +141,7 @@
 
 @push('scripts')
 	<script>
-        countDown("{{$task['task_id']}}","{{$task['target_time']}}");
+        countDown("{{$task['task_id']}}","{{$task['target_time']}}","{{Session::get('timezone')}}");
 	</script>
 
 

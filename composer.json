@@ -33,6 +33,7 @@
 			"app/Helpers/Parsers/ReportParser.php",
 			"app/Helpers/Parsers/HeroParser.php",
 			"app/Helpers/Parsers/TroopsParser.php",
+			"app/Helpers/Parsers/IncomingParser.php",
 			"app/Helpers/Graphics.php"
 		]
 	},

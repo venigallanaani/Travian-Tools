@@ -64,7 +64,9 @@ Route::get('/calculators/cropper','Calculators\CalculatorController@cropper')->n
 Route::get('/cropper',function(){
     return redirect('/calculators/cropper');                    
 });                                                                //redirects the page to the cropper page in calculators menu
-
+/* ------------------------------- Raid troops calculator ------------------------------*/
+Route::get('/calculators/raid','Calculators\RaidCalculateController@display')->name('calcRaid');      // Calculates the troops needed to complete raid
+Route::post('/calculators/raid','Calculators\RaidCalculateController@calculateRaid');  //Displays result for raid troops
 
 /*----------------------------------------------------------------------------------*/
 /* -------------------------- Controller for Account Page -------------------------- */
@@ -119,9 +121,9 @@ Route::post('/servers','ServersController@process');
 
 
 
-/*----------------------------------------------------------------------------------*/
-/* --------------------------------- Plus Page Routes ----------------------------- */
-/*----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------------------------------*/
+/* -------------------------------------------------- Plus Page Routes ------------------------------------------------------- */
+/*-----------------------------------------------------------------------------------------------------------------------------*/
 Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu main page
 
 /*-----------------------------------------------   Plus overview routes --------------------------------------------------*/
@@ -129,8 +131,7 @@ Route::get('/plus/members','Plus\PlusController@members');                  // P
 Route::get('/plus/member/{id}','Plus\PlusController@member');               // Plus member details 
 
 
-Route::get('/plus/rankings','Plus\PlusController@tdbRoute');
-Route::get('/plus/incoming','Plus\PlusController@tdbRoute');
+Route::get('/plus/rankings','Plus\PlusController@rankings');
 Route::get('/plus/offense','Plus\PlusController@tdbRoute');
 Route::get('/defense/incoming','Plus\PlusController@tdbRoute');
 
@@ -146,11 +147,11 @@ Route::get('/leader/access','Plus\Leader\LeaderController@access');
 Route::post('/leader/access/add','Plus\Leader\LeaderController@addAccess');
 Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@updateAccess');
 
-//Route::get('/leader/rankings','Plus\Leader\LeaderController@showRankings');
 Route::get('/leader/rankings','Plus\PlusController@tdbRoute');
 
 Route::get('/leader/subscription','Plus\Leader\SubscriptionController@subscriptions');
 Route::post('/leader/subscription/message','Plus\Leader\SubscriptionController@messageUpdate');
+Route::post('/leader/subscription/options','Plus\Leader\SubscriptionController@optionsUpdate');
 
 /* -------------------------------------------- Plus Resoruces Routes ---------------------------------------------------- */
 
@@ -167,8 +168,12 @@ Route::post('/resource/update','Plus\Resources\LeaderResourceController@processR
 
 /* -------------------------------------------- Plus Defense Routes ---------------------------------------------------- */
 
-/* -------------- Incomings Route ----------------------------- */
-Route::get('/defense/incomings','Plus\PlusController@tdbRoute');
+/* -------------------- Plus member incoming Options -----------------------*/
+//Route::get('/defense/incomings','Plus\PlusController@tdbRoute');
+
+Route::get('/plus/incoming','Plus\Defense\Incoming\IncomingController@enterIncoming')->name('incoming');
+Route::post('/plus/incoming','Plus\Defense\Incoming\IncomingController@processIncoming');
+Route::post('/plus/incoming/update','Plus\Defense\Incoming\IncomingController@updateIncoming');
 
 /* --------------- Plus group member CFD routes  --------------- */
 Route::get('/plus/defense','Plus\Defense\CFD\CFDController@defenseTaskList');
