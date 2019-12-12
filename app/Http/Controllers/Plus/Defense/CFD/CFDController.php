@@ -22,7 +22,7 @@ class CFDController extends Controller
         $tasks=CFDTask::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('status','ACTIVE')
-                    ->orderBy('target_time','asc')->get();
+                    ->orderBy('target_time','desc')->get();
 
         
         return view("Plus.Defense.CFD.defenseTaskList")->with(['tasks'=>$tasks]);

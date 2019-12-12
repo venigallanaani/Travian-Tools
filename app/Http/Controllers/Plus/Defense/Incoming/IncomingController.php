@@ -16,9 +16,12 @@ use App\Account;
 
 class IncomingController extends Controller
 {
+// 
     public function enterIncoming(Request $request){
         
-        $saves=null; $drafts=null;
+        session(['title'=>'Plus']);
+        
+        $drafts=null; $owaves=array(); $swaves = array();
         $account=Account::where('server_id',$request->session()->get('server.id'))
                         ->where('user_id',Auth::user()->id)->first();
         
@@ -30,26 +33,38 @@ class IncomingController extends Controller
                             ->where(function($query) use ($account_id, $uid){
                                         $query->where('uid','=',$account_id)
                                             ->orWhere('def_uid','=',$uid);
-                            })                                
-                            //->where('deleteTime','>',strtotime(Carbon::now()))
+                            })                            
                             ->where('status','DRAFT')->orderBy('landTime','asc')->get();
         
         $saves=Incomings::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
                             ->where('def_uid',$account->uid)
-                            //->where('deleteTime','>',strtotime(Carbon::now()))
-                            ->where('status','SAVED')->orderBy('landTime','asc')->get();
+                            ->where('status','SAVED')->orderBy('landTime','asc')->get();                        
+        
+        foreach($saves as $wave){
+            if($wave->uid == $wave->def_uid){
+                $owaves[]=$wave;
+            }else{
+                $swaves[]=$wave;
+            }
+        }
+                            
                             
         return view("Plus.Defense.Incomings.enterIncoming")->with(['drafts'=>$drafts])
-                            ->with(['saves'=>$saves]);
+                        ->with(['owaves'=>$owaves])->with(['swaves'=>$swaves]);
         
     }
     
+// parses the Incoming waves
     public function processIncoming(Request $request){        
         
-        $incList=ParseIncoming(Input::get('incStr'));
+        session(['title'=>'Plus']);
         
         $drafts=null; $saves=null;
+        
+        $incList=ParseIncoming(Input::get('incStr'));
+//dd($incList);
+        
         
         if($incList==null){
         // String parsing issues, no data received 
@@ -58,16 +73,21 @@ class IncomingController extends Controller
         // Data is retrived from the string.
             foreach($incList as $inc){
                 
+            // Get requestors details
                 $uid = Account::where('server_id',$request->session()->get('server.id'))
                                 ->where('user_id',Auth::user()->id)
-                                ->pluck('account_id')->first();
+                                ->pluck('uid')->first();
                 
+            // get Attackers details
                 $att = Diff::where('server_id',$request->session()->get('server.id'))
-                                ->where('x',$inc['a_x'])->where('y',$inc['a_y'])->first();
-                $def = Diff::where('server_id',$request->session()->get('server.id'))
-                                ->where('x',$inc['d_x'])->where('y',$inc['d_y'])->first();
+                                ->where('x',$inc['a_coords'][0])->where('y',$inc['a_coords'][1])->first();
                 
-                date_default_timezone_set($request->session()->get('server.tmz'));                
+            // Get Defenders details
+                $def = Diff::where('server_id',$request->session()->get('server.id'))
+                                ->where('x',$inc['d_coords'][0])->where('y',$inc['d_coords'][1])->first();
+                
+            // Determine land time of the attack
+                date_default_timezone_set($request->session()->get('timezone'));                
                 
                 if(Carbon::now()->format('H:i:s')>$inc['landTime']){                                        
                     $landTime=new Carbon(Carbon::tomorrow()->format('Y-m-d').$inc['landTime']);
@@ -118,7 +138,7 @@ class IncomingController extends Controller
                     
                     $wave->save();                    
                 }else{
-                    if($incoming->waves<$inc['wave']){                        
+                    if($incoming->waves<$inc['wave']){
                         $wave=new Incomings;
                         
                         $wave->incid=$incId;

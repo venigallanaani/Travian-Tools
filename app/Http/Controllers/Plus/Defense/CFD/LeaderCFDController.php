@@ -24,7 +24,8 @@ class LeaderCFDController extends Controller
         
         $tasks = CFDTask::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->get();
+                        ->orderBy('target_time','desc')->get();
+        
         $atasks=array();    $ctasks=array();
         foreach($tasks as $task){
             

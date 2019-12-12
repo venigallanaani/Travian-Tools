@@ -21,6 +21,7 @@ class CreateSubscriptionsTable extends Migration
             $table->string('link')->nullable();
             $table->date('end_date');
             $table->string('timezone')->nullable();
+            $table->boolean('rank')->default(FALSE);
             $table->string('message')->nullable();
             $table->string('message_update')->nullable();
             $table->string('message_date')->nullable();

@@ -1,7 +1,7 @@
 @extends('Plus.template')
 
 @section('body')
-<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
 	<div class="card-header h4 py-2 bg-info text-white"><strong>Enter Incomings</strong></div>
 @foreach(['danger','success','warning','info'] as $msg)
 	@if(Session::has($msg))
@@ -38,18 +38,17 @@
     		@foreach($drafts as $draft)		
     		<form class="border border-info p-0 my-1 col-md-11 mx-auto" action="/plus/incoming/update" method="post">
     			{{csrf_field()}}
-    			<table class="table table-borderless p-0 m-0 text-center">
+    			<table class="table table-borderless p-0 m-0 text-center table-sm">
     				<tr>
-    					<td class="col-md-3 p-1 m-0 text-danger"><strong>Attacker</strong></td>
-    					<td class="col-md-6 small p-1 m-0">
-    						<a href="https://{{Session::get('server.url')}}/statistiken.php?id=3&name={{$draft->att_player}}" target="_blank">Hero XP: </a><input name="hxp" type="text" size='5'/>
+    					<td class="p-1 m-0 text-danger"><strong>Attacker <a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$draft->att_uid}}" target="_blank"><i class="fas fa-external-link-alt"></i></a></strong></td>
+    					<td class="p-1 m-0"><strong>Hero XP: </strong><input name="hxp" type="text" size='5'/>
     						<a href="http://travian.kirilloid.ru/items.php" target="_blank"><strong> Hero Equipment Details <i class="fas fa-external-link-alt"></i></strong></a>
     					</td>
-    					<td class="col-md-3 p-1 m-0 text-success"><strong>Defender</strong></td>
+    					<td class="p-1 m-0"></td>
     				</tr>    
     				<tr>
-    					<td class="col-md-3 small p-1 m-0"><a href=""><strong>{{$draft->att_player}} ({{$draft->att_village}})</strong></a></td>
-    					<td class="col-md-6 small p-1 m-0">
+    					<td class="p-1 m-0"><strong><a href="{{route('findPlayer')}}/{{$draft->att_player}}/1" target="_blank">{{$draft->att_player}}</a> ({{$draft->att_village}})</strong></td>
+    					<td class="p-1 m-0">
     						<select name="helm">
     							<option value="">--Select Helm--</option>
     							<option value="">T1 helm</option>
@@ -69,11 +68,11 @@
     							<option value="">T3 Boots</option>
     						</select>
     					</td>
-    					<td class="col-md-3 small p-1 m-0"><a href=""><strong>{{$draft->def_player}} ({{$draft->def_village}})</strong></a></td>
+    					<td class="p-1 m-0"><strong>Waves: </strong>{{$draft->waves}}</td>
     				</tr> 
     				<tr>
-    					<td class="col-md-3 small p-1 m-0"><strong>Waves: </strong>{{$draft->waves}}</td>
-    					<td class="col-md-6 small p-1 m-0">
+    					<td class="p-1 m-0 text-success"><strong>Defender <a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$draft->def_uid}}" target="_blank"><i class="fas fa-external-link-alt"></i></a></strong></td>	    					
+    					<td class="p-1 m-0">
     						<select	name="right">
     							<option value="">--Select Right hand--</option>
     							<option value="">T1 weapon</option>
@@ -87,14 +86,14 @@
     							<option value="">T3 sheild</option>
     						</select>
     					</td>
-    					<td class="col-md-3 small p-1 m-0"><strong>Land Time</strong></td>
+    					<td class="p-1 m-0"><strong>Land Time</strong></td>
     				</tr> 
-    				<tr>
-    					<td class="col-md-3 small p-1 m-0"></td>
-    					<td class="col-md-6 small p-1 m-0">Comments: <input name="comments" type="text" size="30">
-    						<button class="btn btn-primary py-0" type="submit" name="incId" value="{{$draft->incid}}">Enter</button>
+    				<tr>    					
+    					<td class="p-1 m-0"><strong><a href="{{route('findPlayer')}}/{{$draft->def_player}}/1" target="_blank">{{$draft->def_player}}</a> ({{$draft->def_village}})</strong></td>
+    					<td class="p-1 m-0">Comments: <input name="comments" type="text" size="30">
+    						<button class="btn btn-primary py-1 px-5" type="submit" name="incId" value="{{$draft->incid}}">Save</button>
     					</td>
-    					<td class="col-md-3  small p-1 m-0">{{$draft->landTime}}</td>
+    					<td class="p-1 m-0">{{$draft->landTime}}</td>
     				</tr> 		    			
     			</table>
     		</form> 
@@ -103,51 +102,101 @@
 	</div>
 			
 	<div class="col-md-12 mt-2 mx-auto text-center">
-		<p class="h4 text-dark py-2 my-0 bg-warning"><strong>Your Incomings</strong></p>
-		@if(count($saves)==0)			
+	@if((count($owaves) + count($swaves))==0)			
 		<p class="text-center h5 py-5"> No incoming attacks saved for this profile</p>			
-		@else			
-		<table class="table small mx-auto col-md-11 table-hover table-sm">
+	@else	
+		@if(count($owaves)>0)
+		<p class="h4 text-dark py-2 my-0 bg-warning"><strong>Your Incomings</strong></p>		
+		<table class="table mx-auto col-md-11 table-hover table-sm">
 			<thead class="thead-inverse">
 				<tr>
-					<th class="col-md-1">Attacker</th>
-					<th class="col-md-1">Target</th>
-					<th class="col-md-1">Waves</th>
-					<th class="col-md-1">Land Time</th>
-					<th class="col-md-1">Timer</th>
-					<th class="col-md-1">Hero</th>
-					<th class="col-md-1">Action</th>
+					<th class="">Attacker</th>
+					<th class="">Target</th>
+					<th class="">Waves</th>
+					<th class="">Land Time</th>
+					<th class="">Timer</th>
+					<th class="">Hero XP</th>
+					<th class="">Action</th>
+					<th></th>
 				</tr>
 			</thead>
-			@foreach($saves as $save)
+			@foreach($owaves as $wave)
 				@php
-					if($save->ldr_sts=='Attack'){ $color = 'table-danger';	}
-					elseif($save->ldr_sts=='Fake'){$color='table-primary';}
-					elseif($save->ldr_sts=='Thinking'){$color='table-warning';}					
+					if($wave->ldr_sts=='Attack'){ $color = 'table-danger';	}
+					elseif($wave->ldr_sts=='Fake'){$color='table-primary';}
+					elseif($wave->ldr_sts=='Thinking'){$color='table-warning';}					
 					else{$color='table-white';}					
 				@endphp				
 						
-    			<tr class="{{$color}}">
-    				<td><a href="{{route('findPlayer')}}/{{$save->att_player}}/1"><strong>{{$save->att_player}} ({{$save->att_village}})</strong></a></td>
-    				<td><strong>{{$save->def_village}}</strong></td>
-    				<td>{{$save->waves}}</td>
-    				<td>{{$save->landTime}}</td>
-    				<td><strong><span id="{{$save->incid}}"></span></strong></td>
-    				<td>{{$save->hero}}</td>
-    				<td>{{$save->ldr_sts}}</td>
+    			<tr class="{{$color}} small">
+    				<td><strong><a href="{{route('findPlayer')}}/{{$wave->att_player}}/1" target="_blank">{{$wave->att_player}}</a> ({{$wave->att_village}})</strong></td>
+    				<td><strong>{{$wave->def_village}}</strong></td>
+    				<td>{{$wave->waves}}</td>
+    				<td>{{$wave->landTime}}</td>
+    				<td><strong><span id="{{$wave->incid}}"></span></strong></td>
+    				<td>{{$wave->hero_xp}}</td>
+    				<td>{{$wave->ldr_sts}}</td>
+    				<td><button class="badge badge-primary" type="button" id="update"></button>
     			</tr>
 			@endforeach			
 		</table>
-		@endif			
+		@endif
+		
+		@if(count($swaves)>0)
+		<div class="my-3">	
+			<p class="h4 text-dark py-2 my-0 bg-info"><strong>Your Sitter Incomings</strong></p>			
+    		<table class="table mx-auto col-md-11 table-hover table-sm">
+    			<thead class="thead-inverse">
+    				<tr>
+    					<th class="">Attacker</th>
+    					<th class="">Target</th>
+    					<th class="">Waves</th>
+    					<th class="">Land Time</th>
+    					<th class="">Timer</th>
+    					<th class="">Hero XP</th>
+    					<th class="">Action</th>
+    					<th></th>
+    				</tr>
+    			</thead>
+    			@foreach($swaves as $wave)
+    				@php
+    					if($wave->ldr_sts=='Attack'){ $color = 'table-danger';	}
+    					elseif($wave->ldr_sts=='Fake'){$color='table-primary';}
+    					elseif($wave->ldr_sts=='Thinking'){$color='table-warning';}					
+    					else{$color='table-white';}					
+    				@endphp				
+    						
+        			<tr class="{{$color}} small">
+        				<td><a href="{{route('findPlayer')}}/{{$wave->att_player}}/1" target="_blank">{{$wave->att_player}}</a> ({{$wave->att_village}})</td>
+        				<td>{{$wave->def_village}}</td>
+        				<td>{{$wave->waves}}</td>
+        				<td>{{$wave->landTime}}</td>
+        				<td><strong><span id="{{$wave->incid}}"></span></strong></td>
+        				<td>{{$wave->hero_xp}}</td>
+        				<td>{{$wave->ldr_sts}}</td>
+        				<td><button class="badge badge-primary" type="button" id="update"></button>
+        			</tr>
+    			@endforeach			
+    		</table>
+		</div>
+		@endif
+	@endif			
 	</div>
 </div>
 @endsection
 
 @push('scripts')
-	@if(count($saves)>0)	
+	@if(count($swaves)>0)	
 	<script>
-		@foreach($saves as $save)
-			countDown("{{$save->incid}}","{{$save->landTime}}");
+		@foreach($swaves as $wave)
+			countDown("{{$wave->incid}}","{{$wave->landTime}}","{{Session::get('timezone')}}");
+		@endforeach
+	</script>
+	@endif
+	@if(count($owaves)>0)	
+	<script>
+		@foreach($owaves as $wave)
+			countDown("{{$wave->incid}}","{{$wave->landTime}}","{{Session::get('timezone')}}");
 		@endforeach
 	</script>
 	@endif

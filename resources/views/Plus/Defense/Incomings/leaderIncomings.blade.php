@@ -17,7 +17,7 @@
 		<p class="h5 py-5"> No incoming attacks are logged.</p>			
 	@else	
 		<div class="h5 py-5">
-			<p><span class="text-info"><strong>{{$waves}}</strong></span> incoming waves are logged from <span class="text-danger"><strong>{{$att}}</strong> attackers</span> to <span class="text-success"><strong>{{$def}}</strong> villages</span>.</p>
+			<p><span class="text-info"><strong>{{$waves}}</strong></span> incoming waves are logged from <span class="text-danger"><strong>{{$att}}</strong> attackers</span> on <span class="text-success"><strong>{{$def}}</strong> ally villages</span>.</p>
 			<p><a href="/defense/incomings/list" target="_blank"><button class="btn btn-lg btn-outline-info"><strong>Go To Incomings List</strong></button></a></p>
 		</div>
 	@endif			
