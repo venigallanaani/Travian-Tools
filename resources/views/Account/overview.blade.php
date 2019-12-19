@@ -17,7 +17,7 @@
             @endif
         @endforeach  
         		<div>
-        			<table class="table table-borderless table-sm col-md-5 mx-auto my-3">
+        			<table class="table table-borderless col-md-5 mx-auto my-3">
 						<tr>
 							<td class="py-0"><strong><span class="text-warning">Profile Name</span></strong></td>
 							<td class="py-0">: <strong>{{$player->player}}</strong></td>
@@ -25,6 +25,10 @@
 						<tr>
 							<td class="py-0"><strong><span class="text-warning">Rank</span></strong></td>
 							<td class="py-0">: {{$player->rank}}</td>
+						</tr>
+						<tr>
+							<td class="py-0"><strong><span class="text-warning">Alliance Name</span></strong></td>
+							<td class="py-0">: <a href="{{route('findAlliance')}}/{{$player->alliance}}/1" target="_blank"><strong>{{$player->alliance}}</strong></a></td>
 						</tr>
 						<tr>
 							<td class="py-0"><strong><span class="text-warning">Population</span></strong></td>
@@ -47,29 +51,12 @@
 							<td class="py-0">: {{$account->tribe}}</td>
 						</tr>
 						<tr>
-							<td class="py-0"><strong><span class="text-warning">Alliance Name</span></strong></td>
-							<td class="py-0">: <a href="{{route('findAlliance')}}/{{$player->alliance}}/1" target="_blank"><strong>{{$player->alliance}}</strong></a></td>
-						</tr>
-						<tr>
-							<td class="py-0"><strong><span class="text-warning">Plus Group</span></strong></td>
-							<td class="py-0">: {{$account->plus}}</td>
-						</tr>        						
+							<td colspan="2" class="text-center"><strong><a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$account->uid}}" target="_blank">Travian Profile  <i class="fas fa-external-link-alt"></i></a></strong></td>
+						</tr>     
         			</table>
         		</div>
         		
         		<div class="col-md-8 text-center mt-3 mx-auto">
-        			<table class="table table-bordered text-center table-sm">
-        			   	<tr>        					
-        					<td colspan="2" class="h4 text-white bg-warning"><strong>Ingame Links</strong></td>
-        				</tr>
-        				<tr>        					
-        					<td class="h5"><a href="https://{{Session::get('server.url')}}/statistiken.php?id=0&idSub=1&name={{$player->player}}" target="_blank">
-        						<strong>Attack Points</strong></a></td>
-        					<td class="h5"><a href="https://{{Session::get('server.url')}}/statistiken.php?id=0&idSub=2&name={{$player->player}}" target="_blank">
-        						<strong>Defense Points</strong></a></td>
-        				</tr>
-        			</table>        		
-
         			<table class="table table-bordered table-hover table-sm">
         				<thead class="thead">
         					<tr>
@@ -77,7 +64,7 @@
         					</tr>
         					<tr>
         						<th class="">#</th>
-        						<th class="">Village Name</th>
+        						<th class="">Village</th>
         						<th class="">Population</th>
         						<th class="">Coordinates</th>
         					</tr>

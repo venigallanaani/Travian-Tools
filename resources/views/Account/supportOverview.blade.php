@@ -66,29 +66,37 @@
     							<tr>
         							<th class="text-center">TT Account Name</th>
         							<th class="text-center">Account Type</th>
-    							@if($account->status=="PRIMARY")
         							<th class="text-center">Options</th>
-    							@endif
     							</tr>
     						</thead>
+    						<tr>    					
+    							<td>{{$account->user_name}}</td>
+    							<td>{{ucfirst(strtolower($account->status))}}</td>
+    							<td>
+								@if(strtoupper($account->status)!="PRIMARY")
+									<form action="{{route('accountDual')}}" method="post">
+										{{csrf_field()}}   
+										<button class="btn btn-sm btn-primary" value="{{$account->user_id}}" name="unlink">Unlink Account</button>
+									</form>
+								@endif
+    							</td>    						
+    						</tr>
 						@foreach($duals as $dual)
+							@if($account->user_id!=$dual->user_id)
     						<tr>
     							<td>{{$dual->user_name}}</td>
     							<td>{{ucfirst(strtolower($dual->status))}}</td>							
     							<td>
     								<form action="{{route('accountDual')}}" method="post">
     									{{csrf_field()}}    									
-									@if($account->status=="PRIMARY")
-										@if(!$account->user_id==$dual->user_id)
-											<button class="btn btn-sm btn-primary" value="{{$dual->user_id}}" name="delDual">Delete</button> 
-    										<button class="btn btn-sm btn-primary" value="{{$dual->user_id}}" name="setPrimary">Set as Primary</button>
-										@endif
-									@else
-										<button class="btn btn-sm btn-primary" value="{{$dual->user_id}}" name="unlink">Unlink Account</button>
+									@if(strtoupper($account->status)=="PRIMARY")								
+										<button class="btn btn-sm btn-danger" value="{{$dual->user_id}}" name="delDual">Delete</button> 
+										<button class="btn btn-sm btn-info" value="{{$dual->user_id}}" name="setPrimary">Set as Primary</button>							
 									@endif
     								</form>
 								</td>							
     						</tr>
+    						@endif
 						@endforeach
     					</table>
     				</div>  			
