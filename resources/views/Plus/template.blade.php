@@ -62,7 +62,7 @@
 		</div>		
 	</div>
 	@else
-    <div class="container">
+    <div class="col-7 mx-auto">
         <div class="d-inline float-md-left col-md-3">
             <!-- ======================================= Finders Side menu =================================== -->
             <div class="list-group text-center text-white mt-1">
@@ -110,14 +110,13 @@
                 <a href="/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Push Status</a>
             </div> 
         @endif
-		@if(Session::get('plus.artifact')==2)
+		@if(Session::get('plus.artifact')==1)
             <!-- =================================== Artifacts menu ================================== -->
             <div class="list-group text-center text-white mt-1">
                 <a class="list-group-item py-1 bg-dark h4">Artifacts Menu</a>                
-                <a href="/artifact" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
-                <a href="/artifact/list" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Artifact List</a>
-                <a href="/artifact/request" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Requests</a>
-                <a href="/artifact/capture" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Capture Plan</a>
+                <a href="{{route('ldrArt')}}" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
+                <a href="{{route('ldrArt')}}/schedule" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Schedule</a>
+                <a href="{{route('ldrArt')}}/capture" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Capture Plan</a>
             </div> 
         @endif
 		@if(Session::get('plus.wonder')==2)

@@ -14,6 +14,7 @@ use App\Players;
 use App\Diff;
 use App\Troops;
 use App\Plus;
+use App\Villages;
 
 class SupportController extends Controller
 {
@@ -113,10 +114,14 @@ class SupportController extends Controller
             Account::where('user_id',Input::get('setPrimary'))
                         ->where('server_id',$request->session()->get('server.id'))
                         ->update(['status'=>'PRIMARY']);    
-        // updating the Troops page with new account_id
+        // updating the Troops page & villages with new account_id
             Troops::where('account_id',$account->account_id)
                         ->where('server_id',$request->session()->get('server.id'))
                         ->update(['account_id'=>$account_id]);
+            Villages::where('account_id',$account->account_id)
+                        ->where('server_id',$request->session()->get('server.id'))
+                        ->update(['account_id'=>$account_id]);
+            
         }
     // Joining as a dual on other account
         if(Input::has('dualUpdate')){
@@ -135,8 +140,12 @@ class SupportController extends Controller
                                 'token'=>$primary->token,
                                 'plus'=>$primary->plus
                             ]);
-           Troops::where('server_id',$request->session()->get('server.id'))
+            // Deleting the Troops and Villages with old account_id
+            Troops::where('server_id',$request->session()->get('server.id'))
                         ->where('account_id',$account->account_id)->delete();
+
+            Villages::where('account_id',$account->account_id)
+                        ->where('server_id',$request->session()->get('server.id'))->delete();
             
         }        
         
@@ -160,84 +169,5 @@ class SupportController extends Controller
         return Redirect::back();
     }
     
-    
-    
-    public function updateDual(Request $request){
-        
-        $account=Account::where('user_id',Auth::user()->id)
-                    ->where('server_id',$request->session()->get('server.id'))->first();                    
-                    
-        $primary = Account::where('server_id',$request->session()->get('server.id'))
-                    ->where('uid',$account->uid)->where('status','PRIMARY')
-                    ->where('token',Input::get('dualpass'))->first();
-        
-        
-        if(Input::has('dualUpdate')){
-            
-            Account::where('server_id',$request->session()->get('server.id'))
-                            ->where('account_id',$account->account_id)
-                            ->update(['account_id'=>$primary->account_id,
-                                'token'=>$primary->token,
-                                'status'=>'DUAL',
-                                'sitter1'=>$primary->sitter1,
-                                'sitter2'=>$primary->sitter2,
-                                'plus'=>$primary->plus
-                            ]);
-            
-            Session::flash('success','Successfully added as dual');
-        }
-        if(Input::has('delDual')){
-            
-            Account::where('server_id',$request->session()->get('server.id'))
-                        ->where('user_id',Input::get('delDual'))
-                        ->update(['account_id'=>$account->uid.Input::get('delDual'),
-                                    'token'=>str_random(5),
-                                    'plus'=>''                            
-                        ]);
-            
-            Session::flash('success','Successfully deleted a dual');
-        }
-        if(Input::has('setPrimary')){
-            
-            $account_id = $account->uid.Input::get('setPrimary');
-            $token = str_random(5);
-            
-            Account::where('server_id',$request->session()->get('server.id'))
-                        ->where('user_id',Input::get('setPrimary'))
-                        ->update(['account_id'=>$account_id,
-                            'token'=>$token,
-                            'status'=>'PRIMARY'
-                        ]);
-                        
-            Account::where('server_id',$request->session()->get('server.id'))
-                        ->where('account_id',$account->account_id)
-                        ->update(['account_id'=>$account_id,                            
-                            'status'=>'DUAL',
-                            'token'=>$token
-                        ]); 
-                        
-            Troops::where('server_id',$request->session()->get('server.id'))
-                        ->where('account_id',$primary->account_uid)
-                        ->update(['account_id',$account_id]);
-            
-            Session::flash('success','Successfully changed the Primary account of the Travian profile');
-        }
-        if(Input::has('unlink')){
-            
-            $account_id = $account->uid.Input::get('unlink');
-            $token = str_random(5);
-            
-            Account::where('server_id',$request->session()->get('server.id'))
-            ->where('user_id',Input::get('unlink'))
-            ->update(['account_id'=>$account_id,
-                'token'=>$token,
-                'status'=>'PRIMARY'
-            ]); 
-            
-            Session::flash('success','Successfully unlinked from the Primary account of the Travian profile');
-        }
-        
-        return Redirect::back();
-    }
     
 }

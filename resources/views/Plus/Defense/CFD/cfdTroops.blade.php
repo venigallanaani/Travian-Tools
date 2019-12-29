@@ -41,7 +41,7 @@
     						$res+=$troop->resources;
     					@endphp
     					<tr class="">
-    						<td class="py-1">{{$troop->village}}</td>
+    						<td class="py-1"><a href="" target="_blank">{{$troop->village}}</a></td>
     						<td class="py-1 px-0">{{number_format($troop->unit01)}}</td>
     						<td class="py-1 px-0">{{number_format($troop->unit02)}}</td>
     						<td class="py-1 px-0">{{number_format($troop->unit03)}}</td>
@@ -57,16 +57,16 @@
     				<tr>	
     					<td colspan="3" rowspan="2" class="p-0 text-center align-middle" data-toggle="tooltip" data-placement="top" title="Total Troops">
     						<img alt="" src="/images/x.gif" class="res upkeep">: <strong>{{number_format($upkeep)}}</strong></td>
-    					<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Total Defense">
-    						<img alt="" src="/images/x.gif" class="stats def">: {{number_format($defInf + $defCav)}}</td>
-    					<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Resources">
-    						<img alt="" src="/images/x.gif" class="res all">: {{number_format($res)}}</td>								
-    				</tr>
-    				<tr>
     					<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Infantry Defense">
     						<img alt="" src="/images/x.gif" class="stats dinf">: {{number_format($defInf)}}</td>
     					<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Cavalry Defense">
-    						<img alt="" src="/images/x.gif" class="stats dcav">: {{number_format($defCav)}}</td>								
+    						<img alt="" src="/images/x.gif" class="stats dcav">: {{number_format($defCav)}}</td>							
+    				</tr>
+    				<tr>
+    					<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Total Defense">
+    						<img alt="" src="/images/x.gif" class="stats def">: {{number_format($defInf + $defCav)}}</td>
+    					<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Resources">
+    						<img alt="" src="/images/x.gif" class="res all">: {{number_format($res)}}</td>										
     				</tr>
     			</table>            
 			</div>

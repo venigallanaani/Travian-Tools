@@ -3,7 +3,7 @@
 @section('body')        
         
     <!-- ============================================ home page body starts here ============================================ -->
-    <div class="container mt-1">
+    <div class="col-7 mx-auto mt-1">
 		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
 	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">

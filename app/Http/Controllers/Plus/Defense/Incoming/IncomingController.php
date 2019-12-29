@@ -181,6 +181,13 @@ class IncomingController extends Controller
         
         $incId=Input::get('incId');
         
+        $accData = null;
+        if(!Input::get('accData')==null){
+            $accData = ParseAccount(Input::get('accData'));
+        }
+        
+//dd($accData);
+
         $account_id=Account::where('server_id',$request->session()->get('server.id'))
                         ->where('user_id',Auth::user()->id)->pluck('account_id')->first();
         

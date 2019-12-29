@@ -34,7 +34,7 @@
 	@endguest	
     	
 	@auth
-    <div class="container">
+    <div class="col-7 mx-auto">
     	@if(!Session::has('server'))
     	<div class="alert alert-warning text-center my-1" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -47,6 +47,7 @@
   			<div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
 				<a class="list-group-item py-1 bg-dark h4">Account Menu</a>
 				<a href="{{route('account')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
+				<a href="{{route('accountVillages')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Villages</a>
 				<a href="{{route('accountSupport')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Sitters & Duals</a>
 				<a href="{{route('accountTroops')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Details</a>
 				<a href="{{route('accountHero')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Hero Details</a>

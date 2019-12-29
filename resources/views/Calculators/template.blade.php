@@ -7,7 +7,7 @@
         </div>
     </header>
         
-    <div class="container">
+    <div class="col-7 mx-auto">
         <div class="d-inline">
             <!-- ======================================= Finders Side menu =================================== -->
             <div class="list-group col-md-3 text-center text-white mt-1 float-md-left">

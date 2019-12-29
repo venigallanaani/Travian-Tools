@@ -22,7 +22,7 @@ class AllianceController extends Controller
         
         $account=Account::where('server_id',$request->session()->get('server.id'))
                     ->where('user_id',Auth::user()->id)->first();
-        
+//dd($account);
         if($account==null){
             
             Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));
@@ -32,14 +32,14 @@ class AllianceController extends Controller
             $aid = Players::where('server_id',$request->session()->get('server.id'))
                         ->where('uid',$account->uid)->pluck('aid')->first();
             
-                        
+//dd($aid);                        
             if($aid==null){
                 Session::flash('warning', 'You are not in an Alliance');
                 return view('Account.template');
             }else{
                 $alliance=Alliances::where('server_id',$request->session()->get('server.id'))
                                 ->where('aid',$aid)->first();
-                
+//dd($alliance);
                 $players=Players::where('aid',$aid)
                                 ->where('server_id',$request->session()->get('server.id'))
                                 ->orderBy('population','desc')->get();

@@ -24,7 +24,7 @@
         </div>
     </header>
 
-    <div class="container">
+    <div class="col-7 mx-auto">
 @auth
       <div class="d-inline">
           <!-- ======================================= Account Side menu =================================== -->

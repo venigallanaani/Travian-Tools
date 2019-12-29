@@ -75,6 +75,10 @@ Route::get('/account','Account\AccountController@overview')->name('account');			
 Route::post('/account/find','Account\AccountController@findAccount');
 Route::post('/account/add','Account\AccountController@addAccount');
 
+/* ------------------ Account Villages page --------------------------------*/
+Route::get('/account/villages','Account\VillagesController@villagesOverview')->name('accountVillages');
+Route::post('/account/villages','Account\VillagesController@updateVillages');
+
 /* ------------------ Account Troops page --------------------------------*/
 Route::get('/account/troops','Account\TroopsController@troopsOverview')->name('accountTroops');
 Route::post('/account/troops/parse','Account\TroopsController@processTroops');
@@ -84,6 +88,7 @@ Route::post('/account/troops/update','Account\TroopsController@updateTroops');
 Route::get('/account/hero','Account\HeroController@heroOverview')->name('accountHero');
 Route::post('/account/hero','Account\HeroController@processHero');
 
+/* ------------------ Account Alliance page --------------------------------*/
 Route::get('/account/alliance','Account\AllianceController@allianceOverview')->name('accountAlliance');
 
 /* ------------------------ Account Support page --------------------------------- */
@@ -136,6 +141,8 @@ Route::get('/plus/rankings','Plus\PlusController@rankings');
 /* --------------------- Join Plus Group -------------------------- */
 Route::get('/plus/join/{link}','Plus\Leader\LeaderController@joinPlusGroup');
 Route::post('/plus/join','Plus\Leader\SubscriptionController@refreshLink');
+
+Route::get('/plus/leave','Plus\Leader\LeaderController@showLeaveGroup');
 Route::post('/plus/leave','Plus\Leader\LeaderController@leavePlusGroup');
 
 
@@ -220,3 +227,22 @@ Route::get('/offense/plan/delete/{id}','Plus\Offense\OffensePlanController@delet
 Route::get('/offense/archive','Plus\Offense\offenseArchiveController@archiveList');
 Route::get('/offense/archive/{id}','Plus\Offense\offenseArchiveController@displayArchivePlan');
 Route::post('/offense/archive/update','Plus\Offense\offenseArchiveController@updateArchivePlan');
+
+
+
+/* ---------------------------------------- Plus Offense Routes ------------------------------------------------- */
+
+/* ---------------------- Plus member Artifact Options ------------------------------- */
+
+
+/* ------------------------------- Plus leader Artifact Options -------------------------------- */
+//Route::get('/artifacts','Plus\Artifacts\artifactLeaderController@Overview')->name('ldrArt');
+Route::get('/artifacts','Plus\PlusController@tdbRoute')->name('ldrArt');
+//Route::get('/artifacts/schedule','Plus\Artifacts\artifactLeaderController@schedule');
+Route::get('/artifacts/schedule','Plus\PlusController@tdbRoute');
+
+Route::get('/artifacts/capture','Plus\Artifacts\artifactLeaderController@captureDisplay');
+Route::post('/artifacts/capture','Plus\Artifacts\artifactLeaderController@captureResult');
+
+
+

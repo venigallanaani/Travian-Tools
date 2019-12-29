@@ -231,6 +231,14 @@ class LeaderController extends Controller
         
     }
     
+    public function showLeaveGroup(Request $request) {
+
+        session(['title'=>'Plus']);
+        
+        return view('Plus.General.leave');
+        
+    }
+    
     public function leavePlusGroup(Request $request){
              
         Plus::where('server_id',$request->session()->get('server.id'))

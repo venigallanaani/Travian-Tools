@@ -37,23 +37,11 @@
                     </tr>                            
                 </table>
             </div>
-                
+               
+            <p class="h5 py-2"><a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$player['uid']}}" target="_blank">Travian Profile  <i class="fas fa-external-link-alt"></i></a></p>            
+             
             <div class="col-md-8 text-center mx-auto mt-1">
-                <table class="table table-bordered text-center table-sm">
-                    <tr>                            
-                        <td colspan="2" class="h5 text-white bg-success"><strong>Ingame Links</strong></td>
-                    </tr>
-                    <tr>                            
-                        <td class=""><a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$player['uid']}}" target="_blank">Travian Profile</a></td>
-                        <td class=""><a href="https://{{Session::get('server.url')}}/statistiken.php?id=3&name={{$player['player']}}" target="_blank">Hero XP</a></td>
-                    </tr>
-                    <tr>                            
-                        <td class=""><a href="https://{{Session::get('server.url')}}/statistiken.php?id=0&idSub=1&name={{$player['player']}}" target="_blank">Attack Points</a></td>
-                        <td class=""><a href="https://{{Session::get('server.url')}}/statistiken.php?id=0&idSub=2&name={{$player['player']}}" target="_blank">Defense Points</a></td>
-                    </tr>
-                </table>                
-
-                <table class="table table-bordered table-hover table-sm col-md-12">
+            	<table class="table table-bordered table-hover table-sm col-md-12">
                     <thead class="thead">
                         <tr>
                             <th colspan="4" class="h5 text-white bg-success"><strong>Villages</strong></th>

@@ -74,11 +74,11 @@
 					<table class="table align-middle">
 						<thead class="thead-inverse">
     						<tr>
-    							<th class="">Player</th>
-    							<th class="">Defense</th>
+    							<th class="">Player</th>    							
     							<th class="">Type</th>
     							<th class="">Priority</th>
-    							<th class="">%</th>
+    							<th class="">Total</th>
+    							<th class="">Received</th>
     							<th class="">Land time</th>
     							<th class="">Time left</th>
     							<th class=""></th>    							
@@ -101,11 +101,11 @@
     						<tr class="small" style="background-color:{{$bgcolor}};">
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
-    							</td>
-    							<td>{{number_format($task->def_total)}}</td>
+    							</td>    							
     							<td><strong>{{strtoupper($task->type)}}</strong></td>
-    							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    							
-    							<td>{{$task->def_percent}}%</td>
+    							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    
+    							<td>{{number_format($task->def_total)}}</td>							
+    							<td>{{number_format($task->def_received)}} ({{$task->def_percent}}%)</td>
     							<td>{{$task->target_time}}</td>
     							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
     							<td><a class="btn btn-outline-secondary" href="/defense/cfd/{{$task->task_id}}">

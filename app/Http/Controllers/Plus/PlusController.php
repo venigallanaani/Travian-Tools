@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+
 use App\Plus;
 use App\ResTask;
 use App\CFDTask;
@@ -15,6 +16,7 @@ use App\Players;
 use App\OPSWaves;
 use App\Subscription;
 use App\Incomings;
+
 class PlusController extends Controller
 {
     //Displays the Plus Home page

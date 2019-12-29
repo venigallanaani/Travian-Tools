@@ -104,7 +104,7 @@ class CFDController extends Controller
             $defReceived = $task->def_received + $upkeep;
             $defRemain = $task->def_total - $defReceived;            
             
-            if($defReceived > $task->def_total){
+            if($defReceived >= $task->def_total){
                 $status='COMPLETE'; $defPercent=100;
             }else{
                 $status='ACTIVE';   $defPercent = ceil(($defReceived/$task->def_total)*100);
@@ -167,7 +167,7 @@ class CFDController extends Controller
             Session::flash('success','Defense task is successfully updated.');
             
         }else{
-            Session::flash('danger','Village not found');
+            Session::flash('danger','Reinforcement Village not found');
         }                
         return Redirect::to('/plus/defense/'.$id) ;
     }   
