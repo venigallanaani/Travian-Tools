@@ -3,8 +3,8 @@
 @section('body')
 
 <!-- =================================== Cropper input screen================================== -->
-    <div class="card float-md-left my-1 p-0 col-md-12 shadow">
-        <div class="card-header h4 py-2 bg-primary text-white col-md-12">
+    <div class="card float-md-left my-1 p-0 col-12 shadow">
+        <div class="card-header h4 py-2 bg-primary text-white col-12">
             <strong>Cropper</strong>
         </div>
         <div class="card-text mx-auto text-center my-3">
@@ -474,7 +474,7 @@
             	z=document.getElementById("steps");  // nothing
             	z.innerHTML="Calculating...";   
             	var j=1;
-            	var output='<div class="card float-md-left mb-5 p-0 col-md-12 shadow"><div class="card-header h4 py-2 bg-primary text-white"><strong>Cropper Development Sequence</strong></div>';
+            	var output='<div class="card float-md-left mb-5 p-0 col-12 shadow"><div class="card-header h4 py-2 bg-primary text-white"><strong>Cropper Development Sequence</strong></div>';
             	output=output+'<div class="card-text mx-auto text-center"><table class="table table-hover table-sm small"><tr class="h6 text-primary">';
             	output=output+'<th>#</th><th>[<img alt="" src="/images/x.gif" class="build fm">,<img alt="" src="/images/x.gif" class="build bkry">,<img alt="" src="/images/x.gif" class="build hm">]</th>';
             	output=output+'<th>Fields</th><th>Production</th><th>Action</th><tr>';

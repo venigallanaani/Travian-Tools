@@ -19,16 +19,16 @@
         @endif
     @endforeach	
 
-	<div class="container">
+	<div class="mx-auto col-8">
 		@yield('report')
-		<div class="card col-md-12 p-1 my-2 shadow">
-			<form class="mx-auto col-md-10" action="{{route('makeReport')}}" method="post">
+		<div class="card col-12 p-1 my-2 shadow">
+			<form class="mx-auto col-10" action="{{route('makeReport')}}" method="post">
 				@if(!empty($link))
 					<input name="link" value="{{$link}}" hidden>
 				@endif
 				{{ csrf_field() }}
 				<span class="h5">Enter report data here:</span><textarea class="form-control" rows="3" name="report" required></textarea>
-				<table class="col-md-12 mx-auto my-2">
+				<table class="col-12 mx-auto my-2">
 					<tr>
 						<td><input type="checkbox" name="attacker" value="yes"> Hide Attacker</td>
 						<td><input type="checkbox" name="defender" value="yes"> Hide Defender</td>

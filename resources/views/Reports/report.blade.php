@@ -10,8 +10,8 @@
 	
 	@foreach($reports as $report)
 	
-		<div class="card col-md-12 p-1 my-2 shadow">
-			<table class="my-2 mx-auto col-md-8">
+		<div class="card col-12 p-1 my-2 shadow">
+			<table class="my-2 mx-auto col-8">
     			<tr class="p-1 my-0">
     				<td><span class="h6 text-info blockquote"><strong>Subject:</strong></span></td>
     				<td class="blockquote">{{$report['TITLE']}}</td>
@@ -23,7 +23,7 @@
 			</table>
 
 			<div>
-				<table class="table table-sm col-md-10 mx-auto table-bordered text-center">
+				<table class="table table-sm col-10 mx-auto table-bordered text-center">
 					<tr class="bg-warning font-weight-bold">
 						<td class=""><strong>Attacker</strong></td>
 						<td class="text-left" colspan="11">{{$report['ATTACK']['SUBJECT']}}</td>
@@ -87,7 +87,7 @@
 			</div>
 			
 			<div>
-				<table class="table table-sm col-md-7 mx-auto table-bordered text-center shadow">
+				<table class="table table-sm col-7 mx-auto table-bordered text-center shadow">
 					<tr>
 						<td class=""></td>
 						<td class="text-white bg-danger font-weight-bold h6" colspan="2">Attacker ({{$report['STATS']['OFFENSE']['PERCENT']}} %)</td>
@@ -243,7 +243,7 @@
 			</div>		
 			
 			<div>
-				<table class="table table-sm col-md-10 mx-auto table-bordered text-center">
+				<table class="table table-sm col-10 mx-auto table-bordered text-center">
 					<tr class="bg-info text-white font-weight-bold">
 						<td class=""><strong>Defender</strong></td>
 						<td class="text-left" colspan="11">{{$report['DEFEND']['SUBJECT']}}</td>
@@ -279,7 +279,7 @@
 	@if(!empty($report['REINFORCEMENT']))
 		@foreach($report['REINFORCEMENT'] as $reinforcement)
 			<div>
-				<table class="table table-sm col-md-10 mx-auto table-bordered text-center">
+				<table class="table table-sm col-10 mx-auto table-bordered text-center">
 					<tr class="bg-info text-white font-weight-bold">
 						<td><strong>Reinforcements</strong></td>
 						<td  class="text-left" colspan="11">{{$reinforcement['TRIBE']}}</td>

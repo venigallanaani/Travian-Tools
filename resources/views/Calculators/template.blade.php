@@ -7,7 +7,7 @@
         </div>
     </header>
     
-    <div class="container">
+    <div class="mx-auto col-8">
         <div class="float-md-left col-md-12 mt-1 p-0">
 		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
