@@ -37,7 +37,7 @@
 									<p class="py-0 my-2"><button class="btn btn-warning px-5" name="delete" value="{{$task[0]['task_id']}}">Delete Task</button></p>
 								</td>
 							</tr>
-						</form>		
+						</form>
 					</table>
 				<!-- ============================== Table of all the players and defense details =============================== -->
 					<div class="my-5">

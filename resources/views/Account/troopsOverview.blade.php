@@ -32,7 +32,7 @@
     			</div>
 
         		<div class="text-center mx-2 ">
-					<table class="table table-bordered col-md-10 p-0 table-sm small mx-auto">
+					<table class="table table-bordered col-md-10 p-0 table-sm mx-auto">
 						<tr class="text-warning font-weight-bold h6">
 							<td class="px-0 py-1">Village</td>
 							@foreach($units as $unit)
@@ -86,7 +86,7 @@
 			<div class="col-md-8 mx-auto rounded mb-5 pt-2" style="background-color:#dbeef4;">
 				<form method="post" action="{{route('accountTroops')}}/parse">	
 					{{ csrf_field() }}
-    				<table>
+    				<table class="mx-auto">
     					<tr>
     						<td colspan="2"><p class="h4 text-primary text-center"><strong>Input Troops Details</strong></p></td>
     					</tr>

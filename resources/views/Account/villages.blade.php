@@ -2,7 +2,7 @@
 
 @section('body')
 <!-- =================================== Account Overview screen================================== -->
-		<div class="card float-md-left col-9 mt-1 p-0 mb-5 shadow">
+		<div class="card float-md-left col-md-9 mt-1 p-0 mb-5 shadow">
 			<div class="card-header h4 py-2 bg-warning text-white">
 				<strong>Villages Overview</strong>
 			</div>
@@ -26,15 +26,15 @@
             						<th class="align-middle py-0 px-1" rowspan="2">Capital</th>            						
             						<th class="align-middle py-0 px-1" rowspan="2">Tiles</th>
             						<th class="align-middle py-0 px-1" rowspan="2">Fields</th>
-            						<th class="py-0" colspan="4">Oasis</th>
-            						<th class="py-0" colspan="2">Prod <img alt="wood" src="/images/x.gif" class="res all"></th>
+            						<th class="py-0 px-1" colspan="4">Oasis</th>
+            						<th class="py-0 px-1" colspan="2">*Prod <img alt="wood" src="/images/x.gif" class="res all"></th>
             						<th class="align-middle py-0" rowspan="2">Village Type</th>    						
             					</tr>
             					<tr>
-            						<th class="py-0"><img alt="wood" src="/images/x.gif" class="res wood"></th>
-            						<th class="py-0"><img alt="wood" src="/images/x.gif" class="res clay"></th>
-            						<th class="py-0"><img alt="wood" src="/images/x.gif" class="res iron"></th>
-            						<th class="py-0"><img alt="wood" src="/images/x.gif" class="res crop"></th>
+            						<th class="py-0 px-1"><img alt="wood" src="/images/x.gif" class="res wood"></th>
+            						<th class="py-0 px-1"><img alt="wood" src="/images/x.gif" class="res clay"></th>
+            						<th class="py-0 px-1"><img alt="wood" src="/images/x.gif" class="res iron"></th>
+            						<th class="py-0 px-1"><img alt="wood" src="/images/x.gif" class="res crop"></th>
             						<th class="py-0 px-1">Normal</th> 
             						<th class="py-0 px-1">Plus</th>       						
             					</tr>
@@ -105,6 +105,7 @@
         									<option value="NONE" @if($village['TYPE']=='NONE') selected @endif>None</option>
         									<option value="FEEDER" @if($village['TYPE']=='FEEDER') selected @endif>Feeder</option>
         									<option value="SUPPORT" @if($village['TYPE']=='SUPPORT') selected @endif>Support</option>
+        									<option value="SCOUT" @if($village['TYPE']=='SCOUT') selected @endif>Scout</option>
         									<option value="ANVIL" @if($village['TYPE']=='ANVIL') selected @endif>Anvil</option>
         									<option value="HAMMER" @if($village['TYPE']=='HAMMER') selected @endif>Hammer</option>
         									<option value="GHOST" @if($village['TYPE']=='GHOST') selected @endif>Ghost Hammer</option>
@@ -117,6 +118,7 @@
             			<button class="btn btn-warning btn-lg px-5" type="submit"><strong>Update Villages</strong></button>
         			</form>
         		</div>
+        		<p class="text-right px-5">* The displayed values are approximate values</p>
 			</div>			
 		</div>
 	

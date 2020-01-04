@@ -25,7 +25,7 @@ class CreateVillagesTable extends Migration
             $table->integer('prod');
             $table->boolean('cap')->default(FALSE);
             $table->integer('field');
-            $table->enum('type',['NONE','FEEDER','SUPPORT','ANVIL','HAMMER','GHOST','WWH']);
+            $table->enum('type',['NONE','FEEDER','SUPPORT','SCOUT','ANVIL','HAMMER','GHOST','WWH']);
             $table->timestamps();
             
             $table->foreign('server_id')->references('server_id')->on('servers');

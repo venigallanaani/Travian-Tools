@@ -79,22 +79,28 @@ Route::post('/account/add','Account\AccountController@addAccount');
 Route::get('/account/villages','Account\VillagesController@villagesOverview')->name('accountVillages');
 Route::post('/account/villages','Account\VillagesController@updateVillages');
 
+/* ------------------ Account Hero page --------------------------------*/
+Route::get('/account/hero','Account\HeroController@heroOverview')->name('accountHero');
+Route::post('/account/hero','Account\HeroController@processHero');
+
 /* ------------------ Account Troops page --------------------------------*/
 Route::get('/account/troops','Account\TroopsController@troopsOverview')->name('accountTroops');
 Route::post('/account/troops/parse','Account\TroopsController@processTroops');
 Route::post('/account/troops/update','Account\TroopsController@updateTroops');
 
-/* ------------------ Account Hero page --------------------------------*/
-Route::get('/account/hero','Account\HeroController@heroOverview')->name('accountHero');
-Route::post('/account/hero','Account\HeroController@processHero');
-
-/* ------------------ Account Alliance page --------------------------------*/
-Route::get('/account/alliance','Account\AllianceController@allianceOverview')->name('accountAlliance');
+/* ------------------ Account Troops Plan page --------------------------------*/
+Route::get('/account/plan','Account\PlanController@plansOverview')->name('accountPlan');
+Route::post('/account/plan/create','Account\PlanController@createPlan');
+Route::post('/account/plan/update','Account\PlanController@updatePlan');
+Route::post('/account/plan/delete','Account\PlanController@deletePlan');
 
 /* ------------------------ Account Support page --------------------------------- */
 Route::get('/account/support','Account\SupportController@overview')->name('accountSupport');
 Route::post('/account/sitter/update', 'Account\SupportController@updateSitters')->name('accountSitter');
 Route::post('/account/dual/update', 'Account\SupportController@updateDuals')->name('accountDual');
+
+/* ------------------ Account Alliance page --------------------------------*/
+Route::get('/account/alliance','Account\AllianceController@allianceOverview')->name('accountAlliance');
 
 
 /*----------------------------------------------------------------------------------*/

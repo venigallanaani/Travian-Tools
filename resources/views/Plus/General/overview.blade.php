@@ -10,8 +10,8 @@
             <p>Welcome to Plus group - <span class="text-info"><strong>{{Session::get('plus.name')}}</strong></span></p>
             <br>
             <div class="card mx-auto">
-            	<div class="card-header py-1 text-info h4">
-            		<p><strong>Message of the day</strong></p>
+            	<div class="card-header py-2 text-info h4">
+            		<strong>Message of the day</strong>
             	</div>
             	<div class="card-body">
             		<p class="card-text font-italic">{{$subscription->message}}</p>
@@ -20,8 +20,8 @@
             </div>
             <br>
             <div class="card mx-auto">
-            	<div class="card-header py-1 text-info h4">
-            		<p><strong>Group Status</strong></p>
+            	<div class="card-header py-2 text-info h4">
+            		<strong>Group Status</strong>
             	</div>
             	<div class="card-body px-5 h6">							
 				@if($counts['inc']>0)				
@@ -48,7 +48,17 @@
 					<p>No <span class="text-info"><strong>Resource tasks</strong></span> are currently active</p>
 				@endif
             	</div>
-            </div>            
+            </div>  
+            <br>
+            <div class="card mx-auto">
+            	<div class="card-header py-2 text-info h4">
+            		<strong>Group Options</strong>
+            	</div>
+            	<div class="card-body px-5 h5">
+            		<a href="/plus/leave"><button class="btn btn-info p-3"><strong>Leave Plus Group</strong></button></a>
+            	</div>
+            	            
+            </div>          
         </div>
     </div>
     	
