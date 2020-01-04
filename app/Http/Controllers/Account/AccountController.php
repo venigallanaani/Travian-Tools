@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Account;
 use App\Players;
 use App\Diff;
+use App\Villages;
+use App\TroopPlan;
+use App\Hero;
+use App\Plus;
+use App\Troops;
 
 class AccountController extends Controller
 {
@@ -110,4 +115,40 @@ class AccountController extends Controller
            return Redirect::to('/account');
 
    }
+   
+    public function showDelete(){
+        return view('Account.leave');
+    }
+   
+    public function deleteAccount(Request $request){
+       
+        $account=Account::where('server_id',$request->session()->get('server.id'))
+                    ->where('user_id',Auth::user()->id)->first();
+        $duals = Account::where('server_id',$request->session()->get('server_id'))
+                    ->where('account_id',$account->account_id)->get();          
+       
+        if($account->status == 'PRIMARY'){            
+            if(count($duals)>1){                
+                Session::flash('danger','You are the Primary Account holder, promote one of the duals to Primary before deleting');
+                return view('Account.leave');                
+            }
+        }
+        
+        Villages::where('server_id',$request->session()->get('server.id'))
+                ->where('account_id',$account->account_id)->delete();
+        Troops::where('server_id',$request->session()->get('server.id'))
+                ->where('account_id',$account->account_id)->delete();
+        Hero::where('server_id',$request->session()->get('server.id'))
+                ->where('account_id',$account->account_id)->delete();
+        Plus::where('server_id',$request->session()->get('server.id'))
+                ->where('id',$account->user_id)->delete();
+        TroopPlan::where('server_id',$request->session()->get('server.id'))
+                ->where('account_id',$account->account_id)->delete();
+        Account::where('server_id',$request->session()->get('server.id'))
+                ->where('user_id',Auth::user()->id)->delete();
+        
+        Session::flash('success','Your Account is successfully deleted');
+        
+        return Redirect::to('/home');
+    }
 }

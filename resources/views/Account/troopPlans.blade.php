@@ -46,99 +46,99 @@
         @endforeach
             		<br>
         		@if($plans==null)
-					<p>No Plans Created</p>
+					<p class="text-center h5 py-3">No Troops Plans are created for this account</p>
 				@else
         		@foreach($plans as $plan)
-                		<div class="card col-md-10 mx-auto my-2 p-0 shadow">
-                			<div class="card-header h5 py-2 bg-warning">
-                				Village - <strong>{{$plan['VILLAGE']}}</strong><span class="float-right">Plan Name - <strong>{{$plan['NAME']}}</strong></span>
-                			</div>
-                			<div class="card-text p-2">
-                				<table class="mx-auto col-md-8 my-2">
-                    				<tr>
-                    					<td><strong>Created date - </strong>{{$plan['CREATE']}}</td>
-                    					<td rowspan="2"><strong>Notes - </strong>{{$plan['COMMENTS']}}</td>
-                					</tr>  
-                    				<tr>
-                    					<td><strong>Updated date - </strong>{{$plan['UPDATE']}}</td>
-                    					<td></td>
-                					</tr> 
-                				</table>
-                				<table class="table table-sm text-center table-bordered small">
-                					<thead>
-                						<tr>
-                							<td></td>
-                						@foreach($tribe as $unit)
-                							<td class="" data-toggle="tooltip" data-placement="top" title="{{$unit['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$unit['IMAGE']}}"></td>
-                						@endforeach
-                							<td class="" data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></td> 
-                						</tr>
-            						</thead>
-            						<tr class="table-info font-weight-bold" id="planned">
-                							<td>Planned *</td>
-            								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][0]}}</td>
-            								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][1]}}</td>
-            								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][2]}}</td>
-            								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][3]}}</td>
-            								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][4]}}</td>
-            								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][5]}}</td>
-            								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][6]}}</td>
-            								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][7]}}</td>
-            								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][8]}}</td>
-            								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][9]}}</td>
-            								<td class="px-0">{{number_format($plan['PLANNED_UPKEEP'])}}</td>
-            						</tr>
-            						<tr class="">
-            							<td class="font-weight-bold">Trained</td>
-        							@foreach($plan['COMPLETED'] as $unit)
-        								<td class="px-0">{{$unit}}</td>
-        							@endforeach
-        								<td class="px-0">{{number_format($plan['COMPLETED_UPKEEP'])}}</td>
-            						</tr>
-            						<tr class="" id="queued">
-            							<td class="font-weight-bold px-0">In Queue *</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][0]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][1]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][2]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][3]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][4]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][5]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][6]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][7]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][8]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][9]}}</td>
-        								<td class="px-0">{{number_format($plan['PROGRESS_UPKEEP'])}}</td>
-            						</tr>
-            						<tr class="table-success font-weight-bold">
-            							<td class="font-weight-bold">Total</td>
-        							@foreach($plan['TOTAL'] as $unit)
-        								<td class="px-0">{{$unit}}</td>
-        							@endforeach
-        								<td class="px-0">{{number_format($plan['TOTAL_UPKEEP'])}}</td>
-            						</tr>  
-            						<tr class="table-warning">
-            							<td class="font-weight-bold">Pending</td>
-        							@foreach($plan['PENDING'] as $unit)
-        								<td class="px-0">{{$unit}}</td>
-        							@endforeach
-        								<td class="px-0">{{number_format($plan['PENDING_UPKEEP'])}}</td>
-            						</tr>      				
-            						<tr>
-            							<td colspan="4" class="py-2">Calculator - TBD
-                						</td>
-                						<td colspan="4" class="py-2">
-                                    		<button class="btn btn-warning px-3 mx-3" name="update" id="update" value="{{$plan['ID']}}" type="submit"><strong>Update</strong></button>
-                                		</td>
-                                		<td colspan="4" class="py-2">
-                		        			<form action="{{route('accountPlan')}}/delete" method="POST" >
-            									{{csrf_field()}}
-                                    			<button class="btn btn-danger px-4 mx-3" name="delete" value="{{$plan['ID']}}" type="submit"><strong>Delete</strong></button>
-                                			</form>
-                						</td>                						
-            						</tr>
-                				</table>
-                			</div>
+            		<div class="card col-md-10 mx-auto my-2 p-0 shadow">
+            			<div class="card-header h5 py-2 bg-warning">
+            				Village - <strong>{{$plan['VILLAGE']}}</strong><span class="float-right">Plan Name - <strong>{{$plan['NAME']}}</strong></span>
             			</div>
+            			<div class="card-text p-2">
+            				<table class="mx-auto col-md-8 my-2">
+                				<tr>
+                					<td><strong>Created date - </strong>{{$plan['CREATE']}}</td>
+                					<td rowspan="2"><strong>Notes - </strong>{{$plan['COMMENTS']}}</td>
+            					</tr>  
+                				<tr>
+                					<td><strong>Updated date - </strong>{{$plan['UPDATE']}}</td>
+                					<td></td>
+            					</tr> 
+            				</table>
+            				<table class="table table-sm text-center table-bordered small">
+            					<thead>
+            						<tr>
+            							<td></td>
+            						@foreach($tribe as $unit)
+            							<td class="" data-toggle="tooltip" data-placement="top" title="{{$unit['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$unit['IMAGE']}}"></td>
+            						@endforeach
+            							<td class="" data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></td> 
+            						</tr>
+        						</thead>
+        						<tr class="table-info font-weight-bold" id="planned">
+            							<td>Planned *</td>
+        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][0]}}</td>
+        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][1]}}</td>
+        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][2]}}</td>
+        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][3]}}</td>
+        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][4]}}</td>
+        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][5]}}</td>
+        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][6]}}</td>
+        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][7]}}</td>
+        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][8]}}</td>
+        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][9]}}</td>
+        								<td class="px-0">{{number_format($plan['PLANNED_UPKEEP'])}}</td>
+        						</tr>
+        						<tr class="">
+        							<td class="font-weight-bold">Trained</td>
+    							@foreach($plan['COMPLETED'] as $unit)
+    								<td class="px-0">{{$unit}}</td>
+    							@endforeach
+    								<td class="px-0">{{number_format($plan['COMPLETED_UPKEEP'])}}</td>
+        						</tr>
+        						<tr class="" id="queued">
+        							<td class="font-weight-bold px-0">In Queue *</td>
+    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][0]}}</td>
+    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][1]}}</td>
+    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][2]}}</td>
+    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][3]}}</td>
+    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][4]}}</td>
+    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][5]}}</td>
+    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][6]}}</td>
+    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][7]}}</td>
+    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][8]}}</td>
+    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][9]}}</td>
+    								<td class="px-0">{{number_format($plan['PROGRESS_UPKEEP'])}}</td>
+        						</tr>
+        						<tr class="table-success font-weight-bold">
+        							<td class="font-weight-bold">Total</td>
+    							@foreach($plan['TOTAL'] as $unit)
+    								<td class="px-0">{{$unit}}</td>
+    							@endforeach
+    								<td class="px-0">{{number_format($plan['TOTAL_UPKEEP'])}}</td>
+        						</tr>  
+        						<tr class="table-warning">
+        							<td class="font-weight-bold">Pending</td>
+    							@foreach($plan['PENDING'] as $unit)
+    								<td class="px-0">{{$unit}}</td>
+    							@endforeach
+    								<td class="px-0">{{number_format($plan['PENDING_UPKEEP'])}}</td>
+        						</tr>      				
+        						<tr>
+        							<td colspan="4" class="py-2">Calculator - TBD
+            						</td>
+            						<td colspan="4" class="py-2">
+                                		<button class="btn btn-warning px-3 mx-3" name="update" id="update" value="{{$plan['ID']}}" type="submit"><strong>Update</strong></button>
+                            		</td>
+                            		<td colspan="4" class="py-2">
+            		        			<form action="{{route('accountPlan')}}/delete" method="POST" >
+        									{{csrf_field()}}
+                                			<button class="btn btn-danger px-4 mx-3" name="delete" value="{{$plan['ID']}}" type="submit"><strong>Delete</strong></button>
+                            			</form>
+            						</td>                						
+        						</tr>
+            				</table>
+            			</div>
+        			</div>
         			<br>
         		@endforeach  
         		@endif         		
@@ -154,7 +154,7 @@
         $(document).on('click','#update',function(e){
             e.preventDefault();  
 
-            var id= $('#update').val();
+            var id= $(this).closest("table").find('#update').val();
 
 			var planned = $(this).closest("table").find('#planned');
 			var p_01 = planned.find('td:eq(1)').text();				var p_02 = planned.find('td:eq(2)').text();
@@ -183,7 +183,7 @@
                    },
                success:function(data){					
             	   	//alert(data.success)
-            	   location.reload();
+            	    location.reload();
                }
             });  
     

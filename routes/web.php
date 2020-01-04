@@ -75,6 +75,9 @@ Route::get('/account','Account\AccountController@overview')->name('account');			
 Route::post('/account/find','Account\AccountController@findAccount');
 Route::post('/account/add','Account\AccountController@addAccount');
 
+Route::get('/account/delete','Account\AccountController@showDelete')->name('accountDelete');
+Route::post('/account/delete','Account\AccountController@deleteAccount');
+
 /* ------------------ Account Villages page --------------------------------*/
 Route::get('/account/villages','Account\VillagesController@villagesOverview')->name('accountVillages');
 Route::post('/account/villages','Account\VillagesController@updateVillages');
@@ -148,7 +151,7 @@ Route::get('/plus/rankings','Plus\PlusController@rankings');
 Route::get('/plus/join/{link}','Plus\Leader\LeaderController@joinPlusGroup');
 Route::post('/plus/join','Plus\Leader\SubscriptionController@refreshLink');
 
-Route::get('/plus/leave','Plus\Leader\LeaderController@showLeaveGroup');
+Route::get('/plus/leave','Plus\Leader\LeaderController@showLeaveGroup')->name('plusLeave');
 Route::post('/plus/leave','Plus\Leader\LeaderController@leavePlusGroup');
 
 

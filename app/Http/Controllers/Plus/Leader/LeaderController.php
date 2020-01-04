@@ -249,7 +249,7 @@ class LeaderController extends Controller
             ->where('user_id',Auth::user()->id)
             ->update(['plus'=>null]);
         
-        Session::flash('success','You have left from the PLUS group');
+        Session::flash('success','You have left the plus group');
         return Redirect::to('/home'); 
         
     }

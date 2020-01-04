@@ -14,6 +14,7 @@ class CreateTroopsplanTable extends Migration
     public function up()
     {
         Schema::create('troopsplan', function (Blueprint $table) {
+            $table->string('plan_id')->unique();
             $table->string('server_id');
             $table->string('account_id');
             $table->string('vid');

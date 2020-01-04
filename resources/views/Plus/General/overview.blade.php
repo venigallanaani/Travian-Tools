@@ -55,7 +55,7 @@
             		<strong>Group Options</strong>
             	</div>
             	<div class="card-body px-5 h5">
-            		<a href="/plus/leave"><button class="btn btn-info p-3"><strong>Leave Plus Group</strong></button></a>
+            		<a href="{{route('plusLeave')}}"><button class="btn btn-info p-3"><strong>Leave Plus Group</strong></button></a>
             	</div>
             	            
             </div>          

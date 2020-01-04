@@ -49,10 +49,10 @@
 				<a href="{{route('account')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
 				<a href="{{route('accountVillages')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Villages Overview</a>
 				<a href="{{route('accountHero')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Hero Details</a>				
-				<a href="{{route('accountTroops')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Details</a>
-				<a href="{{route('accountPlan')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Plan</a>
+				<a href="{{route('accountTroops')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Overview</a>				
 				<a href="{{route('accountSupport')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Sitters & Duals</a>
-				<a href="{{route('accountAlliance')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Alliance</a>				
+				<a href="{{route('accountAlliance')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Alliance</a>
+				<a href="{{route('accountPlan')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Plan</a>				
   			</div>	
 	    </div> 
 	    	

@@ -7,9 +7,9 @@
 		</div>
 		<div class="card-text p-4">
 		@if(count($profiles)>0)
-			<form action="{{route('profileServers')}}/load" method="POST" class="col-md-12 mx-auto">
+			<form action="{{route('profileServers')}}/load" method="POST" class="mx-auto">
 				{{csrf_field()}}
-				<table class="table table-hover table-small small">
+				<table class="table table-hover table-small text-center">
 					<thead>
 						<tr>
 							<th>Server Name</th>

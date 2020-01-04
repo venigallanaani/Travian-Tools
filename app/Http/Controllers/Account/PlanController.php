@@ -29,132 +29,130 @@ class PlanController extends Controller
         $account=Account::where('server_id',$request->session()->get('server.id'))
                     ->where('user_id',Auth::user()->id)->first();
 //dd($account); 
-
-    // Get Villages details for output
-        $villages = Diff::where('server_id',$request->session()->get('server.id'))
-                        ->where('uid',$account->uid)->get();                    
-//dd($villages);  
-
-    // Get Plan Details                
-        $plans = TroopPlan::where('server_id',$request->session()->get('server.id'))
-                        ->where('account_id',$account->account_id)->orderBy('create_date','asc')->get();
+        if($account==null){
             
-//dd($plans); 
-        $i=0;
-        foreach($villages as $village){
-            $result['VILLAGES'][$i]['VID']=$village->vid;
-            $result['VILLAGES'][$i]['VILLAGE']=$village->village;
+            Session::flash('warning', 'No associated account is found on travian server '.$request->session()->get('session.url'));
+            return view('Account.addAccount')->with(['players'=>null]);
             
-            $i++;
-        }
-    // No Plans are created
-        if(count($plans)==0){            
-            $result['PLANS']=null;
-            $result['TRIBE']=null;
-        }else{
-            
-            $units = Units::where('tribe',$account->tribe)->get();
-//dd($units);
+        }else{                            
+    
+        // Get Villages details for output
+            $villages = Diff::where('server_id',$request->session()->get('server.id'))
+                            ->where('uid',$account->uid)->get();                    
+    //dd($villages);  
+    
+        // Get Plan Details                
+            $plans = TroopPlan::where('server_id',$request->session()->get('server.id'))
+                            ->where('account_id',$account->account_id)->orderBy('create_date','asc')->get();
+                
+    //dd($plans); 
             $i=0;
-            foreach($units as $unit){
-                $result['TRIBE'][$i]['NAME']= $unit->name;
-                $result['TRIBE'][$i]['IMAGE']= $unit->image;
-                //$result['TRIBE'][$i]['UPKEEP']= $unit->upkeep;
+            foreach($villages as $village){
+                $result['VILLAGES'][$i]['VID']=$village->vid;
+                $result['VILLAGES'][$i]['VILLAGE']=$village->village;
+                
                 $i++;
             }
-//dd($result['TRIBE']);
-            
-            $i=0; 
-            foreach($plans as $plan){
-                $array['ID']=$plan->plan_id;
-                $array['NAME'] = $plan->plan_name;
-                $array['VILLAGE'] = $plan->village;
-                $array['VID'] = $plan->vid;
-                $array['CREATE']=$plan->create_date;
-                $array['UPDATE']=$plan->update_date;
-                $array['COMMENTS']=$plan->comments;
+        // No Plans are created
+            if(count($plans)==0){            
+                $result['PLANS']=null;
+                $result['TRIBE']=null;
+            }else{
                 
-                $planned_upkeep=0;
-                $completed_upkeep=0;
-                $progress_upkeep=0;
-                $total_upkeep=0;
-                $pending_upkeep=0;
+                $units = Units::where('tribe',$account->tribe)->orderBy('id','asc')->get();
+    //dd($units);
+                $i=0;
+                foreach($units as $unit){
+                    $result['TRIBE'][$i]['NAME']= $unit->name;
+                    $result['TRIBE'][$i]['IMAGE']= $unit->image;
+                    $result['TRIBE'][$i]['UPKEEP']= $unit->upkeep;
+                    $i++;
+                }
+    //dd($result['TRIBE']);
                 
-                if($plan->p_unit_upkeep==0){
-                    for($j=0;$j<10;$j++){
-                        $planned[$j]=0;
-                        $completed[$j]=0;
-                        $progress[$j]=0;
-                        $total[$j]=0; 
-                        $pending[$j]=0;
-                    }                    
-                }else{
-                    $troops = Troops::where('account_id',$account->account_id)
-                                ->where('server_id',$request->session()->get('server.id'))
-                                ->where('vid',$plan->vid)->first();
-//dd($troops);
-                    $units = Units::where('tribe',$account->tribe)
-                                ->orderBy('id','asc')->pluck('upkeep');
-                    $units = $units->toArray();
+                $i=0; 
+                foreach($plans as $plan){
+                    $array['ID']=$plan->plan_id;
+                    $array['NAME'] = $plan->plan_name;
+                    $array['VILLAGE'] = $plan->village;
+                    $array['VID'] = $plan->vid;
+                    $array['CREATE']=$plan->create_date;
+                    $array['UPDATE']=$plan->update_date;
+                    $array['COMMENTS']=$plan->comments;
                     
-                    $planned[0] = $plan->p_unit_01;     $planned[1] = $plan->p_unit_02;     $planned[2] = $plan->p_unit_03;
-                    $planned[3] = $plan->p_unit_04;     $planned[4] = $plan->p_unit_05;     $planned[5] = $plan->p_unit_06;
-                    $planned[6] = $plan->p_unit_07;     $planned[7] = $plan->p_unit_08;     $planned[8] = $plan->p_unit_09;
-                    $planned[9] = $plan->p_unit_10;
+                    $planned_upkeep=0;
+                    $completed_upkeep=0;
+                    $progress_upkeep=0;
+                    $total_upkeep=0;
+                    $pending_upkeep=0;
                     
-                    $progress[0] = $plan->unit_01;      $progress[1] = $plan->unit_02;      $progress[2] = $plan->unit_03;
-                    $progress[3] = $plan->unit_04;      $progress[4] = $plan->unit_05;      $progress[5] = $plan->unit_06;
-                    $progress[6] = $plan->unit_07;      $progress[7] = $plan->unit_08;      $progress[8] = $plan->unit_09;
-                    $progress[9] = $plan->unit_10;
-                    
-                    $completed[0] = $troops->unit01;    $completed[1] = $troops->unit02;    $completed[2] = $troops->unit03;
-                    $completed[3] = $troops->unit04;    $completed[4] = $troops->unit05;    $completed[5] = $troops->unit06;
-                    $completed[6] = $troops->unit07;    $completed[7] = $troops->unit08;    $completed[8] = $troops->unit08;
-                    $completed[9] = $troops->unit10;
-                    
-                    for($j=0;$j<10;$j++){
-                        if($planned[$j]==0){
+                    if($plan->p_unit_upkeep==0){
+                        for($j=0;$j<10;$j++){
+                            $planned[$j]=0;
                             $completed[$j]=0;
                             $progress[$j]=0;
+                            $total[$j]=0; 
+                            $pending[$j]=0;
+                        }                    
+                    }else{
+                        $troops = Troops::where('account_id',$account->account_id)
+                                    ->where('server_id',$request->session()->get('server.id'))
+                                    ->where('vid',$plan->vid)->first();
+                       
+                        $planned[0] = $plan->p_unit_01;     $planned[1] = $plan->p_unit_02;     $planned[2] = $plan->p_unit_03;
+                        $planned[3] = $plan->p_unit_04;     $planned[4] = $plan->p_unit_05;     $planned[5] = $plan->p_unit_06;
+                        $planned[6] = $plan->p_unit_07;     $planned[7] = $plan->p_unit_08;     $planned[8] = $plan->p_unit_09;
+                        $planned[9] = $plan->p_unit_10;
+                        
+                        $progress[0] = $plan->unit_01;      $progress[1] = $plan->unit_02;      $progress[2] = $plan->unit_03;
+                        $progress[3] = $plan->unit_04;      $progress[4] = $plan->unit_05;      $progress[5] = $plan->unit_06;
+                        $progress[6] = $plan->unit_07;      $progress[7] = $plan->unit_08;      $progress[8] = $plan->unit_09;
+                        $progress[9] = $plan->unit_10;
+                        
+                        $completed[0] = $troops->unit01;    $completed[1] = $troops->unit02;    $completed[2] = $troops->unit03;
+                        $completed[3] = $troops->unit04;    $completed[4] = $troops->unit05;    $completed[5] = $troops->unit06;
+                        $completed[6] = $troops->unit07;    $completed[7] = $troops->unit08;    $completed[8] = $troops->unit08;
+                        $completed[9] = $troops->unit10;
+                        
+                        for($j=0;$j<10;$j++){
+                            if($planned[$j]==0){
+                                $completed[$j]=0;
+                                $progress[$j]=0;
+                            }
+                            
+                            $total[$j]=$completed[$j]+$progress[$j];
+                            $pending[$j] = $planned[$j] - $total[$j];
+                            
+                            $planned_upkeep+= $planned[$j]*$result['TRIBE'][$j]['UPKEEP'];
+                            $completed_upkeep+= $completed[$j]*$result['TRIBE'][$j]['UPKEEP'];
+                            $progress_upkeep+= $progress[$j]*$result['TRIBE'][$j]['UPKEEP'];                        
+                            
                         }
-                        
-                        $total[$j]=$completed[$j]+$progress[$j];
-                        $pending[$j] = $planned[$j] - $total[$j];
-                        
-                        $planned_upkeep+= $planned[$j]*$units[$j];
-                        $completed_upkeep+= $completed[$j]*$units[$j];
-                        $progress_upkeep+= $progress[$j]*$units[$j];                        
-                        
+                        $total_upkeep = $completed_upkeep+$progress_upkeep;
+                        $pending_upkeep = $planned_upkeep - $total_upkeep;
                     }
-                    $total_upkeep = $completed_upkeep+$progress_upkeep;
-                    $pending_upkeep = $planned_upkeep - $total_upkeep;
+                    
+                    $result['PLANS'][$i]=$array;
+                    $result['PLANS'][$i]['PLANNED']=$planned;
+                    $result['PLANS'][$i]['COMPLETED']=$completed;
+                    $result['PLANS'][$i]['PROGRESS']=$progress;
+                    $result['PLANS'][$i]['TOTAL']=$total;
+                    $result['PLANS'][$i]['PENDING']=$pending;
+                    
+                    $result['PLANS'][$i]['PLANNED_UPKEEP']=$planned_upkeep;
+                    $result['PLANS'][$i]['COMPLETED_UPKEEP']=$completed_upkeep;
+                    $result['PLANS'][$i]['PROGRESS_UPKEEP']=$progress_upkeep;
+                    $result['PLANS'][$i]['TOTAL_UPKEEP']=$total_upkeep;
+                    $result['PLANS'][$i]['PENDING_UPKEEP']=$pending_upkeep;
+                    
+                    $i++;
                 }
                 
-                $result['PLANS'][$i]=$array;
-                $result['PLANS'][$i]['PLANNED']=$planned;
-                $result['PLANS'][$i]['COMPLETED']=$completed;
-                $result['PLANS'][$i]['PROGRESS']=$progress;
-                $result['PLANS'][$i]['TOTAL']=$total;
-                $result['PLANS'][$i]['PENDING']=$pending;
-                
-                $result['PLANS'][$i]['PLANNED_UPKEEP']=$planned_upkeep;
-                $result['PLANS'][$i]['COMPLETED_UPKEEP']=$completed_upkeep;
-                $result['PLANS'][$i]['PROGRESS_UPKEEP']=$progress_upkeep;
-                $result['PLANS'][$i]['TOTAL_UPKEEP']=$total_upkeep;
-                $result['PLANS'][$i]['PENDING_UPKEEP']=$pending_upkeep;
-                
-                $i++;
             }
-            
-//dd($result['PLANS']);           
-            
+            return view('Account.troopPlans')->with(['villages'=>$result['VILLAGES']])
+                        ->with(['plans'=>$result['PLANS']])->with(['tribe'=>$result['TRIBE']]);
         }
-        
-
-//dd($result);
-        return view('Account.troopPlans')->with(['villages'=>$result['VILLAGES']])
-                    ->with(['plans'=>$result['PLANS']])->with(['tribe'=>$result['TRIBE']]);
-        
+            
     }
     
 //creates new troops development plan
@@ -276,7 +274,7 @@ class PlanController extends Controller
                             'p_unit_upkeep'=>$planned_upkeep,
                             'update_date'=>$date
                         ]);
-        $response = 'success';
+        $response = $id;
         return response()->json(['success'=>$response]);
     }
         
