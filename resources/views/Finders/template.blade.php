@@ -30,7 +30,7 @@
                 <a href="{{route('findInactive')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Inactive Finder</a>
                 <a href="{{route('findNatar')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Natar Finder</a>
                 <a href="{{route('findNeighbour')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Neighbour Finder</a>
-            </div>                      
+            </div>
         </div>
         <div class="float-md-left col-md-9 mt-1 p-0">
         @if(!Session::has('server'))

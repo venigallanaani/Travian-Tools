@@ -78,54 +78,67 @@
         @if(Session::get('plus.leader')==1)
             <!-- =================================== Plus Leader/Owner menu ================================== -->
             <div class="list-group text-center text-white mt-1">
-                <a class="list-group-item py-1 bg-dark h4">Leader Menu</a>                
-                <a href="/leader/subscription" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Subscription</a>
-                <a href="/leader/access" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Access</a>
-                <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a>
+                <a class="list-group-item py-1 bg-dark h4"  onclick="toggleMenu('leader')">Leader Menu <i class="fas fa-angle-down"></i></a> 
+                <div id="leader" style="display:none">               
+                    <a href="/leader/subscription" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Subscription</a>
+                    <a href="/leader/access" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Access</a>
+                    <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a>
+                </div>
             </div>
         @endif   
         @if(Session::get('plus.defense')==1) 
             <!-- =================================== Defense menu ================================== -->
             <div class="list-group text-center text-white mt-1">
-                <a class="list-group-item py-1 bg-dark h4">Defense Menu</a>
-                <a href="/defense/incomings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Incomings</a>
-                <a href="/defense/cfd" class="list-group-item py-1 list-group-item-action bg-info text-white h5">CFD Status</a>
-                <a href="/defense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Defense</a>                
+                <a class="list-group-item py-1 bg-dark h4"  onclick="toggleMenu('defense')">Defense Menu <i class="fas fa-angle-down"></i></a>
+                <div id="defense" style="display:none">
+                    <a href="/defense/incomings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Incomings</a>
+                    <a href="/defense/cfd" class="list-group-item py-1 list-group-item-action bg-info text-white h5">CFD Status</a>
+                    <a href="/defense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Defense</a>   
+                </div>             
             </div>
   		@endif
   		@if(Session::get('plus.offense')==1)
             <!-- =================================== Offense menu ================================== -->
             <div class="list-group text-center text-white mt-1">
-                <a class="list-group-item py-1 bg-dark h4">Offense Menu</a>                 
-                <a href="/offense/status" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Offense Plans</a>
-                <a href="/offense/troops" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Hammers</a>
-                <a href="/offense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Offense</a>
-                <a href="/offense/archive" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Plans Archive</a>                  
+                <a class="list-group-item py-1 bg-dark h4"  onclick="toggleMenu('offense')">Offense Menu <i class="fas fa-angle-down"></i></a>  
+                <div id="offense" style="display:none">               
+                    <a href="/offense/status" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Offense Plans</a>
+                    <a href="/offense/troops" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Hammers</a>
+                    <a href="/offense/search" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Search Offense</a>
+                    <a href="/offense/archive" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Plans Archive</a> 
+                </div>                 
             </div>
         @endif
 		@if(Session::get('plus.resources')==1)
             <!-- =================================== Resource menu ================================== -->
             <div class="list-group text-center text-white mt-1">
-                <a class="list-group-item py-1 bg-dark h4">Resource Menu</a>                
-                <a href="/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Push Status</a>
+                <a class="list-group-item py-1 bg-dark h4"  onclick="toggleMenu('resource')">Resource Menu <i class="fas fa-angle-down"></i></a>
+                <div id="resource" style="display:none">
+                	<a href="/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Push Status</a>
+            	</div>
             </div> 
         @endif
 		@if(Session::get('plus.artifact')==1)
             <!-- =================================== Artifacts menu ================================== -->
             <div class="list-group text-center text-white mt-1">
-                <a class="list-group-item py-1 bg-dark h4">Artifacts Menu</a>                
-                <a href="{{route('ldrArt')}}" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
-                <a href="{{route('ldrArt')}}/schedule" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Schedule</a>
-                <a href="{{route('ldrArt')}}/capture" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Capture Plan</a>
+                <a class="list-group-item py-1 bg-dark h4"  onclick="toggleMenu('artifact')">Artifacts Menu <i class="fas fa-angle-down"></i></a> 
+                <div id="artifact" style="display:none">
+                    <a href="{{route('ldrArt')}}" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
+                    <a href="{{route('ldrArt')}}/schedule" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Schedule</a>
+                    <a href="{{route('ldrArt')}}/capture" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Capture Plan</a>
+                </div>
             </div> 
         @endif
-		@if(Session::get('plus.wonder')==2)
+		@if(Session::get('plus.wonder')==1)
             <!-- =================================== Artifacts menu ================================== -->
             <div class="list-group text-center text-white mt-1">
-                <a class="list-group-item py-1 bg-dark h4">Wonder Menu</a>                
-                <a href="/wonder" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
-                <a href="/wonder/crop" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Crop Tool</a>
-                <a href="/wonder/defense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Wonder Defense</a>                
+                <a class="list-group-item py-1 bg-dark h4"  onclick="toggleMenu('wonder')">Wonder Menu <i class="fas fa-angle-down"></i></a>  
+                <div id="wonder" style="display:none">              
+                    <a href="/wonder" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
+                    <a href="/wonder/crop" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Crop Tool</a>
+                    <a href="/wonder/defense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Wonder Defense</a>
+                    <a href="/wonder/offense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">WWR/WWK</a>   
+                </div>              
             </div> 
         @endif
         	<div class="text-center text-white mb-5">
@@ -141,19 +154,14 @@
 @endauth
 	@push('scripts')
 		<script type="text/javascript" src="{{ asset('js/moment.js') }}"></script> 
-        <script type="text/javascript" src="{{ asset('js/moment-timezone-with-data-2012-2022.min.js') }}"></script>         
-        
-        
-        <script> 
-        	
+        <script type="text/javascript" src="{{ asset('js/moment-timezone-with-data-2012-2022.min.js') }}"></script> 
+        <script>        	
             $(function(){                
     	  		setInterval(function(){
         	  		var now = moment().tz("{{Session::get('timezone')}}");
-        	  		//var now = moment();
     		 		$('#clock').html(now.format('YYYY-MM-DD HH:mm:ss'));    		 		
     	  		},1000);
         	});
-
          </script>
     @endpush
 

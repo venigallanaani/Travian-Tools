@@ -141,11 +141,11 @@ if(!function_exists('ParseReports')){
                 }
             }
         }
-        
+//dd($result);
         if(isset($result['ATTACKER']['INFORMATION'])){
             for($i=0;$i<count($result['ATTACKER']['INFORMATION']);$i++){
                 
-                $info=explode(" ",$result['ATTACKER']['INFORMATION'][$i]);
+                $info=explode(" ",trim($result['ATTACKER']['INFORMATION'][$i]));
                 if(count($info)>2){
                     if(strpos($info[1],$info[0])!==false){
                         $result['ATTACKER']['INFORMATION'][$i]=explode(' ',$result['ATTACKER']['INFORMATION'][$i],2)[1];
