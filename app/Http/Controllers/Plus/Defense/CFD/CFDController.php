@@ -33,26 +33,50 @@ class CFDController extends Controller
         
         session(['title'=>'Plus']);
         
-        $task=CFDTask::where('server_id',$request->session()->get('server.id'))
-                    ->where('plus_id',$request->session()->get('plus.plus_id'))
-                    ->where('task_id',$id)->first(); 
+        ///$result = $this->taskDetails($request, $id);
+        $result = app('App\Http\Controllers\plus\Defense\defenseHelperController')->taskDetails($request, $id);
+//dd($result);
         
-        $villages=Diff::where('server_id',$request->session()->get('server.id'))
-                    ->where('player',$request->session()->get('plus.account'))->get();
-        
-        $units = Units::where('tribe_id',$villages[0]['id'])
-                    ->orderBy('id','asc')->get();
-        
-        $troops=CFDUpd::where('server_id',$request->session()->get('server.id'))                    
-                    ->where('plus_id',$request->session()->get('plus.plus_id'))
-                    ->where('player_id',$request->session()->get('plus.id'))
-                    ->where('task_id',$id)->get();
-        
-        //dd($troops);                    
-        return view("Plus.Defense.CFD.defenseTask")->with(['task'=>$task])
-                       ->with(['villages'=>$villages])->with(['units'=>$units])->with(['troops'=>$troops]);
+        return view("Plus.Defense.CFD.defenseTask")->with(['task'=>$result['TASK']])
+                       ->with(['villages'=>$result['VILLAGES']])->with(['units'=>$result['UNITS']])
+                        ->with(['troops'=>$result['TROOPS']]);
         
     }
+    
+    
+    public function defenseTaskWithTravel(Request $request, $id){
+        
+        session(['title'=>'Plus']);
+        
+        $task = app('App\Http\Controllers\plus\Defense\defenseHelperController')->taskDetails($request, $id);
+        
+        $travels = app('App\Http\Controllers\plus\Defense\defenseHelperController')->defenseTravelTime($request, $task['UNITS'], $task['TASK'],$request->session()->get('plus.account_id'));
+        
+        return view("Plus.Defense.CFD.defenseTravel")->with(['task'=>$task['TASK']])
+                    ->with(['villages'=>$task['VILLAGES']])->with(['units'=>$task['UNITS']])
+                    ->with(['troops'=>$task['TROOPS']])->with(['travels'=>$travels]);
+        
+    }   
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     public function updateDefenseTask(Request $request, $id){
         
@@ -125,7 +149,7 @@ class CFDController extends Controller
             //Updating the CFD update table with player details
             $player = CFDUpd::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('player_id',$request->session()->get('plus.id'))
+                        ->where('player_id',$request->session()->get('plus.account_id'))
                         ->where('task_id',$id)->where('vid',$village->vid)->get();
                 
             if($player!=null){                
@@ -134,7 +158,7 @@ class CFDController extends Controller
                 $cfd->server_id = $request->session()->get('server.id');
                 $cfd->plus_id = $request->session()->get('plus.plus_id');
                 $cfd->task_id = $id;
-                $cfd->player_id = $request->session()->get('plus.id');
+                $cfd->player_id = $request->session()->get('plus.account_id');
                 $cfd->uid = $village->uid;
                 $cfd->player = $village->player;
                 $cfd->vid = $village->vid;
@@ -151,7 +175,7 @@ class CFDController extends Controller
             }else{
                 CFDUpd::where('server_id',$request->session()->get('server.id'))
                 ->where('plus_id',$request->session()->get('plus.plus_id'))
-                ->where('player_id',$request->session()->get('plus.id'))
+                ->where('player_id',$request->session()->get('plus.account_id'))
                 ->where('task_id',$id)->where('vid',$village->vid)
                 ->update([
                     'resources'=>$player->resources+$res,
@@ -171,5 +195,5 @@ class CFDController extends Controller
         }                
         return Redirect::to('/plus/defense/'.$id) ;
     }   
-    
+        
 }

@@ -194,7 +194,9 @@ class LeaderController extends Controller
                         $access->name=$subscription->name;
                         $access->server_id=$request->session()->get('server.id');
                         $access->user=$account->user_name;
+                        $access->uid=$account->uid;
                         $access->account=$account->account;
+                        $access->account_id=$account->account_id;
                         $access->plus=1;
                         $access->leader=0;
                         $access->offense=0;
@@ -221,7 +223,7 @@ class LeaderController extends Controller
                 
             }else{
                 // Join link is invalid
-                Session::flash('template','This join link is no longer valid!');
+                Session::flash('template','This plus group join link is no longer valid, please contact group owner for new link.');
                 return view('Plus.template');
             }
             
@@ -250,7 +252,7 @@ class LeaderController extends Controller
             ->update(['plus'=>null]);
         
         Session::flash('success','You have left the plus group');
-        return Redirect::to('/home'); 
+        return Redirect::to('/plus'); 
         
     }
     

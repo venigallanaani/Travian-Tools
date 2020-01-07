@@ -109,10 +109,11 @@ class PlanController extends Controller
                         $progress[6] = $plan->unit_07;      $progress[7] = $plan->unit_08;      $progress[8] = $plan->unit_09;
                         $progress[9] = $plan->unit_10;
                         
-                        $completed[0] = $troops->unit01;    $completed[1] = $troops->unit02;    $completed[2] = $troops->unit03;
-                        $completed[3] = $troops->unit04;    $completed[4] = $troops->unit05;    $completed[5] = $troops->unit06;
-                        $completed[6] = $troops->unit07;    $completed[7] = $troops->unit08;    $completed[8] = $troops->unit08;
-                        $completed[9] = $troops->unit10;
+                        $completed[0] = $troops!=null ? $troops->unit01 : 0;            $completed[1] = $troops!=null ? $troops->unit02 : 0;    
+                        $completed[2] = $troops!=null ? $troops->unit03 : 0;            $completed[3] = $troops!=null ? $troops->unit04 : 0;    
+                        $completed[4] = $troops!=null ? $troops->unit05 : 0;            $completed[5] = $troops!=null ? $troops->unit06 : 0;
+                        $completed[6] = $troops!=null ? $troops->unit07 : 0;            $completed[7] = $troops!=null ? $troops->unit08 : 0;    
+                        $completed[8] = $troops!=null ? $troops->unit09 : 0;            $completed[9] = $troops!=null ? $troops->unit10 : 0;
                         
                         for($j=0;$j<10;$j++){
                             if($planned[$j]==0){
@@ -252,6 +253,10 @@ class PlanController extends Controller
         $date = Carbon::now()->format('Y-m-d');
         $planned_upkeep=0;      $queued_upkeep=0;        
         
+//         $village = Diff::where('server_id',$request->session()->get('server.id'))
+//                         ->where('uid',$account->uid)->where('vid',$vid)
+//                         ->pluck('village')->first();
+        
         for($i=0;$i<10;$i++){            
             $planned_upkeep+=$planned[$i]*$units[$i];
             $queued_upkeep+=$queued[$i]*$units[$i];            
@@ -260,6 +265,7 @@ class PlanController extends Controller
         TroopPlan::where('server_id',$request->session()->get('server.id'))
                         ->where('account_id',$account->account_id)->where('plan_id',$id)
                         ->update([
+                            //'village'=>$village;
                             'unit_01'=>$queued[0],      'p_unit_01'=>$planned[0],
                             'unit_02'=>$queued[1],      'p_unit_02'=>$planned[1],
                             'unit_03'=>$queued[2],      'p_unit_03'=>$planned[2],

@@ -193,6 +193,8 @@ Route::get('/defense/incomings/list','Plus\Defense\Incoming\LeaderIncomingContro
 Route::get('/plus/defense','Plus\Defense\CFD\CFDController@defenseTaskList');
 Route::get('/plus/defense/{id}','Plus\Defense\CFD\CFDController@defenseTask');
 Route::post('/plus/defense/{id}','Plus\Defense\CFD\CFDController@updateDefenseTask');
+Route::get('/plus/defense/travel/{id}','Plus\Defense\CFD\CFDController@defenseTaskWithTravel');
+
 /* --------------- Plus leader CFD options routes  --------------- */
 Route::get('/defense/cfd','Plus\Defense\CFD\LeaderCFDController@CFDList');
 Route::get('/defense/cfd/{id}','Plus\Defense\CFD\LeaderCFDController@CFDDetail');

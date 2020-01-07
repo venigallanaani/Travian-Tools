@@ -29,7 +29,13 @@
 							<td class="py-1"><strong>Land Time:</strong> {{$task['target_time']}}</td>
 							<td class="py-1"><strong>Time Left: <span id="{{$task['task_id']}}"></span></strong></td>
 						</tr>
+						<tr>
+							<td class=""><strong>Comments: </strong>{{$task['comments']}}</td>
+							<td class=""><a href="/plus/defense/travel/{{$task->task_id}}"><button class="btn btn-info py-2">Calculate Travel Time</button></a></td>
+						</tr>
 					</table>
+					
+				@yield('travel')
 
 				<!-- ================ Defense Troops Input data ========================== -->
 					

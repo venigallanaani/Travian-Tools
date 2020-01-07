@@ -19,7 +19,9 @@ class CreatePlusTable extends Migration
             $table->string('name');
             $table->string('server_id');
             $table->string('user');
+            $table->integer('uid');
             $table->string('account');
+            $table->string('account_id');
             $table->boolean('plus')->default(TRUE);
             $table->boolean('leader')->default(FALSE);
             $table->boolean('defense')->default(FALSE);
