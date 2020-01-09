@@ -252,19 +252,21 @@ class CFDController extends Controller
                         
                         $upkeep+=$units[$j]['upkeep']*$troops[$j]['COUNT'];
                     }
-                    
-                    $tTime=($dist/$minSpeed)*3600;
-                    $sTime=strtotime($task->target_time)-$tTime;
-                    
-                    $result[$i]['VILLAGE']=$village['village'];
-                    $result[$i]['X']=$village['x'];
-                    $result[$i]['Y']=$village['y'];
-                    $result[$i]['TROOPS']=array_column($troops, 'COUNT');
-                    $result[$i]['UPKEEP']=$upkeep;
-                    $result[$i]['TRAVEL']=gmdate('H:i:s',floor($tTime));
-                    $result[$i]['START']=Carbon::createFromTimestamp(floor($sTime))->toDateTimeString();
-                    
-                    $i++;
+                    if($upkeep>0){
+                        $tTime=($dist/$minSpeed)*3600;
+                        $sTime=strtotime($task->target_time)-$tTime;
+                        
+                        $result[$i]['VILLAGE']=$village['village'];
+                        $result[$i]['X']=$village['x'];
+                        $result[$i]['Y']=$village['y'];
+                        $result[$i]['TROOPS']=array_column($troops, 'COUNT');
+                        $result[$i]['UPKEEP']=$upkeep;
+                        $result[$i]['TRAVEL']=gmdate('H:i:s',floor($tTime));
+                        $result[$i]['START']=Carbon::createFromTimestamp(floor($sTime))->toDateTimeString();
+                        
+                        $i++;
+                    }
+
                 }
             }
         }
