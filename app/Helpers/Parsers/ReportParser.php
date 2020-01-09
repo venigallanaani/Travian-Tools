@@ -142,6 +142,7 @@ if(!function_exists('ParseReports')){
             }
         }
 //dd($result);
+//dd($result['ATTACKER']['INFORMATION']);
         if(isset($result['ATTACKER']['INFORMATION'])){
             for($i=0;$i<count($result['ATTACKER']['INFORMATION']);$i++){
                 
@@ -155,10 +156,10 @@ if(!function_exists('ParseReports')){
                     }
                 }
                 $info=explode(" ",$result['ATTACKER']['INFORMATION'][$i]);
-                $len=strlen($info[0]);
-                if($len % 2==0 && (substr($info[0],$len/2)==substr($info[0],0,$len/2))){
-                    $result['ATTACKER']['INFORMATION'][$i]=substr($result['ATTACKER']['INFORMATION'][$i],$len/2);
-                }
+//                 $len=strlen($info[0]);
+//                 if($len % 2==0 && (substr($info[0],$len/2)==substr($info[0],0,$len/2))){
+//                     $result['ATTACKER']['INFORMATION'][$i]=substr($result['ATTACKER']['INFORMATION'][$i],$len/2);
+//                 }
             }
         }
         

@@ -13,6 +13,10 @@ use App\CFDTask;
 use App\CFDUpd;
 use App\Diff;
 use App\Units;
+use App\Plus;
+use App\Troops;
+use App\Account;
+use Carbon\Carbon;
 
 
 class LeaderCFDController extends Controller
@@ -192,5 +196,129 @@ class LeaderCFDController extends Controller
         }
         
         return Redirect::to('/defense/cfd');
+    }
+    
+    public function CFDTravel(Request $request,$id){
+        
+        $task=CFDTask::where('server_id',$request->session()->get('server.id'))
+                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                ->where('task_id',$id)->first();
+        
+        $players = Plus::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->pluck('account_id');
+        
+        $rows = Units::whereIn('tribe_id',[1,2,3,6,7])->orderBy('id','asc')->get();
+        $units = array();
+        foreach($rows as $row){
+            $units[$row->tribe][]=$row;    
+        }
+//dd($units);        
+        $villages = null;   $i=0;
+        foreach($players as $player){
+            $account = Account::where('server_id',$request->session()->get('server.id'))
+                                    ->where('account_id',$player)->first();
+
+            $troops=$this->defenseTravelTime($request,$units[$account->tribe],$task,$player);           
+            
+            if($troops!==null){
+                foreach($troops as $troop){
+                    $villages[$i]=$troop;
+                    $villages[$i]['PLAYER']=$account->account;
+                    $i++;
+                }
+                $i++;
+            }            
+        }       
+//dd($villages);
+        return view('Plus.Defense.CFD.cfdTravel')->with(['task'=>$task])->with(['villages'=>$villages]);
+        
+    }
+    
+    public function defenseTravelTime($request, $units, $task, $account){
+        $result = null;
+        
+        $villages=Troops::where('server_id',$request->session()->get('server.id'))->where('account_id',$account)
+                    ->whereIn('type',['DEFENSE','SUPPORT'])->get();
+        
+        if(count($villages)>0){
+            
+            date_default_timezone_set($request->session()->get('timezone'));
+            $time = strtotime($task->target_time) - strtotime(Carbon::now());
+            $time = $time/3600;
+            
+            //$units = $units->toArray();
+            //dd($units);
+            $images=array();    $i=0;
+            foreach($units as $unit){
+                $images[$i]['NAME']=$unit['name'];
+                $images[$i]['IMAGE']=$unit['image'];
+                $i++;
+            }
+            
+            $x=$task->x;    $y=$task->y;    $i=0;
+            
+            foreach($villages as $village){
+                $minSpeed = 20; $flag = 0;  $upkeep=0;
+                
+                $village=$village->toArray();
+                $troops[0]['COUNT'] = $village['unit01'];   $troops[1]['COUNT'] = $village['unit02'];   $troops[2]['COUNT'] = $village['unit03'];
+                $troops[3]['COUNT'] = $village['unit04'];   $troops[4]['COUNT'] = $village['unit05'];   $troops[5]['COUNT'] = $village['unit06'];
+                $troops[6]['COUNT'] = $village['unit07'];   $troops[7]['COUNT'] = $village['unit08'];   $troops[8]['COUNT'] = $village['unit09'];
+                $troops[9]['COUNT'] = $village['unit10'];
+                
+                $dist = (($village['x']-$x)**2+($village['y']-$y)**2)**0.5;
+                if($village['Tsq'] > 0 && $dist > 20){
+                    $dist = 20 + ($dist-20)/(1+0.1*$village['Tsq']);
+                }
+                
+                for($j=0;$j<10;$j++){
+                    if($units[$j]['type']=='H'||$units[$j]['type']=='D'){ $troops[$j]['SPEED'] = $units[$j]['speed'];   }
+                    else{ $troops[$j]['SPEED'] = 0;                      $troops[$j]['COUNT'] = 0;                    }
+                    
+                    if($troops[$j]['COUNT']!=0 && $troops[$j]['SPEED']<=$minSpeed){
+                        $minSpeed = $troops[$j]['SPEED'];
+                    }
+                }
+                
+                if($dist/$minSpeed > $time){
+                    foreach($troops as $troop){
+                        if($troop['COUNT']>0 && ($dist/$troop['SPEED'] < $time)){
+                            $minSpeed = $troop['SPEED'];
+                            $flag=1;
+                        }
+                    }
+                }else{  $flag=1;    }
+                
+                for($j=0;$j<10;$j++){
+                    if($troops[$j]['SPEED']<$minSpeed){
+                        $troops[$j]['COUNT']=0;
+                    }
+                }
+                if($flag == 1){
+                    
+                    for($j=0;$j<10;$j++){
+                        
+                        $upkeep+=$units[$j]['upkeep']*$troops[$j]['COUNT'];
+                    }
+                    
+                    $tTime=($dist/$minSpeed)*3600;
+                    $sTime=strtotime($task->target_time)-$tTime;
+                    
+                    $result[$i]['VILLAGE']=$village['village'];
+                    $result[$i]['X']=$village['x'];
+                    $result[$i]['Y']=$village['y'];
+                    $result[$i]['TROOPS']=array_column($troops, 'COUNT');
+                    $result[$i]['UPKEEP']=$upkeep;
+                    $result[$i]['UNITS']=$images;
+                    $result[$i]['TRAVEL']=gmdate('H:i:s',floor($tTime));
+                    $result[$i]['START']=Carbon::createFromTimestamp(floor($sTime))->toDateTimeString();
+                    
+                    $i++;
+                }
+            }
+        }
+        //dd($result);
+        return $result;
     }
 }

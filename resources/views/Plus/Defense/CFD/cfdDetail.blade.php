@@ -58,16 +58,18 @@
 					  	<tr class="py-2">
 							<td class="py-0">								
 								<p class="py-0 my-1"><strong>Defense Received(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{number_format($task->def_received)}} ({{$task->def_percent}}%)</p>
-								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Total Defense"><img alt="" src="/images/x.gif" class="stats def">: {{number_format($task->def_inf + $task->def_cav)}}</p>
-								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Infantry Defense"><img alt="" src="/images/x.gif" class="stats dinf">: {{number_format($task->def_inf)}}</p>
+								<p class="py-0 my-1"><strong>Defense Remaining(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{number_format($task->def_remain)}}</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Resources"><img alt="" src="/images/x.gif" class="res all"> : {{number_format($task->resources)}}</p>								
+								
 							</td>
 							<td class="py-0">								
-								<p class="py-0 my-1"><strong>Defense Remaining(<img alt="" src="/images/x.gif" class="res upkeep">): </strong>{{number_format($task->def_remain)}}</p>
-								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Resources"><img alt="" src="/images/x.gif" class="res all"> : {{number_format($task->resources)}}</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Infantry Defense"><img alt="" src="/images/x.gif" class="stats dinf">: {{number_format($task->def_inf)}}</p>								
 								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Cavalry Defense"><img alt="" src="/images/x.gif" class="stats dcav">: {{number_format($task->def_cav)}}</p>
+								<p class="py-0 my-1" data-toggle="tooltip" data-placement="top" title="Total Defense"><img alt="" src="/images/x.gif" class="stats def">: {{number_format($task->def_inf + $task->def_cav)}}</p>
 							</td>
 						</tr>					
 					</table>
+					<a href="/defense/cfd/travel/{{$task->task_id}}" target="_blank"><button class="btn btn-lg btn-info shadow p-2">Find Available Defense</button></a>
 	<!-- ===================== Displays the incoming troops and types ============================================ -->
 				@if(count($tribes)>0)
 					<div class="my-3">

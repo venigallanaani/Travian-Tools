@@ -30,18 +30,56 @@
 							<td class="py-1"><strong>Time Left: <span id="{{$task['task_id']}}"></span></strong></td>
 						</tr>
 						<tr>
-							<td class=""><strong>Comments: </strong>{{$task['comments']}}</td>
-							<td class=""><a href="/plus/defense/travel/{{$task->task_id}}"><button class="btn btn-info py-2">Calculate Travel Time</button></a></td>
+							<td colspan="2" class=""><strong>Comments: </strong>{{$task['comments']}}</td>
+							
 						</tr>
 					</table>
 					
-				@yield('travel')
+					
+                	@if($travels==null)
+                		<p class="py-3 h5 text-danger">No available units can make it to the defense call</p>                	
+                	@else
+                	<div>
+                		<table class="table table-bordered table-sm">
+                			<thead style="background-color:#dbeef4">
+                				<tr>
+                					<td><strong>Village</strong></td>
+                				@foreach($units as $unit)
+                					<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="{{$unit->name}}"><img alt="" src="/images/x.gif" class="units {{$unit->image}}"></td>
+                				@endforeach
+                					<td class="px-0 py-1"><strong>Total</strong>(<img alt="upkeep" src="/images/x.gif" class="res upkeep">)</td>
+                					<td class="px-0 py-1"><strong>Travel Time</strong></td>
+                					<td class="px-0 py-1"><strong>Start Time</strong></td>
+                				</tr>
+                			</thead>
+                		@foreach($travels as $travel)
+                			<tr>
+                				<td class="px-0 py-1 font-weight-bold"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$travel['X']}}&y={{$travel['Y']}}" target="_blank">{{$travel['VILLAGE']}}</a></td>
+                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][0])}}</td>
+                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][1])}}</td>
+                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][2])}}</td>
+                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][3])}}</td>
+                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][4])}}</td>
+                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][5])}}</td>
+                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][6])}}</td>
+                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][7])}}</td>
+                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][8])}}</td>
+                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][9])}}</td>
+                				<td class="px-0 py-1"><strong>{{number_format($travel['UPKEEP'])}}</strong></td>
+                				<td class="px-0 py-1 text-primary font-weight-bold">{{$travel['TRAVEL']}}</td>
+                				<td class="px-0 py-1 text-primary font-weight-bold">{{$travel['START']}}</td>
+                			</tr>
+                		@endforeach			
+                		</table>
+            		</div>
+                	@endif
+            		
 
 				<!-- ================ Defense Troops Input data ========================== -->
 					
 					<form method="post" action="/plus/defense/{{$task->task_id}}">
 						{{ csrf_field() }}
-						<div  class="py-2 px-1 text-center rounded" style="background-color:#dbeef4" >
+						<div class="py-2 px-1 text-center rounded" style="background-color:#dbeef4" >
     						<p class="h5 text-info"><strong>Enter Your Defense</strong></p>
     						<div class="bg-white rounded">
         						<table class="table table-borderless col-md-11 mx-auto small">
