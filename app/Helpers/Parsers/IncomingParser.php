@@ -70,14 +70,15 @@ if(!function_exists('ParseIncoming')){
 
 //Parse defense village coords
             if(strpos(strtoupper($incStrs[$x]),'LOYALTY:')!==FALSE
-                && strpos(strtoupper($incStrs[$x+2]),'VILLAGES')!==FALSE){
+                && strpos(strtoupper($incStrs[$x+1]),'VILLAGES')!==FALSE){
                     
                 $d_village=trim($incStrs[$x-1]);
-                
-                for($z=$x;$z<count($incStrs);$z++){                 
-                    if($d_village==trim($incStrs[$z])){                
-                        
-                        $dCoords = GetCoords(trim($incStrs[$z+1]));                        
+//dd($d_village);        
+                for($z=$x+1;$z<count($incStrs);$z++){ 
+                    if(strtoupper($d_village)==strtoupper(trim($incStrs[$z]))){                    
+//dd($incStrs[$z+1]);
+                        $dCoords = GetCoords(trim($incStrs[$z+1])); 
+                        $da_village = trim($incStrs[$z]);
 //dd($dCoords);
                         $z=count($incStrs);
                     }

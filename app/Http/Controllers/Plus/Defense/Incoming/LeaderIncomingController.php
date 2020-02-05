@@ -160,20 +160,25 @@ class LeaderIncomingController extends Controller
         $tracks = $tracks->toArray();
         
         //dd($tracks);
+        $attack=array();
         if(count($tracks)==0){
-            $tracks=array();
-            $tracks[0]['right']='';
-            $tracks[0]['left']='';
-            $tracks[0]['helm']='';
-            $tracks[0]['chest']='';
-            $tracks[0]['boots']='';
+            $attack['right']='';
+            $attack['left']='';
+            $attack['helm']='';
+            $attack['chest']='';
+            $attack['boots']='';
+        }else{
+            $attack['right']=$tracks[0]['right'];
+            $attack['left']=$tracks[0]['left'];
+            $attack['helm']=$tracks[0]['helm'];
+            $attack['chest']=$tracks[0]['chest'];
+            $attack['boots']=$tracks[0]['boots'];
         }
-        
+//dd($attack);
         session(['title'=>'Inc Tracker-'.$incomings[0]['att_player']]);
         
         return view('Plus.Defense.Incomings.trackIncoming')->with(['report'=>$report])->with(['incomings'=> $incomings])
-                            ->with(['units'=>$units])->with(['tracks'=>$tracks]);        
-        
+                            ->with(['units'=>$units])->with(['tracks'=>$tracks])->with(['attack'=>$attack]); 
         
     }
     

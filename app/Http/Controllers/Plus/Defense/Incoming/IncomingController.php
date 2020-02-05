@@ -101,7 +101,7 @@ class IncomingController extends Controller
                 
                 $noticeTime=Carbon::now()->format('Y-m-d H:i:s');
                 
-                if($incoming==null){                    
+                if($incoming==null){
                     $wave=new Incomings;
                     
                     $wave->incid=$incId;
