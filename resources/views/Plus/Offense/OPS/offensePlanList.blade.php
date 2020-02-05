@@ -14,7 +14,7 @@
             		</div>
             		<div class="collapse" id="task" style="">
               			<div class="card card-body shadow">
-    						<form action="/offense/create" method="POST" class="col-md-10 mx-auto text-center">
+    						<form action="/offense/create" method="POST" class="col-md-10 mx-auto text-center" autocomplete="off">
         						{{ csrf_field() }}
         						<p class="my-2">
         							<strong>Plan Name: <input type="text" name="name" size="10" required></strong>

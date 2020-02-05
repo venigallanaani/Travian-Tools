@@ -31,7 +31,7 @@
   			<div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
 				<a class="list-group-item py-1 bg-dark h4">Profile Menu</a>
 				<a href="{{route('profile')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
-				<a href="{{route('profileServers')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Servers</a>
+				<a href="{{route('profileServers')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">My Servers</a>
   			</div>	
 	    </div> 
 		@foreach(['danger','success','warning','info'] as $msg)

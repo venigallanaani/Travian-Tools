@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Contacts;
 use App\Servers;
 use App\Account;
+use App\Plus;
 
 class profileController extends Controller
 {
@@ -63,7 +64,14 @@ class profileController extends Controller
             
             $account=Account::where('server_id',$row->server_id)
                         ->where('user_id',Auth::user()->id)->first();
+            
             if(!$account==null){
+                
+                $plus = Plus::where('server_id',$row->server_id)
+                            ->where('id', Auth::user()->id)->first();
+                if(!$plus == null){
+                    $plus = $plus->name;
+                }else{  $plus = null;   }
                 $profiles[]=array(
                     'name'=>$row->url,
                     'server_id'=>$row->server_id,
@@ -72,7 +80,8 @@ class profileController extends Controller
                     'timezone'=>$row->timezone,
                     'account'=>$account->account,
                     'tribe'=>$account->tribe,
-                    'status'=>$account->status
+                    'status'=>$account->status,
+                    'plus'=>$plus
                 );
             }            
         }        

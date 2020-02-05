@@ -56,7 +56,6 @@ class VillagesController extends Controller
                 $villages[$diff->vid]['IRON']=0;
                 $villages[$diff->vid]['CROP']=0;
                 $villages[$diff->vid]['PROD']=54;
-                $villages[$diff->vid]['TYPE']='NONE'; 
             }
 	                               
             if(count($vills) > 0){
@@ -70,7 +69,6 @@ class VillagesController extends Controller
                     $villages[$vill->vid]['IRON']=$vill->iron;
                     $villages[$vill->vid]['CROP']=$vill->crop;
                     $villages[$vill->vid]['PROD']=$vill->prod;
-                    $villages[$vill->vid]['TYPE']=$vill->type;
                 }
             }
             
@@ -123,10 +121,7 @@ class VillagesController extends Controller
             $input[$i]['OASIS']['IRON']=Input::get($iron);
             
             $crop = $village->vid."_crop";
-            $input[$i]['OASIS']['CROP']=Input::get($crop);
-            
-            $type = $village->vid."_type";
-            $input[$i]['TYPE']=Input::get($type);            
+            $input[$i]['OASIS']['CROP']=Input::get($crop);        
             
             $i++;
         }
@@ -177,7 +172,6 @@ class VillagesController extends Controller
                     $village->prod=$res;
                     $village->cap=$data['CAP'];
                     $village->field=$data['FIELD'];
-                    $village->type=$data['TYPE'];
                     
                     $village->save();
                 }else{
@@ -193,15 +187,14 @@ class VillagesController extends Controller
                                     'crop'=>$data['OASIS']['CROP'],
                                     'prod'=>$res,
                                     'cap'=>$data['CAP'],
-                                    'field'=>$data['FIELD'],
-                                    'type'=>$data['TYPE']   
+                                    'field'=>$data['FIELD'] 
                                 ]);
  
                 }
             }           
             
         }      
-      
+        Session::flash('success',"Troops details are successfully updated");
         
         return Redirect::back();
 

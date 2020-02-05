@@ -36,7 +36,8 @@ if(!function_exists('ParseTroops')){
         
         $i=0;
         for($x=$z+1;$x<count($parseStrings);$x++){
-            if(strpos(trim(strtoupper($parseStrings[$x])),'DAILY QUESTS')!==FALSE){
+            if(strpos(trim(strtoupper($parseStrings[$x])),'DAILY QUESTS')!==FALSE ||
+                strpos(trim($parseStrings[$x]),'Homepage Forum Links FAQ')!==FALSE){
                 break;
             }else{
                
@@ -48,10 +49,8 @@ if(!function_exists('ParseTroops')){
                 $i++;
                 
             }            
-        }
-        
-        //dd($village);
-        
+        }        
+        //dd($village);        
         
         $troops = array();
         

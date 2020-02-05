@@ -10,9 +10,27 @@ use Illuminate\Support\Facades\Redirect;
 
 use App\ArtList;
 
-class artifactLeaderController extends Controller
+class artifactCaptureController extends Controller
 {
     //
+    
+    public function hammerDisplay(){
+        
+        
+        return view('Plus.Artifacts.Capture.hammerDisplay');
+    }
+    
+    
+    public function hammerResult(Request $request){        
+        
+        if(Input::has('search')){
+            
+            
+            
+            dd($request);
+        }
+        
+    }
     
     public function captureDisplay(){
         

@@ -14,7 +14,7 @@
             		</div>
             		<div class="collapse" id="task" style="">
               			<div class="card card-body shadow">
-    						<form action="/defense/cfd/create" method="POST" class="col-md-10 mx-auto text-center">
+    						<form action="/defense/cfd/create" method="POST" class="col-md-10 mx-auto text-center" autocomplete="off">
         						{{ csrf_field() }}
         						<p class="my-2">
         							<strong>X: <input type="text" name="xCor" size="5" required> | Y: <input type="text" name="yCor" size="5" required></strong>

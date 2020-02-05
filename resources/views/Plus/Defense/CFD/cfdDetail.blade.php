@@ -21,7 +21,7 @@
                 @endforeach
         			<!-- ===============Defense task details =========================== -->
 					<table class="table mx-auto col-md-11 table-bordered text-center table-sm" style="background-color:#dbeef4;">
-						<form action="/defense/cfd/update" method="POST">
+						<form action="/defense/cfd/update" method="POST" autocomplete="off">
 							{{ csrf_field() }}
 							<tr>
 								<td class="py-2">

@@ -27,8 +27,7 @@
             						<th class="align-middle py-0 px-1" rowspan="2">Tiles</th>
             						<th class="align-middle py-0 px-1" rowspan="2">Fields</th>
             						<th class="py-0 px-1" colspan="4">Oasis</th>
-            						<th class="py-0 px-1" colspan="2">*Prod <img alt="wood" src="/images/x.gif" class="res all"></th>
-            						<th class="align-middle py-0" rowspan="2">Village Type</th>    						
+            						<th class="py-0 px-1" colspan="2">*Prod <img alt="wood" src="/images/x.gif" class="res all"></th> 						
             					</tr>
             					<tr>
             						<th class="py-0 px-1"><img alt="wood" src="/images/x.gif" class="res wood"></th>
@@ -43,7 +42,7 @@
                 				<tr>
                 					<td class="px-1"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village['X']}}&y={{$village['Y']}}" target="_blank">{{$village['NAME']}}</a></td>
                 					<td class="px-1"><input type="checkbox" name="{{$village['VID']}}_cap"  @if($village['CAP']!=null) checked @endif></td>                					
-                					<td class="px-1 small"><select name="{{$village['VID']}}_tiles">
+                					<td class="px-1 small"><select name="{{$village['VID']}}_tiles" style="border:1px">
         									<option value="4-4-4-6" @if($village['TILES']=='4-4-4-6') selected @endif>4-4-4-6</option>
 											<option value="5-4-3-6" @if($village['TILES']=='5-4-3-6') selected @endif>5-4-3-6</option>
 											<option value="5-3-4-6" @if($village['TILES']=='5-3-4-6') selected @endif>5-3-4-6</option>
@@ -58,8 +57,8 @@
 											<option value="1-1-1-15" @if($village['TILES']=='1-1-1-15') selected @endif>1-1-1-15</option>
         								</select> 
                 					</td>
-                					<td class="px-1 small"><input type="number" name="{{$village['VID']}}_field" min="0" max="21" style="width:3em" value="{{$village['FIELD']}}"></td>
-                					<td class="px-1 small"><select name="{{$village['VID']}}_wood" style="width: 4em">
+                					<td class="px-1 small"><input type="number" name="{{$village['VID']}}_field" min="0" max="21" style="width:3em; border:1px" value="{{$village['FIELD']}}"></td>
+                					<td class="px-1 small"><select name="{{$village['VID']}}_wood" style="width: 4em; border:1px">
         									<option value="0"  @if($village['WOOD']==0) selected @endif>0%</option>
         									<option value="25" @if($village['WOOD']==25) selected @endif>25%</option>
         									<option value="50" @if($village['WOOD']==50) selected @endif>50%</option>
@@ -69,7 +68,7 @@
         									<option value="150" @if($village['WOOD']==150) selected @endif>150%</option>
         								</select>
     								</td>
-                					<td class="px-1 small"><select name="{{$village['VID']}}_clay" style="width: 4em">
+                					<td class="px-1 small"><select name="{{$village['VID']}}_clay" style="width: 4em; border:1px">
         									<option value="0" @if($village['CLAY']==0) selected @endif>0%</option>
         									<option value="25" @if($village['CLAY']==25) selected @endif>25%</option>
         									<option value="50" @if($village['CLAY']==50) selected @endif>50%</option>
@@ -79,7 +78,7 @@
         									<option value="150" @if($village['CLAY']==150) selected @endif>150%</option>
         								</select>
     								</td>
-                					<td class="px-1 small"><select name="{{$village['VID']}}_iron" style="width: 4em">
+                					<td class="px-1 small"><select name="{{$village['VID']}}_iron" style="width: 4em; border:1px">
         									<option value="0" @if($village['IRON']==0) selected @endif>0%</option>
         									<option value="25" @if($village['IRON']==25) selected @endif>25%</option>
         									<option value="50" @if($village['IRON']==50) selected @endif>50%</option>
@@ -89,7 +88,7 @@
         									<option value="150" @if($village['IRON']==150) selected @endif>150%</option>
         								</select>
     								</td>
-                					<td class="px-1 small"><select name="{{$village['VID']}}_crop" style="width: 4em">
+                					<td class="px-1 small"><select name="{{$village['VID']}}_crop" style="width: 4em; border:1px">
         									<option value="0" @if($village['CROP']==0) selected @endif>0%</option>
         									<option value="25" @if($village['CROP']==25) selected @endif>25%</option>
         									<option value="50" @if($village['CROP']==50) selected @endif>50%</option>
@@ -101,17 +100,6 @@
     								</td>
                 					<td class="px-1 small">{{number_format($village['PROD'])}}</td>
                 					<td class="px-1 small">{{number_format($village['PROD']*1.25)}}</td>
-                					<td class="px-1 small"><select name="{{$village['VID']}}_type"  style="width: 8em">
-        									<option value="NONE" @if($village['TYPE']=='NONE') selected @endif>None</option>
-        									<option value="FEEDER" @if($village['TYPE']=='FEEDER') selected @endif>Feeder</option>
-        									<option value="SUPPORT" @if($village['TYPE']=='SUPPORT') selected @endif>Support</option>
-        									<option value="SCOUT" @if($village['TYPE']=='SCOUT') selected @endif>Scout</option>
-        									<option value="ANVIL" @if($village['TYPE']=='ANVIL') selected @endif>Anvil</option>
-        									<option value="HAMMER" @if($village['TYPE']=='HAMMER') selected @endif>Hammer</option>
-        									<option value="GHOST" @if($village['TYPE']=='GHOST') selected @endif>Ghost Hammer</option>
-        									<option value="WWH" @if($village['TYPE']=='WWH') selected @endif>WWK/WWR</option>
-        								</select>
-    								</td>
             					</tr>
         					@endforeach
             			</table>

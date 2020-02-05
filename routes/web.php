@@ -178,6 +178,20 @@ Route::get('/resource/{id}','Plus\Resources\LeaderResourceController@resourceTas
 Route::post('/resource/create','Plus\Resources\LeaderResourceController@createResourceTask');
 Route::post('/resource/update','Plus\Resources\LeaderResourceController@processResourceTask');	
 
+/* -------------------------------------------- Plus Scout Routes ---------------------------------------------------- */
+
+Route::get('/plus/reports','Plus\Reports\ReportsController@showPlusReports');
+Route::post('/plus/reports/add','Plus\Reports\ReportsController@addPlusReports');
+
+Route::get('/plus/ldrrpts','Plus\Reports\ReportsController@showLeaderReports');
+Route::get('/plus/ldrrpts/delete/{id}','Plus\Reports\ReportsController@deleteLeaderReports');
+
+Route::get('/plus/reports/hammers','Plus\Reports\ReportsController@showEnemyHammers');
+Route::post('/plus/reports/hammers/add','Plus\Reports\ReportsController@addEnemyHammer');
+Route::get('/plus/reports/hammers/delete/{id}','Plus\Reports\ReportsController@deleteEnemyHammer');
+
+Route::get('/plus/reports/scouts','Plus\PlusController@tdbRoute');
+
 /* -------------------------------------------- Plus Defense Routes ---------------------------------------------------- */
 
 /* -------------------- Plus member incoming Options -----------------------*/
@@ -187,6 +201,10 @@ Route::post('/plus/incoming/update','Plus\Defense\Incoming\IncomingController@up
 /* -------------------- Plus Leader incoming Options -----------------------*/
 Route::get('/defense/incomings','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomings');
 Route::get('/defense/incomings/list','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomingsList');
+
+Route::post('/defense/incomings/cfd','Plus\Defense\Incoming\LeaderIncomingController@createCFD');
+
+Route::get('/defense/attacker/{id}','Plus\Defense\Incoming\LeaderIncomingController@showAttacker');
 
 
 /* --------------- Plus group member CFD routes  --------------- */
@@ -252,8 +270,12 @@ Route::get('/artifacts','Plus\PlusController@tdbRoute')->name('ldrArt');
 //Route::get('/artifacts/schedule','Plus\Artifacts\artifactLeaderController@schedule');
 Route::get('/artifacts/schedule','Plus\PlusController@tdbRoute');
 
-Route::get('/artifacts/capture','Plus\Artifacts\artifactLeaderController@captureDisplay');
-Route::post('/artifacts/capture','Plus\Artifacts\artifactLeaderController@captureResult');
+
+Route::get('/artifacts/hammers','Plus\Artifacts\artifactCaptureController@hammerDisplay');
+Route::post('/artifacts/hammers','Plus\Artifacts\artifactCaptureController@hammerResult');
+
+Route::get('/artifacts/capture','Plus\Artifacts\artifactCaptureController@captureDisplay');
+Route::post('/artifacts/capture','Plus\Artifacts\artifactCaptureController@captureResult');
 
 
 

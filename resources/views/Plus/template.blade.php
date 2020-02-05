@@ -74,6 +74,7 @@
                 <a href="/plus/defense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Defense Tasks</a>
                 <a href="/plus/offense" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Offense Tasks</a>
                 <a href="/plus/resource" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Resource Tasks</a>
+                <a href="/plus/reports" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Group Reports</a>
             </div>       
         @if(Session::get('plus.leader')==1)
             <!-- =================================== Plus Leader/Owner menu ================================== -->
@@ -85,7 +86,19 @@
                     <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rankings</a>
                 </div>
             </div>
-        @endif   
+        @endif  
+        @if(Session::get('plus.leader')==1 or Session::get('plus.scout')==1 or Session::get('plus.defense')==1 or Session::get('plus.offense')==1
+        		or Session::get('plus.resources')==1 or Session::get('plus.artifact')==1 or Session::get('plus.wonder')==1) 
+            <!-- =================================== Scouts menu ================================== -->
+            <div class="list-group text-center text-white mt-1">
+                <a class="list-group-item py-1 bg-dark h4"  onclick="toggleMenu('scout')">Reports Menu <i class="fas fa-angle-down"></i></a>
+                <div id="scout" style="display:none">
+                    <a href="/plus/ldrrpts" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Reports</a>
+                    <a href="/plus/reports/hammers" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Hammer Tracking</a>
+                    <a href="/plus/reports/scouts" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Scout Requests</a>   
+                </div>             
+            </div>
+  		@endif 
         @if(Session::get('plus.defense')==1) 
             <!-- =================================== Defense menu ================================== -->
             <div class="list-group text-center text-white mt-1">
@@ -124,7 +137,8 @@
                 <a class="list-group-item py-1 bg-dark h4"  onclick="toggleMenu('artifact')">Artifacts Menu <i class="fas fa-angle-down"></i></a> 
                 <div id="artifact" style="display:none">
                     <a href="{{route('ldrArt')}}" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Overview</a>                
-                    <a href="{{route('ldrArt')}}/schedule" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Schedule</a>
+                    <a href="{{route('ldrArt')}}/schedule" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Rotation</a>
+                    <a href="{{route('ldrArt')}}/hammers" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Artifact Hammers</a>
                     <a href="{{route('ldrArt')}}/capture" class="list-group-item py-1 list-group-item-action bg-info text-white h5">Capture Plan</a>
                 </div>
             </div> 

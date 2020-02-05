@@ -27,7 +27,7 @@ class CreateTroopsTable extends Migration
             $table->integer('unit07')->default(0);      $table->integer('unit08')->default(0);
             $table->integer('unit09')->default(0);      $table->integer('unit10')->default(0);
             $table->integer('upkeep')->default(0);      $table->integer('Tsq')->default(0);
-            $table->enum('type',['OFFENSE','DEFENSE','SCOUT','SUPPORT','ARTIFACT','NONE'])->default('NONE');
+            $table->enum('type',['OFFENSE','DEFENSE','SCOUT','SUPPORT','GHOST','WWH','NONE'])->default('NONE');
             $table->timestamps();
         });
     }

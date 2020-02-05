@@ -35,7 +35,7 @@
             	@foreach($villages as $village)
             		<tr class="">
             			<td rowspan="2" class="px-1 py-1"><a href="{{route('findPlayer')}}/{{$village['PLAYER']}}/1" target="_blank">{{$village['PLAYER']}}</a></td>
-            			<td rowspan="2" class="px-1 py-1"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$village['X']}}&y={{$village['Y']}}" target="_blank">{{$village['VILLAGE']}}</a></td>
+            			<td rowspan="2" class="px-1 py-1"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village['X']}}&y={{$village['Y']}}" target="_blank">{{$village['VILLAGE']}}</a></td>
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][0]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][0]['IMAGE']}}"></td>
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][1]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][1]['IMAGE']}}"></td>
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][2]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][2]['IMAGE']}}"></td>

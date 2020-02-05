@@ -37,7 +37,6 @@ class CreateIncomingsTable extends Migration
             $table->string('att_y');
             $table->string('landTime');
             $table->string('noticeTime');
-            $table->integer('hero_xp')->nullable();
             $table->string('hero_helm')->nullable();
             $table->string('hero_chest')->nullable();
             $table->string('hero_boots')->nullable();

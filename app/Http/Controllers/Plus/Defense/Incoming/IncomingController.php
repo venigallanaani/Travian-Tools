@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Diff;
 use App\Incomings;
 use App\Account;
+use App\IncTrack;
 
 class IncomingController extends Controller
 {
@@ -21,20 +22,12 @@ class IncomingController extends Controller
         
         session(['title'=>'Plus']);
         
-        $drafts=null; $owaves=array(); $swaves = array();
+        $owaves=array(); $swaves = array();
         $account=Account::where('server_id',$request->session()->get('server.id'))
                         ->where('user_id',Auth::user()->id)->first();
         
         $uid=$account->uid;
         $account_id=$account->account_id;
-        
-        $drafts=Incomings::where('server_id',$request->session()->get('server.id'))
-                            ->where('plus_id',$request->session()->get('plus.plus_id'))
-                            ->where(function($query) use ($account_id, $uid){
-                                        $query->where('uid','=',$account_id)
-                                            ->orWhere('def_uid','=',$uid);
-                            })                            
-                            ->where('status','DRAFT')->orderBy('landTime','asc')->get();
         
         $saves=Incomings::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -49,8 +42,9 @@ class IncomingController extends Controller
             }
         }
                             
-                            
-        return view("Plus.Defense.Incomings.enterIncoming")->with(['drafts'=>$drafts])
+        //dd($owaves);
+        
+        return view("Plus.Defense.Incomings.enterIncoming")
                         ->with(['owaves'=>$owaves])->with(['swaves'=>$swaves]);
         
     }
@@ -77,7 +71,7 @@ class IncomingController extends Controller
                 $uid = Account::where('server_id',$request->session()->get('server.id'))
                                 ->where('user_id',Auth::user()->id)
                                 ->pluck('uid')->first();
-                
+                //dd($uid);
             // get Attackers details
                 $att = Diff::where('server_id',$request->session()->get('server.id'))
                                 ->where('x',$inc['a_coords'][0])->where('y',$inc['a_coords'][1])->first();
@@ -89,7 +83,7 @@ class IncomingController extends Controller
             // Determine land time of the attack
                 date_default_timezone_set($request->session()->get('timezone'));                
                 
-                if(Carbon::now()->format('H:i:s')>$inc['landTime']){                                        
+                if(Carbon::now()->format('H:i:s')>$inc['landTime']){ 
                     $landTime=new Carbon(Carbon::tomorrow()->format('Y-m-d').$inc['landTime']);
                 }else{
                     $landTime=new Carbon(Carbon::now()->format('Y-m-d').$inc['landTime']);
@@ -114,6 +108,7 @@ class IncomingController extends Controller
                     $wave->server_id=$request->session()->get('server.id');
                     $wave->plus_id=$request->session()->get('plus.plus_id');
                     $wave->uid=$uid;
+                    $wave->att_id=$att->uid.'_'.$att->vid;
                     $wave->def_uid=$def->uid;
                     $wave->def_player=$def->player;
                     $wave->def_village=$def->village;
@@ -131,7 +126,7 @@ class IncomingController extends Controller
                     $wave->att_y=$att->y;
                     $wave->landTime=$landTime;
                     $wave->noticeTime=$noticeTime;
-                    $wave->status='DRAFT';
+                    $wave->status='SAVED';
                     $wave->hero='No Change';
                     $wave->deleteTime=strtotime($landTime);
                     $wave->ldr_sts='New';
@@ -145,6 +140,7 @@ class IncomingController extends Controller
                         $wave->server_id=$request->session()->get('server.id');
                         $wave->plus_id=$request->session()->get('plus.plus_id');
                         $wave->uid=$uid;
+                        $wave->att_id=$att->uid.'_'.$att->vid;
                         $wave->def_uid=$def->uid;
                         $wave->def_player=$def->player;
                         $wave->def_village=$def->village;
@@ -162,7 +158,7 @@ class IncomingController extends Controller
                         $wave->att_y=$att->y;
                         $wave->landTime=$landTime;
                         $wave->noticeTime=$noticeTime;
-                        $wave->status='DRAFT';
+                        $wave->status='SAVED';
                         $wave->hero='No Change';
                         $wave->deleteTime=strtotime($landTime);
                         $wave->ldr_sts='New';
@@ -177,37 +173,99 @@ class IncomingController extends Controller
             return Redirect::To('/plus/incoming');           
     }
     
-    public function updateIncoming(Request $request){
-        
-        $incId=Input::get('incId');
-        
+    public function updateIncoming(Request $request){       
+                
+        date_default_timezone_set($request->session()->get('timezone'));
+        $helm = Input::get('helm');     $chest=Input::get('chest');
+        $boot = Input::get('boot');     $right=Input::get('right');
+        $left = Input::get('left');
+    
         $accData = null;
-        if(!Input::get('accData')==null){
-            $accData = ParseAccount(Input::get('accData'));
+        if(Input::get('account')!==null){
+            $accData = ParseAccount(Input::get('account'));
+            //dd($accData);
+        }
+        if($accData==null){
+            $accData['ATTACK']=0;
+            $accData['DEFEND']=0;
+            $accData['HERO']=0;
         }
         
-//dd($accData);
-
-        $account_id=Account::where('server_id',$request->session()->get('server.id'))
-                        ->where('user_id',Auth::user()->id)->pluck('account_id')->first();
+        $account=Account::where('server_id',$request->session()->get('server.id'))
+                    ->where('user_id',Auth::user()->id)->first();
         
-        $incoming=Incomings::where('server_id',$request->session()->get('server.id'))
+    // Updating the incomings table
+        if(Input::has('wave')){
+            $incId=Input::get('wave');
+            
+            
+            $incoming=Incomings::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('incid',$incId)->where('status','DRAFT')->first();
+                        ->where('incid',$incId)->first();
+            
+            $incoming->uid=$account->uid;
+            $incoming->hero_xp=$accData['HERO'];
+            $incoming->hero_helm=$helm;
+            $incoming->hero_chest=$chest;
+            $incoming->hero_boots=$boot;
+            $incoming->hero_right=$right;
+            $incoming->hero_left=$left;
+            $incoming->status='SAVED';
+            $incoming->comments=Input::get('comments');
+            
+            $incoming->save();
+        }
         
-        $incoming->uid=$account_id;
-        $incoming->hero_xp=Input::get('hxp');
-        $incoming->hero_helm=Input::get('helm');
-        $incoming->hero_chest=Input::get('chest');
-        $incoming->hero_boots=Input::get('boot');
-        $incoming->hero_right=Input::get('right');
-        $incoming->hero_left=Input::get('left');
-        $incoming->comments=Input::get('comments');
-        $incoming->status='SAVED';
+    //Updating the incomings tracker table
+        if(Input::has('att')){
+            $att_id = Input::get('att');
+        }else{
+            $att_id = $incoming->att_id;
+        }        
+        $track = IncTrack::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('att_id',$att_id)->orderBy('save_time','desc')->first();
         
-        $incoming->save(); 
+        $new = new IncTrack;
         
-        return Redirect::To('/plus/incoming');
+        $new->server_id = $request->session()->get('server.id');
+        $new->plus_id = $request->session()->get('plus.plus_id');
+        $new->att_id = $att_id;
+        $new->helm = $helm;
+        $new->chest = $chest;
+        $new->right = $right;
+        $new->left = $left;
+        $new->boots = $boot;
+        $new->attack = $accData['ATTACK'];
+        $new->defense = $accData['DEFEND'];
+        $new->exp = $accData['HERO'];
+        $new->save_time = Carbon::now()->format('Y-m-d H:i:s');
+        $new->save_by = Auth::user()->name; 
+        
+        if($track != null){
+            if($track->helm != $helm && $helm!=null && $track->helm != null){
+                $new->chest_change = 'YES';
+            }
+            if($track->chest != $chest && $chest!=null && $track->chest !=null){
+                $new->chest_change = 'YES';
+            }
+            if($track->boots != $boot && $boot!=null && $track->boots != null){
+                $new->boots_change = 'YES';
+            }
+            if($track->right != $right && $right!=null && $track->right != null){
+                $new->right_change = 'YES';
+            }
+            if($track->left != $left && $left!=null && $track->left != null){
+                $new->left_change = 'YES';
+            }
+            if($track->exp != $accData['HERO'] && $accData['HERO']!=0 && $track->exp !=0){
+                $new->hero_change = 'YES';
+            }
+        }
+                
+        $new->save();
+
+        return Redirect::back();
     }
     
 }

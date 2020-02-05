@@ -18,7 +18,7 @@
 			   @endphp
 					<table class="table mx-auto col-md-8 table-borderless text-left">
 						<tr>
-							<td class="py-1"><strong>Target: <a href="https://{{Session::get('server.url')}}/karte.php?x={{$task['x']}}&y={{$task['y']}}" target="_blank">{{$task['player']}} ({{$task['village']}})</a></strong></td>
+							<td class="py-1"><strong>Target: <a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task['x']}}&y={{$task['y']}}" target="_blank">{{$task['player']}} ({{$task['village']}})</a></strong></td>
 							<td class="py-1"><strong>Defense </strong>(<img alt="upkeep" src="/images/x.gif" class="res upkeep">): {{number_format($task['def_remain'])}}</td>							
 						</tr>
 						<tr>
@@ -54,7 +54,7 @@
                 			</thead>
                 		@foreach($travels as $travel)
                 			<tr>
-                				<td class="px-0 py-1 font-weight-bold"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$travel['X']}}&y={{$travel['Y']}}" target="_blank">{{$travel['VILLAGE']}}</a></td>
+                				<td class="px-0 py-1 font-weight-bold"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$travel['X']}}&y={{$travel['Y']}}" target="_blank">{{$travel['VILLAGE']}}</a></td>
                 				<td class="px-0 py-1">{{number_format($travel['TROOPS'][0])}}</td>
                 				<td class="px-0 py-1">{{number_format($travel['TROOPS'][1])}}</td>
                 				<td class="px-0 py-1">{{number_format($travel['TROOPS'][2])}}</td>
@@ -77,7 +77,7 @@
 
 				<!-- ================ Defense Troops Input data ========================== -->
 					
-					<form method="post" action="/plus/defense/{{$task->task_id}}">
+					<form method="post" action="/plus/defense/{{$task->task_id}}" autocomplete="off">
 						{{ csrf_field() }}
 						<div class="py-2 px-1 text-center rounded" style="background-color:#dbeef4" >
     						<p class="h5 text-info"><strong>Enter Your Defense</strong></p>

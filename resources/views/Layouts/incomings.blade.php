@@ -16,8 +16,8 @@
                         <a href="{{route('servers')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
-            @if(Session::has('server'))
-            	<p class="h6 d-inline-block px-2" data-toggle="tooltip" data-placement="top" title="Server Time"><span id="clock"></span></p>
+            @if(Session::has('plus'))
+            	<p class="h6 d-inline-block px-2" data-toggle="tooltip" data-placement="top" title="Group Time"><span id="clock">...</span></p>
         	@endif
             </div>
         </div>
@@ -62,7 +62,7 @@
 		</div>		
 	</div>
 	@else
-    <div class="container">
+    <div class="col-7 col-md-7 mx-auto">
         
         @yield('body')
 
@@ -73,4 +73,16 @@
 @endauth
 
 
+	@push('scripts')
+		<script type="text/javascript" src="{{ asset('js/moment.js') }}"></script> 
+        <script type="text/javascript" src="{{ asset('js/moment-timezone-with-data-2012-2022.min.js') }}"></script> 
+        <script>        	
+            $(function(){                
+    	  		setInterval(function(){
+        	  		var now = moment().tz("{{Session::get('timezone')}}");
+    		 		$('#clock').html(now.format('YYYY-MM-DD HH:mm:ss'));    		 		
+    	  		},1000);
+        	});
+         </script>
+    @endpush
 @endsection

@@ -88,9 +88,6 @@
     					@endforeach
         			</table>
         		</div>
-        		<div class="col-md-8 mx-auto my-5">
-        			<a href="{{route('accountDelete')}}"><button class="btn btn-warning btn-lg">Delete Account</button></a>
-        		</div>
 			</div>			
 		</div>
 	

@@ -15,7 +15,7 @@
         @endif
     @endforeach		
     		<div class="text-center my-2">	
-    			<form action="/defense/search" method="POST">
+    			<form action="/defense/search" method="POST" autocomplete="off">
     				{{ csrf_field() }}
     				<p class="h5 py-1"><strong>X: <input name="xCor" type="text" size="5" required value="0"> | 
 							Y: <input name="yCor" type="text" size="5" required value="0"></strong></p>

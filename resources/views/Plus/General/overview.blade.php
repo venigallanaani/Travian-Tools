@@ -48,17 +48,7 @@
 					<p>No <span class="text-info"><strong>Resource tasks</strong></span> are currently active</p>
 				@endif
             	</div>
-            </div>  
-            <br>
-            <div class="card mx-auto">
-            	<div class="card-header py-2 text-info h4">
-            		<strong>Group Options</strong>
-            	</div>
-            	<div class="card-body px-5 h5">
-            		<a href="{{route('plusLeave')}}"><button class="btn btn-info p-3"><strong>Leave Plus Group</strong></button></a>
-            	</div>
-            	            
-            </div>          
+            </div>           
         </div>
     </div>
     	

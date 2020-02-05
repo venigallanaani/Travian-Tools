@@ -12,7 +12,7 @@
         			
         			<!-- ===============Defense task details =========================== -->
 					<table class="table mx-auto col-md-11 table-bordered text-center small" style="background-color:#dbeef4;">
-						<form action="/resource/update" method="POST">
+						<form action="/resource/update" method="POST" autocomplete="off">
 							{{ csrf_field() }}
 							<tr>
 								<td class="py-2">

@@ -9,7 +9,7 @@
         <div class="text-center p-5 mx-auto">
             <table>
             	<tr>
-            		<td colspan="2" class="h5">Are you sure you want to leave the plus group?</td>
+            		<td colspan="2" class="h5">Are you sure you want to delete the Travian Tools account?</td>
             	</tr>
             	<tr>
             		<td class="py-3">

@@ -15,7 +15,7 @@
         @endif
     @endforeach		
     		<div class="text-center my-2">	
-    			<form action="/offense/search" method="POST">
+    			<form action="/offense/search" method="POST" autocomplete="off">
     				{{ csrf_field() }}
     				<table class="text-center mx-auto">
     					<tr>
@@ -27,7 +27,7 @@
 						<tr>
 							<td colspan="2">
 								<p class="h5 py-1"><strong>Offense (<img alt="" src="/images/x.gif" class="res upkeep">): 
-    								<input name="offNeed" type="text" size="10" required value="0"></strong></p>
+    								<input name="offNeed" type="number" style="width:7em" required min="0"></strong></p>
 							</td>
 						</tr>
 						<tr>
