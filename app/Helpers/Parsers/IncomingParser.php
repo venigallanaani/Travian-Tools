@@ -28,6 +28,7 @@ if(!function_exists('ParseIncoming')){
                 if(strpos(strtoupper($incStrs[$y]), ' RAIDS ')!==FALSE){ $type='RAID';   }                
                 
             //Fetching the attacker coordinates
+                //$aCoords = null;
                 $aCoords = GetCoords(explode("\t", $incStrs[$y+1])[0]);
 //dd($coords);
 
@@ -78,8 +79,8 @@ if(!function_exists('ParseIncoming')){
                     if(strtoupper($d_village)==strtoupper(trim($incStrs[$z]))){                    
 //dd($incStrs[$z+1]);
                         $dCoords = GetCoords(trim($incStrs[$z+1])); 
+                        
                         $da_village = trim($incStrs[$z]);
-//dd($dCoords);
                         $z=count($incStrs);
                     }
                 }
@@ -121,6 +122,7 @@ if(!function_exists('ParseIncoming')){
                 }                
                 $result[$j]['d_village']=$d_village;
                 $result[$j]['d_coords']=$dCoords;
+                
             }
         }
         
@@ -133,21 +135,21 @@ if(!function_exists('ParseIncoming')){
 if(!function_exists('GetCoords')){
 // Calculates the coords from the string (x|y)
     function GetCoords(String $incStr){
+          
+        $result=array(); 
+        $incStr = explode("|", trim($incStr)); 
         
-        $result=array(); $cor='';
-        
-        $cor=strstr(trim($incStr),'|',TRUE);
-        $result[0]= preg_replace('/[^ \w-]/', '', trim($cor));
-        if(strlen($cor)>strlen($result[0])+10){
-            $result[0]=-($xCor);
+        $result[0]= preg_replace('/[^ \w-]/', '', trim($incStr[0]));
+        //dd($result[0]);
+        if(strlen(trim($incStr[0]))>strlen($result[0])+10){
+            $result[0]=-($result[0]);
+        }        
+
+        $result[1]= trim(preg_replace('/[^ \w-]/', '', trim($incStr[1])));
+        if(strlen(trim($incStr[1]))>strlen($result[1])+10){
+            $result[1]=-($result[1]);
         }
-        
-        $cor=substr(strstr(trim($incStr),'|'),1,-1);
-        $result[1]= trim(preg_replace('/[^ \w-]/', '', trim($cor)));
-        if(strlen($cor)>strlen($result[1])+10){
-            $result[1]=-($yCor);
-        }
-        
+    //dd($result);
         return $result;
     }
 }

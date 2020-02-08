@@ -45,7 +45,7 @@
                         							<option value="RR4" @if($attack['right'] =='RR4') selected @endif>Imperatoris Sword</option>
                         							<option value="RR5" @if($attack['right'] =='RR5') selected @endif>Caesaris Lance</option>
                     							@endif
-                    							@if($incomings[0]['att_tribe']=='GUAL')
+                    							@if($incomings[0]['att_tribe']=='GAUL')
                         							<option value="RG1" @if($attack['right'] =='RG1') selected @endif>Phalanx Spear</option>
                         							<option value="RG2" @if($attack['right'] =='RG2') selected @endif>Swordsman Sword</option>
                         							<option value="RG3" @if($attack['right'] =='RG3') selected @endif>Theutates Bow</option>
