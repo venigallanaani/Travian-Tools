@@ -11,163 +11,97 @@ if(!function_exists('ParseTroops')){
         $array = preg_split('/$\R?^/m', $troopsStr);
         
         $parseStrings = array();
-        $i=0;
+        $i=0;     $x=0;     $index=0;
         foreach($array as $string){
             if(strlen(trim($string))>0){
-                $parseStrings[$i]=$string;
+                $parseStrings[$i]=trim($string);
                 $i++;
             }
         }
-        //dd($parseStrings);
+//dd($parseStrings);
         
-        $z=0;
-        $village = array();
+        $troops = array();        $village = array();       $units = array();
         
-        for($x=0;$x<count($parseStrings);$x++){
-            if(strpos(strtoupper($parseStrings[$x]),'LOYALTY:')!==FALSE){
-                for($y=$x; $y<count($parseStrings);$y++){
-                    if(strpos(strtoupper($parseStrings[$y]),'VILLAGES')!==FALSE){
-                        $z=$y;
-                        break;
-                    }
-                }
-            }
-        }
-        
-        $i=0;
-        for($x=$z+1;$x<count($parseStrings);$x++){
-            if(strpos(trim(strtoupper($parseStrings[$x])),'DAILY QUESTS')!==FALSE ||
-                strpos(trim($parseStrings[$x]),'Homepage Forum Links FAQ')!==FALSE){
-                break;
-            }else{
-               
-                $village[$i]['NAME']=trim($parseStrings[$x]);
-                $x++;
-                $str=strstr(($parseStrings[$x]),'|',TRUE);
-                $village[$i]['XCOR']=$str;
-                $village[$i]['YCOR']=substr(strstr($parseStrings[$x],'|'),1,-1);
-                $i++;
-                
-            }            
-        }        
-        //dd($village);        
-        
-        $troops = array();
-        
-        $index = 0;
         for($i=0; $i<count($parseStrings); $i++){
             if(strpos(strtoupper($parseStrings[$i]), 'SMITHY')!==FALSE
                 && strpos(strtoupper($parseStrings[$i+1]), 'VILLAGE')!==FALSE){
-                    for($j=$i+2; $j<$j+count($village); $j++){
-                        if(strpos($parseStrings[$j], 'Sum')!==FALSE
-                            || strlen($parseStrings[$j]) == 0){
-                                break;
-                        }else {
-                            $unitList = explode("\t", $parseStrings[$j]);
-                            //removing the first and last element of the array (village name & hero count)
-                            for($k=0;$k<count($unitList)-2;$k++){
-                                $units[$k] = intval($unitList[$k+1]);
-                            }
-                        }
-                        $xCor= preg_replace('/[^ \w-]/', '', $village[$index]['XCOR']);
-                        if(strlen($village[$index]['XCOR'])>strlen($xCor)+10){
-                            $xCor=-$xCor;
-                        }
-                        $yCor= preg_replace('/[^ \w-]/', '', $village[$index]['YCOR']);
-                        if(strlen($village[$index]['YCOR'])>strlen($yCor)+10){
-                            $yCor=-$yCor;
-                        }
+                    
+                    for($x=$i+2; $x<count($parseStrings); $x++){
                         
-                        $troops[$index] = array(
-                            "NAME"=>trim($village[$index]['NAME']),
-                            "XCOR" => trim($xCor),
-                            "YCOR"=>trim($yCor),
-                            "UNITS"=>$units
-                        );
-                        $index++;
-                    }
-                    break;
-            }
-        }
-        //dd($troops);
-        return $troops;
-    }
-}  
-
-
-if(!function_exists('ParseTroopsTemp')){
-    
-    function ParseTroopsTemp($troopsStr) {
-        
-        //======================================================================================================
-        //                      Parses the input troops string into an array
-        //======================================================================================================
-        
-        $parseStrings = preg_split('/$\R?^/m', $troopsStr);
-        
-        $emptyString = FALSE;
-        $z=0;
-        $village = array();
-        for($x=0;$x<count($parseStrings);$x++){
-            if(strpos($parseStrings[$x],'Loyalty:')!==FALSE
-                && strpos($parseStrings[$x+2],'Villages')!==FALSE){
-                    for($y=$x+3;$y<count($parseStrings);$y++){
-                        if(strlen(trim($parseStrings[$y])) == 0){
-                            if($emptyString){
-                                break;
-                            }
+                        //$list = explode('',$parseStrings[$x]);
+                        $list = preg_split('/\s+/', $parseStrings[$x]);
+                        if(count($list)<10){
+                            $i=$i+$index;
+                            array_pop($troops);
+                            break;
+                            
                         }else{
-                            $emptyString = TRUE;
-                            $village[$z]['NAME']=$parseStrings[$y];
-                            $y++;
-                            $str=strstr(($parseStrings[$y]),'|',TRUE);
-                            $village[$z]['XCOR']=$str;
-                            $village[$z]['YCOR']=substr(strstr($parseStrings[$y],'|'),1,-1);
-                            $z++;
+                            
+                            $units[0]=trim($list[1]);       $units[5]=trim($list[6]);
+                            $units[1]=trim($list[2]);       $units[6]=trim($list[7]);
+                            $units[2]=trim($list[3]);       $units[7]=trim($list[8]);
+                            $units[3]=trim($list[4]);       $units[8]=trim($list[9]);
+                            $units[4]=trim($list[5]);       $units[9]=trim($list[10]);
+                            
+                            $troops[$index]['NAME']=trim($list[0]);
+                            $troops[$index]['UNITS']=$units;
+                            $index++;
                         }
                     }
+                    
             }
-        }
-        
-        $troops = array();
-        
-        $index = 0;
-        for($i=0; $i<count($parseStrings); $i++){
-            if(strpos($parseStrings[$i], 'Smithy')!==FALSE
-                && strpos($parseStrings[$i+1], 'Village')!==FALSE){
-                    for($j=$i+2; $j<$j+count($village); $j++){
-                        if(strpos($parseStrings[$j], 'Sum')!==FALSE
-                            || strlen($parseStrings[$j]) == 0){
-                                break;
-                        }else {
-                            $unitList = explode("\t", $parseStrings[$j]);
-                            //removing the first and last element of the array (village name & hero count)
-                            for($k=0;$k<count($unitList)-2;$k++){
-                                $units[$k] = intval($unitList[$k+1]);
-                            }
-                        }
-                        $xCor= preg_replace('/[^ \w-]/', '', $village[$index]['XCOR']);
-                        if(strlen($village[$index]['XCOR'])>strlen($xCor)+10){
-                            $xCor=-$xCor;
-                        }
-                        $yCor= preg_replace('/[^ \w-]/', '', $village[$index]['YCOR']);
-                        if(strlen($village[$index]['YCOR'])>strlen($yCor)+10){
-                            $yCor=-$yCor;
-                        }
+            
+            if(strpos(strtoupper($parseStrings[$i]),'LOYALTY:')!==FALSE
+                && strpos(strtoupper($parseStrings[$i+1]),'VILLAGES')!==FALSE){
+                    $index=0;   $y=$i+2;
+                    while($index<count($troops)){
                         
-                        $troops[$index] = array(
-                            "NAME"=>trim($village[$index]['NAME']),
-                            "XCOR" => trim($xCor),
-                            "YCOR"=>trim($yCor),
-                            "UNITS"=>$units
-                        );
+                        $list = explode(' ',trim($parseStrings[$y]));                           //dd($list);            
+                        
+                        if(count($list)>1){
+                            $coords = GetCoords(trim($list[1]));
+                        }else{
+                            $y++;
+                            $coords = GetCoords(trim($parseStrings[$y]));                            
+                        }
+//dd($coords);          
+                        $troops[$index]['XCOR']=$coords[0];
+                        $troops[$index]['YCOR']=$coords[1];
+                        $y++;
                         $index++;
                     }
-                    break;
-            }
+
+                }
+
+      
         }
-        return $troops;
+//dd($troops);  
+    return $troops;
     }
-}  
+}
+
+
+if(!function_exists('GetCoords')){
+    // Calculates the coords from the string (x|y)
+    function GetCoords(String $incStr){
+        
+        $result=array();
+        $incStr = explode("|", trim($incStr));
+        
+        $result[0]= preg_replace('/[^ \w-]/', '', trim($incStr[0]));
+        //dd($result[0]);
+        if(strlen(trim($incStr[0]))>strlen($result[0])+10){
+            $result[0]=-($result[0]);
+        }
+        
+        $result[1]= trim(preg_replace('/[^ \w-]/', '', trim($incStr[1])));
+        if(strlen(trim($incStr[1]))>strlen($result[1])+10){
+            $result[1]=-($result[1]);
+        }
+        //dd($result);
+        return $result;
+    }
+}
+
 
 ?>
