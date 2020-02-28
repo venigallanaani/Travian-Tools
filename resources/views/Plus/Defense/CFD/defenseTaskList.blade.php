@@ -47,7 +47,7 @@
 								else{$bgcolor ='#e6e6e6';	}
 								
 							@endphp
-    						<tr class="small" style="background-color:{{$bgcolor}};">
+    						<tr style="background-color:{{$bgcolor}};">
     							<td><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>

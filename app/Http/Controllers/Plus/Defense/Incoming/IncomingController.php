@@ -32,6 +32,7 @@ class IncomingController extends Controller
         $saves=Incomings::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
                             ->where('def_uid',$account->uid)
+                            //->where('deleteTime','>',strtotime(Carbon::now()))
                             ->where('status','SAVED')->orderBy('landTime','asc')->get();                        
         
         foreach($saves as $wave){
@@ -173,98 +174,87 @@ class IncomingController extends Controller
             return Redirect::To('/plus/incoming');           
     }
     
-    public function updateIncoming(Request $request){       
-                
+    public function updateIncoming(Request $request){
+        
         date_default_timezone_set($request->session()->get('timezone'));
-        $helm = Input::get('helm');     $chest=Input::get('chest');
-        $boot = Input::get('boot');     $right=Input::get('right');
-        $left = Input::get('left');
-    
+        
         $accData = null;
-        if(Input::get('account')!==null){
-            $accData = ParseAccount(Input::get('account'));
-            //dd($accData);
-        }
-        if($accData==null){
+        if(Input::get('account')!=null){
+            $accData = ParseAccountHTML(Input::get('account'));
+            
+            if($accData==null){
+                Session::flash('danger','Cannot parse the data, please try again');
+            }
+        }else{
+            $accData['HERO']=0;
             $accData['ATTACK']=0;
             $accData['DEFEND']=0;
-            $accData['HERO']=0;
+            $accData['IMAGE']='N/A';
         }
+        
         
         $account=Account::where('server_id',$request->session()->get('server.id'))
                     ->where('user_id',Auth::user()->id)->first();
         
-    // Updating the incomings table
+        // Updating the incomings table
         if(Input::has('wave')){
-            $incId=Input::get('wave');
-            
+            $incId=Input::get('wave');            
             
             $incoming=Incomings::where('server_id',$request->session()->get('server.id'))
-                        ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('incid',$incId)->first();
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('incid',$incId)->first();
             
             $incoming->uid=$account->uid;
             $incoming->hero_xp=$accData['HERO'];
-            $incoming->hero_helm=$helm;
-            $incoming->hero_chest=$chest;
-            $incoming->hero_boots=$boot;
-            $incoming->hero_right=$right;
-            $incoming->hero_left=$left;
+            $incoming->hero_attack=$accData['ATTACK'];
+            $incoming->hero_defense=$accData['DEFEND'];
+            $incoming->hero_image=$accData['IMAGE'];
             $incoming->status='SAVED';
             $incoming->comments=Input::get('comments');
             
             $incoming->save();
         }
         
-    //Updating the incomings tracker table
+        //Updating the incomings tracker table
         if(Input::has('att')){
             $att_id = Input::get('att');
         }else{
             $att_id = $incoming->att_id;
-        }        
+        }
         $track = IncTrack::where('server_id',$request->session()->get('server.id'))
-                        ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('att_id',$att_id)->orderBy('save_time','desc')->first();
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('att_id',$att_id)->orderBy('save_time','desc')->first();
         
         $new = new IncTrack;
         
         $new->server_id = $request->session()->get('server.id');
         $new->plus_id = $request->session()->get('plus.plus_id');
         $new->att_id = $att_id;
-        $new->helm = $helm;
-        $new->chest = $chest;
-        $new->right = $right;
-        $new->left = $left;
-        $new->boots = $boot;
         $new->attack = $accData['ATTACK'];
         $new->defense = $accData['DEFEND'];
         $new->exp = $accData['HERO'];
+        $new->image = $accData['IMAGE'];
         $new->save_time = Carbon::now()->format('Y-m-d H:i:s');
-        $new->save_by = Auth::user()->name; 
+        $new->save_by = Auth::user()->name;
         
         if($track != null){
-            if($track->helm != $helm && $helm!=null && $track->helm != null){
-                $new->chest_change = 'YES';
+            if($track->attack != $accData['ATTACK'] && $accData['ATTACK']!=0 && $track->attack!=0){
+                $new->attack_change = $accData['ATTACK']-$track->attack;
             }
-            if($track->chest != $chest && $chest!=null && $track->chest !=null){
-                $new->chest_change = 'YES';
+            if($track->defense != $accData['DEFEND'] && $accData['DEFEND']!=0 && $track->defense!=0){
+                $new->defense_change = $accData['DEFEND']-$track->defense;
             }
-            if($track->boots != $boot && $boot!=null && $track->boots != null){
-                $new->boots_change = 'YES';
+            if($track->exp != $accData['HERO'] && $accData['HERO']!=0 && $track->exp!=0){
+                $new->exp_change = $accData['HERO']-$track->exp;
             }
-            if($track->right != $right && $right!=null && $track->right != null){
-                $new->right_change = 'YES';
-            }
-            if($track->left != $left && $left!=null && $track->left != null){
-                $new->left_change = 'YES';
-            }
-            if($track->exp != $accData['HERO'] && $accData['HERO']!=0 && $track->exp !=0){
-                $new->hero_change = 'YES';
+            if($track->image != $accData['IMAGE'] && $accData['IMAGE']!='N/A' && $track->image!='N/A'){
+                $new->image_change = 'YES';
+                $new->image_old = $track->image;
             }
         }
-                
+        
         $new->save();
-
+        
         return Redirect::back();
     }
     

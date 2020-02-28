@@ -33,10 +33,13 @@
 			</thead>
 			@foreach($incomings as $index=>$incoming)
 				@php
-					if($incoming['ldr_sts']=='Attack'){ $color = 'table-danger';	}
-					elseif($incoming['ldr_sts']=='Fake'){$color='table-primary';}
-					elseif($incoming['ldr_sts']=='Thinking'){$color='table-warning';}					
-					else{$color='table-white';}					
+					if		($incoming['ldr_sts']=='SCOUT')		{$color='table-warning';	}
+					elseif	($incoming['ldr_sts']=='THINKING')	{$color='table-info';		}
+					elseif	($incoming['ldr_sts']=='DEFEND')	{$color='table-success';	}	
+					elseif	($incoming['ldr_sts']=='ARTEFACT')	{$color='table-primary';	}	
+					elseif	($incoming['ldr_sts']=='SNIPE')		{$color='table-danger';		}
+					elseif	($incoming['ldr_sts']=='FAKE')		{$color='table-secondary';	}								
+					else	{	$color='table-white';	}					
 				@endphp				
 						
     			<tr class="{{$color}} small" id="{{$incoming['incid']}}">
@@ -61,45 +64,57 @@
     					</select>
     				</td>
     				<td><select id="action" name="type">
-    						<option @if($incoming['ldr_sts']=='New') selected @endif>New</option>
-    						<option @if($incoming['ldr_sts']=='Thinking') selected @endif>Thinking</option>
-    						<option @if($incoming['ldr_sts']=='Attack') selected @endif>Attack</option>
-    						<option @if($incoming['ldr_sts']=='Fake') selected @endif>Fake</option>    						
-    						<option @if($incoming['ldr_sts']=='Other') selected @endif>Other</option>
+    						<option @if($incoming['ldr_sts']=='NEW') selected @endif>New</option>
+    						<option @if($incoming['ldr_sts']=='SCOUT') selected @endif>Scouting</option>
+    						<option @if($incoming['ldr_sts']=='THINKING') selected @endif>Thinking</option>
+    						<option @if($incoming['ldr_sts']=='DEFEND') selected @endif>Defend</option>
+    						<option @if($incoming['ldr_sts']=='ARTEFACT') selected @endif>Save Artefact</option> 
+    						<option @if($incoming['ldr_sts']=='SNIPE') selected @endif>Snipe</option> 						
+    						<option @if($incoming['ldr_sts']=='FAKE') selected @endif>Fake</option>
     					</select>
-    				</td>    				
+    				</td>
     				<td><button class="btn btn-info btn-sm" id="details" name="button" value="{{$index}}" type="submit"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></td>
     			</tr>
     			<tr style="display: none;background-color:#dbeef4">
-    				<td colspan="3" class="py-2">
-    					<p class="py-0"><a href="/defense/attacker/{{$incoming['att_id']}}" target="_blank"><strong>Track Attacker <i class="fas fa-external-link-alt"></i></strong></a></p>
-    					<p class="py-0"><strong>Hero XP - </strong>{{$incoming['hero']}}</p>
-    					<p class="py-0"><strong>Notes - </strong><small>{{$incoming['comments']}}</small></p>
+    				<td colspan="2" class="py-1">
+    					<p class="py-0 h5"><a href="/defense/attacker/{{$incoming['att_id']}}" target="_blank"><strong>Track Attacker <i class="fas fa-external-link-alt"></i></strong></a></p>
+    					<p class="py-0 h6"><strong>Hero XP - </strong>{{$incoming['hero']}}</p>
+    					<p class="py-0 h6"><strong>Notes - </strong><small>{{$incoming['comments']}}</small></p>
 					</td>
-
-    				<td colspan="7" class="py-2">
-    					@if($incoming['CFD']==null)
-        					<form action="/defense/incomings/cfd" method="post">
-        						{{csrf_field()}}
-        						<p class="py-0 h6"><strong>CFD Details</strong></p>
-        						<p class="py-0"><strong>Defense Needed - </strong><input name="def" type="number" required style="width:5em" min="0">
-        							<strong>Type - </strong>
-            							<select name="type">
-        									<option value="defend">Defend</option>
-        									<option value="snipe">Snipe</option>
-        									<option value="other">Other</option>
-        								</select>    						
-        						</p>
-        						<p class="py-0"><button class="btn btn-sm btn-info" name="wave" value="{{$incoming['incid']}}" type="submit">Create CFD</button>
-        					</form>	
-    					@else
-							<p class="py-0 h6"><a href="/defense/cfd/{{$incoming['CFD']['id']}}" target="_blank"><strong>CFD Details </strong><i class="fas fa-external-link-alt"></i></a></p>
-							<p class="py-0">
-								<span class="px-3 py-0"><strong>Total-</strong> {{number_format($incoming['CFD']['total'])}}</span>
-								<span class="px-3 py-0"><strong>Type -</strong> {{$incoming['CFD']['type']}}</span>							
+					<td colspan="2" class="py-1">
+						@if($incoming['VILLAGE']==null)
+							<p class="h6"><strong>No Village Details</strong></p>
+						@else
+							<p class="py-0 h5">Village Details</p>
+							<p class="py-0 h6">
+								<span class="px-1 py-0"><strong>Artifact</strong> - {{ucfirst(strtolower($incoming['VILLAGE']['artifact']))}}</span>
+								@if($incoming['VILLAGE']['cap']==1)
+									<span class="py-0 px-1"><strong>Capital</strong></span>
+								@endif
 							</p>
-							<p class="py-0"><strong>Filled -</strong> {{number_format($incoming['CFD']['filled'])}} ({{$incoming['CFD']['percent']}}%)</p>
+							<p class="px-1 py-0"><strong>Village Type-</strong> {{ucfirst(strtolower($incoming['VILLAGE']['type']))}}</p>
+
+						@endif
+					
+					</td>
+    				<td colspan="2" class="py-1">
+    					@if($incoming['CFD']==null)
+    						<p class="py-0 h6">CFD doesn't exists</p>
+    						<p class="py-0 h5"><a href="/defense/cfd/{{$incoming['CFD']['id']}}" target="_blank"><strong>Create CFD</strong><i class="fas fa-external-link-alt"></i></a></p>
+    					@else
+    						<p class="py-0 h5"><strong>CFD - </strong>{{number_format($incoming['CFD']['total'])}} ({{$incoming['CFD']['percent']}}%)</p>
+    						<p class="py-0 h6"><span class="px-1 py-0"><strong>Type -</strong> {{$incoming['CFD']['type']}}</span></p>
+							<p class="py-0 h6"><a href="/defense/cfd/{{$incoming['CFD']['id']}}" target="_blank"><strong>Edit CFD</strong><i class="fas fa-external-link-alt"></i></a></p>
+							
     					@endif
+    				</td>
+    				<td colspan="4" class="py-1 px-0">
+    					<span class="h6">Updated by - <a href="/plus/member/{{$incoming['updated_by']}}" target="_blank">{{$incoming['updated_by']}}</a></span>
+        				<form action="/defense/incomings/update/comments" method="POST">
+        					{{csrf_field()}}
+        					<textarea name="comments" rows="2" cols="20">{{$incoming['ldr_nts']}}</textarea> 
+        					<button class="btn btn-sm btn-info" name="wave" value="{{$incoming['incid']}}" type="submit">Save</button>
+    					</form>
     				</td>
     			</tr>
 			@endforeach			
@@ -112,57 +127,48 @@
 @push('scripts')
 <script>
     $(document).on('click','#details',function(e){
-        e.preventDefault();  
-    
+        e.preventDefault();    
         var col= $(this).closest("td");
         var id= col.find('#details').val();
-
 		var row = $(this).closest('tr').next('tr');
-		row.toggle('500');
-    
+		row.toggle('500');    
     });
-
 </script>
 <script>
 	$(document).on('change','#tsq',function(e){
-		e.preventDefault();  
-
-		var wave = $(this).closest("tr");
-		var id= wave.attr("id");
-        var vid = wave.find('td:eq(1)').attr("id");
-		
+		e.preventDefault();
+		var wave = $(this).closest("tr");	var id= wave.attr("id");	var vid = wave.find('td:eq(1)').attr("id");		
+        //var tsq = wave.find('td:eq(8)').find('select #tsq').val();
+        var tsq=$(this).val();
         
-		var tsq = wave.find('td:eq(7)').find('select#tsq').val();
-        
-        alert(id);
+        alert(tsq);
 	});
 </script>
 <script>
-	$(document).on('change','#action',function(e){
+	$(document).on('change','#action',function(e){		
 		e.preventDefault();  
 		
-		var sts = $("#action option:selected").text();
-
-		var col = $(this).closest('td');
-		var row = $("#action option:selected").closest("tr");		
+		var sts = $(this).val();	var row = $(this).closest("tr");	var id = row.attr("id");		
 		
-		if(sts == 'New'){
-			row.addClass('table-primary');
-		}
-		if(sts == 'Thinking'){
-			row.addClass('table-info');
-		}
-		if(sts == 'Fake'){
-			row.addClass('table-success');
-		}
-		if(sts == 'Attack'){
-			row.addClass('table-danger');
-		}
-		if(sts == 'Other'){
-			row.addClass('table-secondary');
-		}
-        
-        alert(sts);
+		if(sts == 'New'){			row.removeClass();	row.addClass('small');					}
+		if(sts == 'Scouting'){		row.removeClass();	row.addClass('small table-warning');	}
+		if(sts == 'Thinking'){		row.removeClass();	row.addClass('small table-info');		}
+		if(sts == 'Defend'){		row.removeClass();	row.addClass('small table-success');	}
+		if(sts == 'Save Artefact'){	row.removeClass();	row.addClass('small table-primary');	}
+		if(sts == 'Snipe'){			row.removeClass();	row.addClass('small table-danger');		}
+		if(sts == 'Fake'){			row.removeClass();	row.addClass('small table-secondary');	} 
+
+	    var xmlhttp = new XMLHttpRequest();
+	    xmlhttp.onreadystatechange = function() {
+	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+	        {
+	            console.log(xmlhttp.responseText);
+	        }
+	    };
+	    xmlhttp.open("GET", "/defense/incomings/update/"+id+"/"+sts, true);
+	    xmlhttp.send();
+		
+        //alert(sts);
 	});
 
 </script>

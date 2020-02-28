@@ -202,8 +202,10 @@ Route::post('/plus/incoming/update','Plus\Defense\Incoming\IncomingController@up
 Route::get('/defense/incomings','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomings');
 Route::get('/defense/incomings/list','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomingsList');
 
-Route::post('/defense/incomings/cfd','Plus\Defense\Incoming\LeaderIncomingController@createCFD');
+Route::get('/defense/incomings/update/{id}/{sts}','Plus\Defense\Incoming\LeaderIncomingController@updateWaveStatus');
+Route::post('/defense/incomings/update/comments','Plus\Defense\Incoming\LeaderIncomingController@updateWaveNotes');
 
+Route::post('/defense/incomings/cfd','Plus\Defense\Incoming\LeaderIncomingController@createCFD');
 Route::get('/defense/attacker/{id}','Plus\Defense\Incoming\LeaderIncomingController@showAttacker');
 
 

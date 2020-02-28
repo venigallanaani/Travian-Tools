@@ -56,6 +56,7 @@ class VillagesController extends Controller
                 $villages[$diff->vid]['IRON']=0;
                 $villages[$diff->vid]['CROP']=0;
                 $villages[$diff->vid]['PROD']=54;
+                $villages[$diff->vid]['ART']='NONE';
             }
 	                               
             if(count($vills) > 0){
@@ -69,6 +70,7 @@ class VillagesController extends Controller
                     $villages[$vill->vid]['IRON']=$vill->iron;
                     $villages[$vill->vid]['CROP']=$vill->crop;
                     $villages[$vill->vid]['PROD']=$vill->prod;
+                    $villages[$vill->vid]['ART']=$vill->artifact;
                 }
             }
             
@@ -123,6 +125,9 @@ class VillagesController extends Controller
             $crop = $village->vid."_crop";
             $input[$i]['OASIS']['CROP']=Input::get($crop);        
             
+            $art = $village->vid."_art";
+            $input[$i]['ART']=Input::get($art); 
+            
             $i++;
         }
 //dd($input);   
@@ -172,6 +177,7 @@ class VillagesController extends Controller
                     $village->prod=$res;
                     $village->cap=$data['CAP'];
                     $village->field=$data['FIELD'];
+                    $village->artifact=$data['ART'];
                     
                     $village->save();
                 }else{
@@ -187,14 +193,15 @@ class VillagesController extends Controller
                                     'crop'=>$data['OASIS']['CROP'],
                                     'prod'=>$res,
                                     'cap'=>$data['CAP'],
-                                    'field'=>$data['FIELD'] 
+                                    'field'=>$data['FIELD'], 
+                                    'artifact'=>$data['ART']
                                 ]);
  
                 }
             }           
             
         }      
-        Session::flash('success',"Troops details are successfully updated");
+        Session::flash('success',"Village details are successfully updated");
         
         return Redirect::back();
 

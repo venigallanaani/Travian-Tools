@@ -4,13 +4,13 @@ if(!function_exists('ParseIncoming')){
         
         $array = preg_split('/$\R?^/m', $incStr);
         $result=null; $incomings=array();
-        $d_vill=''; $d_xCor=''; $d_yCor=''; 
+        $d_village=null;
         
         $incStrs=array();
         
         foreach($array as $string){
             if(strlen(trim($string))>0){
-                $incStrs[]=$string;
+                $incStrs[]=trim($string);
             }
         }
                
@@ -19,44 +19,73 @@ if(!function_exists('ParseIncoming')){
         for($x=0;$x<count($incStrs);$x++){
             $type='';   $troops=array(); 
             $coords=''; $cor='';    $xCor='';  $yCor='';
-            $landTime='';   $restTime='';                          
+            $landTime='';   $restTime=''; 
             
-            if(strpos(strtoupper($incStrs[$x]),'MARK ATTACK')){
-                $y=$x;              
-            // calculating type of attack
-                if(strpos(strtoupper($incStrs[$y]), ' ATTACKS ')!==FALSE){ $type='ATTACK'; }
-                if(strpos(strtoupper($incStrs[$y]), ' RAIDS ')!==FALSE){ $type='RAID';   }                
-                
-            //Fetching the attacker coordinates
-                //$aCoords = null;
-                $aCoords = GetCoords(explode("\t", $incStrs[$y+1])[0]);
-//dd($coords);
+            if(strpos(strtoupper($incStrs[$x]),'MARK ATTACK')!== FALSE){
+//dd($x);
+                $y=$x; 
+                for($y=$x;$y<$x+10;$y++){
+                    if(strpos(strtoupper($incStrs[$y]), 'TROOPS')!==FALSE){
+                        break;
+                    }
+                }
+//dd($y);       
+                if($y==$x+2){
+                    if(strpos(strtoupper($incStrs[$x]), ' ATTACKS ')!==FALSE){ 
+                        $type='ATTACK'; 
+                        $d_village = trim(explode('ATTACKS',strtoupper($incStrs[$x]))[1]);
+                    }
+                    if(strpos(strtoupper($incStrs[$x]), ' RAIDS ')!==FALSE){ 
+                        $type='RAID';   
+                        $d_village = trim(explode('RAIDS',strtoupper($incStrs[$x]))[1]);
+                    }
+                }else{
+                    if(strpos(strtoupper($incStrs[$y-2]), ' ATTACKS ')!==FALSE){ 
+                        $type='ATTACK'; 
+                        $d_village = trim(explode('ATTACKS',strtoupper($incStrs[$y-2]))[1]);
+                    }
+                    if(strpos(strtoupper($incStrs[$y-2]), ' RAIDS ')!==FALSE){ 
+                        $type='RAID';   
+                        $d_village = trim(explode('RAIDS',strtoupper($incStrs[$y-2]))[1]);
+                    }     
+                }
+//dd($type);
+            // Calculate attacker coords
+                $aCoords = GetCoords(explode("\t", $incStrs[$y-1])[0]);
+//dd($aCoords);
 
             // Fetching all incoming troops details
-                if(strpos(strtoupper($incStrs[$y+2]), 'TROOPS')!==FALSE){
-                
-                    $unitList = explode("\t", $incStrs[$y+2]);                        
-                    $troops = array(
-                        'unit01'=> trim($unitList[1]),  'unit02'=> trim($unitList[2]),
-                        'unit03'=> trim($unitList[3]),  'unit04'=> trim($unitList[4]),
-                        'unit05'=> trim($unitList[5]),  'unit06'=> trim($unitList[6]),
-                        'unit07'=> trim($unitList[7]),  'unit08'=> trim($unitList[8]),
-                        'unit09'=> trim($unitList[9]),  'unit10'=> trim($unitList[10])
-                    );
-                }
+               
+                $unitList = explode("\t", $incStrs[$y]);                        
+                $troops = array(
+                    'unit01'=> trim($unitList[1]),  'unit02'=> trim($unitList[2]),
+                    'unit03'=> trim($unitList[3]),  'unit04'=> trim($unitList[4]),
+                    'unit05'=> trim($unitList[5]),  'unit06'=> trim($unitList[6]),
+                    'unit07'=> trim($unitList[7]),  'unit08'=> trim($unitList[8]),
+                    'unit09'=> trim($unitList[9]),  'unit10'=> trim($unitList[10])
+                );
+
 //dd($troops);                   
             // parsing the timings
-                if(strpos(strtoupper($incStrs[$y+3]), 'ARRIVAL')!==FALSE){
-                    $strings = explode(' ',trim($incStrs[$y+3]));              
-                    
-                    $restTime = trim($strings[1]);
-                    $landTime = trim($strings[3]);
-                    
-                    if(strpos(strtoupper($landTime),'FIRST')!==FALSE){
-                        $landTime = substr($landTime,0,strlen($landTime)-5);
+                if(strpos(strtoupper($incStrs[$y+1]), 'ARRIVAL')!==FALSE){
+                    if(strlen($incStrs[$y+1])>7){
+                        $strings = explode(' ',trim($incStrs[$y+1]));
+                        
+                        $restTime = trim($strings[1]);
+                        $landTime = trim($strings[3]);
+                        
+                        if(strpos(strtoupper($landTime),'FIRST')!==FALSE){
+                            $landTime = substr($landTime,0,strlen($landTime)-5);
+                        }
+                        $x=$y+1;
+                    }else{
+                        $restTime = trim(explode(' ',$incStrs[$y+2])[1]);
+                        $landTime = trim(explode(' ',$incStrs[$y+3])[1]);
+                        $x=$y+3;
                     }
-                }                
+                }
 
+//dd($landTime);
                $incomings[]=array(
                     'type'=>$type,
                     'wave'=>1,
@@ -66,28 +95,30 @@ if(!function_exists('ParseIncoming')){
                     'troops'=>$troops                    
                 );                 
 //dd($incomings);
-                $x=$y+3;
             } 
 
 //Parse defense village coords
             if(strpos(strtoupper($incStrs[$x]),'LOYALTY:')!==FALSE
                 && strpos(strtoupper($incStrs[$x+1]),'VILLAGES')!==FALSE){
-                    
-                $d_village=trim($incStrs[$x-1]);
-//dd($d_village);        
+       
                 for($z=$x+1;$z<count($incStrs);$z++){ 
-                    if(strtoupper($d_village)==strtoupper(trim($incStrs[$z]))){                    
-//dd($incStrs[$z+1]);
-                        $dCoords = GetCoords(trim($incStrs[$z+1])); 
+                    //if(strtoupper($d_village)==strtoupper(trim($incStrs[$z]))){
+                    if(strpos(strtoupper(trim($incStrs[$z])),strtoupper($d_village))!==FALSE){
                         
-                        $da_village = trim($incStrs[$z]);
+                        if(strlen(trim($incStrs[$z]))>strlen(trim($d_village))){
+                            $dCoords = GetCoords(trim(explode(' ',$incStrs[$z])[1]));
+                        }else{
+                            $dCoords = GetCoords(trim($incStrs[$z+1]));
+                        }
+
                         $z=count($incStrs);
-                    }
-                }
+                   }
+               }
             }
         } 
-        
-//dd($incomings);
+       
+//dd($dCoords); 
+
 
     // Consolidate incomings into waves
         if(count($incomings)==0){
@@ -135,7 +166,8 @@ if(!function_exists('ParseIncoming')){
 if(!function_exists('GetCoords')){
 // Calculates the coords from the string (x|y)
     function GetCoords(String $incStr){
-          
+      
+//dd($incStr);
         $result=array(); 
         $incStr = explode("|", trim($incStr)); 
         

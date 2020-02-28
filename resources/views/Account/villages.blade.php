@@ -23,11 +23,12 @@
             				<thead class="bg-warning">
             					<tr>
             						<th class="align-middle py-0 px-1" rowspan="2">Village</th>        						
-            						<th class="align-middle py-0 px-1" rowspan="2">Capital</th>            						
+            						<th class="align-middle py-0 px-1" rowspan="2">Cap</th>            						
             						<th class="align-middle py-0 px-1" rowspan="2">Tiles</th>
             						<th class="align-middle py-0 px-1" rowspan="2">Fields</th>
             						<th class="py-0 px-1" colspan="4">Oasis</th>
-            						<th class="py-0 px-1" colspan="2">*Prod <img alt="wood" src="/images/x.gif" class="res all"></th> 						
+            						<th class="py-0 px-1" colspan="2">*Prod <img alt="wood" src="/images/x.gif" class="res all"></th>
+            						<th class="align-middle py-0 px-1" rowspan="2">Artifact</th> 						
             					</tr>
             					<tr>
             						<th class="py-0 px-1"><img alt="wood" src="/images/x.gif" class="res wood"></th>
@@ -100,6 +101,13 @@
     								</td>
                 					<td class="px-1 small">{{number_format($village['PROD'])}}</td>
                 					<td class="px-1 small">{{number_format($village['PROD']*1.25)}}</td>
+                					<td class="px-0 small"><select name="{{$village['VID']}}_art" style="width: 5em; border:1px">
+        									<option value="NONE" @if($village['ART']=='NONE') selected @endif>None</option>
+        									<option value="SMALL" @if($village['ART']=='SMALL') selected @endif>Small</option>
+        									<option value="LARGE" @if($village['ART']=='LARGE') selected @endif>Large</option>
+        									<option value="UNIQUE" @if($village['ART']=='UNIQUE') selected @endif>Unique</option>
+        								</select>               					
+                					</td>
             					</tr>
         					@endforeach
             			</table>
