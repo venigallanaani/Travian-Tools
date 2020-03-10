@@ -21,13 +21,34 @@ class CFDController extends Controller
         
         session(['title'=>'Plus']);
         
-        $tasks=CFDTask::where('server_id',$request->session()->get('server.id'))
-                    ->where('plus_id',$request->session()->get('plus.plus_id'))
-                    ->where('status','ACTIVE')
-                    ->orderBy('target_time','desc')->get();
-
+        $tasks = array();   $withdraws = array();   $index=0;
         
-        return view("Plus.Defense.CFD.defenseTaskList")->with(['tasks'=>$tasks]);
+        $CFDs=CFDTask::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('status','<>','COMPLETE')
+                    ->orderBy('target_time','asc')->get();
+        
+        foreach($CFDs as $CFD){            
+            if($CFD->status=='WITHDRAW'){
+                
+                $troops = CFDUpd::where('server_id',$request->session()->get('server.id'))
+                                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                        ->where('task_id',$CFD->task_id)->where('player_id',$request->session()->get('plus.account_id'))->get();
+// dd($CFD);
+// dd($troops);  
+                if($troops!=null){
+                    $withdraws[$index]['PLAYER']=$CFD->player;
+                    $withdraws[$index]['VILLAGE']=$CFD->village;
+                    $withdraws[$index]['X']=$CFD->x;
+                    $withdraws[$index]['Y']=$CFD->y;                    
+                    $index++;
+                }
+            }else{
+                $tasks[]=$CFD;                
+            }
+        }
+//dd($withdraws);
+        return view("Plus.Defense.CFD.defenseTaskList")->with(['tasks'=>$tasks])->with(['withdraws'=>$withdraws]);
         
     }
     
@@ -37,7 +58,7 @@ class CFDController extends Controller
         
         ///$result = $this->taskDetails($request, $id);
         $task = $this->taskDetails($request, $id);
-//dd($result);
+//dd($task);
         
         $travels = $this->defenseTravelTime($request, $task['UNITS'], $task['TASK'],$request->session()->get('plus.account_id'));
         
@@ -60,6 +81,8 @@ class CFDController extends Controller
                         ->where('x',Input::get('$xCor'))
                         ->where('y',Input::get('$yCor'))->first();
         }
+        
+        
         
         if($village){
             

@@ -20,7 +20,7 @@
                     @endif
                 @endforeach	
                 	
-				<div class="text-center col-md-11 mx-auto my-2 p-0">
+				<div class="text-center col-md-11 mx-auto my-2 p-0">					
 					<table class="table align-middle">
 						<thead class="thead-inverse">
     						<tr>
@@ -52,7 +52,7 @@
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>
     							<td>{{number_format($task->def_remain)}}</td>
-    							<td><strong>{{strtoupper($task->type)}}</strong></td>
+    							<td><strong>{{ucfirst(strtolower($task->type))}}</strong></td>
     							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>
     							<td>{{$task->target_time}}</td>
     							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
@@ -63,7 +63,16 @@
 						@endforeach
 					</table>
 				</div>
-			@endif
+				@endif
+				
+				@if(count($withdraws)>0)
+					<div class="text-center mx-auto col-md-8 my-4">
+						<p class="bg-warning h4 py-1"> Troops Withdrawl Request </p>
+					@foreach($withdraws as $withdraw)
+						<p class="h6"> Withdraw your reinforcements from <strong><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task->x}}&y={{$task->y}}" target="_blank">{{$withdraw['PLAYER']}} ({{$withdraw['VILLAGE']}})</a></strong></p>		
+					@endforeach	
+					</div>			
+				@endif
 			</div>
 		</div>
 @endsection

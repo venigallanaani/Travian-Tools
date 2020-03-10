@@ -24,34 +24,36 @@
 						<form action="/defense/cfd/update" method="POST" autocomplete="off">
 							{{ csrf_field() }}
 							<tr>
-								<td class="py-2">
-									<p class="py-0"><strong>Defense Needed:</strong> <input type="text" name="defNeed" size="10" value="{{$task->def_total}}"/></p>
-									<p class="py-0"><strong>Land Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task->target_time}}" class="dateTimePicker"/></p>
-									<p class="py-0"><strong>Defense Priority:</strong> 
+								<td class="py-2">									
+									<p class="py-1 my-1"><strong>Defense Needed:</strong> <input type="text" name="defNeed" size="10" value="{{$task->def_total}}"/></p>
+									<p class="py-1 my-1"><strong>Land Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task->target_time}}" class="dateTimePicker"/></p>
+									<p class="h6"><strong>Remaining Time: <span id="{{$task->task_id}}"></span></strong></p>
+									<p class="py-1 my-1"><strong>Defense Priority:</strong> 
     													<select name="priority">
-    														<option value="high"  @php if($task->priority == 'high'){echo 'selected';} @endphp>High</option>
-    														<option value="medium" @php if($task->priority == 'medium'){echo 'selected';} @endphp>Medium</option>
-    														<option value="low" @php if($task->priority == 'low'){echo 'selected';} @endphp>Low</option>
-    														<option value="none" @php if($task->priority == 'none'){echo 'selected';} @endphp>None</option>
+    														<option value="high"  @if($task->priority == 'high') selected @endif>High</option>
+    														<option value="medium" @if($task->priority == 'medium') selected @endif>Medium</option>
+    														<option value="low" @if($task->priority == 'low') selected @endif>Low</option>
+    														<option value="none" @if($task->priority == 'none') selected @endif>None</option>
     													</select></p>
-	    							<p class="py-0"><strong>Defense Type:</strong> 
+	    							<p class="py-1 my-1"><strong>Defense Type:</strong> 
     													<select name="type">
-    														<option value="defend" @php if($task->type == 'defend'){echo 'selected';} @endphp>Defend</option>
-    														<option value="snipe" @php if($task->type == 'snipe'){echo 'selected';} @endphp>Snipe</option>
-    														<option value="stand" @php if($task->type == 'stand'){echo 'selected';} @endphp>Standing</option>
-    														<option value="scout" @php if($task->type == 'scout'){echo 'selected';} @endphp>Scout</option>
-    														<option value="other" @php if($task->type == 'other'){echo 'selected';} @endphp>Other</option>
+    														<option value="defend" @if($task->type == 'defend') selected @endif>Defend</option>
+    														<option value="snipe" @if($task->type == 'snipe') selected @endif>Snipe</option>
+    														<option value="stand" @if($task->type == 'stand') selected @endif>Standing</option>
+    														<option value="scout" @if($task->type == 'scout') selected @endif>Scout</option>
+    														<option value="other" @if($task->type == 'other') selected @endif>Other</option>
 														</select></p>	
-									<p><strong><span class="align-top">Comments: </span></strong><textarea name="comments">{{$task->comments}}</textarea></p>							
+									<p class="py-1 my-1"><strong><span class="align-top">Comments: </span></strong><textarea rows="3" name="comments">{{$task->comments}}</textarea></p>
+									<p class="py-1 my-1"><input type="checkbox" name="crop" @if($task->crop==1) checked @endif><strong> Send Crop</strong></p>									
 								</td>
-								<td class="py-2">
-									<p class="py-0"><strong>Remaining Time: <span id="{{$task->task_id}}"></span></strong></p>
-									<p class="py-0 my-1"><button class="btn btn-primary px-5" name="update" value="{{$task->task_id}}">Update Task</button></p>
-									<p class="py-0 my-1"><button class="btn btn-success px-5" name="complete" value="{{$task->task_id}}">Mark as Complete</button></p>
-									<p class="py-0 my-1"><button class="btn btn-warning px-5" name="delete" value="{{$task->task_id}}">Delete Task</button></p>
-									<p></p>
-									<p class="py-0 my-1"><strong>Created By:</strong> {{$task->created_by}}</p>
-									<p class="py-0 my-1"><strong>Last Updated By:</strong> {{$task->updated_by}}</p>
+								<td class="py-2">									
+									<p class="py-1 my-1"><button class="btn btn-primary px-5 shadow" name="update" value="{{$task->task_id}}">Update Task</button></p>
+									<p class="py-1 my-1"><button class="btn btn-success px-5 shadow" name="complete" value="{{$task->task_id}}">Mark as Complete</button></p>
+									<p class="py-1 my-1"><button class="btn btn-warning px-5 shadow" name="withdraw" value="{{$task->task_id}}">Withdraw Troops</button></p>
+									<p class="py-1 my-1"><button class="btn btn-danger px-5 shadow" name="delete" value="{{$task->task_id}}">Delete Task</button></p>								
+									<br>
+									<p class="py-1 my-1"><strong>Created By:</strong> {{$task->created_by}}</p>
+									<p class="py-1 my-1"><strong>Last Updated By:</strong> {{$task->updated_by}}</p>
 								</td>
 							</tr>
 						</form>

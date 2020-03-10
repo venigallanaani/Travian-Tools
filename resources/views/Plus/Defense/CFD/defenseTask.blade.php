@@ -30,14 +30,18 @@
 							<td class="py-1"><strong>Time Left: <span id="{{$task['task_id']}}"></span></strong></td>
 						</tr>
 						<tr>
-							<td colspan="2" class=""><strong>Comments: </strong>{{$task['comments']}}</td>
-							
+							<td colspan="2" class=""><strong>Comments: </strong>{{$task['comments']}}</td>							
 						</tr>
+						@if($task['crop']==1)
+							<tr>
+								<td colspan="2" class="text-primary h5 text-center"><strong>Send some goddamn crop to feed your fat ass reinforcements</strong></td>							
+							</tr>
+						@endif
 					</table>
 					
 					
                 	@if($travels==null)
-                		<p class="py-3 h5 text-danger">No available units can make it to the defense call</p>                	
+                		<p class="py-2 h5 text-danger">No available units can make it to the defense call</p>                	
                 	@else
                 	<div>
                 		<table class="table table-bordered table-sm">

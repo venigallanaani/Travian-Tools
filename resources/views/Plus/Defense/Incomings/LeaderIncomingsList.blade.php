@@ -14,11 +14,51 @@
 @endforeach			
 	<div class="col-md-12 mt-2 mx-auto text-center">		
 		@if(count($incomings)==0)			
-		<p class="h5 pb-5 pt-2"> No incoming attacks saved for this profile</p>			
-		@else			
+		<p class="h5 pb-5 pt-2"> No incomings are entered by the group members</p>			
+		@else
+		
+    		<table class="table col-md-8 mx-auto text-left table-borderless">
+    			<tr class="header show">
+    				<td>
+    					<div style="height:250px; overflow-y:auto;" class="my-2">
+        					<table class="table my-0 py-0 table-bordered">
+        						<thead><tr class="header show"><th style="position:sticky; top:0px;" class="table-danger mx-1 text-center h4 py-1">Attackers</th></tr></thead>
+        						@foreach($attackers as $attacker)
+            						<tr class="header show"><td class="h6 py-1"><input class="id_attack" rel="attack" type="checkbox" value="{{$attacker['ID']}}"> {{$attacker['NAME']}}</tr>
+                                @endforeach
+        					</table>
+    					</div>
+    				</td>
+    				<td>
+    					<div style="height:250px; overflow-y:auto;" class="my-2">
+        					<table class="table my-0 py-0 table-bordered">
+        						<thead><tr class="header show"><th style="position:sticky; top:0px;" class="table-success mx-1 text-center h4 py-1">Defenders</th></tr></thead>
+        						@foreach($defenders as $defender)
+            						<tr class="header show"><td class="h6 py-1"><input class="id_defend" rel="defend" type="checkbox" value="{{$defender['ID']}}"> {{$defender['NAME']}}</td></tr>
+                                @endforeach
+        					</table>
+    					</div>
+    				</td>
+    				<td>
+    					<div style="height:250px; overflow-y:auto;" class="my-2">
+        					<table class="table my-0 py-0 table-bordered">
+        						<thead><tr class="header show"><td class="table-info mx-1 text-center h4 py-1">Actions</td></tr></thead>
+        						<tr class="header show"><td class="h6 table-white py-1"><input class="id_type" rel="type" type="checkbox" value="NEW"> New</td></tr>
+        						<tr class="header show"><td class="h6 table-info py-1"><input class="id_type" rel="type" type="checkbox" value="THINKING"> Thinking</td></tr>
+        						<tr class="header show"><td class="h6 table-warning py-1"><input class="id_type" rel="type" type="checkbox" value="SCOUT"> Scouting</td></tr>
+        						<tr class="header show"><td class="h6 table-success py-1"><input class="id_type" rel="type" type="checkbox" value="DEFEND"> Defend</td></tr>
+        						<tr class="header show"><td class="h6 table-danger py-1"><input class="id_type" rel="type" type="checkbox" value="SNIPE"> Snipe</td></tr>
+        						<tr class="header show"><td class="h6 table-primary py-1"><input class="id_type" rel="type" type="checkbox" value="ARTEFACT"> Save Artefact</td></tr>
+        						<tr class="header show"><td class="h6 table-secondary py-1"><input class="id_type" rel="type" type="checkbox" value="FAKE"> Fake</td></tr>          						
+        					</table>
+    					</div>
+    				</td>
+    			</tr>
+    		</table>
+
 		<table class="table mx-auto col-md-12 table-hover table-sm table-bordered shadow">
 			<thead class="thead-inverse bg-info text-white">
-				<tr>
+				<tr class="header show">
 					<th class="">Attacker</th>
 					<th class="">Noticed Time</th>
 					<th class="">Defender</th>
@@ -42,13 +82,13 @@
 					else	{	$color='table-white';	}					
 				@endphp				
 						
-    			<tr class="{{$color}} small" id="{{$incoming['incid']}}">
-    				<td><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['att_x']}}&y={{$incoming['att_y']}}" target="_blank"><strong>{{$incoming['att_player']}}</strong> 
+    			<tr class="{{$color}} h6 show" id="{{$incoming['incid']}}">
+    				<td class="attack" rel="{{$incoming['att_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['att_x']}}&y={{$incoming['att_y']}}" target="_blank"><strong>{{$incoming['att_player']}}</strong> 
     						({{$incoming['att_village']}}) </a></td>
 					<td>{{$incoming['noticeTime']}}</td>
-    				<td><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['def_x']}}&y={{$incoming['def_y']}}" target="_blank"><strong>{{$incoming['def_player']}}</strong>
+    				<td  class="defend" rel="{{$incoming['def_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['def_x']}}&y={{$incoming['def_y']}}" target="_blank"><strong>{{$incoming['def_player']}}</strong>
     						 ({{$incoming['def_village']}})</a></td>
-			 		<td></td>
+			 		<td>{{$incoming['landTime']}}</td>
     				<td>{{$incoming['waves']}}</td>
     				<td>{{$incoming['landTime']}}</td>
     				<td><select id="unit" style="width:5em"><option>0</option>
@@ -63,19 +103,19 @@
     						<option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>    						
     					</select>
     				</td>
-    				<td><select id="action" name="type">
+    				<td class="type" rel="{{$incoming['ldr_sts']}}"><select id="action" name="type">
     						<option @if($incoming['ldr_sts']=='NEW') selected @endif>New</option>
-    						<option @if($incoming['ldr_sts']=='SCOUT') selected @endif>Scouting</option>
     						<option @if($incoming['ldr_sts']=='THINKING') selected @endif>Thinking</option>
+    						<option @if($incoming['ldr_sts']=='SCOUT') selected @endif>Scouting</option>
+    						<option @if($incoming['ldr_sts']=='SNIPE') selected @endif>Snipe</option>
     						<option @if($incoming['ldr_sts']=='DEFEND') selected @endif>Defend</option>
-    						<option @if($incoming['ldr_sts']=='ARTEFACT') selected @endif>Save Artefact</option> 
-    						<option @if($incoming['ldr_sts']=='SNIPE') selected @endif>Snipe</option> 						
+    						<option @if($incoming['ldr_sts']=='ARTEFACT') selected @endif>Save Artefact</option>    						 						
     						<option @if($incoming['ldr_sts']=='FAKE') selected @endif>Fake</option>
     					</select>
     				</td>
     				<td><button class="btn btn-info btn-sm" id="details" name="button" value="{{$index}}" type="submit"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></td>
     			</tr>
-    			<tr style="display: none;background-color:#dbeef4">
+    			<tr style="display: none;background-color:#dbeef4" class="info">
     				<td colspan="2" class="py-1">
     					<p class="py-0 h5"><a href="/defense/attacker/{{$incoming['att_id']}}" target="_blank"><strong>Track Attacker <i class="fas fa-external-link-alt"></i></strong></a></p>
     					<p class="py-0 h6"><strong>Hero XP - </strong>{{$incoming['hero']}}</p>
@@ -93,9 +133,7 @@
 								@endif
 							</p>
 							<p class="px-1 py-0"><strong>Village Type-</strong> {{ucfirst(strtolower($incoming['VILLAGE']['type']))}}</p>
-
-						@endif
-					
+						@endif					
 					</td>
     				<td colspan="2" class="py-1">
     					@if($incoming['CFD']==null)
@@ -131,7 +169,7 @@
         var col= $(this).closest("td");
         var id= col.find('#details').val();
 		var row = $(this).closest('tr').next('tr');
-		row.toggle('500');    
+		row.toggle('500');
     });
 </script>
 <script>
@@ -141,7 +179,7 @@
         //var tsq = wave.find('td:eq(8)').find('select #tsq').val();
         var tsq=$(this).val();
         
-        alert(tsq);
+        //alert(id+'|||||'+tsq);
 	});
 </script>
 <script>
@@ -150,13 +188,13 @@
 		
 		var sts = $(this).val();	var row = $(this).closest("tr");	var id = row.attr("id");		
 		
-		if(sts == 'New'){			row.removeClass();	row.addClass('small');					}
-		if(sts == 'Scouting'){		row.removeClass();	row.addClass('small table-warning');	}
-		if(sts == 'Thinking'){		row.removeClass();	row.addClass('small table-info');		}
-		if(sts == 'Defend'){		row.removeClass();	row.addClass('small table-success');	}
-		if(sts == 'Save Artefact'){	row.removeClass();	row.addClass('small table-primary');	}
-		if(sts == 'Snipe'){			row.removeClass();	row.addClass('small table-danger');		}
-		if(sts == 'Fake'){			row.removeClass();	row.addClass('small table-secondary');	} 
+		if(sts == 'New'){			row.removeClass();	row.addClass('h6');					}
+		if(sts == 'Scouting'){		row.removeClass();	row.addClass('h6 table-warning');	}
+		if(sts == 'Thinking'){		row.removeClass();	row.addClass('h6 table-info');		}
+		if(sts == 'Defend'){		row.removeClass();	row.addClass('h6 table-success');	}
+		if(sts == 'Save Artefact'){	row.removeClass();	row.addClass('h6 table-primary');	}
+		if(sts == 'Snipe'){			row.removeClass();	row.addClass('h6 table-danger');		}
+		if(sts == 'Fake'){			row.removeClass();	row.addClass('h6 table-secondary');	} 
 
 	    var xmlhttp = new XMLHttpRequest();
 	    xmlhttp.onreadystatechange = function() {
@@ -170,8 +208,26 @@
 		
         //alert(sts);
 	});
-
 </script>
+<script>
+ 	$("input:checkbox").click(function () {
+ 	    var showAll = true;
+ 	    $('tr').not('.header').hide();
+ 	    $('input[type=checkbox]').each(function () {
+ 	        if ($(this)[0].checked) {
+ 	            showAll = false;
+ 	            var status = $(this).attr('rel');
+ 	            var value = $(this).val();            
+ 	            var row = $('td.' + status + '[rel="' + value + '"]').parent('tr');
+ 	            row.show(); 	            
+ 	        }
+ 	    });
+ 	    if(showAll){
+ 	        $('tr').show();
+ 	        $('tr').not('.show').hide();
+ 	    }
+ 	});
+</script> 
 @endpush
 
 

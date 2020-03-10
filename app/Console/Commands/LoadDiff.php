@@ -65,7 +65,7 @@ class LoadDiff extends Command
                                                 ",alliance='".$village->alliance.
                                                 "',population=".$village->population. 
                                                 ", pop1=population".
-                                " where vid=".$diff->vid." and server_id='".$server->server_id."'";                
+                                " where vid=".$diff->vid." and server_id='".$server->server_id."' and uid=".$village->uid;                
                 DB::update(DB::raw($sqlStr)); 
             }
             echo "Updated the pop changes for last one week"."\n";

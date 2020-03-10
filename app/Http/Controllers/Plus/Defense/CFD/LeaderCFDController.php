@@ -33,10 +33,10 @@ class LeaderCFDController extends Controller
         $atasks=array();    $ctasks=array();
         foreach($tasks as $task){
             
-            if($task->status=="COMPLETE"){
-                $ctasks[]=$task;
-            }else{
+            if($task->status=="ACTIVE"){
                 $atasks[]=$task;
+            }else{
+                $ctasks[]=$task;
             }            
             
         }
@@ -53,7 +53,7 @@ class LeaderCFDController extends Controller
         $task=CFDTask::where('server_id',$request->session()->get('server.id'))
                 ->where('plus_id',$request->session()->get('plus.plus_id'))
                 ->where('task_id',$id)->first();
-        
+        //dd($task);
         $tribes = CFDUpd::where('server_id','=',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))->where('task_id',$id)
                     ->select('tribe_id', DB::raw('sum(UNIT01) as unit_01'), DB::raw('sum(UNIT02) as unit_02'),DB::raw('sum(UNIT03) as unit_03'),
@@ -102,7 +102,7 @@ class LeaderCFDController extends Controller
     public function createCFD(Request $request){
         
         session(['title'=>'Defense']);
-        
+    //dd($request);
         $x=Input::get('xCor');
         $y=Input::get('yCor');
         $def=Input::get('defNeed');
@@ -110,7 +110,12 @@ class LeaderCFDController extends Controller
         $priority=Input::get('priority');
         $type=Input::get('type');
         $comments=Input::get('comments');
-        
+        if(Input::has('crop')){
+            $crop = true;
+        }else{
+            $crop = false;
+        }
+    //dd($crop);
         $village = Diff::where('server_id',$request->session()->get('server.id'))
                         ->where('x',$x)->where('y',$y)->first();
         
@@ -127,6 +132,7 @@ class LeaderCFDController extends Controller
             $task->target_time=$time;   $task->comments=$comments;
             $task->village=$village->village;
             $task->player=$village->player;
+            $task->crop=$crop;
             $task->created_by=$request->session()->get('plus.user');
             
             $task->save();            
@@ -193,6 +199,19 @@ class LeaderCFDController extends Controller
                     ->where('server_id',$request->session()->get('server.id'))->delete();
             
             Session::flash('warning','Defense Call is successfully deleted.');
+        }
+        
+        if(Input::has('withdraw')) {
+            $task_id=Input::get('withdraw');
+
+            date_default_timezone_set($request->session()->get('timezone'));
+
+            CFDTask::where('server_id',$request->session()->get('server.id'))
+                        ->where('task_id',$task_id)
+                        ->update([  'status'=>'WITHDRAW',
+                                    'delete_at'=>  strtotime(Carbon::now()->addDays(1))]);
+            
+            Session::flash('warning','Created notification to Withdraw troops, CFD will be deleted in 24 Hrs');
         }
         
         return Redirect::to('/defense/cfd');

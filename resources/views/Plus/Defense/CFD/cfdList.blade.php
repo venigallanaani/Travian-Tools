@@ -43,7 +43,10 @@
         								</select>
         						</p>
         						<p class="my-2">
-        							<strong>Comments:</strong><textarea name="comments" class="form-control" rows="5"></textarea>
+        							<input type="checkbox" name="crop"> Send Crop
+    							</p>
+        						<p class="my-2">
+        							<strong>Notes:</strong><textarea name="comments" class="form-control" rows="5"></textarea>
         						</p>
         						<p class="my-2">
         							<button class="btn btn-info px-5" name="createDefTask"><strong>Create Task</strong></button>
@@ -67,12 +70,14 @@
     		@else
     <!-- ==================================== List of CFD is progress ======================================= -->		
     			@if(count($atasks)>0)
-    			<div class="text-center py-3 h4">
-					<p>Active CFDs List</p>    			
-    			</div>
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
 					<table class="table align-middle">
-						<thead class="thead-inverse">
+						<thead class="thead-inverse h5">
+    						<tr>
+    							<td colspan="8" class="table-success text-center mx-5 h5 py-2">Active CFDs List</td>    							
+    						</tr>
+						</thead>
+						<thead class="thead-inverse h5">
     						<tr>
     							<th class="">Player</th>    							
     							<th class="">Type</th>
@@ -98,11 +103,11 @@
 								else{$bgcolor ='#e6e6e6';	}
 
 							@endphp
-    						<tr class="small" style="background-color:{{$bgcolor}};">
+    						<tr class="h6" style="background-color:{{$bgcolor}};">
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>    							
-    							<td><strong>{{strtoupper($task->type)}}</strong></td>
+    							<td>{{ucfirst(strtolower($task->type))}}</td>
     							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    
     							<td>{{number_format($task->def_total)}}</td>							
     							<td>{{number_format($task->def_received)}} ({{$task->def_percent}}%)</td>
@@ -118,18 +123,20 @@
 				@endif
 				
 				@if(count($ctasks)>0)
-    			<div class="text-center py-3 h4">
-					<p>Completed CFDs List</p>    			
-    			</div>
-				<div class="text-center col-md-11 mx-auto my-2 p-0">
+				<div class="text-center col-md-11 mx-auto mt-5 p-0">
 					<table class="table align-middle">
+						<thead class="thead-inverse h5">
+    						<tr>
+    							<td colspan="8" class="table-secondary text-center mx-5 h5 py-2">Completed CFDs List</td>    							
+    						</tr>
+						</thead>
 						<thead class="thead-inverse">
     						<tr>
     							<th class="">Player</th>
     							<th class="">Defense</th>
     							<th class="">Type</th>
     							<th class="">Priority</th>
-    							<th class="">%</th>
+    							<th class="">Status</th>
     							<th class="">Land time</th>
     							<th class=""></th>    							
     						</tr>
@@ -141,14 +148,14 @@
 								elseif($task->priority=='low'){$color='text-info';}
 								else{$color="";}
 							@endphp
-    						<tr class="small">
+    						<tr class="h6">
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>
     							<td>{{number_format($task->def_total)}}</td>
-    							<td><strong>{{strtoupper($task->type)}}</strong></td>
+    							<td>{{ucfirst(strtolower($task->type))}}</td>
     							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    							
-    							<td>{{$task->def_percent}}%</td>
+    							<td>{{ucfirst(strtolower($task->status))}}</td>
     							<td>{{$task->target_time}}</td>
     							<td><a class="btn btn-outline-secondary" href="/defense/cfd/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>

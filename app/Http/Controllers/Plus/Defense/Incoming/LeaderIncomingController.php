@@ -30,9 +30,10 @@ class LeaderIncomingController extends Controller
                         //->where('deleteTime','>',strtotime(Carbon::now()))
                         ->orderBy('landTime','asc')->get();
         
-        $att = 0; $def = 0; $waves=0;
-        $attacker[]=array();    
-        $defender[]=array();
+        $att = 0;   $def = 0;   $waves=0;
+        $attacker=array();    
+        $defender=array();
+        $defender=array();
         
         foreach($incomings as $incoming){            
             $waves+=$incoming->waves;    
@@ -63,18 +64,32 @@ class LeaderIncomingController extends Controller
         
         $incomings = $incomings->toArray();        
         
-        $result = array();        
-        $attackers[]=array();        $defenders[]=array();  $index=0;
+        $result = array();          $index=0;
+        $attackers=array();         $defenders=array();         $temp['A']=array();     $temp['D']=array();      $att = 0;   $def = 0;
         
         foreach($incomings as $incoming){
             
             $result[$index]=$incoming;
             
+            if(!in_array($incoming['att_id'],$temp['A'])){
+                $temp['A'][]=$incoming['att_id'];
+                $attackers[$att]['ID']=$incoming['att_id'];
+                $attackers[$att]['NAME']=$incoming['att_player']." (".$incoming['att_village'].")";
+                $att++;
+            }
+            if(!in_array($incoming['def_id'],$temp['D'])){
+                $temp['D'][]=$incoming['def_id'];
+                $defenders[$def]['ID']=$incoming['def_id'];
+                $defenders[$def]['NAME']=$incoming['def_player']." (".$incoming['def_village'].")";
+                $def++;
+            }
+            
+            
             $CFD = CFDTask::where('server_id',$request->session()->get('server.id'))
                                 ->where('plus_id',$request->session()->get('plus.plus_id'))
                                 ->where('x',$incoming['def_x'])->where('y',$incoming['def_y'])
                                 ->orderBy('created_at','desc')->first();
-            
+                
             if($CFD==null){
                 $result[$index]['CFD']=null;
             }else{               
@@ -98,14 +113,14 @@ class LeaderIncomingController extends Controller
                 $result[$index]['VILLAGE']['cap']=$village[0]->cap;
                 $result[$index]['VILLAGE']['artifact']=$village[0]->artifact;
                 $result[$index]['VILLAGE']['type']=$village[0]->type;
-            }
-                                 
+            }                                 
             
             $index++;
         }
 
-        //dd($result);
-        return view('Plus.Defense.Incomings.leaderIncomingsList')->with(['incomings'=>$result]);
+//dd($attackers);
+//dd($result);
+    return view('Plus.Defense.Incomings.leaderIncomingsList')->with(['incomings'=>$result])->with(['attackers'=>$attackers])->with(['defenders'=>$defenders]);
         
     }
     
@@ -172,8 +187,7 @@ class LeaderIncomingController extends Controller
     }
     
 // Update leader notes in the incomings
-    public function updateWaveNotes(Request $request){
-        
+    public function updateWaveNotes(Request $request){        
         
         $wave= Incomings::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))

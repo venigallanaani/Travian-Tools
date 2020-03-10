@@ -29,13 +29,13 @@ class IncomingController extends Controller
         $uid=$account->uid;
         $account_id=$account->account_id;
         
-        $saves=Incomings::where('server_id',$request->session()->get('server.id'))
+        $waves=Incomings::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
-                            ->where('def_uid',$account->uid)
+                            ->where('uid',$account->uid)
                             //->where('deleteTime','>',strtotime(Carbon::now()))
                             ->where('status','SAVED')->orderBy('landTime','asc')->get();                        
-        
-        foreach($saves as $wave){
+//dd($waves);
+        foreach($waves as $wave){
             if($wave->uid == $wave->def_uid){
                 $owaves[]=$wave;
             }else{
@@ -55,8 +55,7 @@ class IncomingController extends Controller
         
         session(['title'=>'Plus']);
         
-        $drafts=null; $saves=null;
-        
+        $drafts=null; $saves=null;        
         $incList=ParseIncoming(Input::get('incStr'));
 //dd($incList);
         

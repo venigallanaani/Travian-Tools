@@ -35,8 +35,7 @@ class processPlayers extends Command
             echo "New process players job started at ".Carbon::now()."\n";
             
             $uIds=MapData::where('table_id','=',$server->table_id)
-                        ->where('uid','<>',1)
-                        ->orderBy('uid','asc')
+                        ->where('uid','<>',1)->orderBy('uid','asc')
                         ->distinct('uid')->pluck('uid');
             
             foreach($uIds as $uid){
