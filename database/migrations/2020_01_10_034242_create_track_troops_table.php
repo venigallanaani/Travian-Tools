@@ -18,6 +18,7 @@ class CreateTrackTroopsTable extends Migration
             $table->string('server_id');
             $table->string('plus_id');
             $table->string('att_id');
+            $table->enum('type',['REPORT','TRACK'])->default('TRACK');
             $table->integer('x');
             $table->integer('y');
             $table->integer('vid');
@@ -25,11 +26,13 @@ class CreateTrackTroopsTable extends Migration
             $table->string('player');
             $table->string('alliance');
             $table->string('tribe');
-            $table->enum('type',['ATTACK','DEFEND','SCOUT'])->default('SCOUT');
-            $table->string('report_date');
-            $table->string('report');
-            $table->integer('upkeep');
-            $table->string('report_data');
+            $table->integer('tsq')->default(0);
+            $table->integer('art')->default(4);
+            $table->enum('type',['ATTACK','DEFEND','SCOUT','TRACK'])->default('TRACK');
+            $table->string('report_date')->nullable();
+            $table->string('report')->nullable();
+            $table->integer('upkeep')->default(0);
+            $table->string('report_data')->nullable();
             $table->string('notes')->nullable();
             $table->timestamps();
         });

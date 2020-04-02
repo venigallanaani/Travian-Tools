@@ -23,6 +23,7 @@ class PlusController extends Controller
     public function index(Request $request){
         
     	session(['title'=>'Plus']);
+    	session(['menu'=>0]);
     	$counts=array();
     	
     	if(!$request->session()->has('server.id')){    	    
@@ -70,6 +71,8 @@ class PlusController extends Controller
                         ->where('server_id',$request->session()->get('server.id'))->first();
                 
                 $request->session()->put('timezone',$subscription->timezone);
+                $request->session()->put('discord',$subscription->discord);
+                $request->session()->put('slack',$subscription->slack);
                         
                 $counts=array(
                    'inc'=>$inc,
@@ -92,7 +95,7 @@ class PlusController extends Controller
     public function members(Request $request){
         
         session(['title'=>'Plus']);
-        
+        session(['menu'=>0]);
         $rows=Plus::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->orderby('account','asc')->get();
@@ -121,20 +124,20 @@ class PlusController extends Controller
     public function member(Request $request, $id){
         
         session(['title'=>'Plus']);
+        session(['menu'=>0]);
         
         $contact=Contacts::where('id',$id)->first();
                             
         return view('Plus.General.member')->with(['contact'=>$contact]);
         
-    }
-    
-    
+    }   
 
 
 //Members ranking details -- only displayable with options from subscription page
     public function rankings(Request $request){
         
         session(['title'=>'Plus']);
+        session(['menu'=>0]);
         
         $subscription = Subscription::where('id',$request->session()->get('plus.id'))
                             ->where('server_id',$request->session()->get('server.id'))->first();

@@ -41,7 +41,10 @@
 					
 					
                 	@if($travels==null)
-                		<p class="py-2 h5 text-danger">No available units can make it to the defense call</p>                	
+            		<div class="py-2">
+                		<p class="h5 text-danger">No available units can make it to the defense call</p>
+                		<p class="h6 text-info font-italic">( Travel times might change based on hero equipment )</p>
+            		</div>
                 	@else
                 	<div>
                 		<table class="table table-bordered table-sm">
@@ -101,7 +104,7 @@
         								@endforeach    								
         							</tr>
         							<tr>
-        								<td class="pr-0 pt-1"><input type="text" name="xCor" size="2" /> | <input type="text" name="yCor" size="2" /></td>
+        								<td class="px-0 pt-1"><input type="text" name="xCor" size="2" /> | <input type="text" name="yCor" size="2" /></td>
         								<td class="px-0 pt-1" ><input type="text" name="unit01" size="5" /></td>
         								<td class="px-0 pt-1"><input type="text" name="unit02" size="5" /></td>
         								<td class="px-0 pt-1"><input type="text" name="unit03" size="5" /></td>
@@ -126,7 +129,7 @@
 					
 					<div class="my-3">
 					@if(count($troops)>0)
-						<p class="h5"><strong>Your Contributions</strong></p>
+						<p class="h5"><strong>Your Troops</strong></p>
 						<table class="table table-bordered table-hover col-md-10 mx-auto">
 							<tr>	
 								<th class="p-0">Village</th>
@@ -152,31 +155,31 @@
     								$res+=$troop->resources;
 								@endphp
     							<tr class="">
-    								<td class="py-1">{{$troop->village}}</td>
-    								<td class="py-1 px-0 small">{{number_format($troop->unit01)}}</td>
-    								<td class="py-1 px-0 small">{{number_format($troop->unit02)}}</td>
-    								<td class="py-1 px-0 small">{{number_format($troop->unit03)}}</td>
-    								<td class="py-1 px-0 small">{{number_format($troop->unit04)}}</td>
-    								<td class="py-1 px-0 small">{{number_format($troop->unit05)}}</td>
-    								<td class="py-1 px-0 small">{{number_format($troop->unit06)}}</td>
-    								<td class="py-1 px-0 small">{{number_format($troop->unit07)}}</td>
-    								<td class="py-1 px-0 small">{{number_format($troop->unit08)}}</td>
-    								<td class="py-1 px-0 small">{{number_format($troop->unit09)}}</td>
-    								<td class="py-1 px-0 small">{{number_format($troop->unit10)}}</td>
+    								<td class="py-0">{{$troop->village}}</td>
+    								<td class="p-0 h6">{{number_format($troop->unit01)}}</td>
+    								<td class="p-0 h6">{{number_format($troop->unit02)}}</td>
+    								<td class="p-0 h6">{{number_format($troop->unit03)}}</td>
+    								<td class="p-0 h6">{{number_format($troop->unit04)}}</td>
+    								<td class="p-0 h6">{{number_format($troop->unit05)}}</td>
+    								<td class="p-0 h6">{{number_format($troop->unit06)}}</td>
+    								<td class="p-0 h6">{{number_format($troop->unit07)}}</td>
+    								<td class="p-0 h6">{{number_format($troop->unit08)}}</td>
+    								<td class="p-0 h6">{{number_format($troop->unit09)}}</td>
+    								<td class="p-0 h6">{{number_format($troop->unit10)}}</td>
     							</tr>				
 							@endforeach
 							<tr>	
 								<td colspan="3" rowspan="2" class="p-0 text-center align-middle" data-toggle="tooltip" data-placement="top" title="Total Troops">
 									<img alt="" src="/images/x.gif" class="res upkeep">: <strong>{{number_format($upkeep)}}</strong></td>
-								<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Total Defense">
+								<td colspan="4" class="p-0 h6 text-center" data-toggle="tooltip" data-placement="top" title="Total Defense">
 									<img alt="" src="/images/x.gif" class="stats def">: {{number_format($defInf + $defCav)}}</td>
-								<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Resources">
+								<td colspan="4" class="p-0 h6 text-center" data-toggle="tooltip" data-placement="top" title="Resources">
 									<img alt="" src="/images/x.gif" class="res all">: {{number_format($res)}}</td>								
 							</tr>
 							<tr>
-								<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Infantry Defense">
+								<td colspan="4" class="p-0 h6 text-center" data-toggle="tooltip" data-placement="top" title="Infantry Defense">
 									<img alt="" src="/images/x.gif" class="stats dinf">: {{number_format($defInf)}}</td>
-								<td colspan="4" class="p-0 text-center" data-toggle="tooltip" data-placement="top" title="Cavalry Defense">
+								<td colspan="4" class="p-0 h6 text-center" data-toggle="tooltip" data-placement="top" title="Cavalry Defense">
 									<img alt="" src="/images/x.gif" class="stats dcav">: {{number_format($defCav)}}</td>								
 							</tr>
 						</table>

@@ -16,19 +16,20 @@
 		<div class="col-md-10 mx-auto rounded pt-2 mb-2" style="background-color:#dbeef4;">
 			<form method="post" action="/plus/incoming">
 				{{csrf_field()}}
-    			<table>
+    			<table class="table table-borderless">
     				<tr>
-    					<td colspan="2"><p class="h4 text-primary text-center"><strong>Input Incoming Details</strong></p></td>
+    					<td colspan="2" class="py-1"><p class="h4 text-primary text-center"><strong>Input Incoming Details</strong></p></td>
     				</tr>
     				<tr>
-    					<td class="align-middle px-2">
-    						<form>								
-    							<textarea rows="3" cols="40" name="incStr" required></textarea>
-    							<p class="text-center"><button class="btn btn-primary" type="submit">Enter Incomings</button></p>
-    						</form>
+    					<td colspan="2" class="py-1 font-italic"><p class="h6 text-center">Enter the incoming attacks details from rally point here <strong><a href="https://{{Session::get('server.url')}}/build.php?gid=16&tt=1&filter=1&subfilters=1" target="_blank">Link</a></strong></p></td>
+    				</tr>
+    				<tr>
+    					<td class="align-middle px-2 py-1">    						    						
+							<textarea rows="3" cols="40" name="incStr" required></textarea>							
     					</td>
-    					<td class="align-top px-2 font-italic">
-    						<p>Enter the incoming attacks details from rally point here <strong><a href="https://{{Session::get('server.url')}}/build.php?gid=16&tt=1&filter=1&subfilters=1" target="_blank">Link</a></strong></p>
+    					<td class="align-top px-2">
+    						<p class="h6"><input type="checkbox" name="scout"> Scout Artifact</p>
+    						<p class=""><button class="btn btn-primary" type="submit">Enter Incomings</button></p>
     					</td>
     				</tr>			
     			</table>
@@ -67,12 +68,12 @@
     					else	{	$color='table-white';	}					
 					@endphp				
     						
-        			<tr class="{{$color}} h6">
-        				<td><strong><a href="{{route('findPlayer')}}/{{$wave->att_player}}/1" target="_blank">{{$wave->att_player}}</a> ({{$wave->att_village}})</strong></td>
-        				<td><strong>{{$wave->def_village}}</strong></td>    				
+        			<tr class="{{$color}}">
+        				<td class="h6"><a href="{{route('findPlayer')}}/{{$wave->att_player}}/1" target="_blank">{{$wave->att_player}}</a> ({{$wave->att_village}})</td>
+        				<td class="h6">{{$wave->def_village}}</td>    				
         				<td>{{$wave->landTime}}</td>
         				<td>{{$wave->waves}}</td>
-        				<td><strong><span id="{{$wave->incid}}"></span></strong></td>
+        				<td class="h6"><span id="{{$wave->incid}}"></span></td>
         				<td>@if($wave->ldr_sts == 'ARTEFACT')
         						Save Artefact
     						@else
@@ -86,7 +87,8 @@
 							{{csrf_field()}}
             				<td colspan="3">
             					<p><a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$wave->att_uid}}" target="_blank"><strong>Attacker Account Information <i class="fas fa-external-link-alt"></i></strong></a></p>
-            					<p><textarea rows="3" cols="25" name="account"></textarea></p>
+            					<p class="py-0"><textarea rows="3" cols="25" name="account"></textarea></p>
+            					<p class="small py-0 text-danger">Enter source code of the account page</p>
             				</td>
             				<td colspan="4" class="py-2">
         						<p class="">
@@ -128,12 +130,12 @@
     					else	{	$color='table-white';	}				
     				@endphp				
     						
-        			<tr class="{{$color}} h6">
-        				<td><strong><a href="{{route('findPlayer')}}/{{$wave->att_player}}/1" target="_blank">{{$wave->att_player}}</a> ({{$wave->att_village}})</strong></td>
-        				<td><strong>{{$wave->def_village}}</strong></td>    				
+        			<tr class="{{$color}}">
+        				<td class="h6"><a href="{{route('findPlayer')}}/{{$wave->att_player}}/1" target="_blank">{{$wave->att_player}}</a> ({{$wave->att_village}})</td>
+        				<td class="h6">{{$wave->def_village}}</td>    				
         				<td>{{$wave->landTime}}</td>
         				<td>{{$wave->waves}}</td>
-        				<td><strong><span id="{{$wave->incid}}"></span></strong></td>
+        				<td class="h6"><span id="{{$wave->incid}}"></span></td>
         				<td>@if($wave->ldr_sts == 'ARTEFACT')
         						Save Artefact
     						@else
@@ -147,7 +149,8 @@
 							{{csrf_field()}}
             				<td colspan="3">
             					<p><a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$wave->att_uid}}" target="_blank"><strong>Attacker Account Information <i class="fas fa-external-link-alt"></i></strong></a></p>
-            					<p><textarea rows="3" cols="25" name="account"></textarea></p>
+            					<p class="py-0"><textarea rows="3" cols="25" name="account"></textarea></p>
+            					<p class="small py-0 text-danger">Enter source code of the account page</p>
             				</td>
             				<td colspan="4" class="py-2">
         						<p class="">

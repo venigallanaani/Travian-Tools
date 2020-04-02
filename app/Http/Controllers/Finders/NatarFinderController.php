@@ -9,18 +9,36 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 
-use App\Diff;
-use App\Players;
-use App\Alliances;
+use App\Servers;
 use App\MapData;
 
 class NatarFinderController extends Controller
 {
  
-    public function natar(){ 
+    public function natar($x=null,$y=null,$pop=null,Request $request){ 
         session(['title'=>'Finders']);
-        //Displays the natar finder
-        return view('Finders.Natar.natarFinder'); 
+        
+        if($x==null || $y==null || $pop==null){
+            //Displays the natar finder
+            return view('Finders.Natar.natarFinder');
+        }else{
+            $tableId=Servers::select('table_id')->where('server_id',$request->session()->get('server.id'))->first();
+            
+            $natars = MapData::selectRaw('*,SQRT(POWER(?-x,2)+POWER(?-y,2)) as distance',[$x,$y])
+                            ->where('table_id',$tableId->table_id)
+                            ->where('population','>=',$pop)->where('uid',1)
+                            ->orderBy('distance')->paginate(50);
+            //dd($natars);
+            if(count($natars)==0){
+                return view('Finders.Natar.noNatar')
+                ->with(['xCor'=>$x,'yCor'=>$y,'pop'=>$pop]);
+            }else{
+                return view('Finders.Natar.natarList')->with(['natars'=>$natars])
+                ->with(['xCor'=>$x,'yCor'=>$y,'pop'=>$pop]);
+            }
+            
+        }
+         
     }
     
     public function processNatar(Request $request){
@@ -29,21 +47,10 @@ class NatarFinderController extends Controller
         
         $xCor=Input::get('xCor');
         $yCor=Input::get('yCor');
-        $dist = Input::get('dist');
+        $pop = Input::get('pop');
         
-        $sqlStr = "SELECT a.* FROM maps_details a, servers b WHERE a.table_id = b.table_id AND b.server_id='".$request->session()->get('server.id')."' and".
-            " ((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) <= ".$dist."*".$dist." AND uid=1 ".
-            " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
-                
-        $natars= DB::select(DB::raw($sqlStr));        
-        //dd($natars);
-        if(count($natars)==0){
-            return view('Finders.Natar.noNatar')
-                    ->with(['xCor'=>$xCor,'yCor'=>$yCor,'dist'=>$dist]);
-        }else{
-            return view('Finders.Natar.natarList')->with(['natars'=>$natars])
-                    ->with(['xCor'=>$xCor,'yCor'=>$yCor,'dist'=>$dist]);
-        }                
+        return Redirect::to('/finders/natar/'.$xCor.'/'.$yCor.'/'.$pop);
+            
     }
 
 }

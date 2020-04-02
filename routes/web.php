@@ -46,12 +46,15 @@ Route::get('/finders/alliance/{name}/{id?}','Finders\AllianceFinderController@al
 
 Route::get('/finders/inactive','Finders\InactiveFinderController@inactive')->name('findInactive');		// Displays the different type of finders
 Route::post('/finders/inactive','Finders\InactiveFinderController@processInactive');		// Displays the result of the inactive finders
+Route::get('/finders/inactive/{x}/{y}/{pop}','Finders\InactiveFinderController@inactive');    // Displays the different type of finders
 
 Route::get('/finders/natar','Finders\NatarFinderController@natar')->name('findNatar');		        // Displays the different type of finders
 Route::post('/finders/natar','Finders\NatarFinderController@processNatar');		// Displays the result of the Natar finders
+Route::get('/finders/natar/{x}/{y}/{pop}','Finders\NatarFinderController@natar');
 
 Route::get('/finders/neighbour','Finders\NeighbourFinderController@neighbour')->name('findNeighbour');		// Displays the different type of finders
 Route::post('/finders/neighbour','Finders\NeighbourFinderController@processNeighbour');		// Displays the result of the neighbour finders
+Route::get('/finders/neighbour/{x}/{y}/{dist}/{pop}/{natar}','Finders\NeighbourFinderController@neighbour');
 
 /* ----------------------------------------------------------------------------------------- */
 /* ------------------------------- Calculators page controller --------------------------------- */
@@ -169,6 +172,10 @@ Route::get('/leader/subscription','Plus\Leader\SubscriptionController@subscripti
 Route::post('/leader/subscription/message','Plus\Leader\SubscriptionController@messageUpdate');
 Route::post('/leader/subscription/options','Plus\Leader\SubscriptionController@optionsUpdate');
 
+/* ----------------------- Discord Settings ---------------------------------------- */
+Route::get('/leader/discord','Plus\Leader\NotificationController@showDiscord');
+Route::post('/leader/discord','Plus\Leader\NotificationController@updateDiscord');
+
 /* -------------------------------------------- Plus Resoruces Routes ---------------------------------------------------- */
 
 /* --------------- Resource Member routes --------------- */
@@ -191,7 +198,7 @@ Route::get('/plus/ldrrpts/delete/{id}','Plus\Reports\ReportsController@deleteLea
 
 Route::get('/plus/reports/hammers','Plus\Reports\ReportsController@showEnemyHammers');
 Route::post('/plus/reports/hammers/add','Plus\Reports\ReportsController@addEnemyHammer');
-Route::get('/plus/reports/hammers/delete/{id}','Plus\Reports\ReportsController@deleteEnemyHammer');
+Route::get('/plus/reports/hammers/{action}/{id}/{value?}','Plus\Reports\ReportsController@processEnemyHammer');
 
 Route::get('/plus/reports/scouts','Plus\PlusController@tdbRoute');
 
@@ -201,12 +208,13 @@ Route::get('/plus/reports/scouts','Plus\PlusController@tdbRoute');
 Route::get('/plus/incoming','Plus\Defense\Incoming\IncomingController@enterIncoming')->name('incoming');
 Route::post('/plus/incoming','Plus\Defense\Incoming\IncomingController@processIncoming');
 Route::post('/plus/incoming/update','Plus\Defense\Incoming\IncomingController@updateIncoming');
+
 /* -------------------- Plus Leader incoming Options -----------------------*/
 Route::get('/defense/incomings','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomings');
 Route::get('/defense/incomings/list','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomingsList');
 
-Route::get('/defense/incomings/update/{id}/{sts}','Plus\Defense\Incoming\LeaderIncomingController@updateWaveStatus');
 Route::post('/defense/incomings/update/comments','Plus\Defense\Incoming\LeaderIncomingController@updateWaveNotes');
+Route::get('/defense/incomings/update/{action}/{id}/{value}','Plus\Defense\Incoming\LeaderIncomingController@updateWaveDetails');
 
 Route::post('/defense/incomings/cfd','Plus\Defense\Incoming\LeaderIncomingController@createCFD');
 Route::get('/defense/attacker/{id}','Plus\Defense\Incoming\LeaderIncomingController@showAttacker');

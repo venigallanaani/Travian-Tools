@@ -18,6 +18,7 @@ class SubscriptionController extends Controller
     public function subscriptions(Request $request){
         
         session(['title'=>'Leader']);
+        session(['menu'=>'1']);
         
         $subscription = Subscription::where('server_id',$request->session()->get('server.id'))
                     ->where('id',$request->session()->get('plus.plus_id'))->first();
@@ -38,7 +39,7 @@ class SubscriptionController extends Controller
         return Redirect::to('/leader/subscription');
     }
     
-    function refreshLink(Request $request){
+    public function refreshLink(Request $request){
         
         $link=str_random(15);
         
@@ -53,20 +54,25 @@ class SubscriptionController extends Controller
         
     }
     
-    function optionsUpdate(Request $request){
+    public function optionsUpdate(Request $request){
         
-        $rank=Input::get('rank');
-        if(Input::get('rank')== null){
-            $rank = 0;
-        }else{
-            $rank = 1;
-        }
+        session(['menu'=>'1']);
+        //$rank=Input::get('rank');
+        if(Input::get('rank')== null){  $rank = 0;
+        }else{  $rank = 1;  }
+        if(Input::get('discord')== null){  $discord = 0;
+        }else{  $discord = 1;  }
+        if(Input::get('slack')== null){  $slack = 0;
+        }else{  $slack = 1;  }
+        
         $timezone=Input::get('zone');
         
         Subscription::where('id',$request->session()->get('plus.plus_id'))
                     ->where('server_id',$request->session()->get('server.id'))
-                    ->update(['rank'=>$rank,
-                              'timezone'=>$timezone
+                    ->update([  'rank'=>$rank,
+                                'timezone'=>$timezone,
+                                'discord'=>$discord,
+                                'slack'=>$slack
                             ]);
         return Redirect::to('/leader/subscription');
     }

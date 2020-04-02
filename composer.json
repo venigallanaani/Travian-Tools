@@ -8,7 +8,7 @@
 	"license" : "MIT",
 	"type" : "project",
 	"require" : {
-		"php" : "^7.1.3",
+		"php" : "^7.4",
 		"fideloper/proxy" : "^4.0",
 		"laravel/framework" : "5.7.*",
 		"laravel/tinker" : "^1.0"
@@ -35,6 +35,8 @@
 			"app/Helpers/Parsers/TroopsParser.php",
 			"app/Helpers/Parsers/IncomingParser.php",
 			"app/Helpers/Parsers/AccountParser.php",
+			"app/Helpers/Notifications/Discord/sendNotifications.php",
+			"app/Helpers/Notifications/Discord/DefenseNotifications.php",
 			"app/Helpers/Graphics.php"
 		]
 	},

@@ -1,7 +1,7 @@
 @extends('Layouts.incomings')
 
 @section('body')
-<div class="card float-md-left col-md-12 mt-1 p-0 shadow">
+<div class="card float-md-left col-md-12 mt-1 p-0 shadow mb-5">
 	<div class="card-header h4 py-2 bg-info text-white"><strong>Incomings List</strong></div>
 @foreach(['danger','success','warning','info'] as $msg)
 	@if(Session::has($msg))
@@ -56,19 +56,21 @@
     			</tr>
     		</table>
 
-		<table class="table mx-auto col-md-12 table-hover table-sm table-bordered shadow">
+		<table class="table mx-auto col-md-12 table-hover table-sm table-bordered shadow align-center" id="incTable">
 			<thead class="thead-inverse bg-info text-white">
 				<tr class="header show">
-					<th class="">Attacker</th>
-					<th class="">Noticed Time</th>
-					<th class="">Defender</th>
-					<th class="">Start Time</th>
-					<th class="">Waves</th>					
 					<th class="">Land Time</th>
+					<th class="">Attacker</th>
+					<th class="">Waves</th>
+					<th class="">Defender</th>
+					<th class="">Notice Time</th>
+					<th class="">Start Time</th>										
 					<th class="">Unit</th>
 					<th class="">Tsq</th>
-					<th class="">Action</th>					
-					<th class="">Details</th>
+					<th class="">Boots</th>
+					<th class="">Artifact</th>
+					<th class="">Action</th>									
+					<th class=""></th>
 				</tr>
 			</thead>
 			@foreach($incomings as $index=>$incoming)
@@ -82,46 +84,110 @@
 					else	{	$color='table-white';	}					
 				@endphp				
 						
-    			<tr class="{{$color}} h6 show" id="{{$incoming['incid']}}">
+    			<tr class="{{$color}} show" id="{{$incoming['incid']}}">
+    				<td class="h6" id="land">{{$incoming['landTime']}}</td>
     				<td class="attack" rel="{{$incoming['att_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['att_x']}}&y={{$incoming['att_y']}}" target="_blank"><strong>{{$incoming['att_player']}}</strong> 
     						({{$incoming['att_village']}}) </a></td>
-					<td>{{$incoming['noticeTime']}}</td>
-    				<td  class="defend" rel="{{$incoming['def_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['def_x']}}&y={{$incoming['def_y']}}" target="_blank"><strong>{{$incoming['def_player']}}</strong>
+					<td class="h6">{{$incoming['waves']}}</td>					
+    				<td class="defend" rel="{{$incoming['def_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['def_x']}}&y={{$incoming['def_y']}}" target="_blank"><strong>{{$incoming['def_player']}}</strong>
     						 ({{$incoming['def_village']}})</a></td>
-			 		<td>{{$incoming['landTime']}}</td>
-    				<td>{{$incoming['waves']}}</td>
-    				<td>{{$incoming['landTime']}}</td>
-    				<td><select id="unit" style="width:5em"><option>0</option>
-    						<option>Legion</option><option>Preat</option><option>Imperian</option><option>Scout</option><option>EI</option>
-    						<option>EC</option><option>Ram</option><option>Cat</option><option>Senator</option><option>Settler</option>   						
+				 	<td class="h6" id="notice">{{$incoming['noticeTime']}}</td>
+			 		<td class="h6" id="start">...</td>   				
+    				<td><select id="unit" style="width:6em" class="small">
+    					@if($incoming['att_tribe']=='ROMAN')
+    						<option @if($incoming['unit']==6) selected @endif value="6">6-Legionnaire</option>
+    						<option @if($incoming['unit']==5) selected @endif value="5">5-Praetorian/Settler</option>
+    						<option @if($incoming['unit']==7) selected @endif value="7">7-Imperian</option>
+    						<option @if($incoming['unit']==14) selected @endif value="14">14-Equites Imperatoris</option>
+    						<option @if($incoming['unit']==10) selected @endif value="10">10-Equites Caesaris</option>
+    						<option @if($incoming['unit']==4) selected @endif value="4">4-Ram/Senator</option>
+    						<option @if($incoming['unit']==3) selected @endif value="3">3-Catapult</option>
+						@endif
+						@if($incoming['att_tribe']=='TEUTON')
+    						<option @if($incoming['unit']==7) selected @endif value="7">7-Maceman/Spearman</option>
+    						<option @if($incoming['unit']==6) selected @endif value="6">6-Axeman</option>
+    						<option @if($incoming['unit']==10) selected @endif value="10">10-Paladin</option>
+    						<option @if($incoming['unit']==9) selected @endif value="9">9-Teutonic Knight</option>
+    						<option @if($incoming['unit']==4) selected @endif value="4">4-Ram/Chief</option>
+    						<option @if($incoming['unit']==3) selected @endif value="3">3-Catapult</option>
+						@endif
+						@if($incoming['att_tribe']=='GAUL')
+    						<option @if($incoming['unit']==7) selected @endif value="7">7-Phalanx</option>
+    						<option @if($incoming['unit']==6) selected @endif value="6">6-Swordsman</option>
+    						<option @if($incoming['unit']==19) selected @endif value="19">19-Theutates Thunder</option>
+    						<option @if($incoming['unit']==14) selected @endif value="14">16-Druidrider</option>
+    						<option @if($incoming['unit']==13) selected @endif value="13">13-Haeduan</option>
+    						<option @if($incoming['unit']==4) selected @endif value="4">4-Ram</option>
+    						<option @if($incoming['unit']==3) selected @endif value="3">3-Catapult</option>
+    						<option @if($incoming['unit']==5) selected @endif value="5">5-Chieftain</option>
+						@endif
+						@if($incoming['att_tribe']=='HUN')
+    						<option @if($incoming['unit']==6) selected @endif value="6">6-Mercenray/Bowman</option>
+    						<option @if($incoming['unit']==16) selected @endif value="16">16-Steppe Rider/Marksman</option>
+    						<option @if($incoming['unit']==14) selected @endif value="14">14-Marauder</option>
+    						<option @if($incoming['unit']==4) selected @endif value="4">4-Ram</option>
+    						<option @if($incoming['unit']==3) selected @endif value="3">3-Catapult</option>
+    						<option @if($incoming['unit']==5) selected @endif value="5">5-Logades</option>
+						@endif
+						@if($incoming['att_tribe']=='EGYPTIAN')
+    						<option @if($incoming['unit']==7) selected @endif value="7">7-Salve Militia/Khopesh Warrior</option>
+    						<option @if($incoming['unit']==6) selected @endif value="6">6-Ash Warden</option>
+    						<option @if($incoming['unit']==15) selected @endif value="15">15-Anhur Guard</option>
+    						<option @if($incoming['unit']==10) selected @endif value="10">10-Resheph Chariot</option>
+    						<option @if($incoming['unit']==4) selected @endif value="4">4-Ram/Normach</option>
+    						<option @if($incoming['unit']==3) selected @endif value="3">3-Catapult</option>
+						@endif  						
     					</select>
     				</td>
-    				<td><select id="tsq"><option>0</option>
-    						<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-    						<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-    						<option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
-    						<option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>    						
+    				<td><select id="tsq">
+							<option @if($incoming['tsq']==0) selected @endif>0</option>		<option @if($incoming['tsq']==1) selected @endif>1</option>
+							<option @if($incoming['tsq']==2) selected @endif>2</option>		<option @if($incoming['tsq']==3) selected @endif>3</option>
+							<option @if($incoming['tsq']==4) selected @endif>4</option>		<option @if($incoming['tsq']==5) selected @endif>5</option>
+							<option @if($incoming['tsq']==6) selected @endif>6</option>		<option @if($incoming['tsq']==7) selected @endif>7</option>
+							<option @if($incoming['tsq']==8) selected @endif>8</option>		<option @if($incoming['tsq']==9) selected @endif>9</option>
+							<option @if($incoming['tsq']==10) selected @endif>10</option>	<option @if($incoming['tsq']==11) selected @endif>11</option>
+							<option @if($incoming['tsq']==12) selected @endif>12</option>	<option @if($incoming['tsq']==13) selected @endif>13</option>
+							<option @if($incoming['tsq']==14) selected @endif>14</option>	<option @if($incoming['tsq']==15) selected @endif>15</option>
+							<option @if($incoming['tsq']==16) selected @endif>16</option>	<option @if($incoming['tsq']==17) selected @endif>17</option>
+							<option @if($incoming['tsq']==18) selected @endif>18</option>	<option @if($incoming['tsq']==19) selected @endif>19</option>	
+							<option @if($incoming['tsq']==20) selected @endif>20</option>
     					</select>
     				</td>
-    				<td class="type" rel="{{$incoming['ldr_sts']}}"><select id="action" name="type">
-    						<option @if($incoming['ldr_sts']=='NEW') selected @endif>New</option>
-    						<option @if($incoming['ldr_sts']=='THINKING') selected @endif>Thinking</option>
-    						<option @if($incoming['ldr_sts']=='SCOUT') selected @endif>Scouting</option>
-    						<option @if($incoming['ldr_sts']=='SNIPE') selected @endif>Snipe</option>
-    						<option @if($incoming['ldr_sts']=='DEFEND') selected @endif>Defend</option>
-    						<option @if($incoming['ldr_sts']=='ARTEFACT') selected @endif>Save Artefact</option>    						 						
-    						<option @if($incoming['ldr_sts']=='FAKE') selected @endif>Fake</option>
+    				<td><select id="boots" style="width:5em;" class="small">
+    						<option @if($incoming['hero_boots']==0) selected @endif value="0">-----</option>
+    						<option @if($incoming['hero_boots']==15) selected @endif value="15">Mercenary Boots</option>
+    						<option @if($incoming['hero_boots']==20) selected @endif value="20">Warrior Boots</option>
+    						<option @if($incoming['hero_boots']==25) selected @endif value="25">Archon Boots</option>    						
     					</select>
     				</td>
-    				<td><button class="btn btn-info btn-sm" id="details" name="button" value="{{$index}}" type="submit"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></td>
+    				<td><select id="art" style="width:4em;" class="small">
+							<option @if($incoming['hero_art']==8) selected @endif value="8">2X</option>
+							<option @if($incoming['hero_art']==6) selected @endif value="6">1.5X</option>
+							<option @if($incoming['hero_art']==4) selected @endif value="4">--</option>
+							<option @if($incoming['hero_art']==3) selected @endif value="3">0.67X</option>
+							<option @if($incoming['hero_art']==2) selected @endif value="2">0.5X</option>  						
+    					</select>
+    				</td>
+    				<td class="type" rel="{{$incoming['ldr_sts']}}">
+    					<select id="action" name="type" style="width:6em;" class="small">
+    						<option @if($incoming['ldr_sts']=='NEW') selected @endif value="NEW">New</option>
+    						<option @if($incoming['ldr_sts']=='THINKING') selected @endif value="THINKING">Thinking</option>
+    						<option @if($incoming['ldr_sts']=='SCOUT') selected @endif value="SCOUT">Scouting</option>
+    						<option @if($incoming['ldr_sts']=='SNIPE') selected @endif value="SNIPE">Snipe</option>
+    						<option @if($incoming['ldr_sts']=='DEFEND') selected @endif value="DEFEND">Defend</option>
+    						<option @if($incoming['ldr_sts']=='ARTEFACT') selected @endif value="ARTEFACT">Save Artefact</option>    						 						
+    						<option @if($incoming['ldr_sts']=='FAKE') selected @endif value="FAKE">Fake</option>
+    					</select>
+    				</td>
+    				<td><button class="btn btn-info btn-sm" id="details" name="button" value="{{$incoming['dist']}}" type="submit"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></td>
     			</tr>
     			<tr style="display: none;background-color:#dbeef4" class="info">
-    				<td colspan="2" class="py-1">
+    				<td colspan="3" class="py-1">
     					<p class="py-0 h5"><a href="/defense/attacker/{{$incoming['att_id']}}" target="_blank"><strong>Track Attacker <i class="fas fa-external-link-alt"></i></strong></a></p>
     					<p class="py-0 h6"><strong>Hero XP - </strong>{{$incoming['hero']}}</p>
-    					<p class="py-0 h6"><strong>Notes - </strong><small>{{$incoming['comments']}}</small></p>
+    					<p class="py-0 h6"><strong>Player Notes - </strong><small>{{$incoming['comments']}}</small></p>
 					</td>
-					<td colspan="2" class="py-1">
+					<td colspan="3" class="py-1">
 						@if($incoming['VILLAGE']==null)
 							<p class="h6"><strong>No Village Details</strong></p>
 						@else
@@ -129,16 +195,16 @@
 							<p class="py-0 h6">
 								<span class="px-1 py-0"><strong>Artifact</strong> - {{ucfirst(strtolower($incoming['VILLAGE']['artifact']))}}</span>
 								@if($incoming['VILLAGE']['cap']==1)
-									<span class="py-0 px-1"><strong>Capital</strong></span>
+									<span class="h5 text-danger">Capital</span>
 								@endif
 							</p>
-							<p class="px-1 py-0"><strong>Village Type-</strong> {{ucfirst(strtolower($incoming['VILLAGE']['type']))}}</p>
+							<p class="px-1 py-0 h6"><strong>Village Type-</strong> {{ucfirst(strtolower($incoming['VILLAGE']['type']))}}</p>
 						@endif					
 					</td>
     				<td colspan="2" class="py-1">
     					@if($incoming['CFD']==null)
     						<p class="py-0 h6">CFD doesn't exists</p>
-    						<p class="py-0 h5"><a href="/defense/cfd/{{$incoming['CFD']['id']}}" target="_blank"><strong>Create CFD</strong><i class="fas fa-external-link-alt"></i></a></p>
+    						<p class="py-0 h5"><a href="/defense/cfd" target="_blank"><strong>Create CFD</strong><i class="fas fa-external-link-alt"></i></a></p>
     					@else
     						<p class="py-0 h5"><strong>CFD - </strong>{{number_format($incoming['CFD']['total'])}} ({{$incoming['CFD']['percent']}}%)</p>
     						<p class="py-0 h6"><span class="px-1 py-0"><strong>Type -</strong> {{$incoming['CFD']['type']}}</span></p>
@@ -173,61 +239,159 @@
     });
 </script>
 <script>
-	$(document).on('change','#tsq',function(e){
-		e.preventDefault();
-		var wave = $(this).closest("tr");	var id= wave.attr("id");	var vid = wave.find('td:eq(1)').attr("id");		
-        //var tsq = wave.find('td:eq(8)').find('select #tsq').val();
-        var tsq=$(this).val();
-        
-        //alert(id+'|||||'+tsq);
-	});
+ 	$("input:checkbox").click(function () {
+ 	    var showAll = true;		$('tr').not('.header').hide();
+ 	    $('input[type=checkbox]').each(function () {
+ 	        if ($(this)[0].checked) {
+ 	            showAll = false;	var status = $(this).attr('rel');	var value = $(this).val();            
+ 	            var row = $('td.' + status + '[rel="' + value + '"]').parent('tr');		row.show(); 	            
+ 	        }
+ 	    });
+ 	    if(showAll){	$('tr').show();		$('tr').not('.show').hide();	}
+ 	});
 </script>
 <script>
-	$(document).on('change','#action',function(e){		
+	$(document).on('change','#action',function(e){
 		e.preventDefault();  
 		
-		var sts = $(this).val();	var row = $(this).closest("tr");	var id = row.attr("id");		
+		var sts = $(this).val();	var row = $(this).closest("tr");	var id = row.attr("id");	
+		var col = $(this).closest("td");	row.removeClass();	
 		
-		if(sts == 'New'){			row.removeClass();	row.addClass('h6');					}
-		if(sts == 'Scouting'){		row.removeClass();	row.addClass('h6 table-warning');	}
-		if(sts == 'Thinking'){		row.removeClass();	row.addClass('h6 table-info');		}
-		if(sts == 'Defend'){		row.removeClass();	row.addClass('h6 table-success');	}
-		if(sts == 'Save Artefact'){	row.removeClass();	row.addClass('h6 table-primary');	}
-		if(sts == 'Snipe'){			row.removeClass();	row.addClass('h6 table-danger');		}
-		if(sts == 'Fake'){			row.removeClass();	row.addClass('h6 table-secondary');	} 
+		if(sts == 'NEW')		{	row.addClass('show');					col.attr("rel","NEW");		}
+		if(sts == 'SCOUT')		{	row.addClass('show table-warning');		col.attr("rel","SCOUT");	}
+		if(sts == 'THINKING')	{	row.addClass('show table-info');		col.attr("rel","THINKING");	}
+		if(sts == 'DEFEND')		{	row.addClass('show table-success');		col.attr("rel","DEFEND");	}
+		if(sts == 'ARTEFACT')	{	row.addClass('show table-primary');		col.attr("rel","ARTEFACT");	}
+		if(sts == 'SNIPE')		{	row.addClass('show table-danger');		col.attr("rel","SNIPE");	}
+		if(sts == 'FAKE')		{	row.addClass('show table-secondary');	col.attr("rel","FAKE");		} 
 
 	    var xmlhttp = new XMLHttpRequest();
 	    xmlhttp.onreadystatechange = function() {
 	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-	        {
-	            console.log(xmlhttp.responseText);
-	        }
+	        {	console.log(xmlhttp.responseText);	}
 	    };
-	    xmlhttp.open("GET", "/defense/incomings/update/"+id+"/"+sts, true);
+	    xmlhttp.open("GET", "/defense/incomings/update/action/"+id+"/"+sts, true);		
 	    xmlhttp.send();
-		
-        //alert(sts);
+
+	 	$("input:checkbox").click(function () {
+	 	    var showAll = true;		$('tr').not('.header').hide();
+	 	    $('input[type=checkbox]').each(function(){
+	 	        if ($(this)[0].checked) {
+	 	            showAll = false;	var status = $(this).attr('rel');	var value = $(this).val();
+	 	            var row = $('td.' + status + '[rel="' + value + '"]').parent('tr');		row.show(); 	            
+	 	        }
+	 	    });
+	 	    if(showAll){	$('tr').show();		$('tr').not('.show').hide();	}
+	 	});
 	});
 </script>
 <script>
- 	$("input:checkbox").click(function () {
- 	    var showAll = true;
- 	    $('tr').not('.header').hide();
- 	    $('input[type=checkbox]').each(function () {
- 	        if ($(this)[0].checked) {
- 	            showAll = false;
- 	            var status = $(this).attr('rel');
- 	            var value = $(this).val();            
- 	            var row = $('td.' + status + '[rel="' + value + '"]').parent('tr');
- 	            row.show(); 	            
- 	        }
- 	    });
- 	    if(showAll){
- 	        $('tr').show();
- 	        $('tr').not('.show').hide();
- 	    }
- 	});
-</script> 
+	$(document).on('change','#art',function(e){
+		e.preventDefault();
+		var id = $(this).closest("tr").attr("id");	var art=$(this).val();
+		//alert(id+'|||||'+art);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+	        {	console.log(xmlhttp.responseText);	}
+	    };
+	    xmlhttp.open("GET", "/defense/incomings/update/art/"+id+"/"+art, true);		
+	    xmlhttp.send();
+	    
+	    var att=$(this).closest("tr").find(".attack").attr('rel');
+        var row = $('td.attack[rel="' + att + '"]').parent('tr');		row.find('#art').val(art); 
+	});
+</script>
+<script>
+	$(document).on('change','#boots',function(e){
+		e.preventDefault();
+		var id = $(this).closest("tr").attr("id");	var boots=$(this).val();
+		//alert(id+'|||||'+boots);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+	        {	console.log(xmlhttp.responseText);	}
+	    };
+	    xmlhttp.open("GET", "/defense/incomings/update/boots/"+id+"/"+boots, true);		
+	    xmlhttp.send();	    
+        
+        var att=$(this).closest("tr").find(".attack").attr('rel');
+        var row = $('td.attack[rel="' + att + '"]').parent('tr');        row.find('#boots').val(boots);
+              
+	});
+</script>
+<script>
+	$(document).on('change','#tsq',function(e){
+		e.preventDefault();
+		var id = $(this).closest("tr").attr("id");	var tsq=$(this).val();
+		//alert(id+'|||||'+boots);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+	        {	console.log(xmlhttp.responseText);	}
+	    };
+	    xmlhttp.open("GET", "/defense/incomings/update/tsq/"+id+"/"+tsq, true);		
+	    xmlhttp.send();	    
+        
+        var att=$(this).closest("tr").find(".attack").attr('rel');
+        var row = $('td.attack[rel="' + att + '"]').parent('tr');		row.find('#tsq').val(tsq); 
+        
+	});
+</script>
+<script>
+	$(document).on('change','#unit',function(e){
+		e.preventDefault();
+		var row = $(this).closest("tr")
+		var id = row.attr("id");	var unit=$(this).val();
+		//alert(id+'|||||'+boots);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+	        {	console.log(xmlhttp.responseText);	}
+	    };
+	    xmlhttp.open("GET", "/defense/incomings/update/unit/"+id+"/"+unit, true);		
+	    xmlhttp.send();	
+	});
+</script>
+<script>	
+	$(document).ready(function(){
+		$('#incTable tr').each(function (i, row){
+			if(i>0){
+				var row = $(row);
+				var id = '"'+row.attr("id")+'"';
+				if(id !== '"undefined"'){
+    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),row.find('#tsq').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+    				row.find("#start").html(time);
+    				
+    				var notice = new Date(row.find('#notice').html()).getTime();
+    				var start = new Date(time).getTime();
+    				if(notice-start<0){	row.find("#start").css("color","red");		
+    				}else{	row.find("#start").css("color","black");	}
+				}
+			}			
+		});
+		
+	});
+</script>
+<script>
+	$("#incTable").on('change',function(e){
+		$('#incTable tr').each(function (i, row){
+			if(i>0){
+				var row = $(row);
+				var id = '"'+row.attr("id")+'"';
+				if(id !== '"undefined"'){
+    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),row.find('#tsq').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+    				row.find("#start").html(time);
+    				
+    				var notice = new Date(row.find('#notice').html()).getTime();
+    				var start = new Date(time).getTime();
+    				if(notice-start<0){	row.find("#start").css("color","red");		
+    				}else{	row.find("#start").css("color","black");	}
+				}
+			}			
+		});
+	});
+</script>
 @endpush
 
 

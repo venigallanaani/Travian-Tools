@@ -14,9 +14,8 @@
                         <td class="">
                             <div class="px-2 py-1">
                                 <strong>Coordinates : </strong><input type="text" size="3" name="xCor" required value="{{isset($xCor) ? $xCor : 0}}"/> | <input type="text" size="3" name="yCor" required value="{{isset($yCor) ? $yCor : 0}}"/>
-                            </div>
-                            <div class="px-2 py-1"><strong>Distance : </strong><input type="text" size="5" min=0 name="dist" required value="{{isset($dist) ? $dist : 50}}"/></div>
-                            <div class="px-2 py-1"><strong>Min Pop : </strong><input type="text" size="5" min=0 name="pop" required value="{{isset($pop) ? $pop : 2}}"/></div>
+                            </div>                            
+                            <div class="px-2 py-1"><strong>Min Population : </strong><input type="text" size="5" min=0 name="pop" required value="{{isset($pop) ? $pop : 2}}"/></div>
                             <div class="px-2 py-1">
                                 <button class="btn btn-outline-warning px-5" type="submit"><div class="mx-3"><strong>Search Inactives</strong></div></button>
                             </div>

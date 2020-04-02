@@ -25,15 +25,15 @@
         			<div class="card-text h6 py-2">
         				<table class="table table-borderless">
         					<tr>            						
-        						<td class="text-center py-1"><strong>Group Owner</strong></td>
+        						<td class="text-right py-1"><strong>Group Owner</strong></td>
         						<td class="text-left py-1">: {{$subscription->owner}} </td>
         					</tr>
         					<tr>            						
-        						<td class="text-center py-1"><strong>Duration</strong></td>
+        						<td class="text-right py-1"><strong>Duration</strong></td>
         						<td class="text-left py-1">: {{$subscription->duration}} <small>days</small></td>
         					</tr>
         					<tr>            						
-        						<td class="text-center py-1"><strong>End Date</strong></td>
+        						<td class="text-right py-1"><strong>End Date</strong></td>
         						<td class="text-left py-1">: {{$subscription->end_date}} </td>
         					</tr>
         				</table>				
@@ -80,8 +80,8 @@
         				<form action="/leader/subscription/options" method="POST" class="text-center">
             				{{ csrf_field() }}
 								<div>
-            						<p class=""><input type="checkbox" name="rank" @php if($subscription->rank== 1){echo 'checked';} @endphp /> Show player rankings</p>
-            						<p class="">Select Group Timezone 
+            						<p class="h6"><input type="checkbox" name="rank" @php if($subscription->rank== 1){echo 'checked';} @endphp /> Show player rankings</p>
+            						<p class="h6">Select Group Timezone 
         								<select name="zone">
         									<option value="Pacific/Auckland" @php if($subscription->timezone == 'Pacific/Auckland'){echo 'selected';} @endphp>Pacific/Auckland (GMT +13)</option>
         									<option value="Pacific/Tarawa" @php if($subscription->timezone == 'Pacific/Tarawa'){echo 'selected';} @endphp>Pacific/Tarawa (GMT +12)</option>
@@ -109,6 +109,13 @@
         									<option value="Pacific/Honolulu" @php if($subscription->timezone == 'Pacific/Honolulu'){echo 'selected';} @endphp>Pacific/Honolulu (GMT -10)</option>
         								</select> 
             						</p>
+            						<div class="my-3 h6">
+                						<p class="h4 text-info">Group Notifications</p>
+                						<p class="">
+                							<span class="px-2"><input type="checkbox" name="discord" @if($subscription->discord== 1) checked @endif /> Discord </span>
+                							<span class="px-2 text-danger"><input type="checkbox" name="slack" @if($subscription->slack== 1)checked @endif /> Slack (TBD) </span>
+            							</p>
+            						</div>
 								</div>
         					<button class="btn btn-info btn-lg px-5" type="submit">Save</button>						
         				</form>					

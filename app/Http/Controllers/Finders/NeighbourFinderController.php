@@ -9,17 +9,42 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 
-use App\Diff;
-use App\Players;
-use App\Alliances;
 use App\MapData;
+use App\Servers;
 
 class NeighbourFinderController extends Controller
 {
-    public function neighbour(){       
+    public function neighbour($x=null,$y=null,$dist=null,$pop=null,$natar=null,Request $request){       
         session(['title'=>'Finders']);
-        //Displays the neighbour finder
-        return view('Finders.Neighbour.neighbourFinder');
+        
+        if($x==null || $y==null || $pop==null || $dist==null){
+            //Displays the neighbour finder
+            return view('Finders.Neighbour.neighbourFinder');
+        }else{
+            
+            $tableId=Servers::select('table_id')->where('server_id',$request->session()->get('server.id'))->first();
+            
+            if($natar==0){
+                $villages = MapData::selectRaw('*,SQRT(POWER(?-x,2)+POWER(?-y,2)) as distance',[$x,$y])
+                                ->where('table_id',$tableId->table_id)
+                                ->where('population','>=',$pop)->where('uid','<>',1)
+                                ->orderBy('distance')->paginate(50);
+            }else{
+                $villages = MapData::selectRaw('*,SQRT(POWER(?-x,2)+POWER(?-y,2)) as distance',[$x,$y])
+                                ->where('table_id',$tableId->table_id)
+                                ->where('population','>=',$pop)
+                                ->orderBy('distance')->paginate(50);
+            }
+            
+                        
+            if(count($villages)==0){
+                return view('Finders.Neighbour.noNeighbours')
+                            ->with(['xCor'=>$x, 'yCor'=>$y, 'dist'=>$dist, 'pop'=>$pop]);
+            }else{
+                return view('Finders.Neighbour.neighboursList')->with(['villages'=>$villages])
+                            ->with(['xCor'=>$x, 'yCor'=>$y, 'dist'=>$dist, 'pop'=>$pop]);
+            }
+        }
     }
     
     public function processNeighbour(Request $request){
@@ -33,35 +58,9 @@ class NeighbourFinderController extends Controller
         $natar=Input::get('natar');
         
         if($natar==null){
-            $sqlStr = "SELECT a.* FROM maps_details a, servers b WHERE a.table_id = b.table_id AND b.server_id='".$request->session()->get('server.id')."' AND".
-                "((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) <= ".$dist."*".$dist.
-                " AND a.population >=".$pop." AND a.uid <> 1".
-                " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
+            return Redirect::to('/finders/neighbour/'.$xCor.'/'.$yCor.'/'.$dist.'/'.$pop.'/0');
         }else{
-            $sqlStr = "SELECT a.* FROM maps_details a, servers b WHERE a.table_id = b.table_id AND b.server_id='".$request->session()->get('server.id')."' AND".
-                "((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) <= ".$dist."*".$dist.
-                " AND a.population >=".$pop.
-                " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
-        }
-        
-        $villages= DB::select(DB::raw($sqlStr));        
-        
-        /* $villages=DB::table('maps_details')
-                    ->join('servers','servers.server_id','=','maps_details.server_id')
-                    ->selectRaw('maps_details.*')
-                    ->where('servers.table_id','=','maps_details.table_id')
-                    ->where('servers.server_id','=',$request->session()->get('server.id'))
-                    ->where('maps_details.population','<=',$pop)
-                    ->whereRaw("((".$xCor."-maps_details.x)*(".$xCor."-maps_details.x)+(".$yCor."-maps_details.y)*(".$yCor."-maps_details.y) <= ".$dist."*".$dist.")")                    
-                    ->orderByRaw("(".$xCor."-maps_details.x)*(".$xCor."-maps_details.x)+(".$yCor."-maps_details.y)*(".$yCor."-maps_details.y) ASC")
-                    ->paginate(50);    */    
-
-        if(count($villages)==0){
-            return view('Finders.Neighbour.noNeighbours')
-                ->with(['xCor'=>$xCor, 'yCor'=>$yCor, 'dist'=>$dist, 'pop'=>$pop]);
-        }else{
-            return view('Finders.Neighbour.neighboursList')->with(['villages'=>$villages])
-                ->with(['xCor'=>$xCor, 'yCor'=>$yCor, 'dist'=>$dist, 'pop'=>$pop]);
-        }
+            return Redirect::to('/finders/neighbour/'.$xCor.'/'.$yCor.'/'.$dist.'/'.$pop.'/1');
+        }        
     }
 }

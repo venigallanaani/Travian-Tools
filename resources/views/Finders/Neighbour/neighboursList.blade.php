@@ -2,7 +2,6 @@
 
 @section('result')
 
-
 <!-- ========================================= Natar Finder -- Village found ======================================================== -->
 
     <div class="card float-md-left my-1 p-0 col-md-12 shadow mb-5">
@@ -10,7 +9,7 @@
             <strong>Neighbourhood Scan</strong>
         </div>
         <div class="card-text mx-auto text-center col-md-10 ">
-            <table class="table table-hover table-sm small" id="sortableTable">
+            <table class="table table-hover table-sm">
                 <tr class="h6">
                     <th>Distance</th>
                     <th>Village</th>
@@ -32,24 +31,19 @@
             			else {	$tribe='Natar';	}
         			@endphp
                     <tr>
-                        <td class="py-0">{{round(sqrt(pow(($xCor-$village->x),2)+pow(($yCor-$village->y),2)),1)}}</td>
-                        <td class="py-0">{{$village->village}}</td>
-                        <td class="py-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$village->x}}&y={{$village->y}}" target="_blank">{{$village->x}}|{{$village->y}}</a></td>
+                        <td class="py-0">{{round($village->distance,1)}}</td>
+                        <td class="py-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village->x}}&y={{$village->y}}" target="_blank">{{$village->village}}</a></td>
+                        <td class="py-0">{{$village->x}}|{{$village->y}}</td>
                         <td class="py-0"><a href="/finders/player/{{$village->player}}/1">{{$village->player}}</a></td>
                         <td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$tribe}}"><img alt="" src="/images/x.gif" class="tribe {{$tribe}}"></td>
                         <td class="py-0"><a href="/finders/alliance/{{$village->alliance}}/1">{{$village->alliance}}</a></td>
                         <td class="py-0">{{$village->population}}</td>
                     </tr>
                 @endforeach
-            </table>      
+            </table>  
+            {{ $villages->links() }}    
         </div>
     </div>
 
-
 @endsection
 
-@push('scripts')
-<script>
-
-</script>
-@endpush

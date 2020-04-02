@@ -47,16 +47,16 @@
 								else{$bgcolor ='#e6e6e6';	}
 								
 							@endphp
-    						<tr style="background-color:{{$bgcolor}};">
-    							<td><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
+    						<tr class="" style="background-color:{{$bgcolor}};">
+    							<td class="px-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>
-    							<td>{{number_format($task->def_remain)}}</td>
-    							<td><strong>{{ucfirst(strtolower($task->type))}}</strong></td>
+    							<td class="px-0">{{number_format($task->def_remain)}}</td>
+    							<td class="px-0"><strong>{{ucfirst(strtolower($task->type))}}</strong></td>
     							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>
-    							<td>{{$task->target_time}}</td>
-    							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
-    							<td><a class="btn btn-outline-secondary" href="/plus/defense/{{$task->task_id}}">
+    							<td class="px-0">{{$task->target_time}}</td>
+    							<td class="px-0"><strong><span id="{{$task->task_id}}"></span></strong></td>
+    							<td class="px-0"><a class="btn btn-outline-secondary" href="/plus/defense/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
     						</tr>
@@ -69,7 +69,7 @@
 					<div class="text-center mx-auto col-md-8 my-4">
 						<p class="bg-warning h4 py-1"> Troops Withdrawl Request </p>
 					@foreach($withdraws as $withdraw)
-						<p class="h6"> Withdraw your reinforcements from <strong><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task->x}}&y={{$task->y}}" target="_blank">{{$withdraw['PLAYER']}} ({{$withdraw['VILLAGE']}})</a></strong></p>		
+						<p class="h6"> Withdraw your reinforcements from <strong><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$withdraw['X']}}&y={{$withdraw['Y']}}" target="_blank">{{$withdraw['PLAYER']}} ({{$withdraw['VILLAGE']}})</a></strong></p>		
 					@endforeach	
 					</div>			
 				@endif

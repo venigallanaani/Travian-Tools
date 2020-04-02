@@ -62,10 +62,8 @@
 		</div>		
 	</div>
 	@else
-    <div class="col-7 col-md-7 mx-auto">
-        
+    <div class="col-7 col-md-7 mx-auto">        
         @yield('body')
-
     </div>
     @endif
 @endif
@@ -73,7 +71,7 @@
 @endauth
 
 
-	@push('scripts')
+	@push('extensions')
 		<script type="text/javascript" src="{{ asset('js/moment.js') }}"></script> 
         <script type="text/javascript" src="{{ asset('js/moment-timezone-with-data-2012-2022.min.js') }}"></script> 
         <script>        	

@@ -104,16 +104,16 @@
 
 							@endphp
     						<tr class="h6" style="background-color:{{$bgcolor}};">
-    							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
+    							<td class="px-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>    							
-    							<td>{{ucfirst(strtolower($task->type))}}</td>
+    							<td class="px-0">{{ucfirst(strtolower($task->type))}}</td>
     							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    
-    							<td>{{number_format($task->def_total)}}</td>							
-    							<td>{{number_format($task->def_received)}} ({{$task->def_percent}}%)</td>
-    							<td>{{$task->target_time}}</td>
+    							<td class="px-0">{{number_format($task->def_total)}}</td>							
+    							<td class="px-0">{{number_format($task->def_received)}} ({{$task->def_percent}}%)</td>
+    							<td class="px-0">{{$task->target_time}}</td>
     							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
-    							<td><a class="btn btn-outline-secondary" href="/defense/cfd/{{$task->task_id}}">
+    							<td class="px-1"><a class="btn btn-outline-secondary" href="/defense/cfd/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
     						</tr>

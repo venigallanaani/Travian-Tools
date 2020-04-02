@@ -65,8 +65,7 @@ class profileController extends Controller
             $account=Account::where('server_id',$row->server_id)
                         ->where('user_id',Auth::user()->id)->first();
             
-            if(!$account==null){
-                
+            if(!$account==null){                
                 $plus = Plus::where('server_id',$row->server_id)
                             ->where('id', Auth::user()->id)->first();
                 if(!$plus == null){

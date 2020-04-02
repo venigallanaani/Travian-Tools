@@ -24,10 +24,10 @@ use App\Villages;
 class LeaderIncomingController extends Controller
 {    
     public function LeaderIncomings(Request $request){
-        
+        session(['menu'=>3]);
         $incomings = Incomings::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        //->where('deleteTime','>',strtotime(Carbon::now()))
+                        ->where('landTime','>',Carbon::now()->format('Y-m-d H:i:s'))
                         ->orderBy('landTime','asc')->get();
         
         $att = 0;   $def = 0;   $waves=0;
@@ -56,20 +56,21 @@ class LeaderIncomingController extends Controller
     public function LeaderIncomingsList(Request $request){
         
         session(['title'=>'Incomings']);
-        
+        session(['menu'=>3]);
         $incomings = Incomings::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
-                            //->where('deleteTime','>',strtotime(Carbon::now()))
+                            //->where('landTime','>',Carbon::now()->format('Y-m-d H:i:s'))
                             ->orderBy('landTime','asc')->get();
         
         $incomings = $incomings->toArray();        
-        
+//dd($incomings);
         $result = array();          $index=0;
         $attackers=array();         $defenders=array();         $temp['A']=array();     $temp['D']=array();      $att = 0;   $def = 0;
         
         foreach($incomings as $incoming){
             
             $result[$index]=$incoming;
+            $result[$index]['dist']=pow(pow($incoming['att_x']-$incoming['def_x'],2)+pow($incoming['att_y']-$incoming['def_y'],2),0.5);
             
             if(!in_array($incoming['att_id'],$temp['A'])){
                 $temp['A'][]=$incoming['att_id'];
@@ -82,8 +83,7 @@ class LeaderIncomingController extends Controller
                 $defenders[$def]['ID']=$incoming['def_id'];
                 $defenders[$def]['NAME']=$incoming['def_player']." (".$incoming['def_village'].")";
                 $def++;
-            }
-            
+            }            
             
             $CFD = CFDTask::where('server_id',$request->session()->get('server.id'))
                                 ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -113,21 +113,21 @@ class LeaderIncomingController extends Controller
                 $result[$index]['VILLAGE']['cap']=$village[0]->cap;
                 $result[$index]['VILLAGE']['artifact']=$village[0]->artifact;
                 $result[$index]['VILLAGE']['type']=$village[0]->type;
-            }                                 
+            }
             
             $index++;
         }
-
 //dd($attackers);
 //dd($result);
-    return view('Plus.Defense.Incomings.leaderIncomingsList')->with(['incomings'=>$result])->with(['attackers'=>$attackers])->with(['defenders'=>$defenders]);
+        return view('Plus.Defense.Incomings.leaderIncomingsList')->with(['incomings'=>$result])
+                        ->with(['attackers'=>$attackers])->with(['defenders'=>$defenders]);
         
     }
     
 
  // show the attacker tracking page
     public function showAttacker(Request $request, $id){
-        
+        session(['menu'=>3]);
         //session(['title'=>'Incoming Tracker']);
         
         $incomings = Incomings::where('server_id',$request->session()->get('server.id'))
@@ -145,10 +145,8 @@ class LeaderIncomingController extends Controller
         $units = $units->toArray();
         
         if($report!=null){
-            $report = $report->toArray();
-            
-            $report['troops']=explode('|',$report['report_data']);
-            
+            $report = $report->toArray();            
+            $report['troops']=explode('|',$report['report_data']);            
         }
         
         $tracks = IncTrack::where('server_id',$request->session()->get('server.id'))
@@ -156,8 +154,6 @@ class LeaderIncomingController extends Controller
                         ->where('att_id',$id)->orderBy('save_time','desc')->get();
         $tracks = $tracks->toArray();
         
-        //dd($tracks);
-//dd($attack);
         session(['title'=>'Tracker-'.$incomings[0]['att_player']]);
         
         return view('Plus.Defense.Incomings.trackIncoming')->with(['report'=>$report])->with(['incomings'=> $incomings])
@@ -165,64 +161,84 @@ class LeaderIncomingController extends Controller
         
     }
 
-// Ajax update of the status of the project
-    public function updateWaveStatus(Request $request, $id, $sts){
-        
-        $wave= Incomings::where('server_id',$request->session()->get('server.id'))
-                    ->where('plus_id',$request->session()->get('plus.plus_id'))
-                    ->where('incid',$id)->first();
-        
-        if($sts=='Scouting'){ $wave->ldr_sts='SCOUT';}
-        elseif($sts=='Thinking'){ $wave->ldr_sts='THINKING';}
-        elseif($sts=='Defend'){ $wave->ldr_sts='DEFEND';}
-        elseif($sts=='Save Artefact'){ $wave->ldr_sts='ARTEFACT';}
-        elseif($sts=='Snipe'){ $wave->ldr_sts='SNIPE';}
-        elseif($sts=='Fake'){ $wave->ldr_sts='FAKE';}
-        elseif($sts=='New'){ $wave->ldr_sts='NEW';}
-        else $wave->ldr_sts=$sts;
-        
-        $wave->updated_by = Auth::user()->name;        
-        $wave->save();                    
-        
-    }
     
 // Update leader notes in the incomings
     public function updateWaveNotes(Request $request){        
         
         $wave= Incomings::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
-                    ->where('incid',Input::get('wave'))->first();
-        
+                    ->where('incid',Input::get('wave'))->first();        
         //dd($wave);
-        $wave->ldr_nts = Input::get('comments');
         
+        $wave->ldr_nts = Input::get('comments');        
         $wave->updated_by = Auth::user()->name;
         $wave->save();
         
         return redirect::back();
         
     }
+
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+// Ajax update of the status of the waves
+    public function updateWaveDetails($action, $id, $value, Request $request){
+        
+        $wave= Incomings::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('incid',$id)->first();
+    //update the status of the waves    -- applies just to this wave - update incomings
+        if(strtoupper($action)=='ACTION'){
+        
+            $wave->ldr_sts=$value;                
+            $wave->updated_by = Auth::user()->name;
+            $wave->save();
+        
+        }
+    //update the unit of the wave - applies just to this wave - update incomings
+        if(strtoupper($action)=='UNIT'){
+            
+            $wave->unit = $value;
+            $wave->updated_by = Auth::user()->name;
+            $wave->save();
+            
+        }
+    //update the tsq of the attacker - applies to all the waves from the attacker - update incomings & track troops
+        if(strtoupper($action)=='TSQ'){
+            
+            Incomings::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('att_id',$wave->att_id)
+                            ->update([  'tsq'=>$value,
+                                        'updated_by'=>Auth::user()->name
+                                    ]);
+            TrackTroops::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('att_id',$wave->att_id)
+                            ->update(['tsq'=>$value]);
+            
+        }    
+    //update the boots of the attacker - applies to all the waves from the attacker - update incomings & track troops
+        if(strtoupper($action)=='BOOTS'){
+            Incomings::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('att_id',$wave->att_id)
+                            ->update([  'hero_boots'=>$value,
+                                        'updated_by'=>Auth::user()->name
+                                    ]);
+        }
+    //update the artifact of the attacker - applies to all the waves from the attacker - update incomings & track troops
+        if(strtoupper($action)=='ART'){
+            Incomings::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('att_id',$wave->att_id)
+                            ->update([  'hero_art'=>$value,
+                                        'updated_by'=>Auth::user()->name
+                                    ]);
+            TrackTroops::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('att_id',$wave->att_id)
+                            ->update(['art'=>$value]);            
+        }
+    }
     
 }

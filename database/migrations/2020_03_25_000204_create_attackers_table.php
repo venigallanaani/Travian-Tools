@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIncomingListsTable extends Migration
+class CreateAttackersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,12 @@ class CreateIncomingListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('incomingLists', function (Blueprint $table) {
-            
+        Schema::create('attackers', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('server_id');
             $table->string('plus_id');
-            $table->string('uid');
-            $table->string('player');
-            $table->string('village');
-            $table->integer('tsq')->default(0);
-            $table->string('comments');
-            
+            $table->string('att_id');
+            $table->string('tsq');
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ class CreateIncomingListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('incomingLists');
+        Schema::dropIfExists('attackers');
     }
 }

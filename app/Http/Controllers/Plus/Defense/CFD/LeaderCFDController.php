@@ -25,6 +25,7 @@ class LeaderCFDController extends Controller
     public function CFDList(Request $request){
         
         session(['title'=>'Defense']);
+        session(['menu'=>3]);
         
         $tasks = CFDTask::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -49,6 +50,7 @@ class LeaderCFDController extends Controller
     public function CFDDetail(Request $request, $id){         
         
         session(['title'=>'Defense']);
+        session(['menu'=>3]);
         
         $task=CFDTask::where('server_id',$request->session()->get('server.id'))
                 ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -86,6 +88,7 @@ class LeaderCFDController extends Controller
     public function CFDTroops(Request $request, $id, $uid){
         
         session(['title'=>'Defense']);
+        session(['menu'=>3]);
         
         $troops=CFDUpd::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -102,6 +105,7 @@ class LeaderCFDController extends Controller
     public function createCFD(Request $request){
         
         session(['title'=>'Defense']);
+        session(['menu'=>3]);
     //dd($request);
         $x=Input::get('xCor');
         $y=Input::get('yCor');
@@ -137,14 +141,46 @@ class LeaderCFDController extends Controller
             
             $task->save();            
             
-            Session::flash('success', 'Task successfully created for '.$village->player.' at village-'.$village->village);
-        }        
+            Session::flash('success', 'Task successfully created for '.$village->player.' at village-'.$village->village);            
+            
+        // Discord call
+            if($request->session()->get('discord')==1){
+                
+                $task = CFDTask::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('x',$x)->where('y',$y)->where('target_time',$time)->first();
+                
+                //dd($task);                            
+                $discord['status']  = 'NEW';
+                $discord['village'] = $village->village;
+                $discord['player']  = $village->player;
+                $discord['defense'] = $def;
+                $discord['type']    = $type;
+                $discord['priority']= $priority;
+                $discord['time']    = $time;
+                $discord['x']       = $x;       $discord['y']       = $y;
+                $discord['url']     = 'https://'.$request->session()->get('server.url').'/position_details.php?x='.$x.'&y='.$y;
+                $discord['link']    = env("SITE_URL","https://www.travian-tools.com").'/plus/defense/'.$task->task_id;
+                $discord['crop']    = $crop;
+                $discord['notes']   = $comments;
+                
+                
+                //dd($discord);
+                DiscordCFDNotification($discord,$request->session()->get('server.id'),$request->session()->get('plus.plus_id'));   
+            }
+            //dd($result);
+
+        }
+        
         return Redirect::to('/defense/cfd');
         
     }
     
     public function processCFD(Request $request){
         
+        //dd($request);
+        
+        session(['menu'=>3]);
         $def = Input::get('defNeed');
         $time = Input::get('targetTime');
         $comments = Input::get('comments');
@@ -177,7 +213,27 @@ class LeaderCFDController extends Controller
                                 'status'=>$status,
                                 'comments'=>$comments]);
             
-            Session::flash('success','Defense Call is successfully updated.');             
+            Session::flash('success','Defense Call is successfully updated.');    
+            
+            if($request->session()->get('discord')==1){
+                            
+                $discord['status']  = 'UPDATE';
+                $discord['village'] = $task->village;
+                $discord['player']  = $task->player;
+                $discord['defense'] = $def;
+                $discord['type']    = $type;
+                $discord['priority']= $priority;
+                $discord['time']    = $time;
+                $discord['x']       = $task->x;       $discord['y']       = $task->y;
+                $discord['url']     = 'https://'.$request->session()->get('server.url').'/position_details.php?x='.$task->x.'&y='.$task->y;
+                $discord['link']    = env("SITE_URL","https://www.travian-tools.com").'/plus/defense/'.$task_id;
+                $discord['crop']    = $task->crop;
+                $discord['notes']   = $comments;
+                
+                DiscordCFDNotification($discord,$request->session()->get('server.id'),$request->session()->get('plus.plus_id'));
+            }
+            
+            
         }
         
         if(Input::has('complete')) {
@@ -188,10 +244,52 @@ class LeaderCFDController extends Controller
                         ->update(['status'=>'COMPLETE']);
             
             Session::flash('info','Defense Call is marked completed.');
+            
+            if($request->session()->get('discord')==1){
+                
+                $task=CFDTask::where('server_id',$request->session()->get('server.id'))
+                                    ->where('task_id',$task_id)->first();
+                
+                $discord['status']  = 'COMPLETE';
+                $discord['village'] = $task->village;
+                $discord['player']  = $task->player;
+                $discord['defense'] = null;
+                $discord['type']    = null;
+                $discord['priority']= null;
+                $discord['time']    = $time;
+                $discord['x']       = $task->x;       $discord['y']       = $task->y;
+                $discord['url']     = 'https://'.$request->session()->get('server.url').'/position_details.php?x='.$task->x.'&y='.$task->y;
+                $discord['link']    = env("SITE_URL","https://www.travian-tools.com").'/plus/defense/'.$task_id;
+                $discord['crop']    = null;
+                $discord['notes']   = $comments;
+                
+                DiscordCFDNotification($discord,$request->session()->get('server.id'),$request->session()->get('plus.plus_id'));
+            }
         }
         
         if(Input::has('delete')) {
             $task_id=Input::get('delete');
+            
+            if($request->session()->get('discord')==1){
+                
+                $task=CFDTask::where('server_id',$request->session()->get('server.id'))
+                ->where('task_id',$task_id)->first();
+                
+                $discord['status']  = 'DELETE';
+                $discord['village'] = $task->village;
+                $discord['player']  = $task->player;
+                $discord['defense'] = null;
+                $discord['type']    = null;
+                $discord['priority']= null;
+                $discord['time']    = null;
+                $discord['x']       = $task->x;       $discord['y']       = $task->y;
+                $discord['url']     = 'https://'.$request->session()->get('server.url').'/position_details.php?x='.$task->x.'&y='.$task->y;
+                $discord['link']    = env("SITE_URL","https://www.travian-tools.com").'/plus/defense/'.$task_id;
+                $discord['crop']    = null;
+                $discord['notes']   = $comments;
+                
+                DiscordCFDNotification($discord,$request->session()->get('server.id'),$request->session()->get('plus.plus_id'));
+            }
             
             CFDUpd::where('task_id',$task_id)
                     ->where('server_id',$request->session()->get('server.id'))->delete();
@@ -212,13 +310,34 @@ class LeaderCFDController extends Controller
                                     'delete_at'=>  strtotime(Carbon::now()->addDays(1))]);
             
             Session::flash('warning','Created notification to Withdraw troops, CFD will be deleted in 24 Hrs');
+            
+            if($request->session()->get('discord')==1){
+                
+                $task=CFDTask::where('server_id',$request->session()->get('server.id'))
+                ->where('task_id',$task_id)->first();
+                
+                $discord['status']  = 'WITHDRAW';
+                $discord['village'] = $task->village;
+                $discord['player']  = $task->player;
+                $discord['defense'] = null;
+                $discord['type']    = null;
+                $discord['priority']= null;
+                $discord['time']    = $time;
+                $discord['x']       = $task->x;       $discord['y']       = $task->y;
+                $discord['url']     = 'https://'.$request->session()->get('server.url').'/position_details.php?x='.$task->x.'&y='.$task->y;
+                $discord['link']    = env("SITE_URL","https://www.travian-tools.com").'/plus/defense/'.$task_id;
+                $discord['crop']    = null;
+                $discord['notes']   = null;
+                
+                DiscordCFDNotification($discord,$request->session()->get('server.id'),$request->session()->get('plus.plus_id'));
+            }
         }
         
         return Redirect::to('/defense/cfd');
     }
     
     public function CFDTravel(Request $request,$id){
-        
+        session(['menu'=>3]);
         $task=CFDTask::where('server_id',$request->session()->get('server.id'))
                 ->where('plus_id',$request->session()->get('plus.plus_id'))
                 ->where('task_id',$id)->first();

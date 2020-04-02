@@ -8,17 +8,20 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use lluminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+
 use Carbon\Carbon;
 use App\Plus;
 use App\Account;
 use App\Players;
 use App\Subscription;
+
 class LeaderController extends Controller
 {
 // displays the leadership access page to edit and/or add players to group
     public function access(Request $request){
         
         session(['title'=>'Leader']);
+        session(['menu'=>'1']);
                 
         $plus=Plus::where('server_id',$request->session()->get('server.id'))
                     ->where('id',Auth::user()->id)->first();
@@ -162,7 +165,7 @@ class LeaderController extends Controller
     
 // Access link to join the Plus group
     function joinPlusGroup(Request $request, $link){
-        
+        session(['menu'=>'1']);
         session(['title'=>'Plus']);
         // Check server selected        
         if(!$request->session()->has('server.id')){
@@ -261,6 +264,7 @@ class LeaderController extends Controller
     public function showRankings(Request $request){
         
         session(['title'=>'Leader']);
+        session(['menu'=>'1']);
         
         $plus=Plus::where('server_id',$request->session()->get('server.id'))
                     ->where('id',Auth::user()->id)->first();

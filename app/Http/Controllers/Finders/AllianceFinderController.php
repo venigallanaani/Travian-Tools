@@ -31,18 +31,16 @@ class AllianceFinderController extends Controller
                 $alliances=Alliances::where('alliance','=',$name)
                             ->where('server_id',$request->session()->get('server.id'))->get();
             }
-            
+//dd($alliances);
             if(count($alliances)==0){
-                // no players are found in search results
+                // no alliances are found in search results
                 return view('Finders.Alliance.noAlliance')->with('allyNm',$name);
                 
             }elseif(count($alliances)>1){
-                // more than one player is found in search results
-                //dd($players);
+                // more than one alliance is found in search results
                 return view('Finders.Alliance.manyAlliances')->with(['alliances'=>$alliances])->with('allyNm',$name);                
             }else{
                 //one player is found in the search results
-                // fetching the villages details from diff table
                 $players=Players::where('server_id',$alliances[0]->server_id)
                             ->where('aid',$alliances[0]->aid)
                             ->orderBy('population','desc')->get();

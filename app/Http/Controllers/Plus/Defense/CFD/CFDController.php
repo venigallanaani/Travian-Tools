@@ -183,6 +183,41 @@ class CFDController extends Controller
             }
             Session::flash('success','Defense task is successfully updated.');
             
+    // Discord Notifications
+            if($request->session()->get('discord')==1){
+                
+                $task=CFDTask::where('server_id',$request->session()->get('server.id'))
+                            ->where('task_id',$id)->first();
+                if($status == 'COMPLETE'){
+                    $discord['status']  = 'COMPLETE';
+                    $discord['village'] = $task->village;
+                    $discord['player']  = $task->player;
+                    $discord['defense'] = null;
+                    $discord['type']    = null;
+                    $discord['priority']= null;
+                    $discord['time']    = $task->target_time;
+                    $discord['x']       = $task->x;       $discord['y']       = $task->y;
+                    $discord['url']     = 'https://'.$request->session()->get('server.url').'/position_details.php?x='.$task->x.'&y='.$task->y;
+                    $discord['link']    = env("SITE_URL","https://www.travian-tools.com").'/plus/defense/'.$id;
+                    $discord['crop']    = null;
+                    $discord['notes']   = $task->comments;
+                }else{
+                    $discord['status']  = 'UPDATE';
+                    $discord['village'] = $task->village;
+                    $discord['player']  = $task->player;
+                    $discord['defense'] = $task->def_remain;
+                    $discord['type']    = $task->type;
+                    $discord['priority']= $task->priority;
+                    $discord['time']    = $task->target_time;
+                    $discord['x']       = $task->x;       $discord['y']       = $task->y;
+                    $discord['url']     = 'https://'.$request->session()->get('server.url').'/position_details.php?x='.$task->x.'&y='.$task->y;
+                    $discord['link']    = env("SITE_URL","https://www.travian-tools.com").'/plus/defense/'.$id;
+                    $discord['crop']    = $task->crop;
+                    $discord['notes']   = $task->comments;
+                }                
+                DiscordCFDNotification($discord,$request->session()->get('server.id'),$request->session()->get('plus.plus_id'));
+            }
+            
         }else{
             Session::flash('danger','Reinforcement Village not found');
         }                
@@ -203,9 +238,9 @@ class CFDController extends Controller
                     ->orderBy('id','asc')->get();
         
         $troops=CFDUpd::where('server_id',$request->session()->get('server.id'))
-        ->where('plus_id',$request->session()->get('plus.plus_id'))
-        ->where('player_id',$request->session()->get('plus.id'))
-        ->where('task_id',$id)->get();
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('player_id',$request->session()->get('plus.account_id'))
+                    ->where('task_id',$id)->get();
         
         $result['TASK'] = $task;
         $result['VILLAGES'] = $villages;

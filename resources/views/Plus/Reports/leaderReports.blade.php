@@ -33,7 +33,7 @@
 							<td class="px-1">{{$report['title']}}</td>
 							<td class="px-1"><a href="{{$report['report']}}" target="_blank">Link <i class="fas fa-external-link-alt"></a></td>
 							<td class="px-1">{{$report['date']}}</td>
-							<td class="px-0"><button class="btn btn-danger btn-sm" id="delRep" value="{{$report['id']}}">x</button></td>							
+							<td class="px-0"><button class="btn btn-danger btn-sm" id="delRep" value="{{$report['id']}}"><i class="fa fa-trash" aria-hidden="true"></i></button></td>							
 						</tr>
     				@endforeach
         			</table>

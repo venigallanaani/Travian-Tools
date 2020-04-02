@@ -9,63 +9,23 @@
             <strong>Natar Results</strong>
         </div>
         <div class="card-text mx-auto text-center col-md-8 ">
-            <table class="table table-hover table-sm small" id="sortableTable">
+            <table class="table table-hover">
                 <tr class="h6">
-                    <th onclick="sortTable(1)">Distance</th>
-                    <th onclick="sortTable(2)">Village</th>
-                    <th onclick="sortTable(3)">Population</th>
+                    <th onclick="">Distance</th>
+                    <th onclick="">Village</th>
+                    <th onclick="">Population</th>
                 </tr>
                 @foreach($natars as $natar)
                     <tr>
-                        <td class="py-0">{{round(sqrt(pow(($xCor-$natar->x),2)+pow(($yCor-$natar->y),2)),1)}}</td>
-                        <td class="py-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$natar->x}}&y={{$natar->y}}" target="_blank">{{$natar->village}}</td>
+                        <td class="py-0">{{round($natar->distance,1)}}</td>
+                        <td class="py-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$natar->x}}&y={{$natar->y}}" target="_blank">{{$natar->village}}</td>
                         <td class="py-0">{{$natar->population}}</td>
                     </tr>
                 @endforeach
             </table>
-           
+			{{ $natars->links() }}
         </div>
     </div>
 
 @endsection
 
-@push('scripts')
-<script>
-function sortTable(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("sortableTable");
-    switching = true;
-    dir = "asc"; 
-    while (switching) {
-      	switching = false;
-      	rows = table.rows;
-      	for (i = 1; i < (rows.length - 1); i++) {
-        	shouldSwitch = false;
-        	x = rows[i].getElementsByTagName("TD")[n];
-        	y = rows[i + 1].getElementsByTagName("TD")[n];
-        	if (dir == "asc") {
-          		if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            		shouldSwitch= true;
-            		break;
-         		}
-        	} else if (dir == "desc") {
-          		if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            		shouldSwitch = true;
-            		break;
-          		}
-    		}
-      	}
-      	if (shouldSwitch) {
-        	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        	switching = true;
-        	switchcount ++;      
-      	} else {
-        	if (switchcount == 0 && dir == "asc") {
-          		dir = "desc";
-          		switching = true;
-        	}
-      	}
-	}
-}
-</script>
-@endpush

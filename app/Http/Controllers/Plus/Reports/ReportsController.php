@@ -17,9 +17,11 @@ use App\PlusReports;
 
 class ReportsController extends Controller
 {
+// Show the plus reports to the players in the general plus menu
     public function showPlusReports(Request $request){
         
-        session(['title'=>'Plus']);       
+        session(['title'=>'Plus']);   
+        session(['menu'=>2]);
         
         $reports = PlusReports::where('plus_id',$request->session()->get('plus.plus_id'))
                         ->orderBy('date','desc')->get();
@@ -30,7 +32,11 @@ class ReportsController extends Controller
         
     }
     
+// Submits the reports created by the players to the plus group
     public function addPlusReports(Request $request){
+        
+        session(['title'=>'Reports']);
+        session(['menu'=>2]);
         
         $link = Input::get('link');        
         
@@ -56,10 +62,11 @@ class ReportsController extends Controller
         return Redirect::back();          
     }
     
+// Show the leader view of the reports in the leader reports menu - delete option added.
     public function showLeaderReports(Request $request){
         
-        session(['title'=>'Plus']);
-        
+        session(['title'=>'Reports']);
+        session(['menu'=>2]);
         $reports = PlusReports::where('plus_id',$request->session()->get('plus.plus_id'))
                         ->orderBy('date','desc')->get();
         
@@ -69,19 +76,21 @@ class ReportsController extends Controller
         
     }
     
+// Lets leaders delete the reports from the group
     public function deleteLeaderReports(Request $request, $id){
+        session(['menu'=>2]);
         PlusReports::where('plus_id',$request->session()->get('plus.plus_id'))
                         ->where('id',$id)->delete();
     }
     
-    
+// Lists the hammers that are being tracked by the group and their scout reports.    
     public function showEnemyHammers(Request $request){
         
-        session(['title'=>'Plus']);
-        
+        session(['title'=>'Reports']);
+        session(['menu'=>2]);
         $troops = TrackTroops::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
-                    ->orderBy('report_date','desc')->get();        
+                    ->where('status','REPORT')->orderBy('report_date','desc')->get();        
         $troops = $troops->toArray();
         
         $hammers=array();    $units=array();     $i=0;
@@ -103,15 +112,16 @@ class ReportsController extends Controller
             $troop['village']=$village[0];
             $hammers[] = $troop;
             
-        }
-        
+        }        
         //dd($hammers);
         return view('Plus.Reports.enemyHammers')->with(['units'=>$units])->with(['hammers'=>$hammers]);
         
     }
     
+// New enemy hammers to be tracked to the list.
     public function addEnemyHammer(Request $request) {
-        session(['title'=>'Plus']);
+        session(['title'=>'Reports']);
+        session(['menu'=>2]);
         
         $x = Input::get('xCor');            $y = Input::get('yCor');
         $type = Input::get('type');         $date = Input::get('date');
@@ -167,35 +177,119 @@ class ReportsController extends Controller
             
         }
         
-        $track = new TrackTroops();
-        
-        $track->server_id = $request->session()->get('server.id');
-        $track->plus_id = $request->session()->get('plus.plus_id');
-        $track->att_id = $village->uid.'_'.$village->vid;
-        $track->x = $x;     
-        $track->y = $y;     
-        $track->vid = $village->vid;    
-        $track->uid = $village->uid;    
-        $track->player = $village->player; 
-        $track->alliance = $village->alliance;
-        $track->tribe = $village->id;
-        $track->type = $type;
-        $track->report_date = $date;
-        $track->report = $id;
-        $track->upkeep = $upkeep;
-        $track->report_data = $reportData;
-        $track->notes = $notes;
-        
-        $track->save();
+        $results = TrackTroops::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                ->where('att_id',$village->uid.'_'.$village->vid)
+                                ->orderBy('updated_at','desc')->get();      
+                
+        if(count($results)==0){
+            $track = new TrackTroops();
+            
+            $track->server_id = $request->session()->get('server.id');
+            $track->plus_id = $request->session()->get('plus.plus_id');
+            $track->att_id = $village->uid.'_'.$village->vid;
+            $track->status = 'REPORT';
+            $track->x = $x;
+            $track->y = $y;
+            $track->vid = $village->vid;
+            $track->uid = $village->uid;
+            $track->player = $village->player;
+            $track->alliance = $village->alliance;
+            $track->tribe = $village->id;
+            $track->tsq = 0;
+            $track->art = 4;
+            $track->type = $type;
+            $track->report_date = $date;
+            $track->report = $id;
+            $track->upkeep = $upkeep;
+            $track->report_data = $reportData;
+            $track->notes = $notes;
+            
+            $track->save();
+            
+        }else{
+            $result= $results[0];
+    
+            if(count($results)==1 && $result->status="TRACK"){
+    // if no reports are present update the existing report
+                TrackTroops::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                ->where('att_id',$village->uid.'_'.$village->vid)
+                                ->update([  'status'    =>  'REPORT',
+                                    'type'      =>  $type,
+                                    'report_date'   =>  $date,
+                                    'report'    =>  $id,
+                                    'upkeep'    =>  $upkeep,
+                                    'report_data'   =>  $reportData,
+                                    'notes'     =>  $notes
+                                ]);
+            
+            }else{
+    // if a report exists .. add new report with tsq and arty value from previous report
+                $track = new TrackTroops();
+                
+                $track->server_id = $request->session()->get('server.id');
+                $track->plus_id = $request->session()->get('plus.plus_id');
+                $track->att_id = $village->uid.'_'.$village->vid;
+                $track->status = 'REPORT';
+                $track->x = $x;
+                $track->y = $y;
+                $track->vid = $village->vid;
+                $track->uid = $village->uid;
+                $track->player = $village->player;
+                $track->alliance = $village->alliance;
+                $track->tribe = $village->id;
+                $track->tsq = $result->tsq;
+                $track->art = $result->art;
+                $track->type = $type;
+                $track->report_date = $date;
+                $track->report = $id;
+                $track->upkeep = $upkeep;
+                $track->report_data = $reportData;
+                $track->notes = $notes;
+                
+                $track->save();  
+            }
+        }
         
         return Redirect::back();
     }
     
-    public function deleteEnemyHammer(Request $request, $id){
+// update or delete the tracked enemies
+    public function processEnemyHammer(Request $request,$action,$id,$value=null){
+        session(['menu'=>2]);
+    // update the Tsq of the player
+        if(strtoupper($action)=='TSQ'){
+            $track=TrackTroops::where('server_id',$request->session()->get('server.id'))
+                                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                    ->where('id',$id)->first();
+            
+            TrackTroops::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('att_id',$track->att_id)
+                            ->update(['tsq'=>$value]);
+        }
+    // update the artifact of the player
+        if(strtoupper($action)=='ART'){
+            $track=TrackTroops::where('server_id',$request->session()->get('server.id'))
+                                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                    ->where('id',$id)->first();
+            
+            TrackTroops::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('att_id',$track->att_id)
+                            ->update(['art'=>$value]);
+        }
         
-        TrackTroops::where('server_id',$request->session()->get('server.id'))
-                        ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('id',$id)->delete();
+    // delete enemy hammer report -- deletes the link and sets the status to TRACK
+        if(strtoupper($action)=='DELETE'){
+            TrackTroops::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('id',$id)
+                            ->update([  'status'=>'TRACK'   ]);            
+        }
+        
+
         
     }
 }

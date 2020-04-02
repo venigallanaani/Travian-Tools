@@ -14,6 +14,8 @@ use App\Diff;
 use App\Incomings;
 use App\Account;
 use App\IncTrack;
+use App\Players;
+use App\TrackTroops;
 
 class IncomingController extends Controller
 {
@@ -32,7 +34,7 @@ class IncomingController extends Controller
         $waves=Incomings::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
                             ->where('uid',$account->uid)
-                            //->where('deleteTime','>',strtotime(Carbon::now()))
+                            ->where('landTime','>',Carbon::now()->format('Y-m-d H:i:s'))
                             ->where('status','SAVED')->orderBy('landTime','asc')->get();                        
 //dd($waves);
         foreach($waves as $wave){
@@ -42,8 +44,6 @@ class IncomingController extends Controller
                 $swaves[]=$wave;
             }
         }
-                            
-        //dd($owaves);
         
         return view("Plus.Defense.Incomings.enterIncoming")
                         ->with(['owaves'=>$owaves])->with(['swaves'=>$swaves]);
@@ -52,13 +52,11 @@ class IncomingController extends Controller
     
 // parses the Incoming waves
     public function processIncoming(Request $request){        
-        
         session(['title'=>'Plus']);
         
-        $drafts=null; $saves=null;        
+        $drafts=null; $saves=null; $waves = 0;  $time=null;
         $incList=ParseIncoming(Input::get('incStr'));
-//dd($incList);
-        
+//dd($incList);        
         
         if($incList==null){
         // String parsing issues, no data received 
@@ -66,16 +64,17 @@ class IncomingController extends Controller
         }else{
         // Data is retrived from the string.
             foreach($incList as $inc){
-                
+//dd($inc);
+                $waves += $inc['wave'];
             // Get requestors details
                 $uid = Account::where('server_id',$request->session()->get('server.id'))
                                 ->where('user_id',Auth::user()->id)
                                 ->pluck('uid')->first();
-                //dd($uid);
+
             // get Attackers details
                 $att = Diff::where('server_id',$request->session()->get('server.id'))
                                 ->where('x',$inc['a_coords'][0])->where('y',$inc['a_coords'][1])->first();
-                
+//dd($att);
             // Get Defenders details
                 $def = Diff::where('server_id',$request->session()->get('server.id'))
                                 ->where('x',$inc['d_coords'][0])->where('y',$inc['d_coords'][1])->first();
@@ -89,11 +88,53 @@ class IncomingController extends Controller
                     $landTime=new Carbon(Carbon::now()->format('Y-m-d').$inc['landTime']);
                 }
                 
-                $incId=$att->vid."-".$def->vid."-".strtotime($landTime);
-                                
+                if($time==null){
+                    $time = $landTime->format('Y-m-d H:i:s');
+                }
+                
+                $att_id = $att->uid.'_'.$att->vid;
+                $def_id = $def->uid.'_'.$def->vid;
+                
+                $track = TrackTroops::where('server_id',$request->session()->get('server.id'))
+                                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                        ->where('att_id',$att_id)->orderBy('updated_at','desc')->first();
+//dd($track);   
+                $tsq=0;     $art =4;
+                if($track==null){                    
+                    $track = new TrackTroops;
+                    $track->server_id   = $request->session()->get('server.id');
+                    $track->plus_id     = $request->session()->get('plus.plus_id');
+                    $track->att_id      = $att_id;
+                    $track->status      = 'TRACK';
+                    $track->x           = $att->x;
+                    $track->y           = $att->y;
+                    $track->vid         = $att->vid;
+                    $track->uid         = $att->uid;
+                    $track->player      = $att->player;
+                    $track->alliance    = $att->alliance;
+                    $track->tribe       = $att->id;
+                    $track->tsq         = $tsq;
+                    $track->art         = $art;
+                    
+                    $track->save();
+                }else{
+                    $tsq = $track->tsq;
+                    $art = $track->art;
+                }                  
+                
+                $notes = null;     $ldr_sts='NEW';
+                if(Input::has('scout')){
+                    if($inc['troops']['hero']=='?'){
+                        $notes = 'Hero present in the attack';
+                        $ldr_sts = 'DEFEND';
+                    }
+                }  
+                
+                $incId=$att_id."-".$def_id."-".strtotime($landTime);
+                
                 $incoming = Incomings::where('server_id',$request->session()->get('server.id'))
                                 ->where('plus_id',$request->session()->get('plus.plus_id'))
-                                ->where('incid',$incId)->first();
+                                ->where('incid',$incId)->first(); 
                 
                 if($att->id==1){   $tribe='ROMAN';    }elseif($att->id==2){   $tribe='TEUTON';  }
                 elseif($att->id==3){   $tribe='GAUL';    }elseif($att->id==6){   $tribe='EGYPTIAN';  }
@@ -108,7 +149,8 @@ class IncomingController extends Controller
                     $wave->server_id=$request->session()->get('server.id');
                     $wave->plus_id=$request->session()->get('plus.plus_id');
                     $wave->uid=$uid;
-                    $wave->att_id=$att->uid.'_'.$att->vid;
+                    $wave->att_id=$att_id;
+                    $wave->def_id=$def_id;
                     $wave->def_uid=$def->uid;
                     $wave->def_player=$def->player;
                     $wave->def_village=$def->village;
@@ -129,7 +171,12 @@ class IncomingController extends Controller
                     $wave->status='SAVED';
                     $wave->hero='No Change';
                     $wave->deleteTime=strtotime($landTime);
-                    $wave->ldr_sts='New';
+                    $wave->ldr_sts=$ldr_sts;
+                    $wave->ldr_nts = $notes;
+                    $wave->hero_boots = "0";
+                    $wave->hero_art = $art;
+                    $wave->tsq = $tsq;
+                    $wave->unit = 3;
                     
                     $wave->save();                    
                 }else{
@@ -140,7 +187,8 @@ class IncomingController extends Controller
                         $wave->server_id=$request->session()->get('server.id');
                         $wave->plus_id=$request->session()->get('plus.plus_id');
                         $wave->uid=$uid;
-                        $wave->att_id=$att->uid.'_'.$att->vid;
+                        $wave->att_id=$att_id;
+                        $wave->def_id=$def_id;
                         $wave->def_uid=$def->uid;
                         $wave->def_player=$def->player;
                         $wave->def_village=$def->village;
@@ -161,23 +209,43 @@ class IncomingController extends Controller
                         $wave->status='SAVED';
                         $wave->hero='No Change';
                         $wave->deleteTime=strtotime($landTime);
-                        $wave->ldr_sts='New';
+                        $wave->ldr_sts=$ldr_sts;
+                        $wave->ldr_nts = $notes;
+                        $wave->hero_boots = "0";
+                        $wave->hero_art = $art;
+                        $wave->tsq = $tsq;
+                        $wave->unit = 3;
                         
                         $wave->save();                        
                     }                   
                 }
                 
             }
-            Session::flash('success','Incoming Attacks successfully updated');            
+            Session::flash('success','Incoming Attacks successfully updated');   
+
+            if($request->session()->get('discord')==1){
+
+                $discord['village'] = $def->village;
+                $discord['player']  = $def->player;
+                $discord['waves']   = $waves;
+                $discord['time']    = $time;
+                $discord['x']       = $incList[0]['d_coords'][0];       
+                $discord['y']       = $incList[0]['d_coords'][1];
+                $discord['url']     = 'https://'.$request->session()->get('server.url').'/position_details.php?x='.$discord['x'].'&y='.$discord['y'];
+                $discord['link']    = env("SITE_URL","https://www.travian-tools.com").'/defense/incomings/list';
+                
+                DiscordIncomingNotification($discord,$request->session()->get('server.id'),$request->session()->get('plus.plus_id'));
+            }
+            
         }                        
-            return Redirect::To('/plus/incoming');           
+        return Redirect::To('/plus/incoming');           
     }
     
     public function updateIncoming(Request $request){
         
         date_default_timezone_set($request->session()->get('timezone'));
         
-        $accData = null;
+        $accData = null;    $change = false;
         if(Input::get('account')!=null){
             $accData = ParseAccountHTML(Input::get('account'));
             
@@ -189,8 +257,7 @@ class IncomingController extends Controller
             $accData['ATTACK']=0;
             $accData['DEFEND']=0;
             $accData['IMAGE']='N/A';
-        }
-        
+        }        
         
         $account=Account::where('server_id',$request->session()->get('server.id'))
                     ->where('user_id',Auth::user()->id)->first();
@@ -239,20 +306,46 @@ class IncomingController extends Controller
         if($track != null){
             if($track->attack != $accData['ATTACK'] && $accData['ATTACK']!=0 && $track->attack!=0){
                 $new->attack_change = $accData['ATTACK']-$track->attack;
+                $change = true;
             }
             if($track->defense != $accData['DEFEND'] && $accData['DEFEND']!=0 && $track->defense!=0){
                 $new->defense_change = $accData['DEFEND']-$track->defense;
+                $change = true;
             }
             if($track->exp != $accData['HERO'] && $accData['HERO']!=0 && $track->exp!=0){
                 $new->exp_change = $accData['HERO']-$track->exp;
+                $change = true;
             }
             if($track->image != $accData['IMAGE'] && $accData['IMAGE']!='N/A' && $track->image!='N/A'){
                 $new->image_change = 'YES';
                 $new->image_old = $track->image;
+                $change = true;
             }
         }
         
         $new->save();
+        
+        if($request->session()->get('discord')==1){
+            
+            if($change == true){                
+                $track = IncTrack::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                ->where('att_id',$att_id)->orderBy('save_time','desc')->first();
+
+                $name = Players::select('player')->where('server_id',$request->session()->get('server.id'))
+                            ->where('uid',explode('_',$track->att_id)[0])->first();
+
+                $discord['player'] = $name->player;
+                $discord['xp']  = $track->exp.' (+'.$track->exp_change.')';                
+                $discord['off']  = $track->attack.' (+'.$track->attack_change.')';
+                $discord['def']  = $track->defense.' (+'.$track->defense_change.')';
+                $discord['gear'] = ucfirst(strtolower($track->image_change));
+                $discord['link']    = env("SITE_URL","https://www.travian-tools.com").'/defense/attacker/'.$track->att_id;
+                
+                DiscordAttackerNotification($discord,$request->session()->get('server.id'),$request->session()->get('plus.plus_id'));
+            }
+            
+        }
         
         return Redirect::back();
     }

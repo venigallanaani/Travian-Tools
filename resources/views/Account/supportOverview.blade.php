@@ -22,16 +22,15 @@
     				<div class="card-text">
     					<table class="table table-hover col-md-5 text-center mx-auto">
     						<tr>
-    							<td class="text-right"><strong>Sitter 1 :</strong></td>
+    							<td class="text-right" style="width:10em;"><strong>Sitter 1 :</strong></td>
     							<td contenteditable="true" class="text-left" id="sitter1Edit">{{$account->sitter1}}</td>
     						</tr>
     						<tr>
-    							<td class="text-right"><strong>Sitter 2 :</strong></td>
+    							<td class="text-right" style="width:10em;"><strong>Sitter 2 :</strong></td>
     							<td contenteditable="true" class="text-left" id="sitter2Edit">{{$account->sitter2}}</td>
     						</tr>
     						<tr>
-    							<td class="text-right"></td>
-    							<td class="text-right">
+    							<td class="" colspan="2">
                 					<form id="form" action="{{route('accountSitter')}}" method="POST" onsubmit="return updateSitter()" class="text-center pb-3">
                 						{{ csrf_field() }}
                 						<input id="sitter1" name="sitter1" style="display:none">

@@ -18,6 +18,7 @@ class LeaderResourceController extends Controller
     public function resourceTaskList(Request $request){
         
         session(['title'=>'Resources']);
+        session(['menu'=>5]);
         
         $tasks = ResTask::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))->get();
@@ -30,6 +31,7 @@ class LeaderResourceController extends Controller
     public function resourceTask(Request $request,$id){
         
         session(['title'=>'Resources']);
+        session(['menu'=>5]);
         
         $task = ResTask::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -48,6 +50,7 @@ class LeaderResourceController extends Controller
     public function createResourceTask(Request $request){
         //Create a resource task  
         session(['title'=>'Resources']);
+        session(['menu'=>5]);
         
         $x=Input::get('xCor');
         $y=Input::get('yCor');
@@ -87,6 +90,7 @@ class LeaderResourceController extends Controller
     public function processResourceTask(Request $request){
         //Updates a resource task
         session(['title'=>'Resources']);
+        session(['menu'=>5]);
         
         $res=Input::get('resNeed');
         $time=Input::get('targetTime');

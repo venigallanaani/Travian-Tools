@@ -62,9 +62,9 @@ if(!function_exists('ParseIncoming')){
                     'unit03'=> trim($unitList[3]),  'unit04'=> trim($unitList[4]),
                     'unit05'=> trim($unitList[5]),  'unit06'=> trim($unitList[6]),
                     'unit07'=> trim($unitList[7]),  'unit08'=> trim($unitList[8]),
-                    'unit09'=> trim($unitList[9]),  'unit10'=> trim($unitList[10])
+                    'unit09'=> trim($unitList[9]),  'unit10'=> trim($unitList[10]),
+                    'hero'=> trim($unitList[11])
                 );
-
 //dd($troops);                   
             // parsing the timings
                 if(strpos(strtoupper($incStrs[$y+1]), 'ARRIVAL')!==FALSE){
@@ -92,7 +92,7 @@ if(!function_exists('ParseIncoming')){
                     'a_coords'=>$aCoords,
                     'restTime'=>$restTime,
                     'landTime'=>$landTime,
-                    'troops'=>$troops                    
+                    'troops'=>$troops
                 );                 
 //dd($incomings);
             } 
@@ -143,7 +143,8 @@ if(!function_exists('ParseIncoming')){
                         $result[$j]['troops']['unit07']==$wave['troops']['unit07']  &&
                         $result[$j]['troops']['unit08']==$wave['troops']['unit08']  &&
                         $result[$j]['troops']['unit09']==$wave['troops']['unit09']  &&
-                        $result[$j]['troops']['unit10']==$wave['troops']['unit10']
+                        $result[$j]['troops']['unit10']==$wave['troops']['unit10']  &&
+                        $result[$j]['troops']['unit10']==$wave['troops']['hero']
                      ){
                          $result[$j]['wave']=$result[$j]['wave']+$wave['wave'];
                     }else{

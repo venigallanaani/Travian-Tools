@@ -20,6 +20,8 @@ class CreateIncomingsTable extends Migration
             $table->string('plus_id');
             $table->string('uid');
             
+            $table->string('att_id');
+            $table->string('def_id');
             $table->string('def_uid');
             $table->string('def_player');
             $table->string('def_village');
@@ -35,6 +37,7 @@ class CreateIncomingsTable extends Migration
             $table->string('att_vid');
             $table->string('att_x');
             $table->string('att_y');
+            
             $table->string('landTime');
             $table->string('noticeTime');
             
@@ -42,6 +45,8 @@ class CreateIncomingsTable extends Migration
             $table->string('hero_attack')->nullable();
             $table->string('hero_defense')->nullable();
             $table->string('hero_image')->nullable();
+            $table->enum('hero_boots',['0','15','20','25']);
+            $table->integer('hero_art')->default(4);
             $table->string('comments')->nullable();
             
             $table->enum('status',['DRAFT','SAVED']);
@@ -49,6 +54,7 @@ class CreateIncomingsTable extends Migration
             $table->string('deleteTime');
             
             $table->integer('tsq')->default(0);
+            $table->integer('unit')->default(3);
             $table->enum('ldr_sts',['NEW','SCOUT','THINKING','DEFEND','ARTEFACT','SNIPE','FAKE','OTHER']);
             $table->string('ldr_nts')->nullable();
             $table->string('updated_by')->nullable();

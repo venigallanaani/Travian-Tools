@@ -10,13 +10,13 @@
         <div class="card-text mx-auto text-center col-md-12">
             <table id="sortableTable" class="table table-border-success table-hover table-sm small">
                 <tr class="h6">
-                    <th onclick="sortTable(0)" class="">Distance</th>
-                    <th onclick="sortTable(1)" class="">Village</th>                    
-                    <th onclick="sortTable(2)" class="">Player</th>
+                    <th class="">Distance</th>
+                    <th class="">Village</th>                    
+                    <th class="">Player</th>
                     <th class="">Tribe</th>
-                    <th onclick="sortTable(3)" class="">Alliance</th>   
-                    <th onclick="sortTable(4)" class="">Pop<small>(+/- 7 days)</small></th>
-                    <th onclick="sortTable(5)" class="">Status</th>
+                    <th class="">Alliance</th>   
+                    <th class="">Pop<small>(+/- 7 days)</small></th>
+                    <th class="">Status</th>
                 </tr>
                 @foreach($villages as $village)
             		@php 
@@ -33,7 +33,7 @@
             			else{	$status='text-danger';	}
         			@endphp
                     <tr>
-                        <td class="py-0">{{round(sqrt(pow(($xCor-$village->x),2)+pow(($yCor-$village->y),2)),1)}}</td>
+                        <td class="py-0">{{round($village->distance,1)}}</td>
                         <td class="py-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$village->x}}&y={{$village->y}}" target="_blank">{{$village->village}}</a></td>                    
                         <td class="py-0"><a href="/finders/player/{{$village->player}}/1">{{$village->player}}</a></td>
                     	<td class="py-0" data-toggle="tooltip" data-placement="top" title="{{$tribe}}"><img alt="" src="/images/x.gif" class="tribe {{$tribe}}"></td>
@@ -43,6 +43,7 @@
                     </tr>                
                 @endforeach                
             </table>
+            {{ $villages->links() }}
         </div>
     </div>
 

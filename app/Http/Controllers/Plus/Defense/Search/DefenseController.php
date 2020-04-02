@@ -20,7 +20,7 @@ use App\Account;
 class DefenseController extends Controller
 {
     public function show(){
-        
+        session(['menu'=>3]);
         session(['title'=>'Defense']);
         
         return view("Plus.Defense.Search.search");
@@ -28,7 +28,7 @@ class DefenseController extends Controller
     }
     
     public function process(Request $request){
-        
+        session(['menu'=>3]);
         session(['title'=>'Defense']);
         
         $xCor=Input::get('xCor');

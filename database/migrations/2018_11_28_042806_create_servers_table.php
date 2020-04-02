@@ -21,8 +21,9 @@ class CreateServersTable extends Migration
             $table->date('start_date');
             $table->integer('days');
             $table->string('maps_table');
-            $table->string('diff_table');
+            $table->string('diff_table');            
             $table->string('timezone');
+            $table->int('tsq');
             $table->string('table_id');
             $table->timestamps();
         });

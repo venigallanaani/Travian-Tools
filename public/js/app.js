@@ -4,7 +4,6 @@ function checkTime(i) {
 	return (i < 10) ? "0" + i : i;
 }
 
-
 function countDown(elementId, date, zone) {
     // Set the date we're counting down to
     var countDownDate = new Date(date).getTime();
@@ -14,7 +13,6 @@ function countDown(elementId, date, zone) {
     var x = setInterval(function() {
 
       // Get todays date and time
-      //var now = new Date().getTime();
       var time=moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');
       
       var now= new Date(time).getTime();
@@ -44,6 +42,23 @@ function countDown(elementId, date, zone) {
     }, 1000); 
 }
 
+function startTime(landTime,noticeTime,dist,unit,tsq,boots,art,speed,tmz){
+	
+	var land = new Date(landTime).getTime();
+	var notice = new Date(noticeTime).getTime();
+	var diff = land-notice;
+	
+	var speedtsq = (1+tsq*0.1*speed)*(1+boots/100);
+	if(dist>20){	var time = (20+(dist-20)/speedtsq)/(unit*art/4);
+	}else{	var time = dist/(unit*art/4);	}	
+	var travel = Math.floor(time*60*60*1000);
+
+	var date = moment(land-travel);
+	var start = moment(date).tz(tmz).format('YYYY-MM-DD HH:mm:ss');
+
+	return start;
+	
+}
 
 function toggleMenu(param_menu) {
 	  var x = document.getElementById(param_menu);
@@ -53,3 +68,8 @@ function toggleMenu(param_menu) {
 	    x.style.display = "none";
 	  }
 }
+
+
+
+
+
