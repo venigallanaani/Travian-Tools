@@ -18,7 +18,7 @@ class CreateTrackTroopsTable extends Migration
             $table->string('server_id');
             $table->string('plus_id');
             $table->string('att_id');
-            $table->enum('type',['REPORT','TRACK'])->default('TRACK');
+            $table->enum('status',['REPORT','TRACK'])->default('TRACK');
             $table->integer('x');
             $table->integer('y');
             $table->integer('vid');

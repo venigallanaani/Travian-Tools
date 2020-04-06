@@ -59,7 +59,7 @@ class LeaderIncomingController extends Controller
         session(['menu'=>3]);
         $incomings = Incomings::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
-                            //->where('landTime','>',Carbon::now()->format('Y-m-d H:i:s'))
+                            ->where('landTime','>',Carbon::now()->format('Y-m-d H:i:s'))
                             ->orderBy('landTime','asc')->get();
         
         $incomings = $incomings->toArray();        
@@ -136,7 +136,8 @@ class LeaderIncomingController extends Controller
         
         $report = TrackTroops::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('att_id',$id)->orderBy('report_date','desc')->first();
+                        ->where('att_id',$id)->where('status','REPORT')
+                        ->orderBy('report_date','desc')->first();
         
         $incomings= $incomings->toArray();
         

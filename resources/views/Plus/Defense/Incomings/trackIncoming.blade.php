@@ -2,8 +2,8 @@
 
 @section('body')
 
-		<div class="card float-md-left col-md-12 mt-1 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Incoming Hammer Tracking</strong></div>
+		<div class="card float-md-left col-md-12 mt-1 mb-5 p-0 shadow">
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Incoming Hammer Tracking</strong></div>
 			<div class="card-text">
 		<!-- ========================== Create CFD Options ============================== -->
 					
@@ -18,29 +18,29 @@
         @endforeach
     		
     			
-    			<div class="card card-body m-0 p-2">
-    				<table class="table col-md-6 mx-auto table-borderless align-center">
+    			<div class="card card-body m-0 py-0">
+    				<table class="table col-md-8 mx-auto table-borderless align-center">
     					<tr>
-    						<td class="py-5">
-    							<p class="h5"><strong>Attacker 			- </strong><a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$incomings[0]['att_uid']}}" target="_blank">{{$incomings[0]['att_player']}}</a></p>
-    							<p class="h5"><strong>Village 			- </strong><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incomings[0]['att_x']}}&y={{$incomings[0]['att_y']}}" target="_blank">{{$incomings[0]['att_village']}}</a></p>
-    							<p class="h5"><strong>Total waves 		- </strong>{{array_sum(array_column($incomings,'waves'))}}</p>    							
-    							<p class="h5"><strong>Target Villages 	- </strong>{{count(array_unique(array_column($incomings,'def_vid')))}}</p>
+    						<td class="py-5 h6">
+    							<p class=""><strong>Attacker 			- </strong><a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$incomings[0]['att_uid']}}" target="_blank">{{$incomings[0]['att_player']}}</a></p>
+    							<p class=""><strong>Village 			- </strong><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incomings[0]['att_x']}}&y={{$incomings[0]['att_y']}}" target="_blank">{{$incomings[0]['att_village']}}</a></p>
+    							<p class=""><strong>Total waves 		- </strong>{{array_sum(array_column($incomings,'waves'))}}</p>    							
+    							<p class=""><strong>Target Villages 	- </strong>{{count(array_unique(array_column($incomings,'def_vid')))}}</p>
     						</td>
     						<td>
     							<form action="/plus/incoming/update" method="post" style="background-color:#dbeef4" class="m-2 text-center p-2">
     								{{csrf_field()}}
-									<p class="h5"><strong>Update Attacker Stats</strong></p>
-									<p class="h6"><a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$incomings[0]['att_uid']}}" target="_blank">Account Details <i class="fas fa-external-link-alt"></i></a></p>									
+									<p class="h6"><strong>Update Attacker Stats</strong></p>
+									<p class=""><a href="https://{{Session::get('server.url')}}/spieler.php?uid={{$incomings[0]['att_uid']}}" target="_blank">Account Details <i class="fas fa-external-link-alt"></i></a></p>									
 									<textarea rows="3" cols="30" name="account" required></textarea>
 									<p class="small text-danger">Enter source code of the account page</p>
-									<p><button type="submit" class="btn btn-small px-5 btn-primary"  name="att" value="{{$incomings[0]['att_id']}}">Update</button></p>
+									<p class="py-0"><button type="submit" class="btn btn-small px-5 btn-primary"  name="att" value="{{$incomings[0]['att_id']}}">Update</button></p>
     							</form>    							
     						</td>
 						</tr>
     				</table>
         		@if($report==null)
-        			<p class="text-center text-danger h5">No reports of enemy hammer are saved</p>
+        			<p class="text-center text-danger h6">No reports of enemy hammer are saved</p>
         		@else        			        			
         			<table class="table table-bordered text-center col-md-8 mx-auto">
         				<thead>
@@ -85,7 +85,7 @@
     			
         		<div class="card card-body px-5">
         		@if(count($tracks)==0)
-        			<p class="text-center text-primary h5">Attacker Stats information not stored</p>
+        			<p class="text-center text-primary h6">Attacker Stats information not stored</p>
         		@else
         			<table class="table text-center table-sm table-hover table-bordered">
         				<thead class="">

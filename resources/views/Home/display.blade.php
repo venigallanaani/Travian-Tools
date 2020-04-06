@@ -3,7 +3,7 @@
 @section('body')        
         
     <!-- ============================================ home page body starts here ============================================ -->
-    <div class="col-7 mx-auto mt-1">
+    <div class="container mx-auto mt-1">
 		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
 	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
@@ -26,14 +26,14 @@
             </div>
             <div class="card shadow">
                 <div class="card-body">
-					<p class="h3 text-center m-2"><a href="{{route('reports')}}" class="text-info font-weight-bold">Reports Converter</a></p>
+					<p class="h4 text-center m-2"><a href="{{route('reports')}}" class="text-info font-weight-bold">Reports Converter</a></p>
                 </div>
             </div>
             <div class="card shadow">
-                <p class="card-header h4 text-success font-weight-bold">Finders</p>
+                <p class="card-header h5 text-success font-weight-bold">Finders</p>
                 <div class="card-body">                 
                     <p>Finders help you search the Travian to find different objects you need.</p>
-                    <table>
+                    <table style="font-size:1em">
                         <tr><td><a href="{{route('findPlayer')}}" class="text-success font-weight-bold">Player Finder</a></td></tr>
                         <tr><td><a href="{{route('findAlliance')}}" class="text-success font-weight-bold">Alliance Finder</a></td></tr>
                         <tr><td><a href="{{route('findInactive')}}" class="text-success font-weight-bold">Inactive Finder</a></td></tr>
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="card shadow">
-                <p class="card-header h4 text-primary font-weight-bold">Calculators</p>
+                <p class="card-header h5 text-primary font-weight-bold">Calculators</p>
                 <div class="card-body">                 
                     <p>Calculators to help with different aspects of the game</p>
                     <table>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="card shadow">
-                <p class="card-header h4 text-warning font-weight-bold">Account</p>
+                <p class="card-header h5 text-warning font-weight-bold">Account</p>
                 <div class="card-body">
                 	@guest
                     	<p><a href="/login"><strong>Sign In</strong></a> to access you account details.</p>
@@ -68,7 +68,7 @@
                 </div>
             </div>  
             <div class="card shadow">
-                <p class="card-header h4 text-info font-weight-bold">Plus</p>
+                <p class="card-header h5 text-info font-weight-bold">Plus</p>
                 <div class="card-body">
                    	@guest
                     	<p><a href="/login"><strong>Sign In</strong></a> to access the Plus group</p>

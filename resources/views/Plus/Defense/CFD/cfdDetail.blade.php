@@ -3,12 +3,12 @@
 @section('body')
 
 		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Call Details</strong></div>
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Defense Call Details</strong></div>
 			<div class="card-text">				
         <!-- ==================================== Defense Tasks Status ======================================= -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">				
 		          <!-- ====================== Defense Task Details ====================== -->
-					<p class="h4 py-2"><strong>Defense Call for {{$task->player}} ({{$task->village}})</strong></p>
+					<p class="h5 py-2"><strong>Defense Call for {{$task->player}} ({{$task->village}})</strong></p>
 			   <!-- ========== Alert about the update =================================== -->		
         		@foreach(['danger','success','warning','info'] as $msg)
         			@if(Session::has($msg))
@@ -20,14 +20,14 @@
                     @endif
                 @endforeach
         			<!-- ===============Defense task details =========================== -->
-					<table class="table mx-auto col-md-11 table-bordered text-center table-sm" style="background-color:#dbeef4;">
+					<table class="table mx-auto col-md-11 table-bordered text-center table-sm" style="font-size:0.9em;     background-color:#dbeef4;">
 						<form action="/defense/cfd/update" method="POST" autocomplete="off">
 							{{ csrf_field() }}
 							<tr>
 								<td class="py-2">									
 									<p class="py-1 my-1"><strong>Defense Needed:</strong> <input type="text" name="defNeed" size="10" value="{{$task->def_total}}"/></p>
 									<p class="py-1 my-1"><strong>Land Time:</strong> <input type="text" name="targetTime" size="20" value="{{$task->target_time}}" class="dateTimePicker"/></p>
-									<p class="h6"><strong>Remaining Time: <span id="{{$task->task_id}}"></span></strong></p>
+									<p class="py-1 my-1"><strong>Remaining Time: <span id="{{$task->task_id}}"></span></strong></p>
 									<p class="py-1 my-1"><strong>Defense Priority:</strong> 
     													<select name="priority">
     														<option value="high"  @if($task->priority == 'high') selected @endif>High</option>
@@ -43,14 +43,14 @@
     														<option value="scout" @if($task->type == 'scout') selected @endif>Scout</option>
     														<option value="other" @if($task->type == 'other') selected @endif>Other</option>
 														</select></p>	
-									<p class="py-1 my-1"><strong><span class="align-top">Comments: </span></strong><textarea rows="3" name="comments">{{$task->comments}}</textarea></p>
+									<p class="py-1 my-1"><strong><span class="align-top">Comments: </span></strong><textarea rows="2" name="comments">{{$task->comments}}</textarea></p>
 									<p class="py-1 my-1"><input type="checkbox" name="crop" @if($task->crop==1) checked @endif><strong> Send Crop</strong></p>									
 								</td>
 								<td class="py-2">									
-									<p class="py-1 my-1"><button class="btn btn-primary px-5 shadow" name="update" value="{{$task->task_id}}">Update Task</button></p>
-									<p class="py-1 my-1"><button class="btn btn-success px-5 shadow" name="complete" value="{{$task->task_id}}">Mark as Complete</button></p>
-									<p class="py-1 my-1"><button class="btn btn-warning px-5 shadow" name="withdraw" value="{{$task->task_id}}">Withdraw Troops</button></p>
-									<p class="py-1 my-1"><button class="btn btn-danger px-5 shadow" name="delete" value="{{$task->task_id}}">Delete Task</button></p>								
+									<p class="py-1 my-1"><button class="btn btn-primary px-5 shadow btn-sm" name="update" value="{{$task->task_id}}">Update Task</button></p>
+									<p class="py-1 my-1"><button class="btn btn-success px-5 shadow btn-sm" name="complete" value="{{$task->task_id}}">Mark as Complete</button></p>
+									<p class="py-1 my-1"><button class="btn btn-warning px-5 shadow btn-sm" name="withdraw" value="{{$task->task_id}}">Withdraw Troops</button></p>
+									<p class="py-1 my-1"><button class="btn btn-danger px-5 shadow btn-sm" name="delete" value="{{$task->task_id}}">Delete Task</button></p>								
 									<br>
 									<p class="py-1 my-1"><strong>Created By:</strong> {{$task->created_by}}</p>
 									<p class="py-1 my-1"><strong>Last Updated By:</strong> {{$task->updated_by}}</p>
@@ -71,11 +71,11 @@
 							</td>
 						</tr>					
 					</table>
-					<a href="/defense/cfd/travel/{{$task->task_id}}" target="_blank"><button class="btn btn-lg btn-info shadow p-2">Find Available Defense</button></a>
+					<a href="/defense/cfd/travel/{{$task->task_id}}" target="_blank"><button class="btn btn-info shadow py-2 px-3">Find Available Defense</button></a>
 	<!-- ===================== Displays the incoming troops and types ============================================ -->
 				@if(count($tribes)>0)
 					<div class="my-3">
-						<p class="h5 text-info"><strong>Incoming Troops</strong></p>
+						<p class="h5 text-info"><strong>Incoming Defense Troops</strong></p>
 						<table class="table table-bordered table-hover small col-md-10 mx-auto">
 							@foreach($tribes as $tribe)
 								@php
@@ -87,7 +87,7 @@
 									else{ $tribeName='Nature';}
 								@endphp
     							<tr>	
-    								<th rowspan="2">{{$tribeName}}</th>
+    								<th rowspan="2" class="h6">{{$tribeName}}</th>
     								<th class="p-0" data-toggle="tooltip" data-placement="top" title="{{$units[$tribe['tribe_id']][0]['name']}}"><img alt="" src="/images/x.gif" class="units {{$units[$tribe['tribe_id']][0]['image']}}"></th>
 									<th class="p-0" data-toggle="tooltip" data-placement="top" title="{{$units[$tribe['tribe_id']][1]['name']}}"><img alt="" src="/images/x.gif" class="units {{$units[$tribe['tribe_id']][1]['image']}}"></th>
 									<th class="p-0" data-toggle="tooltip" data-placement="top" title="{{$units[$tribe['tribe_id']][2]['name']}}"><img alt="" src="/images/x.gif" class="units {{$units[$tribe['tribe_id']][2]['image']}}"></th>
@@ -119,21 +119,21 @@
 				@if(count($players)>0)
 					<div class="my-3">
 						<p class="h5 text-info"><strong>Player Contributions</strong></p>
-						<table class="table table-bordered col-md-8 mx-auto table-hover">
+						<table class="table table-bordered col-md-8 mx-auto table-hover shadow">
 							<tr class="bg-info text-white">
-								<th class="h5">#</th>
-								<th class="h5">Player</th>
-								<th class="h5">Defense</th>
-								<th class="h5">Resources</th>
-								<th class="h5"></th>
+								<th class="h6">#</th>
+								<th class="h6">Player</th>
+								<th class="h6">Defense</th>
+								<th class="h6">Resources</th>
+								<th class="h6"></th>
 							</tr>
 							@foreach($players as $index=>$player)
-							<tr>		
+							<tr class="h6" style="font-size:0.9em">		
 								<td class="py-1">{{$index+1}}</td>
 								<td class="py-1"><a href="{{route('findPlayer')}}/{{$player->player}}/1" target="_blank">{{$player->player}}</a></td>
 								<td class="py-1">{{number_format($player->upkeep)}}</td>
 								<td class="py-1">{{number_format($player->res)}}</td>
-								<td class="py-1"><a class="btn btn-sm btn-outline-secondary" href="/defense/cfd/troops/{{$task->task_id}}/{{$player->uid}}">
+								<td class="py-1"><a class="btn btn-sm btn-outline-secondary py-0" href="/defense/cfd/troops/{{$task->task_id}}/{{$player->uid}}">
     								<i class="fa fa-angle-double-right"></i> troops</a></td>
 							</tr>
 							@endforeach

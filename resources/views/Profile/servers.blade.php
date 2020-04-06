@@ -2,21 +2,21 @@
 @section('body')
 
 	<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-		<div class="card-header h4 py-2 bg-warning text-white">
+		<div class="card-header h5 py-2 bg-warning text-white">
 			<strong>Servers Overview</strong>
 		</div>
 		<div class="card-text p-4">
 		@if(count($profiles)>0)			
-				<table class="table table-hover table-small text-center">
-					<thead class="">
-						<tr>
-							<th>Server Name</th>
-							<th>Start Date</th>
-							<th>Days</th>
-							<th>Account</th>
-							<th>Type</th>
-							<th>Plus Group</th>
-							<th></th>
+				<table class="table table-hover table-small text-center" style="font-size:0.9em">
+					<thead class="h6">
+						<tr class="table-warning">
+							<th class="py-1">Server Name</th>
+							<th class="py-1">Start Date</th>
+							<th class="py-1">Days</th>
+							<th class="py-1">Account</th>
+							<th class="py-1">Type</th>
+							<th class="py-1">Plus Group</th>
+							<th class="py-1"></th>
 						</tr>
 					</thead>
 				@foreach($profiles as $profile)
@@ -43,8 +43,8 @@
 								<button class="btn btn-success" name="server" value="{{$profile['server_id']}}"><i class="fa fa-angle-double-right"></i> <strong>Load Server</strong></button>
 							</form>
 						</td>
-						<td colspan="2"><a href="{{route('accountDelete')}}"><button class="btn btn-warning"><strong>Delete Account</strong></button></a></td>
-						<td colspan="3">
+						<td colspan="3"><a href="{{route('accountDelete')}}"><button class="btn btn-warning"><strong>Delete Account</strong></button></a></td>
+						<td colspan="2">
 							@if($profile['plus']==null)
 								<button class="btn btn-info" disabled><strong>Leave Plus Group</strong></button>
 							@else

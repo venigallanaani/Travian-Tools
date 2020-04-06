@@ -9,7 +9,7 @@
     </header>
 
     <!-- ============================================ home page body starts here ============================================ -->
-    <div class="col-7 mx-auto my-1">			
+    <div class="container mx-auto my-1">			
 		<table class="col-md-12 mx-auto table table-bordered shadow">
 			<tr class=" bg-info text-center text-white h5">
 				<th class="">Version</th>

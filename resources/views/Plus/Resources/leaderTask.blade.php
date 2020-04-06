@@ -3,15 +3,16 @@
 @section('body')
 
 		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Resource Task Details</strong></div>
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Resource Task Details</strong></div>
 			<div class="card-text">				
         <!-- ==================================== Defense Tasks Status ======================================= -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">				
 		          <!-- ====================== Defense Task Details ====================== -->
-					<p class="h5 py-2">Resource Task for <strong>{{$task[0]['player']}} <small>({{$task[0]['village']}})</small></strong></p>
+					<p class="h5 py-2">Resource Task for <a href="https://{{Session::get('server.url')}}/karte.php?x={{$task[0]['x']}}&y={{$task[0]['y']}}" target="_blank">
+						<strong>{{$task[0]['player']}} <small>({{$task[0]['village']}})</small></a></strong></p>
         			
         			<!-- ===============Defense task details =========================== -->
-					<table class="table mx-auto col-md-11 table-bordered text-center small" style="background-color:#dbeef4;">
+					<table class="table mx-auto col-md-11 table-bordered text-center" style="background-color:#dbeef4; font-size:0.9em">
 						<form action="/resource/update" method="POST" autocomplete="off">
 							{{ csrf_field() }}
 							<tr>
@@ -26,15 +27,15 @@
         								<input type="radio" name="resType" value="CROP" @php if($task[0]['type']=='crop'){echo 'checked';} @endphp> <img alt="crop" src="/images/x.gif" class="res crop">
 									</p>
 									<p class="py-0"><strong>Comments:</strong>
-										<textarea name="comments" class="form-control" rows="3">{{$task[0]['comments']}}</textarea>
+										<textarea name="comments" class="form-control" rows="2">{{$task[0]['comments']}}</textarea>
 									</p>
 								</td>
 								<td class="py-2">
 									<p class="py-0"><strong>Resource Received:</strong> {{number_format($task[0]['res_received'])}} ({{$task[0]['res_percent']}}%) </p>
 									<p class="py-0"><strong>Time Left: <span id="{{$task[0]['task_id']}}"></span></strong></p>
-									<p class="py-0 my-2"><button class="btn btn-primary px-5" name="update" value="{{$task[0]['task_id']}}">Update Task</button></p>
-									<p class="py-0 my-2"><button class="btn btn-success px-5" name="complete" value="{{$task[0]['task_id']}}">Mark as Complete</button></p>
-									<p class="py-0 my-2"><button class="btn btn-warning px-5" name="delete" value="{{$task[0]['task_id']}}">Delete Task</button></p>
+									<p class="py-0 my-2 "><button class="btn btn-primary px-5" name="update" value="{{$task[0]['task_id']}}">Update Task</button></p>
+									<p class="py-0 my-2 "><button class="btn btn-success px-5" name="complete" value="{{$task[0]['task_id']}}">Mark as Complete</button></p>
+									<p class="py-0 my-2 "><button class="btn btn-warning px-5" name="delete" value="{{$task[0]['task_id']}}">Delete Task</button></p>
 								</td>
 							</tr>
 						</form>
@@ -43,15 +44,15 @@
 					<div class="my-5">
 					@if(count($players)>0)
 						<p class="h5 text-info"><strong>Player Contributions</strong></p>
-						<table class="table table-bordered col-md-8 mx-auto table-hover">
+						<table class="table table-bordered col-md-8 mx-auto table-hover h6">
 							<tr class="bg-info text-white">
-								<th class="py-1 h5">#</th>
-								<th class="py-1 h5">Player</th>
-								<th class="py-1 h5">%</th>
-								<th class="py-1 h5">Resources</th>
+								<th class="py-1 ">#</th>
+								<th class="py-1 ">Player</th>
+								<th class="py-1 ">%</th>
+								<th class="py-1 ">Resources</th>
 							</tr>
 							@foreach($players as $index=> $player)
-    							<tr>		
+    							<tr class="small">		
     								<td class="py-1">{{$index+1}}</td>
     								<td class="py-1"><a href="{{route('findPlayer')}}/{{$player->player}}/1"><strong>{{$player->player}}</strong></a></td>
     								<td class="py-1">{{$player->percent}}%</td>

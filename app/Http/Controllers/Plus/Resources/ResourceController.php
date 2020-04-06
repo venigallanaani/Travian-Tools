@@ -39,7 +39,13 @@ class ResourceController extends Controller
         $player = ResUpd::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('task_id',$id)
-                    ->where('player_id',$request->session()->get('plus.id'))->first();   
+                    ->where('player_id',$request->session()->get('plus.id'))->first();
+        //dd($player);
+        if($player==null){
+            $player = 0;
+        }else{
+            $player = $player->resources;
+        }
                     
         return view('Plus.Resources.resourceTask')->with(['task'=>$task])
                         ->with(['player'=>$player]);          // Displays the resource tasks and status

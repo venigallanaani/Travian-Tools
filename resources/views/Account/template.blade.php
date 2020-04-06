@@ -4,7 +4,7 @@
 
     <header id="main-header" class="py-1 bg-warning text-white">
         <div class="container">
-            <p class="h3 font-weight-bold d-inline-block">Account</p>
+            <p class="h4 font-weight-bold d-inline-block">Account</p>
             <div class="float-right">
                 <div class="btn btn-light dropdown d-inline-block">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -34,7 +34,7 @@
 	@endguest	
     	
 	@auth
-    <div class="col-7 mx-auto">
+    <div class="container mx-auto">
     	@if(!Session::has('server'))
     	<div class="alert alert-warning text-center my-1" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -44,15 +44,15 @@
         @else
       	<div class="d-inline">
           <!-- ======================================= Account Side menu =================================== -->
-  			<div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
-				<a class="list-group-item py-1 bg-dark h4">Account Menu</a>
-				<a href="{{route('account')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
-				<a href="{{route('accountVillages')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Villages Overview</a>
-				<a href="{{route('accountHero')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Hero Details</a>				
-				<a href="{{route('accountTroops')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Overview</a>				
-				<a href="{{route('accountSupport')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Sitters & Duals</a>
-				<a href="{{route('accountAlliance')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Alliance</a>
-				<a href="{{route('accountPlan')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Troops Plan</a>				
+  			<div class="list-group text-center text-white mt-1 mx-1 float-md-left">
+				<a class="list-group-item py-1 bg-dark h5">Account Menu</a>
+				<a href="{{route('account')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">Overview</a>
+				<a href="{{route('accountVillages')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">Villages Overview</a>
+				<a href="{{route('accountHero')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">Hero Details</a>				
+				<a href="{{route('accountTroops')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">Troops Overview</a>				
+				<a href="{{route('accountSupport')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">Sitters & Duals</a>
+				<a href="{{route('accountAlliance')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">Alliance</a>
+				<a href="{{route('accountPlan')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">Troops Plan</a>				
   			</div>	
 	    </div> 
 	    	

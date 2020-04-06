@@ -3,18 +3,18 @@
 @section('results')
 	
 	<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-		<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Search Results</strong></div>
+		<div class="card-header h5 py-2 bg-info text-white"><strong>Defense Search Results</strong></div>
 		<div class="card-text">	
 		@if(count($troops)==0)
     		<div class="text-center my-2 py-2 text-danger">	
-				<p class="h5">No defense troops are found with given parameters</p>	
+				<p class="h6">No defense troops are found with given parameters</p>	
 			</div>
 		@else
 			<div class="text-center my-2 col-md-11 mx-auto">	
 				<table class="table table-sm table-hover m-2 table-bordered small">
 					<thead>
 						<tr>
-							<th>Dist</th>
+							<th>Distance</th>
 							<th>Village</th>
 							<th>Player</th>
 							<th colspan="10">Troops</th>

@@ -13,7 +13,7 @@
 	@endif  
 	
 		<div class="d-inline float-md-left py-0 m-3 rounded">
-			<div class="px-3 py-3 shadow"  style="background-color:#dbeef4">
+			<div class="px-3 py-3 shadow h6"  style="background-color:#dbeef4">
     			<table>
     				<tr>
     					<td class="text-warning"><strong>Attackers : </strong></td>

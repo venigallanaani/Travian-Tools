@@ -4,12 +4,12 @@
 
 	<!-- =============================================Plus Overview=========================================== -->
     <div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-        <div class="card-header h4 py-2 bg-info text-white">
+        <div class="card-header h5 py-2 bg-info text-white">
             <strong>Your Rankings</strong>
         </div>
     @if($ranking==null)
         <div class="card-text">
-        	<p class="text-center h5 py-5 text-danger">Rankings are disabled for this group</p>        
+        	<p class="text-center h6 py-5 text-danger">Rankings are disabled for this group</p>        
         </div>        
     @else
         <div class="card-text">

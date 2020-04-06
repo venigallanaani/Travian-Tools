@@ -5,19 +5,19 @@
 
 <!-- =============================================Plus Overview=========================================== -->
     <div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-        <div class="card-header h4 py-2 bg-info text-white">
+        <div class="card-header h5 py-2 bg-info text-white">
             <strong>Member Contact Details</strong>
         </div>
     @if($contact!=null)
-        <div class="px-5 py-2 h5">
-    		<table class="table table-borderless mx-auto col-md-8">
+        <div class="px-5 py-2 h6">
+    		<table class="table table-borderless mx-auto col-md-6">
     			<tr>
     				<td class="text-left py-2 text-info font-weight-bold">Skype </td>
-    				<td class="text-left">: {{$contact->skype}}</td>
+    				<td class="text-left py-2">: {{$contact->skype}}</td>
     			</tr>
     			<tr>
     				<td class="text-left py-2 text-info font-weight-bold">Discord </td>
-    				<td class="text-left">: {{$contact->discord}}</td>
+    				<td class="text-left py-2">: {{$contact->discord}}</td>
     			</tr>
 			</table>
         </div>

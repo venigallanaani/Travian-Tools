@@ -3,10 +3,10 @@
 @section('body')
 
 	<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
-		<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Call Troops Details</strong></div>
+		<div class="card-header h5 py-2 bg-info text-white"><strong>Defense Call Troops Details</strong></div>
 		<div class="card-text">
 			<div class="text-center col-md-11 mx-auto my-2 p-0">
-				<p class="h4 py-2"><strong>Troops Contribution of {{$troops[0]['player']}}</strong></p>
+				<p class="h5 py-2"><strong>Troops Contribution of {{$troops[0]['player']}}</strong></p>
     		@foreach(['danger','success','warning','info'] as $msg)
     			@if(Session::has($msg))
 	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
@@ -16,8 +16,8 @@
                 </div>
                 @endif
             @endforeach            
-                <table class="table table-bordered table-hover col-md-12 mx-auto">
-    				<tr>	
+                <table class="table table-bordered table-hover col-md-12 mx-auto" style="font-size:0.9em">
+    				<tr class="h6">	
     					<th class="p-0">Village</th>
     					<th class="p-0" data-toggle="tooltip" data-placement="top" title="{{$units[0]['name']}}"><img alt="" src="/images/x.gif" class="units {{$units[0]['image']}}"></th>
     					<th class="p-0" data-toggle="tooltip" data-placement="top" title="{{$units[1]['name']}}"><img alt="" src="/images/x.gif" class="units {{$units[1]['image']}}"></th>
@@ -41,7 +41,7 @@
     						$res+=$troop->resources;
     					@endphp
     					<tr class="">
-    						<td class="py-1"><a href="" target="_blank">{{$troop->village}}</a></td>
+    						<td class="py-1 h6"><a href="" target="_blank">{{$troop->village}}</a></td>
     						<td class="py-1 px-0">{{number_format($troop->unit01)}}</td>
     						<td class="py-1 px-0">{{number_format($troop->unit02)}}</td>
     						<td class="py-1 px-0">{{number_format($troop->unit03)}}</td>

@@ -19,7 +19,7 @@
         @endif
     @endforeach	
 
-	<div class="col-7 mx-auto">
+	<div class="container mx-auto">
 		@yield('report')
 		<div class="card col-md-12 p-1 my-2 shadow">
 			<form class="mx-auto col-md-10" action="{{route('makeReport')}}" method="post">

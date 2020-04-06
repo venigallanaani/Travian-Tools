@@ -3,7 +3,7 @@
 @section('body')
 
 		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Resource Status</strong></div>
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Resource Status</strong></div>
 			<div class="card-text">
 		<!-- ========================== Create CFD Options ============================== -->
         		<div class="m-3">
@@ -12,7 +12,7 @@
                     		<i class="fa fa-plus"></i> <span class=""><strong>Create New Resource Push</strong></span>
         			 	</p>
             		</div>
-            		<div class="collapse" id="task" style="">
+            		<div class="collapse" id="task" style="font-size:0.9em">
               			<div class="card card-body shadow">
     						<form action="/resource/create" method="POST" class="col-md-8 mx-auto text-center" autocomplete="off">
         						{{ csrf_field() }}
@@ -34,7 +34,7 @@
         								<input type="radio" name="resType" value="CROP"> <img alt="crop" src="/images/x.gif" class="res crop">
         						</p>
         						<p class="my-2">
-        							<strong>Comments:</strong><textarea name="comments" class="form-control" rows="5"></textarea>
+        							<strong>Comments:</strong><textarea name="comments" class="form-control" rows="2"></textarea>
         						</p>
         						<p class="my-2">
         							<button class="btn btn-info px-5" name="createResTask"><strong>Create Task</strong></button>
@@ -55,12 +55,12 @@
         @endforeach
         
     		@if(count($tasks)==0)
-    			<p class="text-center h5 py-5">No resource tasks are currently active.</p>				
+    			<p class="text-center h6 py-5">No resource tasks are currently active.</p>				
     		@else
     <!-- ==================================== List of Resources tasks is progress ======================================= -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
 					<table class="table align-middle small">
-						<thead class="thead-inverse">
+						<thead class="thead-inverse h6">
     						<tr>
     							<th class="">Target</th>
     							<th class="">Resources</th>
@@ -87,7 +87,7 @@
     							<td>{{$task->res_percent}}%</td>
     							<td>{{$task->target_time}}</td>
     							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
-    							<td><a class="btn btn-outline-secondary" href="/resource/{{$task->task_id}}">
+    							<td><a class="btn btn-outline-secondary py-1" href="/resource/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
     						</tr>

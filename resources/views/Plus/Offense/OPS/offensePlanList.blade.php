@@ -3,7 +3,7 @@
 @section('body')
 
 		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Offense Plans Status</strong></div>
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Offense Plans Status</strong></div>
 			<div class="card-text">
 		<!-- ========================== Create CFD Options ============================== -->
 				<div class="m-3">
@@ -12,15 +12,15 @@
                     		<i class="fa fa-plus"></i> <span class=""><strong>Create New Offense Plan</strong></span>
         			 	</p>
             		</div>
-            		<div class="collapse" id="task" style="">
+            		<div class="collapse h6" id="task" style="">
               			<div class="card card-body shadow">
     						<form action="/offense/create" method="POST" class="col-md-10 mx-auto text-center" autocomplete="off">
         						{{ csrf_field() }}
         						<p class="my-2">
-        							<strong>Plan Name: <input type="text" name="name" size="10" required></strong>
+        							Plan Name: <input type="text" name="name" size="10" required>
         						</p>
         						<p class="my-2">
-        							<button class="btn btn-info px-5" name="createOps"><strong>Create Plan</strong></button>
+        							<button class="btn btn-info px-5" name="createOps">Create Plan</button>
         						</p> 						
     						</form>
               			</div>
@@ -37,12 +37,12 @@
         @endforeach
         
     		@if(count($plans)==0)
-    			<p class="text-center h5 py-5">No Offense plans are currently active.</p>				
+    			<p class="text-center h6 py-3">No Offense plans are currently active.</p>				
     		@else
     <!-- ==================================== List of CFD is progress ======================================= -->		
 				<div class="text-center col-md-10 mx-auto my-2 p-0">
-					<table class="table align-middle small table-hover">
-						<thead class="thead-inverse">
+					<table class="table align-middle table-hover small">
+						<thead class="thead-inverse table-danger h6">
     						<tr>
     							<th class="">Plan Name</th>    							
     							<th class="">Status</th>
@@ -54,14 +54,14 @@
     						</tr>
 						</thead>
 						@foreach($plans as $plan)
-    						<tr class="">
-    							<td><strong>{{$plan->name}}</strong></td>
-    							<td>{{ucfirst(strtolower($plan->status))}}</td>
-    							<td>{{$plan->attackers}}</td>
-    							<td>{{$plan->targets}}</td>
-    							<td><strong><span class="text-danger">{{$plan->real}}</span> | <span class="text-primary">{{$plan->fake}}</span> | {{$plan->other}}</strong></td>    							
-    							<td><a href="/plus/member/{{$plan->create_by}}">{{$plan->create_by}}</a></td>    							
-    							<td><a class="btn btn-outline-secondary" href="/offense/status/{{$plan->id}}">
+    						<tr class="py-1">
+    							<td class="py-1"><strong>{{$plan->name}}</strong></td>
+    							<td class="py-1">{{ucfirst(strtolower($plan->status))}}</td>
+    							<td class="py-1">{{$plan->attackers}}</td>
+    							<td class="py-1">{{$plan->targets}}</td>
+    							<td class="py-1"><strong><span class="text-danger">{{$plan->real}}</span> | <span class="text-primary">{{$plan->fake}}</span> | {{$plan->other}}</strong></td>    							
+    							<td class="py-1"><a href="/plus/member/{{$plan->create_by}}">{{$plan->create_by}}</a></td>    							
+    							<td class="py-1"><a class="btn btn-outline-secondary btn-sm py-1" href="/offense/status/{{$plan->id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
     						</tr>

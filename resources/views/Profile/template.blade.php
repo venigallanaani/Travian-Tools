@@ -4,7 +4,7 @@
 
     <header id="main-header" class="py-1 bg-warning text-white">
         <div class="container">
-            <p class="h3 font-weight-bold d-inline-block">Profile</p>
+            <p class="h4 font-weight-bold d-inline-block">Profile</p>
             <div class="float-right">
                 <div class="btn btn-light dropdown d-inline-block">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -24,14 +24,14 @@
         </div>
     </header>
 
-    <div class="col-7 mx-auto">
+    <div class="container mx-auto">
 @auth
       <div class="d-inline">
           <!-- ======================================= Account Side menu =================================== -->
-  			<div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
-				<a class="list-group-item py-1 bg-dark h4">Profile Menu</a>
-				<a href="{{route('profile')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">Overview</a>
-				<a href="{{route('profileServers')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h5">My Servers</a>
+  			<div class="list-group text-center text-white mt-1 float-md-left mx-1">
+				<a class="list-group-item py-1 bg-dark h5 px-5">Profile Menu</a>
+				<a href="{{route('profile')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">Overview</a>
+				<a href="{{route('profileServers')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">My Servers</a>
   			</div>	
 	    </div> 
 		@foreach(['danger','success','warning','info'] as $msg)

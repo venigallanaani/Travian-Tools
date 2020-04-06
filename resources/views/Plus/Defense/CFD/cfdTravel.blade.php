@@ -3,11 +3,11 @@
 @section('body')
 
 	<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
-		<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Call Troops Details</strong></div>
+		<div class="card-header h5 py-2 bg-info text-white"><strong>Defense Call Troops Details</strong></div>
 		<div class="card-text">
 			<div class="text-center col-md-11 mx-auto my-2 p-0">
-				<p class="h4 py-2">Defense in reach of CFD for Village-{{$task->village}} (Player-{{$task->player}})</p>
-				<p class="h5 py-2">Target Time- <span class="text-primary">{{$task->target_time}}</span></p>
+				<p class="h6 py-1">Defense in reach of CFD for Village-{{$task->village}} (Player-{{$task->player}})</p>
+				<p class="h6 py-1">Target Time- <span class="text-primary">{{$task->target_time}}</span></p>
     		@foreach(['danger','success','warning','info'] as $msg)
     			@if(Session::has($msg))
 	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
@@ -19,10 +19,10 @@
             @endforeach
         	
         	@if($villages == null)
-        		<p class="py-3 h5 text-danger">No available units can make it to the defense call</p>
+        		<p class="py-3 h6 text-danger">No available units can make it to the defense call</p>
         	@else
-                <table class="table table-sm table-bordered align-center table-hover col-md-12 shadow">
-                	<thead class="font-weight-bold bg-info text-white">
+                <table class="table table-sm table-bordered align-center table-hover col-md-12 shadow" style="font-size:0.9em">
+                	<thead class="font-weight-bold bg-info text-white h6">
                     	<tr>
                     		<td class="px-1 py-1">Player</td>
                     		<td class="px-1 py-1">Village</td>

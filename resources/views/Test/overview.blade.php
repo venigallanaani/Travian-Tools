@@ -3,7 +3,7 @@
 @section('content')        
         
     <!-- ============================================ home page body starts here ============================================ -->
-    <div class="col-7 mx-auto mt-1">
+    <div class="container mx-auto mt-1">
     	<table class="mx-auto table table-bordered">
 			<tr  class="first">
 				<th>Attacker</th>

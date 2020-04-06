@@ -3,7 +3,7 @@
 @section('body')
 
 		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Call Status</strong></div>
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Defense Call Status</strong></div>
 			<div class="card-text">
 		<!-- ========================== Create CFD Options ============================== -->
 				<div class="m-3">
@@ -12,7 +12,7 @@
                     		<i class="fa fa-plus"></i> <span class=""><strong>Create New Defense Task</strong></span>
         			 	</p>
             		</div>
-            		<div class="collapse" id="task" style="">
+            		<div class="collapse" id="task" style="font-size:0.9em">
               			<div class="card card-body shadow">
     						<form action="/defense/cfd/create" method="POST" class="col-md-10 mx-auto text-center" autocomplete="off">
         						{{ csrf_field() }}
@@ -26,14 +26,14 @@
     								<strong>Land Time: <input type="text" name="targetTime" size="20" class="dateTimePicker">        									 
         						</p>
     						    <p class="my-2 col-md-12">
-        							<strong>Priority: </strong>
+						    		Priority: 
         								<select name="priority">
         									<option value="high">High</option>
         									<option value="medium">Medium</option>
         									<option value="low">Low</option>
         									<option value="none">None</option>
         								</select> 
-        							<strong> Type: </strong>
+        							Type: 
         								<select name="type">
         									<option value="defend">Defend</option>
         									<option value="snipe">Snipe</option>
@@ -46,7 +46,7 @@
         							<input type="checkbox" name="crop"> Send Crop
     							</p>
         						<p class="my-2">
-        							<strong>Notes:</strong><textarea name="comments" class="form-control" rows="5"></textarea>
+        							<strong>Notes:</strong><textarea name="comments" class="form-control" rows="2"></textarea>
         						</p>
         						<p class="my-2">
         							<button class="btn btn-info px-5" name="createDefTask"><strong>Create Task</strong></button>
@@ -71,13 +71,13 @@
     <!-- ==================================== List of CFD is progress ======================================= -->		
     			@if(count($atasks)>0)
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
-					<table class="table align-middle">
+					<table class="table align-middle table-sm">
 						<thead class="thead-inverse h5">
     						<tr>
-    							<td colspan="8" class="table-success text-center mx-5 h5 py-2">Active CFDs List</td>    							
+    							<td colspan="8" class="table-success text-center mx-5 py-2">Active CFDs List</td>    							
     						</tr>
 						</thead>
-						<thead class="thead-inverse h5">
+						<thead class="h6">
     						<tr>
     							<th class="">Player</th>    							
     							<th class="">Type</th>
@@ -103,18 +103,18 @@
 								else{$bgcolor ='#e6e6e6';	}
 
 							@endphp
-    						<tr class="h6" style="background-color:{{$bgcolor}};">
+    						<tr class="h6" style="font-size:0.8em; background-color:{{$bgcolor}};">
     							<td class="px-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
-    								<strong>{{$task->player}} ({{$task->village}})</strong></a>
+    								{{$task->player}} ({{$task->village}})</a>
     							</td>    							
-    							<td class="px-0">{{ucfirst(strtolower($task->type))}}</td>
-    							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    
+    							<td class="px-0"><strong>{{ucfirst(strtolower($task->type))}}</strong></td>
+    							<td class="{{$color}}">{{ucfirst($task->priority)}}</td>    
     							<td class="px-0">{{number_format($task->def_total)}}</td>							
-    							<td class="px-0">{{number_format($task->def_received)}} ({{$task->def_percent}}%)</td>
+    							<td class="px-0">{{number_format($task->def_received)}} <small>({{$task->def_percent}}%)</small></td>
     							<td class="px-0">{{$task->target_time}}</td>
-    							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
-    							<td class="px-1"><a class="btn btn-outline-secondary" href="/defense/cfd/{{$task->task_id}}">
-    								<i class="fa fa-angle-double-right"></i> Details</a>
+    							<td><span id="{{$task->task_id}}"></span></td>
+    							<td class="py-1"><a class="btn btn-outline-secondary py-0" href="/defense/cfd/{{$task->task_id}}">
+    								<i class="fa fa-angle-double-right"></i> <small>Details</small></a>
     							</td>
     						</tr>
 						@endforeach
@@ -127,10 +127,10 @@
 					<table class="table align-middle">
 						<thead class="thead-inverse h5">
     						<tr>
-    							<td colspan="8" class="table-secondary text-center mx-5 h5 py-2">Completed CFDs List</td>    							
+    							<td colspan="8" class="table-secondary text-center mx-5 py-2">Completed CFDs List</td>    							
     						</tr>
 						</thead>
-						<thead class="thead-inverse">
+						<thead class="thead-inverse h6">
     						<tr>
     							<th class="">Player</th>
     							<th class="">Defense</th>

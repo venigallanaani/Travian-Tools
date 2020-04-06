@@ -84,15 +84,15 @@
 					else	{	$color='table-white';	}					
 				@endphp				
 						
-    			<tr class="{{$color}} show" id="{{$incoming['incid']}}">
-    				<td class="h6" id="land">{{$incoming['landTime']}}</td>
+    			<tr class="{{$color}} show" id="{{$incoming['incid']}}" style="font-size:0.8em">
+    				<td class="" id="land">{{$incoming['landTime']}}</td>
     				<td class="attack" rel="{{$incoming['att_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['att_x']}}&y={{$incoming['att_y']}}" target="_blank"><strong>{{$incoming['att_player']}}</strong> 
     						({{$incoming['att_village']}}) </a></td>
 					<td class="h6">{{$incoming['waves']}}</td>					
     				<td class="defend" rel="{{$incoming['def_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['def_x']}}&y={{$incoming['def_y']}}" target="_blank"><strong>{{$incoming['def_player']}}</strong>
     						 ({{$incoming['def_village']}})</a></td>
-				 	<td class="h6" id="notice">{{$incoming['noticeTime']}}</td>
-			 		<td class="h6" id="start">...</td>   				
+				 	<td class="" id="notice">{{$incoming['noticeTime']}}</td>
+			 		<td class="" id="start">...</td>   				
     				<td><select id="unit" style="width:6em" class="small">
     					@if($incoming['att_tribe']=='ROMAN')
     						<option @if($incoming['unit']==6) selected @endif value="6">6-Legionnaire</option>
@@ -179,36 +179,36 @@
     						<option @if($incoming['ldr_sts']=='FAKE') selected @endif value="FAKE">Fake</option>
     					</select>
     				</td>
-    				<td><button class="btn btn-info btn-sm" id="details" name="button" value="{{$incoming['dist']}}" type="submit"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></td>
+    				<td><button class="btn btn-info btn-sm py-0" id="details" name="button" value="{{$incoming['dist']}}" type="submit"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></td>
     			</tr>
-    			<tr style="display: none;background-color:#dbeef4" class="info">
+    			<tr style="display: none;background-color:#dbeef4;font-size: 0.8em" class="info">
     				<td colspan="3" class="py-1">
-    					<p class="py-0 h5"><a href="/defense/attacker/{{$incoming['att_id']}}" target="_blank"><strong>Track Attacker <i class="fas fa-external-link-alt"></i></strong></a></p>
-    					<p class="py-0 h6"><strong>Hero XP - </strong>{{$incoming['hero']}}</p>
-    					<p class="py-0 h6"><strong>Player Notes - </strong><small>{{$incoming['comments']}}</small></p>
+    					<p class="py-0 my-1 h6"><a href="/defense/attacker/{{$incoming['att_id']}}" target="_blank"><strong>Track Attacker <i class="fas fa-external-link-alt"></i></strong></a></p>
+    					<p class="py-0 my-1"><strong>Hero XP - </strong>{{$incoming['hero']}}</p>
+    					<p class="py-0 my-1"><strong>Player Notes - </strong><small>{{$incoming['comments']}}</small></p>
 					</td>
 					<td colspan="3" class="py-1">
 						@if($incoming['VILLAGE']==null)
-							<p class="h6"><strong>No Village Details</strong></p>
+							<p class=""><strong>No Village Details</strong></p>
 						@else
-							<p class="py-0 h5">Village Details</p>
-							<p class="py-0 h6">
+							<p class="py-0 my-1 h6">Village Details</p>
+							<p class="py-0 my-1">
 								<span class="px-1 py-0"><strong>Artifact</strong> - {{ucfirst(strtolower($incoming['VILLAGE']['artifact']))}}</span>
 								@if($incoming['VILLAGE']['cap']==1)
-									<span class="h5 text-danger">Capital</span>
+									<span class="text-danger"><strong>Capital</strong></span>
 								@endif
 							</p>
-							<p class="px-1 py-0 h6"><strong>Village Type-</strong> {{ucfirst(strtolower($incoming['VILLAGE']['type']))}}</p>
+							<p class="px-1 py-0"><strong>Village Type-</strong> {{ucfirst(strtolower($incoming['VILLAGE']['type']))}}</p>
 						@endif					
 					</td>
     				<td colspan="2" class="py-1">
     					@if($incoming['CFD']==null)
     						<p class="py-0 h6">CFD doesn't exists</p>
-    						<p class="py-0 h5"><a href="/defense/cfd" target="_blank"><strong>Create CFD</strong><i class="fas fa-external-link-alt"></i></a></p>
+    						<p class="py-0"><a href="/defense/cfd" target="_blank"><strong>Create CFD</strong><i class="fas fa-external-link-alt"></i></a></p>
     					@else
-    						<p class="py-0 h5"><strong>CFD - </strong>{{number_format($incoming['CFD']['total'])}} ({{$incoming['CFD']['percent']}}%)</p>
-    						<p class="py-0 h6"><span class="px-1 py-0"><strong>Type -</strong> {{$incoming['CFD']['type']}}</span></p>
-							<p class="py-0 h6"><a href="/defense/cfd/{{$incoming['CFD']['id']}}" target="_blank"><strong>Edit CFD</strong><i class="fas fa-external-link-alt"></i></a></p>
+    						<p class="py-0 my-1"><strong>CFD - </strong>{{number_format($incoming['CFD']['total'])}} ({{$incoming['CFD']['percent']}}%)</p>
+    						<p class="py-0 my-1"><span class="px-1 py-0"><strong>Type -</strong> {{$incoming['CFD']['type']}}</span></p>
+							<p class="py-0 my-1 h6"><a href="/defense/cfd/{{$incoming['CFD']['id']}}" target="_blank"><strong>Edit CFD</strong><i class="fas fa-external-link-alt"></i></a></p>
 							
     					@endif
     				</td>
@@ -360,7 +360,7 @@
 				var row = $(row);
 				var id = '"'+row.attr("id")+'"';
 				if(id !== '"undefined"'){
-    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),row.find('#tsq').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
     				row.find("#start").html(time);
     				
     				var notice = new Date(row.find('#notice').html()).getTime();
@@ -380,7 +380,7 @@
 				var row = $(row);
 				var id = '"'+row.attr("id")+'"';
 				if(id !== '"undefined"'){
-    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),row.find('#tsq').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
     				row.find("#start").html(time);
     				
     				var notice = new Date(row.find('#notice').html()).getTime();

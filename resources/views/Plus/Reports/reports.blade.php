@@ -3,7 +3,7 @@
 @section('body')
 
 		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Plus Group Reports</strong></div>
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Plus Group Reports</strong></div>
 			<div class="card-text">
 		<!-- ========================== Create CFD Options ============================== -->
 				<div class="m-3">
@@ -14,11 +14,11 @@
             		</div>
             		<div class="collapse" id="task" style="">
               			<div class="card card-body shadow text-center">
-              				<p class="h4"><a href="{{route('reports')}}" class="text-info" target="_blank">Reports Converter <i class="fas fa-external-link-alt"></i></a></p>
+              				<p class="h5"><a href="{{route('reports')}}" class="text-info" target="_blank">Reports Converter <i class="fas fa-external-link-alt"></i></a></p>
     						<form action="/plus/reports/add" method="POST" class="col-md-10 mx-auto text-center" autocomplete="off">
         						{{ csrf_field() }}
-        						<p class="my-2">
-        							<strong>Report URL- <input name="link" type="text" required size="30"></strong>
+        						<p class="my-2 h6">
+        							Report URL- <input name="link" type="text" required size="30">
         						</p>
         						<p class="my-2">
         							<button class="btn btn-info px-5"><strong>Save Report</strong></button>
@@ -38,22 +38,22 @@
         @endforeach
     		
     		@if(count($reports)>0)
-        			<table class="table text-center table-sm table-hover p-0 table-bordered mx-auto col-md-8">
+        			<table class="table text-center table-sm table-hover table-bordered mx-auto col-md-8">
         				<thead class="">
             				<tr>
-            					<td colspan="3" class="py-2 h5 text-white bg-info">Group Reports</td>
+            					<td colspan="3" class="py-2 h6 text-white bg-info">Group Reports</td>
             				</tr>
-    						<tr class="text-info font-weight-bold">
-    							<td class="px-1">Title</td>
-    							<td class="px-1">Report</td>
-    							<td class="px-1">Date</td>
+    						<tr class="text-info h6">
+    							<td class="">Title</td>
+    							<td class="">Date</td>
+    							<td class="">Report</td>    							
     						</tr>
         				</thead>
     				@foreach($reports as $report)
-    					<tr>    						
-							<td class="px-1">{{$report['title']}}</td>
-							<td class="px-1"><a href="{{$report['report']}}" target="_blank">Link <i class="fas fa-external-link-alt"></a></td>
-							<td class="px-1">{{$report['date']}}</td>							
+    					<tr style="font-size:0.9em">    						
+							<td class="px-1">{{$report['title']}}</td>							
+							<td class="px-1">{{$report['date']}}</td>
+							<td class="px-1"><a href="{{$report['report']}}" target="_blank">Link <i class="fas fa-external-link-alt"></a></td>							
 						</tr>
     				@endforeach
         			</table>

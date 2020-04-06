@@ -3,7 +3,7 @@
 @section('body')
 <!-- =================================== Account Overview screen================================== -->
 		<div class="card float-md-left col-md-9 mt-1 p-0 mb-5 shadow">
-			<div class="card-header h4 py-2 bg-warning text-white">
+			<div class="card-header h5 py-2 bg-warning text-white">
 				<strong>Villages Overview</strong>
 			</div>
 			<div class="card-text">
@@ -21,7 +21,7 @@
         				{{csrf_field()}}
             			<table class="table table-bordered table-hover table-sm align-middle">
             				<thead class="bg-warning">
-            					<tr>
+            					<tr clas="h6">
             						<th class="align-middle py-0 px-1" rowspan="2">Village</th>        						
             						<th class="align-middle py-0 px-1" rowspan="2">Cap</th>            						
             						<th class="align-middle py-0 px-1" rowspan="2">Tiles</th>
@@ -41,7 +41,7 @@
             				</thead>
             				@foreach($villages as $village)
                 				<tr>
-                					<td class="px-1"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village['X']}}&y={{$village['Y']}}" target="_blank">{{$village['NAME']}}</a></td>
+                					<td class="px-1 h6"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village['X']}}&y={{$village['Y']}}" target="_blank">{{$village['NAME']}}</a></td>
                 					<td class="px-1"><input type="checkbox" name="{{$village['VID']}}_cap"  @if($village['CAP']!=null) checked @endif></td>                					
                 					<td class="px-1 small"><select name="{{$village['VID']}}_tiles" style="border:1px">
         									<option value="4-4-4-6" @if($village['TILES']=='4-4-4-6') selected @endif>4-4-4-6</option>
@@ -111,10 +111,10 @@
             					</tr>
         					@endforeach
             			</table>
-            			<button class="btn btn-warning btn-lg px-5" type="submit"><strong>Update Villages</strong></button>
+            			<button class="btn btn-warning px-5" type="submit"><strong>Update Villages</strong></button>
         			</form>
         		</div>
-        		<p class="text-right px-5">* The displayed values are approximate values</p>
+        		<p class="text-right px-5 small">* The displayed values are approximate values</p>
 			</div>			
 		</div>
 	

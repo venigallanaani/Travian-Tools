@@ -3,7 +3,7 @@
 @section('content')    
     <header id="main-header" class="py-1 bg-info text-white">
         <div class="container">
-            <p class="h3 font-weight-bold d-inline-block">Plus</p>
+            <p class="h4 font-weight-bold d-inline-block">Plus</p>
             <div class="float-right">
                 <div class="btn btn-light dropdown d-inline-block">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -62,7 +62,7 @@
 		</div>		
 	</div>
 	@else
-    <div class="col-7 col-md-7 mx-auto">        
+    <div class="container mx-auto">        
         @yield('body')
     </div>
     @endif
@@ -71,7 +71,7 @@
 @endauth
 
 
-	@push('extensions')
+	@push('scripts')
 		<script type="text/javascript" src="{{ asset('js/moment.js') }}"></script> 
         <script type="text/javascript" src="{{ asset('js/moment-timezone-with-data-2012-2022.min.js') }}"></script> 
         <script>        	

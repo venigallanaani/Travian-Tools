@@ -4,7 +4,7 @@
 
 <!-- ================================= Main Content of the Resource Tasks in the Plus general Overview Menu ============================= -->
 		<div class="card float-md-left col-md-9 mt-1 p-0 mb-5 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Resource Tasks</strong></div>
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Resource Tasks</strong></div>
 			<div class="card-text">
     <!-- ==================================== List of tasks is progress ======================================= -->		
 				@if(count($tasks)==0)
@@ -21,14 +21,13 @@
                     @endif
                 @endforeach
                 
-				<div class="text-center col-md-11 my-2 p-0">
-					<table class="table align-middle small col-md-10 mx-auto">
-						<thead class="thead-inverse">
+				<div class=" my-2 p-0 mx-auto col-md-10">
+					<table class="table align-middle table-sm small text-center">
+						<thead class="thead-inverse h6">
     						<tr>
     							<th class="">Target</th>
     							<th class="">Resources</th>
     							<th class="">Pref</th>    							
-    							<th class="">%</th>
     							<th class="">Target Time</th>
     							<th class="">Time left</th>
     							<th class=""></th>    							
@@ -41,10 +40,9 @@
     							</td>
     							<td>{{number_format($task->res_remain)}}</td>
     							<td data-toggle="tooltip" data-placement="top" title="{{$task->type}}"><img alt="all" src="/images/x.gif" class="res {{$task->type}}"></td>							
-    							<td>{{$task->res_percent}}%</td>
     							<td>{{$task->target_time}}</td>
     							<td><strong><span id="{{$task->task_id}}"></span></strong></td>
-    							<td><a class="btn btn-outline-secondary" href="/plus/resource/{{$task->task_id}}">
+    							<td><a class="btn btn-outline-secondary py-0 px-2" href="/plus/resource/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
     						</tr>

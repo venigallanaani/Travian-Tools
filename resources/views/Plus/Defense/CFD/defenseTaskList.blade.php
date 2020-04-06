@@ -3,7 +3,7 @@
 @section('body')
 	<!-- ==================================== Main Content of the CFD tasks list ================================= -->
 		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Tasks</strong></div>
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Defense Tasks</strong></div>
 			<div class="card-text">
     <!-- ==================================== List of CFD is progress ======================================= -->
 				@if(count($tasks)==0)
@@ -21,10 +21,11 @@
                 @endforeach	
                 	
 				<div class="text-center col-md-11 mx-auto my-2 p-0">					
-					<table class="table align-middle">
-						<thead class="thead-inverse">
-    						<tr>
+					<table class="table align-middle" id="listTable">
+						<thead class="thead-inverse h6">
+    						<tr class="">
     							<th class="">Player</th>
+    							<th class="">Village</th>
     							<th class="">Defense</th>
     							<th class="">Type</th>
     							<th class="">Priority</th>
@@ -47,16 +48,19 @@
 								else{$bgcolor ='#e6e6e6';	}
 								
 							@endphp
-    						<tr class="" style="background-color:{{$bgcolor}};">
-    							<td class="px-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
-    								<strong>{{$task->player}} ({{$task->village}})</strong></a>
+    						<tr class="" style="font-size:0.8em; background-color:{{$bgcolor}};">
+    							<td class="py-1 px-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
+    								<strong>{{$task->player}}</strong></a>
     							</td>
-    							<td class="px-0">{{number_format($task->def_remain)}}</td>
-    							<td class="px-0"><strong>{{ucfirst(strtolower($task->type))}}</strong></td>
-    							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>
-    							<td class="px-0">{{$task->target_time}}</td>
-    							<td class="px-0"><strong><span id="{{$task->task_id}}"></span></strong></td>
-    							<td class="px-0"><a class="btn btn-outline-secondary" href="/plus/defense/{{$task->task_id}}">
+    							<td class="py-1 px-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
+    								<strong>{{$task->village}} ({{$task->x}}|{{$task->y}})</strong></a>
+    							</td>
+    							<td class="py-1 px-0">{{number_format($task->def_remain)}}</td>
+    							<td class="py-1 px-0"><strong>{{ucfirst(strtolower($task->type))}}</strong></td>
+    							<td class="{{$color}} py-1 px-0"><strong>{{ucfirst($task->priority)}}</strong></td>
+    							<td class="py-1 px-0">{{$task->target_time}}</td>
+    							<td class="py-1 px-0"><strong><span id="{{$task->task_id}}"></span></strong></td>
+    							<td class="py-1 px-0"><a class="btn btn-outline-secondary btn-sm py-0" href="/plus/defense/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
     						</tr>

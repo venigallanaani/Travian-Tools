@@ -3,12 +3,12 @@
 @section('body')
 
 		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Defense Call for {{$task['player']}} ({{$task['village']}})</strong></div>
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Defense Call for {{$task['player']}} ({{$task['village']}})</strong></div>
 			<div class="card-text">				
         <!-- ==================================== Defense Tasks Status ======================================= -->		
 				<div class="text-center col-md-11 mx-auto my-2 p-0">				
 		          <!-- ====================== Defense Task Details ====================== -->
-					<p class="h4"><strong>Defense Call Details</strong></p>
+					<p class="h5"><strong>Defense Call Details</strong></p>
 			   <!-- ========== Alert about the update =================================== -->
 			   @php
 			   		if($task['priority']=='high'){$color='text-danger';}
@@ -16,7 +16,7 @@
 			   		elseif($task['priority']=='low'){$color='text-info';}
 			   		else{$color='';}
 			   @endphp
-					<table class="table mx-auto col-md-8 table-borderless text-left">
+					<table class="table mx-auto col-md-8 table-borderless text-left" style="font-size: 0.9em">
 						<tr>
 							<td class="py-1"><strong>Target: <a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task['x']}}&y={{$task['y']}}" target="_blank">{{$task['player']}} ({{$task['village']}})</a></strong></td>
 							<td class="py-1"><strong>Defense </strong>(<img alt="upkeep" src="/images/x.gif" class="res upkeep">): {{number_format($task['def_remain'])}}</td>							
@@ -42,8 +42,8 @@
 					
                 	@if($travels==null)
             		<div class="py-2">
-                		<p class="h5 text-danger">No available units can make it to the defense call</p>
-                		<p class="h6 text-info font-italic">( Travel times might change based on hero equipment )</p>
+                		<p class="h6 text-danger">No available units can make it to the defense call</p>
+                		<p class="text-info font-italic">( Travel times might change based on hero equipment )</p>
             		</div>
                 	@else
                 	<div>
@@ -86,7 +86,7 @@
 					
 					<form method="post" action="/plus/defense/{{$task->task_id}}" autocomplete="off">
 						{{ csrf_field() }}
-						<div class="py-2 px-1 text-center rounded" style="background-color:#dbeef4" >
+						<div class="py-2 px-1 text-center rounded shadow" style="background-color:#dbeef4" >
     						<p class="h5 text-info"><strong>Enter Your Defense</strong></p>
     						<div class="bg-white rounded">
         						<table class="table table-borderless col-md-11 mx-auto small">
@@ -130,7 +130,7 @@
 					<div class="my-3">
 					@if(count($troops)>0)
 						<p class="h5"><strong>Your Troops</strong></p>
-						<table class="table table-bordered table-hover col-md-10 mx-auto">
+						<table class="table table-bordered table-hover col-md-10 mx-auto shadow" style="font-size:0.9em">
 							<tr>	
 								<th class="p-0">Village</th>
 								<th class="p-0" data-toggle="tooltip" data-placement="top" title="{{$units[0]['name']}}"><img alt="" src="/images/x.gif" class="units {{$units[0]['image']}}"></th>
@@ -156,16 +156,16 @@
 								@endphp
     							<tr class="">
     								<td class="py-0">{{$troop->village}}</td>
-    								<td class="p-0 h6">{{number_format($troop->unit01)}}</td>
-    								<td class="p-0 h6">{{number_format($troop->unit02)}}</td>
-    								<td class="p-0 h6">{{number_format($troop->unit03)}}</td>
-    								<td class="p-0 h6">{{number_format($troop->unit04)}}</td>
-    								<td class="p-0 h6">{{number_format($troop->unit05)}}</td>
-    								<td class="p-0 h6">{{number_format($troop->unit06)}}</td>
-    								<td class="p-0 h6">{{number_format($troop->unit07)}}</td>
-    								<td class="p-0 h6">{{number_format($troop->unit08)}}</td>
-    								<td class="p-0 h6">{{number_format($troop->unit09)}}</td>
-    								<td class="p-0 h6">{{number_format($troop->unit10)}}</td>
+    								<td class="p-0">{{number_format($troop->unit01)}}</td>
+    								<td class="p-0">{{number_format($troop->unit02)}}</td>
+    								<td class="p-0">{{number_format($troop->unit03)}}</td>
+    								<td class="p-0">{{number_format($troop->unit04)}}</td>
+    								<td class="p-0">{{number_format($troop->unit05)}}</td>
+    								<td class="p-0">{{number_format($troop->unit06)}}</td>
+    								<td class="p-0">{{number_format($troop->unit07)}}</td>
+    								<td class="p-0">{{number_format($troop->unit08)}}</td>
+    								<td class="p-0">{{number_format($troop->unit09)}}</td>
+    								<td class="p-0">{{number_format($troop->unit10)}}</td>
     							</tr>				
 							@endforeach
 							<tr>	

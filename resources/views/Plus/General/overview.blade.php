@@ -6,28 +6,28 @@
         <div class="card-header h4 py-2 bg-info text-white">
             <strong>Plus Overview</strong>
         </div>
-        <div class="card-text p-3 h5">
+        <div class="card-text p-3 h6">
             <p>Welcome to Plus group - <span class="text-info"><strong>{{Session::get('plus.name')}}</strong></span></p>
             <br>
             <div class="card mx-auto">
-            	<div class="card-header py-2 text-info h4">
+            	<div class="card-header py-2 text-info h5">
             		<strong>Message of the day</strong>
             	</div>
-            	<div class="card-body">
+            	<div class="card-body h6 py-2 px-5">
             		<p class="card-text font-italic">{{$subscription->message}}</p>
             		<p class="small text-info"><strong>{{$subscription->message_update}} ({{$subscription->message_date}})</strong></p>
             	</div>
             </div>
             <br>
             <div class="card mx-auto">
-            	<div class="card-header py-2 text-info h4">
+            	<div class="card-header py-2 text-info h5">
             		<strong>Group Status</strong>
             	</div>
             	<div class="card-body px-5 h6">							
 				@if($counts['inc']>0)				
 					<p><strong>{{$counts['inc']}} <a href="/plus/incoming" class="text-info">Incoming attacks</strong></a> on your account</p>
 				@else
-					<p>No <span class="text-info"><strong>Incoming attacks</strong></span> on your account <span class="text-danger">-- under development</span></p>
+					<p>No <span class="text-info"><strong>Incoming attacks</strong></span> on your account</p>
 				@endif
 				
 				@if($counts['def']>0)				

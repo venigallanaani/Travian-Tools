@@ -2,7 +2,7 @@
 
 @section('body')
 		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
-			<div class="card-header h4 py-2 bg-warning text-white">
+			<div class="card-header h5 py-2 bg-warning text-white">
 				<strong>Troops Development Plans</strong>
 			</div>
 			<div class="card-text">
@@ -12,22 +12,20 @@
                     		<i class="fa fa-plus"></i> <span class=""><strong>Create New Troops Plan</strong></span>
         			 	</p>
             		</div>
-            		<div class="collapse" id="task" style="">
-              			<div class="card card-body shadow">
+            		<div class="collapse" id="task" style="font-size:0.9em">
+              			<div class="card card-body shadow h6">
     						<form action="{{route('accountPlan')}}/create" method="POST" class="col-md-8 mx-auto text-center">
         						{{ csrf_field() }}
         						<p class="my-2">
-        							<strong>Village:</strong>
+        							Village:
         								<select name="village">
         								@foreach($villages as $village)
         									<option value="{{$village['VID']}}">{{$village['VILLAGE']}}</option>
         								@endforeach
         								</select>
-    								<strong> Plan Name: <input type="text" name="name"></strong>        							
+    								Plan Name: <input type="text" name="name">        							
         						</p>
-        						<p><strong>Notes: </strong></p>
-        						<p>
-        							<textarea rows="2" cols="25" name="comments"></textarea>
+        						<p>Notes: <textarea rows="2" cols="25" name="comments"></textarea>
         						</p>
         						<p><button class="btn btn-warning" type="submit"><strong>Create Plan</strong></button></p>					
     						</form>
@@ -46,15 +44,15 @@
         @endforeach
             		<br>
         		@if($plans==null)
-					<p class="text-center h5 py-3">No Troops Plans are created for this account</p>
+					<p class="text-center h6 py-3">No Troops Plans are created for this account</p>
 				@else
         		@foreach($plans as $plan)
             		<div class="card col-md-10 mx-auto my-2 p-0 shadow">
-            			<div class="card-header h5 py-2 bg-warning">
+            			<div class="card-header h6 py-2 bg-warning">
             				Village - <strong>{{$plan['VILLAGE']}}</strong><span class="float-right">Plan Name - <strong>{{$plan['NAME']}}</strong></span>
             			</div>
             			<div class="card-text p-2">
-            				<table class="mx-auto col-md-8 my-2">
+            				<table class="mx-auto col-md-8 my-2" style="font-size:0.9em">
                 				<tr>
                 					<td><strong>Created date - </strong>{{$plan['CREATE']}}</td>
                 					<td rowspan="2"><strong>Notes - </strong>{{$plan['COMMENTS']}}</td>
@@ -91,7 +89,7 @@
         						<tr class="">
         							<td class="font-weight-bold">Trained</td>
     							@foreach($plan['COMPLETED'] as $unit)
-    								<td class="px-0">{{$unit}}</td>
+    								<td class="px-0">{{number_format($unit)}}</td>
     							@endforeach
     								<td class="px-0">{{number_format($plan['COMPLETED_UPKEEP'])}}</td>
         						</tr>
@@ -112,14 +110,14 @@
         						<tr class="table-success font-weight-bold">
         							<td class="font-weight-bold">Total</td>
     							@foreach($plan['TOTAL'] as $unit)
-    								<td class="px-0">{{$unit}}</td>
+    								<td class="px-0">{{number_format($unit)}}</td>
     							@endforeach
     								<td class="px-0">{{number_format($plan['TOTAL_UPKEEP'])}}</td>
         						</tr>  
         						<tr class="table-warning">
         							<td class="font-weight-bold">Pending</td>
     							@foreach($plan['PENDING'] as $unit)
-    								<td class="px-0">{{$unit}}</td>
+    								<td class="px-0">{{number_format($unit)}}</td>
     							@endforeach
     								<td class="px-0">{{number_format($plan['PENDING_UPKEEP'])}}</td>
         						</tr>      				
@@ -132,7 +130,7 @@
                             		<td colspan="4" class="py-2">
             		        			<form action="{{route('accountPlan')}}/delete" method="POST" >
         									{{csrf_field()}}
-                                			<button class="btn btn-danger px-4 mx-3" name="delete" value="{{$plan['ID']}}" type="submit"><strong>Delete</strong></button>
+                                			<button class="btn btn-danger px-3 mx-3" name="delete" value="{{$plan['ID']}}" type="submit"><strong>Delete</strong></button>
                             			</form>
             						</td>                						
         						</tr>

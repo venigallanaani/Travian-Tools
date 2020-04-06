@@ -2,7 +2,7 @@
 
 @section('body')
 <div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
-	<div class="card-header h4 py-2 bg-info text-white"><strong>Enter Incomings</strong></div>
+	<div class="card-header h5 py-2 bg-info text-white"><strong>Enter Incomings</strong></div>
 @foreach(['danger','success','warning','info'] as $msg)
 	@if(Session::has($msg))
     	<div class="alert alert-{{ $msg }} text-center my-1 mx-5" role="alert">
@@ -18,7 +18,7 @@
 				{{csrf_field()}}
     			<table class="table table-borderless">
     				<tr>
-    					<td colspan="2" class="py-1"><p class="h4 text-primary text-center"><strong>Input Incoming Details</strong></p></td>
+    					<td colspan="2" class="py-1"><p class="h5 text-primary text-center"><strong>Input Incoming Details</strong></p></td>
     				</tr>
     				<tr>
     					<td colspan="2" class="py-1 font-italic"><p class="h6 text-center">Enter the incoming attacks details from rally point here <strong><a href="https://{{Session::get('server.url')}}/build.php?gid=16&tt=1&filter=1&subfilters=1" target="_blank">Link</a></strong></p></td>
@@ -39,21 +39,21 @@
 			
 	<div class="col-md-12 mt-2 mx-auto text-center">
 	@if((count($owaves) + count($swaves))==0)			
-		<p class="text-center h5 py-5"> No incoming attacks saved for this profile</p>			
+		<p class="text-center h6 py-3"> No incoming attacks saved for this profile</p>			
 	@else	
 		@if(count($owaves)>0)		
     		<table class="table mx-auto col-md-11 table-hover table-sm table-bordered">
     			<thead class="thead-inverse">
     				<tr>
-    					<td class="h4 text-dark py-2 my-0 bg-warning" colspan="7"><strong>Your Incomings</strong></td>
+    					<td class="h5 text-dark py-2 my-0 bg-warning" colspan="7"><strong>Your Incomings</strong></td>
     				</tr>
     				<tr>
-    					<th class="">Attacker</th>
-    					<th class="">Target</th>					
-    					<th class="">Land Time</th>
-    					<th class="">Waves</th>
-    					<th class="">Timer</th>
-    					<th class="">Action</th>
+    					<th class="h6">Attacker</th>
+    					<th class="h6">Target</th>					
+    					<th class="h6">Land Time</th>
+    					<th class="h6">Waves</th>
+    					<th class="h6">Timer</th>
+    					<th class="h6">Action</th>
     					<th></th>
     				</tr>
     			</thead>
@@ -68,12 +68,12 @@
     					else	{	$color='table-white';	}					
 					@endphp				
     						
-        			<tr class="{{$color}}">
-        				<td class="h6"><a href="{{route('findPlayer')}}/{{$wave->att_player}}/1" target="_blank">{{$wave->att_player}}</a> ({{$wave->att_village}})</td>
-        				<td class="h6">{{$wave->def_village}}</td>    				
+        			<tr class="{{$color}}" style="font-size: 0.9em">
+        				<td class=""><a href="{{route('findPlayer')}}/{{$wave->att_player}}/1" target="_blank">{{$wave->att_player}}</a> ({{$wave->att_village}})</td>
+        				<td class="">{{$wave->def_village}}</td>    				
         				<td>{{$wave->landTime}}</td>
         				<td>{{$wave->waves}}</td>
-        				<td class="h6"><span id="{{$wave->incid}}"></span></td>
+        				<td class=""><span id="{{$wave->incid}}"></span></td>
         				<td>@if($wave->ldr_sts == 'ARTEFACT')
         						Save Artefact
     						@else
@@ -107,7 +107,7 @@
     		<table class="table mx-auto col-md-11 table-hover table-sm table-bordered">
     			<thead class="thead-inverse">
     				<tr>
-    					<td class="h4 py-2 my-0 bg-info text-white" colspan="7"><strong>Your Sitter Incomings</strong></td>
+    					<td class="h5 py-2 my-0 bg-info text-white" colspan="7"><strong>Your Sitter Incomings</strong></td>
     				</tr>
     				<tr>
     					<th class="">Attacker</th>

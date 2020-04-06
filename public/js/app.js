@@ -4,7 +4,7 @@ function checkTime(i) {
 	return (i < 10) ? "0" + i : i;
 }
 
-function countDown(elementId, date, zone) {
+function countDownOld(elementId, date, zone) {
     // Set the date we're counting down to
     var countDownDate = new Date(date).getTime();
 
@@ -42,22 +42,53 @@ function countDown(elementId, date, zone) {
     }, 1000); 
 }
 
+function countDown(elementId, date, zone) {
+    var countDownDate = new Date(date).getTime();
+
+    var x = setInterval(function() {
+
+      var time=moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');      
+      var now= new Date(time).getTime();      
+
+      var distance = countDownDate - now;
+
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = days * 24 + Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      hours = checkTime(hours);
+      minutes = checkTime(minutes);
+      seconds = checkTime(seconds);
+
+      document.getElementById(elementId).innerHTML = hours + ":"+ minutes + ":" + seconds;
+      document.getElementById(elementId).style.color = "blue";
+      
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById(elementId).innerHTML = "00:00:00";
+		document.getElementById(elementId).style.color = "red";
+      }
+    }, 1000); 
+}
+
 function startTime(landTime,noticeTime,dist,unit,tsq,boots,art,speed,tmz){
 	
 	var land = new Date(landTime).getTime();
 	var notice = new Date(noticeTime).getTime();
-	var diff = land-notice;
 	
 	var speedtsq = (1+tsq*0.1*speed)*(1+boots/100);
-	if(dist>20){	var time = (20+(dist-20)/speedtsq)/(unit*art/4);
-	}else{	var time = dist/(unit*art/4);	}	
+	if(dist>20){	
+		var time = (20+(dist-20)/speedtsq)/(unit*art/4);
+	}else{	
+		var time = dist/(unit*art/4);
+	}
 	var travel = Math.floor(time*60*60*1000);
 
 	var date = moment(land-travel);
 	var start = moment(date).tz(tmz).format('YYYY-MM-DD HH:mm:ss');
 
-	return start;
-	
+	return start;	
 }
 
 function toggleMenu(param_menu) {

@@ -16,17 +16,17 @@
             @endif
         @endforeach
         		<div class="card shadow col-md-12 p-0 mx-auto">
-    				<div class="card-header h4 py-2 bg-warning text-white text-center">
+    				<div class="card-header h5 py-2 bg-warning text-white text-center">
     					<strong>Sitter Details</strong>
     				</div>
     				<div class="card-text">
     					<table class="table table-hover col-md-5 text-center mx-auto">
     						<tr>
-    							<td class="text-right" style="width:10em;"><strong>Sitter 1 :</strong></td>
+    							<td class="text-right h6" style="width:10em;">Sitter 1 :</td>
     							<td contenteditable="true" class="text-left" id="sitter1Edit">{{$account->sitter1}}</td>
     						</tr>
     						<tr>
-    							<td class="text-right" style="width:10em;"><strong>Sitter 2 :</strong></td>
+    							<td class="text-right h6" style="width:10em;">Sitter 2 :</td>
     							<td contenteditable="true" class="text-left" id="sitter2Edit">{{$account->sitter2}}</td>
     						</tr>
     						<tr>
@@ -35,7 +35,7 @@
                 						{{ csrf_field() }}
                 						<input id="sitter1" name="sitter1" style="display:none">
                 						<input id="sitter2" name="sitter2" style="display:none">    						
-                						<button class="btn btn-warning btn-lg px-5" type="submit"><strong>Save</strong></button>						
+                						<button class="btn btn-warning px-5 py-1" type="submit"><strong>Save</strong></button>						
                 					</form>	
     							</td>
     						</tr>
@@ -44,12 +44,12 @@
     			</div> 
     			
     			<div class="card shadow col-md-12 p-0 mt-3 mb-5 mx-auto">
-    				<div class="card-header h4 py-2 bg-warning text-white text-center">
+    				<div class="card-header h5 py-2 bg-warning text-white text-center">
     					<strong>Dual Details</strong>
     				</div>  
     				<div class="card-text">
     					<div class="col-md-8 mx-auto text-center py-2">
-    						<p>Dual Passcode:	<strong>{{$account->token}}</strong></p>
+    						<p>Dual Passcode:	<span class="h6">{{$account->token}}</span></p>
     					</div>
     					<div class="text-center col-md-8 mx-auto rounded p-2 mb-2" style="background-color:#dbeef4">
     						<p>Enter Dual Passcode to link the Travian profiles</p>
@@ -62,13 +62,13 @@
     					</div>
     					<table class="table table-hover table-sm table-bordered col-md-8 text-center mx-auto">
     						<thead class="bg-warning">
-    							<tr>
+    							<tr class="h6">
         							<th class="text-center">TT Account Name</th>
         							<th class="text-center">Account Type</th>
         							<th class="text-center">Options</th>
     							</tr>
     						</thead>
-    						<tr>    					
+    						<tr style="font-size:0.9em">    					
     							<td>{{$account->user_name}}</td>
     							<td>{{ucfirst(strtolower($account->status))}}</td>
     							<td>

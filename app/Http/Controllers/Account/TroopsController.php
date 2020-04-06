@@ -34,7 +34,7 @@ class TroopsController extends Controller
                     
             $villages = Diff::where('server_id',$request->session()->get('server.id'))
                         ->where('uid',$account->uid)
-                        ->orderBy('vid','asc')->get();
+                        ->orderBy('village','asc')->get();
             
             $list=array(); $i=0;
             $stats = array();

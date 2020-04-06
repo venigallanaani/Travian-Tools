@@ -3,7 +3,7 @@
 @section('content')
     <header id="main-header" class="py-1 bg-success text-white">
         <div class="container">
-            <p class="h3 font-weight-bold d-inline-block">Finders</p>
+            <p class="h4 font-weight-bold d-inline-block">Finders</p>
             <div class="float-right">
                 <div class="btn btn-light dropdown d-inline-block">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -20,16 +20,16 @@
         </div>
     </header>
     
-    <div class="col-7 mx-auto">
+    <div class="container mx-auto" style="font-size: 0.8em">
         <div class="d-inline">
             <!-- ======================================= Finders Side menu =================================== -->
-            <div class="list-group col-md-3 text-center text-white mt-1 float-md-left">
-                <a class="list-group-item py-1 bg-dark h4">Finders Menu</a>
-                <a href="{{route('findPlayer')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Player Finder</a>
-                <a href="{{route('findAlliance')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Alliance Finder</a>
-                <a href="{{route('findInactive')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Inactive Finder</a>
-                <a href="{{route('findNatar')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Natar Finder</a>
-                <a href="{{route('findNeighbour')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h5">Neighbour Finder</a>
+            <div class="list-group text-center text-white mt-1 mx-1 float-md-left">
+                <a class="list-group-item py-1 bg-dark h5">Finders Menu</a>
+                <a href="{{route('findPlayer')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h6">Player Finder</a>
+                <a href="{{route('findAlliance')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h6">Alliance Finder</a>
+                <a href="{{route('findInactive')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h6">Inactive Finder</a>
+                <a href="{{route('findNatar')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h6">Natar Finder</a>
+                <a href="{{route('findNeighbour')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h6">Neighbour Finder</a>
             </div>
         </div>
         <div class="float-md-left col-md-9 mt-1 p-0">

@@ -34,7 +34,7 @@
             <div class="container">
                 <table class="col-md-12 text-center">
                 	<tr>
-                		<td class="h4 font-weight-bold col-md-6">Plan : {{$plan->name}}</td>
+                		<td class="h5 font-weight-bold col-md-6">Plan : {{$plan->name}}</td>
                 		<td class="align-right col-md-6">
                 			<a href='/offense/plan/edit/{{$plan->id}}'><button class="btn btn-warning btn-sm px-5 font-weight-bold">
                 			<i class="fas fa-sync"></i>  Refresh</button></a>                    			
