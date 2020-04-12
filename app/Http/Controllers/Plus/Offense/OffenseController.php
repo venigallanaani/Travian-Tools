@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 
-use App\OPS;
+use App\OPSPlan;
 use App\OPSWaves;
 use App\Account;
 
@@ -20,7 +20,7 @@ class OffenseController extends Controller
         session(['title'=>'Offense']);        
         $ops = null;
         
-        $plans = OPS::where('server_id',$request->session()->get('server.id'))
+        $plans = OPSPlan::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
                         ->where('status','<>','DRAFT')->where('status','<>','ARCHIVE')->get();
         

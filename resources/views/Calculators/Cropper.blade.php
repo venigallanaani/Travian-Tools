@@ -3,8 +3,8 @@
 @section('body')
 
 <!-- =================================== Cropper input screen================================== -->
-    <div class="card float-md-left my-1 p-0 col-md-12 shadow">
-        <div class="card-header h4 py-2 bg-primary text-white col-md-12">
+    <div class="card float-md-left p-0 col-md-12 shadow">
+        <div class="card-header h5 py-2 bg-primary text-white col-md-12">
             <strong>Cropper Development</strong>
         </div>
         <div class="card-text mx-auto text-center my-3">
@@ -443,28 +443,28 @@
             		if (cap==1 && field.lowest()==10)
             			return;
             		output = output + field.uplowest();
-            		return "Upgrade a crop field to level " + output + ". </td>";
+            		return "Upgrade a crop field to level " + output + ". </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
             	}
             	if (lowest == 1)
             	{
             		if (cap==1 && field.lowest()==10)
             			return;
             		field.uphighest();
-            		return '<b>Upgrade a crop field to level ' + field.fields[0] + "</span></b>. </td>";
+            		return '<b>Upgrade a crop field to level ' + field.fields[0] + "</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
             	}
             	if (lowest == 2)
             	{
             		mill++;
-            		return '<b><span class="text-warning">Upgrade the Flour Mill to level ' + mill + "</span></b>. </td>";
+            		return '<b><span class="text-warning">Upgrade the Flour Mill to level ' + mill + "</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
             	}
             	if (lowest == 3)
             	{
             		bake++;
-            		return '<b><span class="text-info">Upgrade the Bakery to level ' + bake + "</span></b>. </td>";
+            		return '<b><span class="text-info">Upgrade the Bakery to level ' + bake + "</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
             	}
             	if (lowest == 4)
             	{
-            		return "<b><span class='text-danger'>Upgrade the Hero Mansion to level " + hm + " and capture your oasis</span></b>. </td>";
+            		return "<b><span class='text-danger'>Upgrade the Hero Mansion to level " + hm + " and capture your oasis</span></b>. </td><td>" + Math.round(efflowest/gold/.24)/100 + "</td>";
             	}
             }
             
@@ -474,10 +474,10 @@
             	z=document.getElementById("steps");  // nothing
             	z.innerHTML="Calculating...";   
             	var j=1;
-            	var output='<div class="card float-md-left mb-5 p-0 col-md-12 shadow"><div class="card-header h4 py-2 bg-primary text-white"><strong>Cropper Development Sequence</strong></div>';
+            	var output='<div class="card float-md-left mb-5 p-0 col-md-12 shadow"><div class="card-header h5 py-2 bg-primary text-white"><strong>Cropper Development Sequence</strong></div>';
             	output=output+'<div class="card-text mx-auto text-center"><table class="table table-hover table-sm small"><tr class="h6 text-primary">';
             	output=output+'<th>#</th><th>[F,B,H]</th>';
-            	output=output+'<th>Fields</th><th>Production</th><th>Action</th><tr>';
+            	output=output+'<th>Fields</th><th>Production</th><th>Action</th><th>ROI <small>(days)</small></th><tr>';
             	var i=0;
             	if (cap == 0)
             	{

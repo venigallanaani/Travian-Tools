@@ -3,11 +3,11 @@
 @section('body')
 
 <!-- =================================== Cropper input screen================================== -->
-    <div class="card float-md-left my-1 p-0 col-md-12 shadow">
-        <div class="card-header h4 py-2 bg-primary text-white col-md-12">
+    <div class="card float-md-left p-0 col-md-12 shadow">
+        <div class="card-header h5 py-1 bg-primary text-white col-md-12">
             <strong>Wheat Scout</strong>
         </div>
-        <div class="card-text mx-auto text-center mt-2">
+        <div class="card-text mx-auto text-center mt-2 h6">
             <form action="{{route('wheatScout')}}" method="POST">
             	{{ csrf_field() }}
                 <table class="table table-borderless mt-2">

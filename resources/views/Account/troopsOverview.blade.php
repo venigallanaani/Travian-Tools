@@ -58,8 +58,8 @@
 								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_9" value="{{$troop['unit09']}}" style="width:2em; border:1px" class="p-0 m-0 text-center"></td>
     							<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_10" value="{{$troop['unit10']}}" style="width:2em; border:1px" class="p-0 m-0 text-center"></td>
     							<td class="px-1 m-0 small"><strong>{{number_format($troop['upkeep'])}}</strong></td>
-    							<td class="p-0 m-0 text-right small"><input name="{{$troop['vid']}}_tsq" value="{{$troop['Tsq']}}" style="width:2.5em; border:1px" class="p-0 m-0" type="number" min=0 max=20></td>
-    							<td class="p-0 small">
+    							<td class="px-1 m-0 text-right small"><input name="{{$troop['vid']}}_tsq" value="{{$troop['Tsq']}}" style="width:2.5em; border:1px" class="p-0 m-0" type="number" min=0 max=20></td>
+    							<td class="px-0 small">
                 					<select name="{{$troop['vid']}}_type"  style="width:5em; border:2px">
     									<option value="NONE" 	@if($troop['type']=='NONE') selected 	@endif><span class="text-danger">None</span></option>
     									<option value="SUPPORT" @if($troop['type']=='SUPPORT') selected @endif>Support</option>

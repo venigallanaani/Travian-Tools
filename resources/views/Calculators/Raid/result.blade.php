@@ -2,10 +2,10 @@
 
 @section('result')
 	<div class="card float-md-left my-1 p-0 col-md-12 shadow mb-5">
-        <div class="card-header h4 py-2 bg-primary text-white col-md-12">
+        <div class="card-header h5 py-1 bg-primary text-white col-md-12">
             <strong>Result</strong>
         </div>
-        <div class="card-text mx-auto text-center mt-2">
+        <div class="card-text mx-auto text-center mt-2 h6">
 			<p class="">Effective Cranny Capacity - <strong>{{number_format($result['CRANNY'])}}</strong></p>  			
 		@if($result['UNITS']!==null)
 			<p class="">Total Raidable Resources - <strong>{{number_format($result['RESOURCES'])}}</strong></p> 

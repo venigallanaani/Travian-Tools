@@ -29,9 +29,6 @@
                 				<p class="my-0"><a href="/offense/plan/edit/{{$plan->id}}" target="_blank">
                 					<button class="btn btn-primary btn-sm px-5">Edit Plan</button>
             					</a></p>
-            					<p class="my-1"><a href="/offense/plan2/edit/{{$plan->id}}" target="_blank">
-                					<button class="btn btn-primary btn-sm px-5">Edit Plan 2</button>
-            					</a></p>
                 				<form action="/offense/status/update" method="post" class="my-1">{{csrf_field()}}
                 				@if(count($waves)!=0 && $plan->status =='DRAFT')
                 					<p class="my-1"><button class="btn btn-success btn-sm px-5" name="publishPlan" value="{{$plan->id}}">Publish Plan</button></p>

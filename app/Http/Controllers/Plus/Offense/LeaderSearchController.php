@@ -63,7 +63,7 @@ class LeaderSearchController extends Controller
             $troops = $villages;
         }        
         return view("Plus.Offense.Search.displayTroops")->with(['troops'=>$troops])
-        ->with(['tribes'=>$tribes]);        
+                            ->with(['tribes'=>$tribes]);        
     }
     
     public function show(){

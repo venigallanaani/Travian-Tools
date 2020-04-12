@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 
-use App\OPS;
+use App\OPSPlan;
 use App\OPSWaves;
 
 class offenseArchiveController extends Controller
@@ -18,7 +18,7 @@ class offenseArchiveController extends Controller
         
         session(['title'=>'Offense']);
         
-        $plans=OPS::where('server_id',$request->session()->get('server.id'))
+        $plans=OPSPlan::where('server_id',$request->session()->get('server.id'))
                 ->where('plus_id',$request->session()->get('plus.plus_id'))
                 ->where('status','=','ARCHIVE')
                 ->orderby('created_at','asc')->get();
@@ -29,7 +29,7 @@ class offenseArchiveController extends Controller
     
     public function displayArchivePlan(Request $request, $id){
         
-        $plan=OPS::where('server_id',$request->session()->get('server.id'))
+        $plan=OPSPlan::where('server_id',$request->session()->get('server.id'))
                 ->where('plus_id',$request->session()->get('plus.plus_id'))
                 ->where('status','=','ARCHIVE')
                 ->where('id',$id)->first();

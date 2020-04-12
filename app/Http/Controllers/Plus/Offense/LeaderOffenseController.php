@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 
-use App\OPS;
+use App\OPSPlan;
 use App\OPSWaves;
 use App\Troops;
 use App\Units;
@@ -21,7 +21,7 @@ class LeaderOffenseController extends Controller
         
         session(['title'=>'Offense']);
         
-        $plans=OPS::where('server_id',$request->session()->get('server.id'))
+        $plans=OPSPlan::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('status','<>','ARCHIVE')
                     ->orderby('created_at','asc')->get();
@@ -33,7 +33,7 @@ class LeaderOffenseController extends Controller
         
         session(['title'=>'Offense']);
         
-        $plan=new OPS;
+        $plan=new OPSPlan;
         
         $plan->server_id = $request->session()->get('server.id');
         $plan->plus_id = $request->session()->get('plus.plus_id');
@@ -52,7 +52,7 @@ class LeaderOffenseController extends Controller
         
         session(['title'=>'Offense']);
         
-        $plan=OPS::where('server_id',$request->session()->get('server.id'))
+        $plan=OPSPlan::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('status','<>','ARCHIVE')
                     ->where('id',$id)->first();
@@ -90,7 +90,7 @@ class LeaderOffenseController extends Controller
         session(['title'=>'Offense']);
         
         if(Input::has('publishPlan')){
-            $plan=OPS::where('server_id',$request->session()->get('server.id'))
+            $plan=OPSPlan::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('id',Input::get('publishPlan'))
                     ->update(['status'=>'PUBLISH']);
@@ -98,15 +98,15 @@ class LeaderOffenseController extends Controller
             Session::flash('success','Plan is successfully published to players');            
         }
         if(Input::has('completePlan')){
-            $plan=OPS::where('server_id',$request->session()->get('server.id'))
-            ->where('plus_id',$request->session()->get('plus.plus_id'))
-            ->where('id',Input::get('completePlan'))
-            ->update(['status'=>'COMPLETE']);
+            $plan=OPSPlan::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('id',Input::get('completePlan'))
+                        ->update(['status'=>'COMPLETE']);
             
             Session::flash('primary','Plan is successfully marked as complete');
         }
         if(Input::has('deletePlan')){
-            OPS::where('server_id',$request->session()->get('server.id'))
+            OPSPlan::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('id',Input::get('deletePlan'))->delete();
             
@@ -117,7 +117,7 @@ class LeaderOffenseController extends Controller
             Session::flash('warning','Plan is successfully delete');            
         }
         if(Input::has('archivePlan')){
-            $plan=OPS::where('server_id',$request->session()->get('server.id'))
+            $plan=OPSPlan::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('id',Input::get('archivePlan'))
                     ->update(['status'=>'ARCHIVE']);

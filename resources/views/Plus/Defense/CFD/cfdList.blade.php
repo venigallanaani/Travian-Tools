@@ -104,7 +104,7 @@
 
 							@endphp
     						<tr class="h6" style="font-size:0.8em; background-color:{{$bgcolor}};">
-    							<td class="px-0"><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
+    							<td class="px-0"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								{{$task->player}} ({{$task->village}})</a>
     							</td>    							
     							<td class="px-0"><strong>{{ucfirst(strtolower($task->type))}}</strong></td>

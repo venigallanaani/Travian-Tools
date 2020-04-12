@@ -22,22 +22,19 @@
     </head>
     <body onload="displayTime()">
         <header id="main-header" class="py-1 bg-dark text-white">
-            <div class="container">
-                <p class="h3 font-weight-bold text-center">
-                	<span class="h3">Offense Plan Editor </span>
-                	<span class="h6"> Travian Tools </span>
-                </p>                
+            <div class="container text-center">
+            	<span class="h4">Offense Plan Editor </span>
+            	<span class="small"> Travian Tools </span>               
             </div>
-        </header> 
-
+        </header>
         <header id="main-header" class="py-1 bg-info text-white">
             <div class="container">
                 <table class="col-md-12 text-center">
                 	<tr>
-                		<td class="h5 font-weight-bold col-md-6">Plan : {{$plan->name}}</td>
+                		<td class="h5 font-weight-bold col-md-6">Offense Plan : <span class="h6 font-italic">{{$plan->name}}</span></td>
                 		<td class="align-right col-md-6">
-                			<a href='/offense/plan/edit/{{$plan->id}}'><button class="btn btn-warning btn-sm px-5 font-weight-bold">
-                			<i class="fas fa-sync"></i>  Refresh</button></a>                    			
+                			<a href='/offense/plan/edit/{{$plan->id}}'><button class="btn btn-warning btn-sm px-3 font-weight-bold">
+                			<i class="fas fa-sync"></i>  Refresh plan</button></a>                    			
             			</td>
                 	</tr>
                 </table>                
@@ -56,9 +53,6 @@
         	@yield('content')
         </div>            
 	
-    @if(!$sankeyData==null)
-    	{{	createSankey($sankeyData)	}}
-	@endif
 <!-- == Bootstrap additions == -->
 		       
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>

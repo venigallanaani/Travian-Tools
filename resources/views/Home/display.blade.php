@@ -26,7 +26,7 @@
             </div>
             <div class="card shadow">
                 <div class="card-body">
-					<p class="h4 text-center m-2"><a href="{{route('reports')}}" class="text-info font-weight-bold">Reports Converter</a></p>
+					<p class="h5 text-center m-2"><a href="{{route('reports')}}" class="text-info font-weight-bold">Reports Converter</a></p>
                 </div>
             </div>
             <div class="card shadow">

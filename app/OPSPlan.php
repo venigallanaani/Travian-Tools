@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OPS extends Model
+class OPSPlan extends Model
 {
     //
     
-    protected $table='opsplan';
+    protected $table='offenseplans';
     
     protected $fillable = [
         '*'

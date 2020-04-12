@@ -1,210 +1,226 @@
 @extends('Layouts.offense')
 
-@section('content')
-	
-	<input name="plan" value="{{$plan->id}}" hidden/>
-	<div class="my-1">		
-	@if(count($waves)>0)	
-		<div class="float-md-left p-2 shadow rounded" >
-    		<div class="mx-auto">
-    			<svg id="sankeyChart" width="800" height="300" style="margin:auto"></svg> 			 		
-    		</div>
-		</div>
-	@endif  
-	
-		<div class="d-inline float-md-left py-0 m-3 rounded">
-			<div class="px-3 py-3 shadow h6"  style="background-color:#dbeef4">
-    			<table>
-    				<tr>
-    					<td class="text-warning"><strong>Attackers : </strong></td>
-    					<td class=""> {{$plan->attackers}}</td>
-    				</tr>
-    				<tr>
-    					<td class="text-success"><strong>Targets : </strong></td>
-    					<td class=""> {{$plan->targets}}</td>
-    				</tr>
-    				<tr>
-    					<td class="text-danger"><strong>Real : </strong></td>
-    					<td class=""> {{$plan->real}}</td>
-    				</tr>
-    				<tr>
-    					<td class="text-primary"><strong>Fake : </strong></td>
-    					<td class=""> {{$plan->fake}}</td>
-    				</tr>
-    				<tr>
-    					<td class=""><strong>Other : </strong></td>
-    					<td class=""> {{$plan->other}}</td>
-    				</tr>
-    			</table>
-			</div>
-		</div>
-	</div>
-	
-	
-	<div class="d-inline float-md-left col-md-12 mx-auto text-center shadow rounded mt-2">
-		<table class="table table-hover table-sm small table-striped m-1 py-2" id="ops">
-			<thead>
-    			<tr class="bg-info text-white">
-    				<th class="">Attacker</th>
-    				<th class="">Target</th>
-    				<th class="">Type</th>
-    				<th class="">Waves</th>
-    				<th class="">Units</th>
-    				<th class="">Land Time</th>
-    				<th class="">Comments</th>
-    				<th><button class="badge badge-warning" id="newRow"><i class="fas fa-plus"></i></button></th>
-    			</tr>
-			</thead>
-			<tbody>
-		@foreach($waves as $wave)
-			@php
-				if($wave->type == 'Real'){	$color='text-danger';	}
-				elseif($wave->type == 'Fake'){	$color='text-primary';	}
-				elseif($wave->type == 'Cheif'){	$color='text-warning';	}
-				elseif($wave->type == 'Scout'){	$color='text-success';	}
-				else{	$color='text-dark';	}
-			@endphp			
-    			<tr id="{{$wave->id}}">
-    				<td class="">
-    					<strong><a href="{{route('findPlayer')}}/{{$wave->a_player}}/1" target="_blank">{{$wave->a_player}}</a></strong>
-    					<a href=""> ({{$wave->a_village}})</a>
+@section('content')        
+        
+    <!-- ============================================ home page body starts here ============================================ -->
+    <div class="mx-auto mt-1">
+    	<div id="loading" class="text-center h5 table-warning col-md-5 mx-auto py-3 rounded" style="display:none">
+    		<span>Loading....please wait</span>
+    	</div>
+    	<div class="rounded">
+    		<table class="table table-bordered">
+    			<tr class="">
+    				<td class="text-center" style="width:18em">
+    					<form action="/offense/plan/additem" method="POST">
+							{{csrf_field()}} 					
+        					<div class="item rounded table-warning py-1 my-1 h6">
+        						<p class="px-0 font-italic">Add Attacker</p>
+        						<p class="px-0">X:<input type="number" name="x" required style="width:5em"> | Y:<input type="number" name="y" required style="width:5em"></p>
+        						<button class="btn btn-info" type="submit" name="attack" value="{{$plan->id}}"">Add Attacker</button>        					
+        					</div>
+    					</form>
+    					<form action="/offense/plan/additem" method="POST">
+							{{csrf_field()}}
+        					<div class="item rounded table-success py-1 my-1 h6">
+        						<p class="px-0 font-italic">Add Target</p>
+        						<p class="px-0">X:<input type="number" name="x" required style="width:5em"> | Y:<input type="number" name="y" required style="width:5em"></p>
+        						<button class="btn btn-info" type="submit" name="target" value="{{$plan->id}}">Add Target</button>
+        					</div> 
+    					</form>
     				</td>
+    				
     				<td class="">
-    					<strong><a href="{{route('findPlayer')}}/{{$wave->d_player}}/1" target="_blank">{{$wave->d_player}}</a></strong>
-    					<a href=""> ({{$wave->d_village}})</a>
-    				</td>
-    				<td class="{{$color}}"><strong>{{$wave->type}}</strong></td>
-    				<td><strong>{{$wave->waves}}</strong></td>
-    				<td data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="" src="/images/x.gif" class="units {{$wave->unit}}"></td>
-    				<td>{{$wave->landtime}}</td>
-    				<td  class="text-center">{{$wave->comments}}</td>
-    				<td><span><button class="badge badge-primary" id="editRow"><i class="far fa-edit"></i></button></span>
-    					<span><button class="badge badge-danger" id="delRow"><i class="far fa-trash-alt"></i></button></span>
+    					<div class="rounded table-info p-2 small" style="height:20em; overflow-y:auto;">
+    						<p class="text-center h5 pb-1">Attackers List</p>
+    						@if($attackers!==null)
+    						@foreach($attackers as $attacker)
+							<div id="attacker" class="attacker d-inline m-1 p-1 bg-white rounded float-left font-weight-bold">
+    							<span id="name" class="">
+									<a class="text-dark" href="{{route('findAlliance')}}/{{$attacker->alliance}}/1" target="_blank">[{{$attacker->alliance}}]</a> 
+    								<a class="text-danger" href="{{route('findPlayer')}}/{{$attacker->player}}/1" target="_blank">{{$attacker->player}}</a> 
+    								<a href="https://{{Session::get('server.url')}}/position_details.php?x={{$attacker->x}}&y={{$attacker->y}}" target="_blank">({{$attacker->village}}) ({{$attacker->x}}|{{$attacker->y}})</a> - 
+    								<span class="text-danger">{{$attacker->real}}</span> | <span class="text-primary">{{$attacker->fake}}</span> | <span class="">{{$attacker->other}}</span>
+    							</span> 
+    							<button class="delitem badge badge-danger" value="{{$attacker->item_id}}" id="attacker"><i class="far fa-trash-alt"></i></button>
+							</div>
+    						@endforeach
+    						@endif    					
+						</div>		
     				</td>
     			</tr>
-		@endforeach
-				<tr>
-					<td>X:<input name="a_x" id="a_x" type="text" size="2" required/> |Y:<input name="a_y" id="a_y" type="text" size="2" required/></td>
-					<td>X:<input name="d_x" id="d_x" type="text" size="2" required/> |Y:<input name="d_y" id="d_y" type="text" size="2" required/></td>
-					<td><select name="type" id="type">
-							<option value="real">Real</option>
-							<option value="fake">Fake</option>
-							<option value="scout">Scout</option>
-							<option value="other">Other</option>
-						</select>
-					</td>
-					<td><input name="waves" id="waves" type="text" size="2" /></td>
-					<td><select name="unit" id="unit">
-							<option value="1">Catapult</option>
-							<option value="2">Rams</option>
-							<option value="4">Cavalry</option>
-							<option value="5">Infantry</option>
-						</select>
-					</td>
-					<td><input name="landtime" type="text" size="20" class="dateTimePicker" id="land" required/></td>
-					<td><input name="comments" type="text" id="comment"/></td>
-    				<td><button class="badge badge-primary" id="saveRow" type="button" onClick="addRow()">Save</button>
-    				</td>
-				</tr> 
-			</tbody>
-		</table>
+    		</table>
+    	</div>
+    	
+    	<div class="mx-auto px-0">
+		@if($targets==null)
+			<p class="py-3 h5 text-center">No targets are added to the Offense plan</p>
+		@else			
+			@foreach($targets as $target)
+				<div class="target card float-left d-inline mx-2 my-1" style="width:22em;">
+					<p class="card-header h6 font-weight-bold py-1">
+						<a class="text-dark" href="{{route('findAlliance')}}/{{$target['TARGET']->alliance}}/1" target="_blank">[{{$target['TARGET']->alliance}}]</a> 
+						<a class="text-success" href="{{route('findPlayer')}}/{{$target['TARGET']->player}}/1" target="_blank">{{$target['TARGET']->player}}</a> 
+						<a href="https://{{Session::get('server.url')}}/position_details.php?x={{$target['TARGET']->x}}&y={{$target['TARGET']->y}}" target="_blank">({{$target['TARGET']->village}}) ({{$target['TARGET']->x}}|{{$target['TARGET']->y}})</a> - 
+						<span class="text-danger">{{$target['TARGET']->real}}</span> | <span class="text-primary">{{$target['TARGET']->fake}}</span> | <span class="">{{$target['TARGET']->other}}</span>
+						<button class="delitem badge badge-danger" value="{{$target['TARGET']->item_id}}" id="target"><i class="far fa-trash-alt"></i></button>					
+					</p>
+					<div id="target" class="card-body p-1 m-0" style="height:15em; overflow-y:auto; background-color:#dbeef4">
+					
+					</div>
+				</div>        		
+    		@endforeach
+		@endif
+    		<div class="target card float-left d-inline mx-2 my-1" style="width:22em;">
+    			<p class="card-header h6 font-weight-bold">Sample Target Panel</p>
+    			<div id="target" class="card-body p-1 m-0" style="height:15em; overflow-y:auto; background-color:#dbeef4">
+    				<div>
+        				<div class="display mx-auto text-center rounded small" style="background-color:white;">
+    						<table class="table table-bordered">
+    							<tr>
+    								<td class="py-0 h6">Jag (Danger!!)</td>
+    								<td class="py-0">1</td>
+    								<td class="py-0">Cat</td>
+    								<td class="py-0 px-0"><button class="badge badge-primary" id="editwave"><i class="far fa-edit"></i></button></td>
+    							</tr>
+    							<tr>								
+    								<td class="py-0" colspan="2">2020-04-20 00:00:00</td>
+    								<td class="py-0">
+    									<strong><span class="text-danger">Real</span></strong>										
+    								</td>
+    								<td class="py-0 px-0"><button class="badge badge-danger" id="delWave"><i class="far fa-trash-alt"></i></button></td>
+    							</tr>
+    						</table>
+    					</div>
+    					<div class="entry mx-auto text-center rounded small" style="background-color:white; display:none;">
+    						<table class="table table-bordered">
+    							<tr>
+    								<td class="py-0 h6">Jag (Danger!!)</td>
+    								<td class="py-0"><input type="number" min=1 value= 1 name="waves" style="width:2em; border:1px"></td>
+    								<td class="py-0">Cat</td>
+    								
+    							</tr>
+    							<tr>								
+    								<td class="py-0" colspan="2">yyyy-MM-DD HH:mm:ss</td>
+    								<td class="py-0">
+    									<select name="type" style="width:4em; border:1px">
+    										<option>Real</option>
+    										<option>Fake</option>
+    										<option>Ghost</option>
+    										<option>Other</option>
+    									</select>
+    								</td>    								
+    							</tr>
+    							<tr class="">
+    								<td class="py-0 px-3 text-left" colspan="2">Notes: <input type="text" name="notes" style="width:15em; border:1px"></td>
+    								<td class="py-0 px-0"><button class="badge badge-success" id="savewave"><i class="fas fa-save"></i></button></td>
+    							</tr>
+    						</table>
+    					</div>
+    				</div>
+    				
+    				<div>
+        				<div class="display mx-auto text-center rounded small" style="background-color:white;">
+    						<table class="table table-bordered">
+    							<tr>
+    								<td class="py-0 h6">Jag (Danger!!)</td>
+    								<td class="py-0">1</td>
+    								<td class="py-0">Cat</td>
+    								<td class="py-0 px-0"><button class="badge badge-primary" id="editwave"><i class="far fa-edit"></i></button></td>
+    							</tr>
+    							<tr>								
+    								<td class="py-0" colspan="2">2020-04-20 00:00:00</td>
+    								<td class="py-0">
+    									<strong><span class="text-danger">Real</span></strong>										
+    								</td>
+    								<td class="py-0 px-0"><button class="badge badge-danger" id="delWave"><i class="far fa-trash-alt"></i></button></td>
+    							</tr>
+    						</table>
+    					</div>
+    					<div class="entry mx-auto text-center rounded small" style="background-color:white; display:none;">
+    						<table class="table table-bordered">
+    							<tr>
+    								<td class="py-0 h6">Jag (Danger!!)</td>
+    								<td class="py-0"><input type="number" min=1 value= 1 name="waves" style="width:2em; border:1px"></td>
+    								<td class="py-0">Cat</td>
+    								<td class="py-0 px-0"><button class="badge badge-primary" id="editwave"><i class="far fa-edit"></i></button></td>
+    							</tr>
+    							<tr>								
+    								<td class="py-0" colspan="2">yyyy-MM-DD HH:mm:ss</td>
+    								<td class="py-0">
+    									<select name="type" style="width:4em; border:1px">
+    										<option>Real</option>
+    										<option>Fake</option>
+    										<option>Ghost</option>
+    										<option>Other</option>
+    									</select>
+    								</td>
+    								<td class="py-0 px-0"><button class="badge badge-danger" id="delwave"><i class="far fa-trash-alt"></i></button></td>
+    							</tr>
+    						</table>
+    					</div>
+    				</div>				
+                </div>
+    		</div>    		  		
+    	</div>
+    </div>  
+	<div class="container text-right small mb-5" style="clear:left">
+		<p class="text-danger font-italic">Offense Planner created by Chandra</p>
 	</div>
+	  
 @endsection
 
 @push('scripts')
+<script>
+	$(document).on('click','.delitem',function(){
+		$("#loading").toggle();
+		
+		var type = $(this).attr("id");	var id = $(this).val();
+		var plan = $('meta[name="planId"]').attr('content');
+		
+		var xmlhttp = new XMLHttpRequest();
+	    xmlhttp.onreadystatechange = function() {
+	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+	        	{	console.log(xmlhttp.responseText);		}
+	    };
+	    xmlhttp.open("GET", "/offense/plan/delitem/"+plan+"/"+type+"/"+id, true);
+	    xmlhttp.send();
+			    
+	    setTimeout(function(){ location.reload(); }, 2000);
+	    
+	});
+ </script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
 
-<script type="text/javascript">
-// Adds new line to the data
-    $(document).ready(function(){
-        $("#newRow").click(function(){
-        	var markup ='<tr>'+
-            				'<td>X:<input name="a_x" type="text" size="2" required/> |Y:<input name="a_y" type="text" size="2" required/></td>'+
-            				'<td>X:<input name="d_x" type="text" size="2" required/> |Y:<input name="d_y" type="text" size="2" required/></td>'+
-            				'<td><select name="type">'+
-            						'<option value="real">Real</option>'+
-            						'<option value="fake">Fake</option>'+
-            						'<option value="scout">Scout</option>'+
-            						'<option value="other">Other</option>'+
-            					'</select>'+
-            				'</td>'+
-            				'<td><input name="waves" type="text" size="2" required/></td>'+
-            				'<td><select name="units">'+
-            						'<option value="1">Catapult</option>'+
-            						'<option value="2">Rams</option>'+
-            						'<option value="3">Cheif</option>'+
-            						'<option value="4">Cavalry</option>'+
-            						'<option value="5">Infantry</option>'+
-            					'</select>'+
-            				'</td>'+
-            				'<td><input name="landtime" type="text" size="20" class="dateTimePicker" required/></td>'+
-            				'<td><input name="Comments" type="text" /></td>'+
-            				'<td><span><button class="badge badge-primary" id="saveRow">Save</button></span>'+
-            				'</td>'+
-        				'</tr>';
+	$(document).ready(function(){
+		$(".attacker").css('cursor','grabbing');
+		$(".attacker").draggable({
+	        helper: 'clone'
+	    });
 
-            
-            $("#ops tbody").append(markup);
-        });
-    });          
-
-//deletes the attack from the plan
-    $(function(){
-    	$('#ops').on('click','#delRow',function(e){
-			var wave= $(this).parents('tr').attr("id");	
-			
-			var xmlhttp = new XMLHttpRequest();
-		    xmlhttp.onreadystatechange = function() {
-		        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-		        {	console.log(xmlhttp.responseText);	}
-		    };
-		    xmlhttp.open("GET", "/offense/plan/delete/"+wave, true);
-		    xmlhttp.send();		
-
-            e.preventDefault();
-          	$(this).parents('tr').remove();		
-        });
-   });
-
+	    $(".target").droppable({drop:function(event,ui){
+		    	$("#target").append().text("added");
+	    		alert("dropped");
+	    	}
+	    });
+	});
 </script>
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });  
-	function addRow(){
-		var plan = $("#plan").val();
-		var a_x = $("#a_x").val();				var a_y = $("#a_y").val();
-        var d_x = $("#d_x").val();				var d_y = $("#d_y").val();
-        var type = $("#type").val();			var waves = $("#waves").val();
-        var unit = $("#unit").val();			var land = $("#land").val();	
-        var comments = $("#comment").val();
-        
-        var wave = {{$plan->id}}+'|'+a_x+'|'+a_y+'|'+d_x+'|'+d_y+'|'+type+'|'+waves+'|'+unit+'|'+land+'|'+comments; 
-        
-        $.ajax({
-            type:'POST',
-            url:'/offense/plan/add',
-            data:{ input : wave	},
-            
-            success:function(data){				
-         	   	alert(data.success)
-            }
-         });  
-	}
- </script>
 
-<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
-<script type="text/javascript">
-    $(".dateTimePicker").datetimepicker({
-        format: "yyyy-mm-dd hh:ii:ss",
-        showSecond:true
-    });
-</script>    
-
+        $("#editwave").click(function(){
+			var div = $(this).closest("div.display");
+			//div.css("background","yellow");
+			var entry = div.siblings();
+			entry.toggle();
+			//entry.css("background","yellow");
+			alert("clicked");
+    		
+        });
+  
+</script>
 @endpush
 
 @push('extensions')
-	<link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
-	<meta name="csrf-token" content="{{ csrf_token() }}" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<meta name="planId" content="{{$plan->id}}" />
 @endpush

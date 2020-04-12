@@ -259,11 +259,18 @@ Route::get('/offense/search','Plus\Offense\LeaderSearchController@show');
 Route::post('/offense/search','Plus\Offense\LeaderSearchController@search');
 
 /* ----------------------- Plus Leader Offense make and edit plan ------------------------ */
-Route::get('/offense/plan/edit/{id}','Plus\Offense\OffensePlanController@showPlanLayout');
-Route::post('/offense/plan/update','Plus\Offense\OffensePlanController@updatePlan');
-Route::post('/offense/plan/add','Plus\Offense\OffensePlanController@addWave');
+Route::get('/offense/plan/edit/{id}','Plus\Offense\OpsMakerController@showPlanLayout');
+/* ----------------------------------- D-D Version --------------------------------- */
+Route::post('/offense/plan/additem','Plus\Offense\OpsMakerController@addOpsItem');
+Route::get('/offense/plan/delitem/{plan}/{type}/{id}','Plus\Offense\OpsMakerController@delOpsItem');
+
+
+/* ----------------------------------- Coords Version ------------------------------- */
+//Route::get('/offense/plan/edit/{id}','Plus\Offense\OffensePlanController@showPlanLayout');
+//Route::post('/offense/plan/update','Plus\Offense\OffensePlanController@updatePlan');
+//Route::post('/offense/plan/add','Plus\Offense\OffensePlanController@addWave');
 //Route::get('/offense/plan/add/{wave}','Plus\Offense\OffensePlanController@addWave');
-Route::get('/offense/plan/delete/{id}','Plus\Offense\OffensePlanController@deleteWave');
+//Route::get('/offense/plan/delete/{id}','Plus\Offense\OffensePlanController@deleteWave');
 
 /* ----------------------- Plus Leader Offense archive plan options ------------------------ */
 Route::get('/offense/archive','Plus\Offense\offenseArchiveController@archiveList');
