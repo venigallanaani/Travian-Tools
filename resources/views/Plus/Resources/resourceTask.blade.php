@@ -2,7 +2,7 @@
 
 @section('body')
 	<!-- ==================================== Main Content of the Resource Tasks overview Menu ================================= -->
-		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
+		<div class="card float-md-left col-md-10 mb-5 p-0 shadow">
 			<div class="card-header h5 py-2 bg-info text-white"><strong>Resource Push for {{$task['player']}}({{$task['village']}})</strong></div>
 			<div class="card-text">
     <!-- ==================================== List of tasks is progress ======================================= -->		

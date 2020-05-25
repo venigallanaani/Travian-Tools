@@ -21,7 +21,6 @@ class ReportsController extends Controller
     public function showPlusReports(Request $request){
         
         session(['title'=>'Plus']);   
-        session(['menu'=>2]);
         
         $reports = PlusReports::where('plus_id',$request->session()->get('plus.plus_id'))
                         ->orderBy('date','desc')->get();
@@ -36,7 +35,6 @@ class ReportsController extends Controller
     public function addPlusReports(Request $request){
         
         session(['title'=>'Reports']);
-        session(['menu'=>2]);
         
         $link = Input::get('link');        
         

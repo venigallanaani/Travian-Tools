@@ -38,7 +38,7 @@ class offenseArchiveController extends Controller
                 ->orderBy('landTime','asc')->get();
         
         return view('Plus.Offense.Archive.displayPlan')->with(['plan'=>$plan])
-                ->with(['waves'=>$waves]);
+                ->with(['waves'=>$waves])->with(['sankeyData'=>null]);
         
     }    
     

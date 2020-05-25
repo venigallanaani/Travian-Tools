@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OPS extends Model
+class OPSItems extends Model
 {
     //
     

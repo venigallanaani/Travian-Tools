@@ -2,8 +2,8 @@
 
 @section('body')
 
-	<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-		<div class="card-header h4 py-2 bg-info text-white"><strong>Offense Troops List</strong></div>
+	<div class="card float-md-left col-md-9 p-0 shadow">
+		<div class="card-header h5 py-2 bg-info text-white"><strong>Hammers List</strong></div>
 		<div class="card-text">
 	@foreach(['danger','success','warning','info'] as $msg)
 		@if(Session::has($msg))
@@ -20,17 +20,18 @@
 				<p>No offense troops are found</p>	
 			</div>
 		@else
-			<div class="text-center my-2 col-md-11 mx-auto">	
+			<div class="text-center my-2 col-md-12 mx-auto">	
 				<table class="table table-sm table-hover m-2 table-bordered small">
 					<thead class="bg-info text-white">
-						<tr>
-							<th></th>
+						<tr class="h6">
+							<th>#</th>
 							<th>Player</th>
 							<th>Village</th>							
 							<th colspan="10">Troops</th>
 							<th data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></th>
 							<th class="py-0 px-1"data-toggle="tooltip" data-placement="top" title="Tournament Square"><img alt="" src="/images/x.gif" class="build tsq"></th>
-							<th>Last Update</th>							
+							<th class="px-1">Type</th>
+							<th class="px-0">Last Update</th>							
 						</tr>
 					</thead>
 				@foreach($troops as $index=>$troop)
@@ -62,19 +63,20 @@
 							<img alt="" src="/images/x.gif" class="units {{$tribes[$troop['tribe']][9]['image']}}"></td>
 						<td rowspan="2" class="align-middle"><strong>{{number_format($troop['upkeep'])}}</strong></td>						
 						<td rowspan="2" class="align-middle">{{$troop['tsq']}}</td>
-						<td rowspan="2" class="align-middle">{{$troop['update']}}</td>
+						<td rowspan="2" class="align-middle"><strong>{{ucfirst(strtolower($troop['type']))}}</strong></td>
+						<td rowspan="2" class="align-middle {{$troop['color']}}"><strong>{{$troop['update']}}</strong></td>
 					</tr>
 					<tr>
-						<td class="px-1 py-0">{{$troop['unit01']}}</td>
-						<td class="px-1 py-0">{{$troop['unit02']}}</td>
-						<td class="px-1 py-0">{{$troop['unit03']}}</td>
-						<td class="px-1 py-0">{{$troop['unit04']}}</td>
-						<td class="px-1 py-0">{{$troop['unit05']}}</td>
-						<td class="px-1 py-0">{{$troop['unit06']}}</td>
-						<td class="px-1 py-0">{{$troop['unit07']}}</td>
-						<td class="px-1 py-0">{{$troop['unit08']}}</td>
-						<td class="px-1 py-0">{{$troop['unit09']}}</td>
-						<td class="px-1 py-0">{{$troop['unit10']}}</td>
+						<td class="px-1 py-0">{{number_format($troop['unit01'])}}</td>
+						<td class="px-1 py-0">{{number_format($troop['unit02'])}}</td>
+						<td class="px-1 py-0">{{number_format($troop['unit03'])}}</td>
+						<td class="px-1 py-0">{{number_format($troop['unit04'])}}</td>
+						<td class="px-1 py-0">{{number_format($troop['unit05'])}}</td>
+						<td class="px-1 py-0">{{number_format($troop['unit06'])}}</td>
+						<td class="px-1 py-0">{{number_format($troop['unit07'])}}</td>
+						<td class="px-1 py-0">{{number_format($troop['unit08'])}}</td>
+						<td class="px-1 py-0">{{number_format($troop['unit09'])}}</td>
+						<td class="px-1 py-0">{{number_format($troop['unit10'])}}</td>
 					</tr>
 				@endforeach
 				</table>	

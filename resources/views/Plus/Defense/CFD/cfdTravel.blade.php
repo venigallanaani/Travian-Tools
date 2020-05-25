@@ -2,7 +2,7 @@
 
 @section('body')
 
-	<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
+	<div class="card float-md-left col-md-9 mb-5 p-0 shadow">
 		<div class="card-header h5 py-2 bg-info text-white"><strong>Defense Call Troops Details</strong></div>
 		<div class="card-text">
 			<div class="text-center col-md-11 mx-auto my-2 p-0">

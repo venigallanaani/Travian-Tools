@@ -47,7 +47,7 @@ function countDown(elementId, date, zone) {
 
     var x = setInterval(function() {
 
-      var time=moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');      
+      var time=moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');   
       var now= new Date(time).getTime();      
 
       var distance = countDownDate - now;
@@ -99,8 +99,12 @@ function toggleMenu(param_menu) {
 	    x.style.display = "none";
 	  }
 }
-
-
-
+     	
+$(function(){                
+	setInterval(function(){
+  		var now = moment().tz("{{Session::get('timezone')}}");
+ 		$('#clock').html(now.format('YYYY-MM-DD HH:mm:ss'));    		 		
+	},1000);
+});
 
 

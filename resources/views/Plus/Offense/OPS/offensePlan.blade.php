@@ -1,21 +1,19 @@
 @extends('Plus.template')
 
 @section('body')
-	<!-- ==================================== Main Content of the CFD tasks list ================================= -->
-		<div class="card float-md-left col-md-9 mt-1 p-0 shadow mb-5">
+		<div class="card float-md-left col-md-10 p-0 shadow mb-5">
 			<div class="card-header h5 py-2 bg-info text-white"><strong>Offense Plan - {{$plan->name}}</strong></div>
 			<div class="card-text">
-    <!-- ==================================== List of CFD is progress ======================================= -->
 				
-        		@foreach(['danger','success','warning','info'] as $msg)
-        			@if(Session::has($msg))
-        	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>{{ Session::get($msg) }}
-                        </div>
-                    @endif
-                @endforeach	
+		@foreach(['danger','success','warning','info'] as $msg)
+			@if(Session::has($msg))
+	        	<div class="alert alert-{{ $msg }} text-center my-1" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>{{ Session::get($msg) }}
+                </div>
+            @endif
+        @endforeach	
                 
                 <div class="text-center col-md-8 mx-auto p-2">
                 	<table class="table table-borderless table-sm text-left" style="font-size:0.9em">
@@ -26,7 +24,10 @@
                 				<p class="py-0"><strong>Updated By : </strong>{{$plan->update_by}}</p>
                 			</td>
                 			<td class="text-center align middle">
-                				<p class="my-0"><a href="/offense/plan/edit/{{$plan->id}}" target="_blank">
+            					<p class="my-1"><a href="/offense/status/{{$plan->id}}">
+                					<button class="btn btn-warning btn-sm px-4"><i class="fas fa-sync"></i> Refresh Plan</button>
+            					</a></p>
+                				<p class="my-1"><a href="/offense/plan/edit/{{$plan->id}}" target="_blank">
                 					<button class="btn btn-primary btn-sm px-5">Edit Plan</button>
             					</a></p>
                 				<form action="/offense/status/update" method="post" class="my-1">{{csrf_field()}}
@@ -34,9 +35,9 @@
                 					<p class="my-1"><button class="btn btn-success btn-sm px-5" name="publishPlan" value="{{$plan->id}}">Publish Plan</button></p>
             					@endif
             					@if($plan->status =='PUBLISH' || $plan->status == 'INPROGRESS')
-            						<p class="my-1"><button class="btn btn-success btn-sm px-5" name="completePlan" value="{{$plan->id}}">Mark as Complete</button></p>
+            						<p class="my-1"><button class="btn btn-success btn-sm px-4" name="completePlan" value="{{$plan->id}}">Mark as Complete</button></p>
         						@endif
-        							<p class="my-1"><button class="btn btn-warning btn-sm px-5" name="deletePlan" value="{{$plan->id}}">Delete Plan</button></p>
+        							<p class="my-1"><button class="btn btn-danger btn-sm px-5" name="deletePlan" value="{{$plan->id}}">Delete Plan</button></p>
     							@if($plan->status == 'COMPLETE')
     								<p class="my-1"><button class="btn btn-secondary btn-sm px-5" name="archivePlan" value="{{$plan->id}}">Archive Plan</button></p>
 								@endif
@@ -52,47 +53,48 @@
             @else	
         		<div class="float-md-left p-2 shadow rounded mx-auto" >
                 	<div class="mx-auto">
-                		<svg id="sankeyChart" width="800" height="300" style="margin:auto"></svg> 			 		
+                		<svg id="sankeyChart" width="800" height="300" style="margin:auto"></svg>
+                		
                 	</div>
                 </div>
 				<div class="text-center col-md-11 mx-auto my-5 p-0">
-					<table class="table align-middle small">
+					<table class="table align-middle table-sm table-hover">
 						<thead class="thead-inverse h6">
     						<tr>
-    							<th class="">Attacker</th>
-    							<th class="">Target</th>
-    							<th class="">Type</th>
-    							<th class="">Land Time</th>
-    							<th class="">Waves</th>
-    							<th class="">Units</th>
-    							<th class="">Status</th>    							
-    							<th class="">Comments</th>
-    							<th class="">Report</th>  							
+    							<th style="width:7em" class="">Attacker</th>
+    							<th style="width:7em" class="">Target</th>    							
+    							<th style="width:6em" class="">Land Time</th>
+    							<th style="width:4em" class="">Type</th>    							
+    							<th style="width:2em" class="">Waves</th>
+    							<th style="width:3em" class="">Units</th>
+    							<th style="width:6em" class="">Notes</th>
+    							<th style="width:4em" class="">Status</th>    							
+    							<th style="width:4em" class="">Report</th>  							
     						</tr>
 						</thead>
 						@foreach($waves as $wave)
 							@php
-                            	if($wave->type == 'Real'){	$color='text-danger';	}
-                            	elseif($wave->type == 'Fake'){	$color='text-primary';	}
-                            	elseif($wave->type == 'Cheif'){	$color='text-warning';	}
-                            	elseif($wave->type == 'Scout'){	$color='text-success';	}
+                            	if($wave['type'] == 'REAL'){	$color='text-danger';	}
+                            	elseif($wave['type'] == 'FAKE'){	$color='text-primary';	}
+                            	elseif($wave['type'] == 'CHIEF'){	$color='text-warning';	}
+                            	elseif($wave['type'] == 'SCOUT'){	$color='text-success';	}
                             	else{	$color='text-dark';	}
                             @endphp	
-    						<tr>
-    							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$wave->a_x}}&y={{$wave->a_y}}" target="_blank">
-    								<strong>{{$wave->a_player}}</strong> ({{$wave->a_village}})</a>
+    						<tr class="small">
+    							<td class="align-middle"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$wave['a_x']}}&y={{$wave['a_y']}}" target="_blank">
+    								<strong>{{$wave['a_player']}}</strong> ({{$wave['a_village']}})</a>
     							</td>
-    							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$wave->d_x}}&y={{$wave->d_y}}" target="_blank">
-    								<strong>{{$wave->d_player}}</strong> ({{$wave->d_village}})</a>
-    							</td>
-    							<td class="{{$color}}"><strong>{{$wave->type}}</strong></td>
-    							<td>{{$wave->landtime}}</td>
-    							<td>{{$wave->waves}}</td>
-    							<td data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="" src="/images/x.gif" class="units {{$wave->unit}}"></td>
-    							<td>{{$wave->status}}</td>    							
-    							<td>{{$wave->comments}}</td>
-    							<td>@if($wave->report!=null)    								
-    								<a href="{{$wave->report}}" target="_blank">Report</a>
+    							<td class="align-middle"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$wave['d_x']}}&y={{$wave['d_y']}}" target="_blank">
+    								<strong>{{$wave['d_player']}}</strong> ({{$wave['d_village']}})</a>
+    							</td>    							
+    							<td class="align-middle">{{$wave['landtime']}}</td>
+    							<td class="{{$color}} align-middle"><strong>{{ucfirst(strtolower($wave['type']))}}</strong></td>
+    							<td class="align-middle">{{$wave['waves']}}</td>
+    							<td data-toggle="tooltip" data-placement="top" title="{{$wave['name']}}"><img alt="" src="/images/x.gif" class="units {{$wave['unit']}}"></td>
+    							<td class="align-middle small">{{$wave['notes']}}</td>
+    							<td class="align-middle">{{ucfirst(strtolower($wave['status']))}}</td>    							
+    							<td class="align-middle">@if($wave['report']!=null)    								
+    								<a href="{{$wave['report']}}" target="_blank"><strong>Link <i class="fas fa-external-link-alt small"></i></strong></a>
     								@endif
     							</td>
     						</tr>

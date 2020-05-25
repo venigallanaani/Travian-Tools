@@ -2,7 +2,7 @@
 
 @section('body')
 
-		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+		<div class="card float-md-left col-md-10 mb-5 p-0 shadow">
 			<div class="card-header h5 py-2 bg-info text-white"><strong>Defense Call Status</strong></div>
 			<div class="card-text">
 		<!-- ========================== Create CFD Options ============================== -->
@@ -148,7 +148,7 @@
 								elseif($task->priority=='low'){$color='text-info';}
 								else{$color="";}
 							@endphp
-    						<tr class="h6">
+    						<tr class="h6" style="font-size:0.8em;">
     							<td><a href="https://{{Session::get('server.url')}}/karte.php?x={{$task->x}}&y={{$task->y}}" target="_blank">
     								<strong>{{$task->player}} ({{$task->village}})</strong></a>
     							</td>
@@ -157,8 +157,8 @@
     							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    							
     							<td>{{ucfirst(strtolower($task->status))}}</td>
     							<td>{{$task->target_time}}</td>
-    							<td><a class="btn btn-outline-secondary" href="/defense/cfd/{{$task->task_id}}">
-    								<i class="fa fa-angle-double-right"></i> Details</a>
+    							<td class="py-1"><a class="btn btn-outline-secondary py-0" href="/defense/cfd/{{$task->task_id}}">
+    								<i class="fa fa-angle-double-right"></i> <small>Details</small></a>
     							</td>
     						</tr>
 						@endforeach
@@ -172,7 +172,6 @@
 @endsection
 
 @push('scripts')
-
 	<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
 	<script type="text/javascript">
         $(".dateTimePicker").datetimepicker({

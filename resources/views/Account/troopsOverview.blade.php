@@ -1,7 +1,7 @@
 @extends('Account.template')
 
 @section('body')
-		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
+		<div class="card float-md-left col-md-10 mt-1 mb-5 p-0 shadow">
 			<div class="card-header h5 py-2 bg-warning text-white">
 				<strong>Troops Details</strong>
 			</div>
@@ -32,36 +32,37 @@
     			</div>
 				<form action="{{route("accountTroops")}}/update" method="post">
 					{{csrf_field()}}
-            		<div class="text-center mx-2 ">
+            		<div class="text-center ">
     					<table class="table table-bordered col-md-10 p-0 table-sm mx-auto">
-    						<tr class="text-warning font-weight-bold h6">
+    						<tr class="table-warning font-weight-bold h6">
     							<td class="px-1 py-1">Village</td>
     							@foreach($units as $unit)
     							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="{{$unit->name}}"><img alt="" src="/images/x.gif" class="units {{$unit->image}}"></td>
     							@endforeach
     							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Upkeep"><img alt="" src="/images/x.gif" class="res upkeep"></td> 
     							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Tournament Square"><img alt="" src="/images/x.gif" class="build tsq"></td>
-    							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Icons">Type</td>
+    							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Village Type">Type</td>
+    							<td class="px-0 py-1" data-toggle="tooltip" data-placement="top" title="Boots Artifact"><i class="fab fa-affiliatetheme"></i></td>
     						</tr>
     					@foreach($troops as $index=>$troop)
     						<tr class="align-center">
     							<td class="h6"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$troop['x']}}&y={{$troop['y']}}" target="_blank">
     								{{$troop['village']}}</a></td>
-								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_1" value="{{$troop['unit01']}}" type="text" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
-								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_2" value="{{$troop['unit02']}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
-								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_3" value="{{$troop['unit03']}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
-								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_4" value="{{$troop['unit04']}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
-								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_5" value="{{$troop['unit05']}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
-								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_6" value="{{$troop['unit06']}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
-								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_7" value="{{$troop['unit07']}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
-								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_8" value="{{$troop['unit08']}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
-								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_9" value="{{$troop['unit09']}}" style="width:2em; border:1px" class="p-0 m-0 text-center"></td>
-    							<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_10" value="{{$troop['unit10']}}" style="width:2em; border:1px" class="p-0 m-0 text-center"></td>
+								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_1" value="{{number_format($troop['unit01'])}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
+								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_2" value="{{number_format($troop['unit02'])}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
+								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_3" value="{{number_format($troop['unit03'])}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
+								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_4" value="{{number_format($troop['unit04'])}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
+								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_5" value="{{number_format($troop['unit05'])}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
+								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_6" value="{{number_format($troop['unit06'])}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
+								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_7" value="{{number_format($troop['unit07'])}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
+								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_8" value="{{number_format($troop['unit08'])}}" style="width:4em; border:1px" class="p-0 m-0 text-center"></td>
+								<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_9" value="{{number_format($troop['unit09'])}}" style="width:2em; border:1px" class="p-0 m-0 text-center"></td>
+    							<td class="px-0 m-0 small"><input name="{{$troop['vid']}}_10" value="{{number_format($troop['unit10'])}}" style="width:2em; border:1px" class="p-0 m-0 text-center"></td>
     							<td class="px-1 m-0 small"><strong>{{number_format($troop['upkeep'])}}</strong></td>
     							<td class="px-1 m-0 text-right small"><input name="{{$troop['vid']}}_tsq" value="{{$troop['Tsq']}}" style="width:2.5em; border:1px" class="p-0 m-0" type="number" min=0 max=20></td>
     							<td class="px-0 small">
                 					<select name="{{$troop['vid']}}_type"  style="width:5em; border:2px">
-    									<option value="NONE" 	@if($troop['type']=='NONE') selected 	@endif><span class="text-danger">None</span></option>
+    									<option value="NONE" 	@if($troop['type']=='NONE') selected 	@endif>None</option>
     									<option value="SUPPORT" @if($troop['type']=='SUPPORT') selected @endif>Support</option>
     									<option value="SCOUT" 	@if($troop['type']=='SCOUT') selected 	@endif>Scout</option>
     									<option value="DEFENSE" @if($troop['type']=='DEFENSE') selected @endif>Defense</option>
@@ -70,24 +71,33 @@
     									<option value="WWH" 	@if($troop['type']=='WWH') selected 	@endif>WWK / WWR</option>
     								</select>
     							</td>
+    							<td class="px-0 small">
+                					<select name="{{$troop['vid']}}_arty"  style="width:3em; border:2px">    									
+    									<option value="2" 	@if($troop['arty']=='2') selected @endif>2X</option>
+    									<option value="1.5" @if($troop['arty']=='1.5') selected 	@endif>1.5X</option>
+    									<option value="1" 	@if($troop['arty']=='1') selected @endif>--</option>
+    									<option value="0.67" @if($troop['arty']=='0.67') selected @endif>0.67X</option>
+    									<option value="0.5" @if($troop['arty']=='0.5') selected	@endif>0.5X</option>
+    								</select>
+    							</td>
     						</tr>
     					@endforeach
     						<tr class="h6">
     							<td class="">Total</td>
-    							<td class="small font-weight-bold font-size:1em">{{number_format($stats['unit01'])}}</td>
-    							<td class="small font-weight-bold font-size:1em">{{number_format($stats['unit02'])}}</td>
-    							<td class="small font-weight-bold font-size:1em">{{number_format($stats['unit03'])}}</td>
-    							<td class="small font-weight-bold font-size:1em">{{number_format($stats['unit04'])}}</td>
-    							<td class="small font-weight-bold font-size:1em">{{number_format($stats['unit05'])}}</td>
-    							<td class="small font-weight-bold font-size:1em">{{number_format($stats['unit06'])}}</td>
-    							<td class="small font-weight-bold font-size:1em">{{number_format($stats['unit07'])}}</td>
-    							<td class="small font-weight-bold font-size:1em">{{number_format($stats['unit08'])}}</td>
-    							<td class="small font-weight-bold font-size:1em">{{number_format($stats['unit09'])}}</td>
-    							<td class="small font-weight-bold font-size:1em">{{number_format($stats['unit10'])}}</td>
-    							<td class="px-0 " colspan="3"><img alt="" src="/images/x.gif" class="res upkeep"> {{number_format($stats['upkeep'])}}</td>
+    							<td class="small font-weight-bold">{{number_format($stats['unit01'])}}</td>
+    							<td class="small font-weight-bold">{{number_format($stats['unit02'])}}</td>
+    							<td class="small font-weight-bold">{{number_format($stats['unit03'])}}</td>
+    							<td class="small font-weight-bold">{{number_format($stats['unit04'])}}</td>
+    							<td class="small font-weight-bold">{{number_format($stats['unit05'])}}</td>
+    							<td class="small font-weight-bold">{{number_format($stats['unit06'])}}</td>
+    							<td class="small font-weight-bold">{{number_format($stats['unit07'])}}</td>
+    							<td class="small font-weight-bold">{{number_format($stats['unit08'])}}</td>
+    							<td class="small font-weight-bold">{{number_format($stats['unit09'])}}</td>
+    							<td class="small font-weight-bold">{{number_format($stats['unit10'])}}</td>
+    							<td class="px-0 " colspan="4"><img alt="" src="/images/x.gif" class="res upkeep"> {{number_format($stats['upkeep'])}}</td>
     						</tr>
             			</table>
-            			<p><button class="btn btn-lg btn-warning"><strong>Update Troops</strong></button></p>
+            			<p><button class="btn btn-warning"><strong>Update Troops</strong></button></p>
             		</div> 
         		</form>       		
 			</div>	

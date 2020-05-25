@@ -232,16 +232,16 @@ class PlanController extends Controller
         
         $id = $request->id;
         
-        $planned[0] = $request->p_01;     $queued[0] = $request->q_01;
-        $planned[1] = $request->p_02;     $queued[1] = $request->q_02;
-        $planned[2] = $request->p_03;     $queued[2] = $request->q_03;
-        $planned[3] = $request->p_04;     $queued[3] = $request->q_04;
-        $planned[4] = $request->p_05;     $queued[4] = $request->q_05;
-        $planned[5] = $request->p_06;     $queued[5] = $request->q_06;
-        $planned[6] = $request->p_07;     $queued[6] = $request->q_07;
-        $planned[7] = $request->p_08;     $queued[7] = $request->q_08;
-        $planned[8] = $request->p_09;     $queued[8] = $request->q_09;
-        $planned[9] = $request->p_10;     $queued[9] = $request->q_10;
+        $planned[0] = intval(str_replace(',','',$request->p_01));     $queued[0] = intval(str_replace(',','',$request->q_01));
+        $planned[1] = intval(str_replace(',','',$request->p_02));     $queued[1] = intval(str_replace(',','',$request->q_02));
+        $planned[2] = intval(str_replace(',','',$request->p_03));     $queued[2] = intval(str_replace(',','',$request->q_03));
+        $planned[3] = intval(str_replace(',','',$request->p_04));     $queued[3] = intval(str_replace(',','',$request->q_04));
+        $planned[4] = intval(str_replace(',','',$request->p_05));     $queued[4] = intval(str_replace(',','',$request->q_05));
+        $planned[5] = intval(str_replace(',','',$request->p_06));     $queued[5] = intval(str_replace(',','',$request->q_06));
+        $planned[6] = intval(str_replace(',','',$request->p_07));     $queued[6] = intval(str_replace(',','',$request->q_07));
+        $planned[7] = intval(str_replace(',','',$request->p_08));     $queued[7] = intval(str_replace(',','',$request->q_08));
+        $planned[8] = intval(str_replace(',','',$request->p_09));     $queued[8] = intval(str_replace(',','',$request->q_09));
+        $planned[9] = intval(str_replace(',','',$request->p_10));     $queued[9] = intval(str_replace(',','',$request->q_10));
         
         $account = Account::where('server_id',$request->session()->get('server.id'))
                         ->where('user_id',Auth::user()->id)->first();

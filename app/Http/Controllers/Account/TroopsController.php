@@ -71,6 +71,7 @@ class TroopsController extends Controller
                         'upkeep'=>0,
                         'Tsq'=>0,
                         'type'=>'NONE',
+                        'arty'=>1
                     );
                 }else{
                     $list[$i]=array(
@@ -91,6 +92,7 @@ class TroopsController extends Controller
                         'upkeep'=>$row->upkeep,
                         'Tsq'=>$row->Tsq,
                         'type'=>strtoupper($row->type),
+                        'arty'=>$row->arty
                     );
                     $unit01+=$row->unit01;  $unit02+=$row->unit02;  $unit03+=$row->unit03;
                     $unit04+=$row->unit04;  $unit05+=$row->unit05;  $unit06+=$row->unit06;
@@ -275,18 +277,19 @@ class TroopsController extends Controller
     //dd($units);
         foreach($villages as $village){
             
-            $unit01 = $village->vid."_1";           $unit01 = Input::get($unit01)==null ? 0:Input::get($unit01);
-            $unit02 = $village->vid."_2";           $unit02 = Input::get($unit02)==null ? 0:Input::get($unit02);
-            $unit03 = $village->vid."_3";           $unit03 = Input::get($unit03)==null ? 0:Input::get($unit03);
-            $unit04 = $village->vid."_4";           $unit04 = Input::get($unit04)==null ? 0:Input::get($unit04);
-            $unit05 = $village->vid."_5";           $unit05 = Input::get($unit05)==null ? 0:Input::get($unit05);
-            $unit06 = $village->vid."_6";           $unit06 = Input::get($unit06)==null ? 0:Input::get($unit06);
-            $unit07 = $village->vid."_7";           $unit07 = Input::get($unit07)==null ? 0:Input::get($unit07);
-            $unit08 = $village->vid."_8";           $unit08 = Input::get($unit08)==null ? 0:Input::get($unit08);
-            $unit09 = $village->vid."_9";           $unit09 = Input::get($unit09)==null ? 0:Input::get($unit09);
-            $unit10 = $village->vid."_10";          $unit10 = Input::get($unit10)==null ? 0:Input::get($unit10);
+            $unit01 = $village->vid."_1";           $unit01 = Input::get($unit01)==null ? 0:intval(str_replace(',','',Input::get($unit01)));
+            $unit02 = $village->vid."_2";           $unit02 = Input::get($unit02)==null ? 0:intval(str_replace(',','',Input::get($unit02)));
+            $unit03 = $village->vid."_3";           $unit03 = Input::get($unit03)==null ? 0:intval(str_replace(',','',Input::get($unit03)));
+            $unit04 = $village->vid."_4";           $unit04 = Input::get($unit04)==null ? 0:intval(str_replace(',','',Input::get($unit04)));
+            $unit05 = $village->vid."_5";           $unit05 = Input::get($unit05)==null ? 0:intval(str_replace(',','',Input::get($unit05)));
+            $unit06 = $village->vid."_6";           $unit06 = Input::get($unit06)==null ? 0:intval(str_replace(',','',Input::get($unit06)));
+            $unit07 = $village->vid."_7";           $unit07 = Input::get($unit07)==null ? 0:intval(str_replace(',','',Input::get($unit07)));
+            $unit08 = $village->vid."_8";           $unit08 = Input::get($unit08)==null ? 0:intval(str_replace(',','',Input::get($unit08)));
+            $unit09 = $village->vid."_9";           $unit09 = Input::get($unit09)==null ? 0:intval(str_replace(',','',Input::get($unit09)));
+            $unit10 = $village->vid."_10";          $unit10 = Input::get($unit10)==null ? 0:intval(str_replace(',','',Input::get($unit10)));
             $tsq = $village->vid."_tsq";            $tsq = Input::get($tsq);
             $type = $village->vid."_type";          $type = Input::get($type);
+            $arty = $village->vid."_arty";          $arty = Input::get($arty);
 
             $upkeep = $unit01*$units[0]['upkeep'] + $unit02*$units[1]['upkeep'] + $unit03*$units[2]['upkeep'] + $unit04*$units[3]['upkeep'] +
                                     $unit05*$units[4]['upkeep'] + $unit06*$units[5]['upkeep'] + $unit07*$units[6]['upkeep'] + 
@@ -301,7 +304,7 @@ class TroopsController extends Controller
                             'unit07'=>$unit07,          'unit08'=>$unit08,
                             'unit09'=>$unit09,          'unit10'=>$unit10,
                             'upkeep'=>$upkeep,          'Tsq'=>$tsq,                
-                            'type'=>$type
+                            'type'=>$type,              'arty'=>$arty
                         ]);
             
         }

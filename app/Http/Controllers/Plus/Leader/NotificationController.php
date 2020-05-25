@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 
-
+use App\Subscription;
 use App\Discord;
 
 class NotificationController extends Controller
@@ -16,23 +16,41 @@ class NotificationController extends Controller
     public function showDiscord(Request $request){
         
         session(['title'=>'Notifications']);
-        session(['menu'=>'1']);
+        session(['menu'=>'1']);     $status = '';
         $discord = Discord::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))->first();
 
-        //dd($discord);
-        $status = '';
-        if($discord->status=='INACTIVE'){            
+        if($discord==null){
+            $sub = Subscription::where('server_id',$request->session()->get('server.id'))
+                        ->where('id',$request->session()->get('plus.plus_id'))->first();
+
+            if($sub->discord==0){
+                return view('Plus.Leader.Notifications.notifyUnSub')->with(['channel'=>'Discord']);
+                
+            }else{
+                $discord = new Discord;
+                $discord->plus_id   = $request->session()->get('plus.plus_id');
+                $discord->server_id = $request->session()->get('server.id');
+                $discord->status    = 'ACTIVE';
+                
+                $discord->save();
+                
+                $discord = Discord::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$request->session()->get('plus.plus_id'))->first();        
+                
+            }
+        }
+        
+        if($discord->status=='INACTIVE'){
             Session::flash('warning',"Discord Notifications are deactivated"); 
             $status = 'disabled';
         }
         if($discord->status=='EXPIRED'){            
             Session::flash('danger',"Discord Notifications period expired"); 
             $status = 'disabled';
-        }
+        }                        
         
-        return view('Plus.Leader.discord')->with(['discord'=>$discord])->with(['status'=>$status]);
-        
+        return view('Plus.Leader.Notifications.discord')->with(['discord'=>$discord])->with(['status'=>$status]);
     }
     
     

@@ -1,7 +1,7 @@
 @extends('Plus.template')
 
 @section('body')
-<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
+<div class="card float-md-left col-md-10 mb-5 p-0 shadow">
 	<div class="card-header h5 py-2 bg-info text-white"><strong>Enter Incomings</strong></div>
 @foreach(['danger','success','warning','info'] as $msg)
 	@if(Session::has($msg))
@@ -80,7 +80,7 @@
         						{{ucfirst(strtolower($wave->ldr_sts))}}
         					@endif
     					</td>
-        				<td><button class="btn btn-info btn-sm" id="details" name="button" value="" type="submit"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></td>
+        				<td><button class="badge badge-info" id="details" name="button" value="" type="submit"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></td>
         			</tr>
         			<tr style="display: none;background-color:#dbeef4" class="text-center">
         				<form action="/plus/incoming/update" method="post">
@@ -142,7 +142,7 @@
         						{{ucfirst(strtolower($wave->ldr_sts))}}
         					@endif
         				</td>
-        				<td><button class="btn btn-info btn-sm" id="details" name="button" value="" type="submit"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></td>
+        				<td><button class="btn btn-info btn-sm" id="details" name="button" value="" type="submit"><i class="fas fa-angle-double-down px-1"></i></button></td>
         			</tr>
         			<tr style="display: none;background-color:#dbeef4" class="text-center">
         				<form action="/plus/incoming/update" method="post">

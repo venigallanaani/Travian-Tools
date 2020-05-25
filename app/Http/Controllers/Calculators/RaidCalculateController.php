@@ -49,9 +49,9 @@ class RaidCalculateController extends Controller
                 $result['UNITS'][$i]['NAME'] = $unit->name;
                 $result['UNITS'][$i]['IMAGE']=$unit->image;
                 if($unit->carry == 0){
-                    $result['UNITS'][$i]['NUM']=0;
+                    $result['UNITS'][$i]['VALUE']=0;
                 }else{
-                    $result['UNITS'][$i]['NUM']=round($res/$unit->carry);
+                    $result['UNITS'][$i]['VALUE']=round($res/$unit->carry);
                 }
                 $i++;
             }

@@ -2,7 +2,7 @@
 
 @section('body')
 <div class="card float-md-left col-md-12 mt-1 p-0 shadow mb-5">
-	<div class="card-header h4 py-2 bg-info text-white"><strong>Incomings List</strong></div>
+	<div class="card-header h5 py-2 bg-info text-white"><strong>Incomings List</strong></div>
 @foreach(['danger','success','warning','info'] as $msg)
 	@if(Session::has($msg))
     	<div class="alert alert-{{ $msg }} text-center my-1 mx-5" role="alert">
@@ -22,7 +22,7 @@
     				<td>
     					<div style="height:250px; overflow-y:auto;" class="my-2">
         					<table class="table my-0 py-0 table-bordered">
-        						<thead><tr class="header show"><th style="position:sticky; top:0px;" class="table-danger mx-1 text-center h4 py-1">Attackers</th></tr></thead>
+        						<thead><tr class="header show"><th style="position:sticky; top:0px;" class="table-danger mx-1 text-center h5 py-1">Attackers</th></tr></thead>
         						@foreach($attackers as $attacker)
             						<tr class="header show"><td class="h6 py-1"><input class="id_attack" rel="attack" type="checkbox" value="{{$attacker['ID']}}"> {{$attacker['NAME']}}</tr>
                                 @endforeach
@@ -32,7 +32,7 @@
     				<td>
     					<div style="height:250px; overflow-y:auto;" class="my-2">
         					<table class="table my-0 py-0 table-bordered">
-        						<thead><tr class="header show"><th style="position:sticky; top:0px;" class="table-success mx-1 text-center h4 py-1">Defenders</th></tr></thead>
+        						<thead><tr class="header show"><th style="position:sticky; top:0px;" class="table-success mx-1 text-center h5 py-1">Defenders</th></tr></thead>
         						@foreach($defenders as $defender)
             						<tr class="header show"><td class="h6 py-1"><input class="id_defend" rel="defend" type="checkbox" value="{{$defender['ID']}}"> {{$defender['NAME']}}</td></tr>
                                 @endforeach
@@ -42,7 +42,7 @@
     				<td>
     					<div style="height:250px; overflow-y:auto;" class="my-2">
         					<table class="table my-0 py-0 table-bordered">
-        						<thead><tr class="header show"><td class="table-info mx-1 text-center h4 py-1">Actions</td></tr></thead>
+        						<thead><tr class="header show"><td class="table-info mx-1 text-center h5 py-1">Actions</td></tr></thead>
         						<tr class="header show"><td class="h6 table-white py-1"><input class="id_type" rel="type" type="checkbox" value="NEW"> New</td></tr>
         						<tr class="header show"><td class="h6 table-info py-1"><input class="id_type" rel="type" type="checkbox" value="THINKING"> Thinking</td></tr>
         						<tr class="header show"><td class="h6 table-warning py-1"><input class="id_type" rel="type" type="checkbox" value="SCOUT"> Scouting</td></tr>
@@ -88,7 +88,7 @@
     				<td class="" id="land">{{$incoming['landTime']}}</td>
     				<td class="attack" rel="{{$incoming['att_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['att_x']}}&y={{$incoming['att_y']}}" target="_blank"><strong>{{$incoming['att_player']}}</strong> 
     						({{$incoming['att_village']}}) </a></td>
-					<td class="h6">{{$incoming['waves']}}</td>					
+					<td class=""><strong>{{$incoming['waves']}}</strong></td>					
     				<td class="defend" rel="{{$incoming['def_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['def_x']}}&y={{$incoming['def_y']}}" target="_blank"><strong>{{$incoming['def_player']}}</strong>
     						 ({{$incoming['def_village']}})</a></td>
 				 	<td class="" id="notice">{{$incoming['noticeTime']}}</td>
@@ -179,7 +179,7 @@
     						<option @if($incoming['ldr_sts']=='FAKE') selected @endif value="FAKE">Fake</option>
     					</select>
     				</td>
-    				<td><button class="btn btn-info btn-sm py-0" id="details" name="button" value="{{$incoming['dist']}}" type="submit"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></td>
+    				<td><button class="badge badge-info" id="details" name="button" value="{{$incoming['dist']}}" type="submit"><i class="fas fa-angle-double-down px-1"></i></button></td>
     			</tr>
     			<tr style="display: none;background-color:#dbeef4;font-size: 0.8em" class="info">
     				<td colspan="3" class="py-1">
@@ -289,7 +289,6 @@
 	$(document).on('change','#art',function(e){
 		e.preventDefault();
 		var id = $(this).closest("tr").attr("id");	var art=$(this).val();
-		//alert(id+'|||||'+art);
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
 	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
@@ -300,13 +299,31 @@
 	    
 	    var att=$(this).closest("tr").find(".attack").attr('rel');
         var row = $('td.attack[rel="' + att + '"]').parent('tr');		row.find('#art').val(art); 
+
+		$('#incTable tr').each(function (i, row){
+			if(i>0){
+				var row = $(row);
+				var rel = row.find(".attack").attr('rel');					
+				if(rel == att){		
+    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+    				row.find("#start").html(time);
+    				
+    				var notice = new Date(row.find('#notice').html()).getTime();
+    				var start = new Date(time).getTime();
+    				if(notice-start<0){	
+        				row.find("#start").css("color","red");		
+    				}else{	
+        				row.find("#start").css("color","black");	
+    				}
+				}
+			}			
+		}); 
 	});
 </script>
 <script>
 	$(document).on('change','#boots',function(e){
 		e.preventDefault();
 		var id = $(this).closest("tr").attr("id");	var boots=$(this).val();
-		//alert(id+'|||||'+boots);
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
 	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
@@ -317,6 +334,26 @@
         
         var att=$(this).closest("tr").find(".attack").attr('rel');
         var row = $('td.attack[rel="' + att + '"]').parent('tr');        row.find('#boots').val(boots);
+
+		$('#incTable tr').each(function (i, row){
+			if(i>0){
+				var row = $(row);
+				var rel = row.find(".attack").attr('rel');					
+				if(rel == att){		
+					//alert(rel);	
+    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+    				row.find("#start").html(time);
+    				
+    				var notice = new Date(row.find('#notice').html()).getTime();
+    				var start = new Date(time).getTime();
+    				if(notice-start<0){	
+        				row.find("#start").css("color","red");		
+    				}else{	
+        				row.find("#start").css("color","black");	
+    				}
+				}
+			}			
+		}); 
               
 	});
 </script>
@@ -324,7 +361,6 @@
 	$(document).on('change','#tsq',function(e){
 		e.preventDefault();
 		var id = $(this).closest("tr").attr("id");	var tsq=$(this).val();
-		//alert(id+'|||||'+boots);
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
 	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
@@ -334,8 +370,26 @@
 	    xmlhttp.send();	    
         
         var att=$(this).closest("tr").find(".attack").attr('rel');
-        var row = $('td.attack[rel="' + att + '"]').parent('tr');		row.find('#tsq').val(tsq); 
-        
+        var row = $('td.attack[rel="' + att + '"]').parent('tr');		row.find('#tsq').val(tsq);
+
+		$('#incTable tr').each(function (i, row){
+			if(i>0){
+				var row = $(row);
+				var rel = row.find(".attack").attr('rel');					
+				if(rel == att){		
+    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+    				row.find("#start").html(time);
+    				
+    				var notice = new Date(row.find('#notice').html()).getTime();
+    				var start = new Date(time).getTime();
+    				if(notice-start<0){	
+        				row.find("#start").css("color","red");		
+    				}else{	
+        				row.find("#start").css("color","black");	
+    				}
+				}
+			}			
+		});       
 	});
 </script>
 <script>
@@ -351,6 +405,14 @@
 	    };
 	    xmlhttp.open("GET", "/defense/incomings/update/unit/"+id+"/"+unit, true);		
 	    xmlhttp.send();	
+
+		var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+		row.find("#start").html(time);
+		
+		var notice = new Date(row.find('#notice').html()).getTime();
+		var start = new Date(time).getTime();
+		if(notice-start<0){	row.find("#start").css("color","red");		
+		}else{	row.find("#start").css("color","black");	}
 	});
 </script>
 <script>	
@@ -369,27 +431,7 @@
     				}else{	row.find("#start").css("color","black");	}
 				}
 			}			
-		});
-		
-	});
-</script>
-<script>
-	$("#incTable").on('change',function(e){
-		$('#incTable tr').each(function (i, row){
-			if(i>0){
-				var row = $(row);
-				var id = '"'+row.attr("id")+'"';
-				if(id !== '"undefined"'){
-    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
-    				row.find("#start").html(time);
-    				
-    				var notice = new Date(row.find('#notice').html()).getTime();
-    				var start = new Date(time).getTime();
-    				if(notice-start<0){	row.find("#start").css("color","red");		
-    				}else{	row.find("#start").css("color","black");	}
-				}
-			}			
-		});
+		});		
 	});
 </script>
 @endpush

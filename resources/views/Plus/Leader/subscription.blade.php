@@ -2,8 +2,8 @@
 
 @section('body')
 <!-- ==================================== Main Content of the Plus Menu ================================= -->
-		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Subscription</strong></div>
+		<div class="card float-md-left col-md-10 mb-5 p-0 shadow">
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Subscription</strong></div>
 			<div class="card-text">			
 		<!-- ============================ Add success/failure notifications ============================== -->
 		@foreach(['danger','success','warning','info'] as $msg)
@@ -19,7 +19,7 @@
         @endforeach
         <!-- =========================== Subscription details ================================ -->
     			<div class="col-md-10 card shadow p-0 my-2 mx-auto">
-        			<div class="card-header h4 py-2 text-info">
+        			<div class="card-header h5 py-2 text-info">
         				<strong>Subscription Details</strong>
         			</div>
         			<div class="card-text h6 py-2">
@@ -42,8 +42,8 @@
         
         <!-- =========================== Add to group link ================================ -->
 
-        		<div class="col-md-10 mx-auto container rounded p-3 my-2 shadow" style="background-color:#dbeef4">            							
-        			<strong><span class="blockquote">Plus Group Link: </span></strong><input type="text" id ="link" name="link" value="https://www.travian-tools.com/plus/join/{{$subscription->link}}" class="w-50"/>
+        		<div class="col-md-10 mx-auto container text-center rounded p-3 my-2 shadow" style="background-color:#dbeef4">            							
+        			<strong><span class="h6">Plus Group Link: </span></strong><input type="text" id ="link" name="link" value="https://www.travian-tools.com/plus/join/{{$subscription->link}}" class="w-50"/>
         			<button class="btn btn-primary btn-sm px-2" onclick="copyLink()"> Copy Link </button>
         			<form action="/plus/join" method="post">
         				{{csrf_field()}}
@@ -55,7 +55,7 @@
 	   <!-- =========================== leadership Options control panel ================================ -->		
 
     			<div class="card shadow col-md-10 p-0 my-2 mx-auto">
-        			<div class="card-header h4 py-2 text-info">
+        			<div class="card-header h5 py-2 text-info">
         				<strong>Message of the day</strong>
         			</div>
         			<div class="card-text">
@@ -67,13 +67,13 @@
         				<form id="form" action="/leader/subscription/message" method="POST" onsubmit="return getContent()" class="text-center pb-3">
         					{{ csrf_field() }}
         					<input id="message" name="message" style="display:none">
-        					<button class="btn btn-info btn-lg px-5" type="submit">Post</button>						
+        					<button class="btn btn-info px-5" type="submit">Post</button>						
         				</form>					
         			</div>			
     			</div>			
 
     			<div class="card shadow col-md-10 p-0 my-2 mx-auto">
-        			<div class="card-header h4 py-2 text-info">
+        			<div class="card-header h5 py-2 text-info">
         				<strong>Group Options</strong>
         			</div>
         			<div class="card-text py-3">
@@ -110,14 +110,14 @@
         								</select> 
             						</p>
             						<div class="my-3 h6">
-                						<p class="h4 text-info">Group Notifications</p>
+                						<p class="h5 text-info">Group Notifications</p>
                 						<p class="">
                 							<span class="px-2"><input type="checkbox" name="discord" @if($subscription->discord== 1) checked @endif /> Discord </span>
                 							<span class="px-2 text-danger"><input type="checkbox" name="slack" @if($subscription->slack== 1)checked @endif /> Slack (TBD) </span>
             							</p>
             						</div>
 								</div>
-        					<button class="btn btn-info btn-lg px-5" type="submit">Save</button>						
+        					<button class="btn btn-info px-5" type="submit">Save</button>						
         				</form>					
         			</div>			
     			</div>

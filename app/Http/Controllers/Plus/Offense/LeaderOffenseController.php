@@ -20,6 +20,7 @@ class LeaderOffenseController extends Controller
     public function offensePlanList(Request $request){
         
         session(['title'=>'Offense']);
+        session(['menu'=>4]);
         
         $plans=OPSPlan::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -51,6 +52,7 @@ class LeaderOffenseController extends Controller
     public function displayOffensePlan(Request $request, $id){
         
         session(['title'=>'Offense']);
+        session(['menu'=>4]);   $units=array();
         
         $plan=OPSPlan::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -64,22 +66,33 @@ class LeaderOffenseController extends Controller
         if(count($waves)==0){
             $sankeyData = null;
         }else{
-            foreach($waves as $wave){                
-                if($wave->type=='Real'){
-                    $color = 'RED';
-                }elseif($wave->type == 'Fake'){
-                    $color = '#007bff';
-                }else{
-                    $color='GREY';
-                }                
-                $sankeyData[]=array(
-                    "ATT"=>$wave->a_player."(".$wave->a_village.")",
-                    "DEF"=>$wave->d_player."(".$wave->d_village.")",
-                    "WAVES"=>$wave->waves,
-                    "TYPE"=>$color
-                );                
+            $rows = Units::select('image','name')->whereIn('tribe_id',[1,2,3,6,7])
+                            ->orderBy('id','asc')->get();
+            foreach($rows as $row){
+                $units[$row->image]=$row->name;
             }
-        }         
+            
+            $waves = $waves->toArray();
+            foreach($waves as $i=>$wave){
+                $waves[$i]['name']=$units[$wave['unit']];
+                if($wave['waves']>0){
+                    if($wave['type']=='REAL'){
+                        $color = 'RED';
+                    }elseif($wave['type'] == 'FAKE'){
+                        $color = '#007bff';
+                    }else{
+                        $color='GREY';
+                    }                
+                    $sankeyData[]=array(
+                        "ATT"=>$wave['a_player']."(".$wave['a_village'].")",
+                        "DEF"=>$wave['d_player']."(".$wave['d_village'].")",
+                        "WAVES"=>$wave['waves'],
+                        "TYPE"=>$color
+                    );    
+                }
+            }
+        }
+
         return view('Plus.Offense.OPS.offensePlan')->with(['plan'=>$plan])
                     ->with(['waves'=>$waves])->with(['sankeyData'=>$sankeyData]);
         
@@ -88,6 +101,7 @@ class LeaderOffenseController extends Controller
     public function updateOffensePlan(Request $request){
         
         session(['title'=>'Offense']);
+        session(['menu'=>4]);
         
         if(Input::has('publishPlan')){
             $plan=OPSPlan::where('server_id',$request->session()->get('server.id'))

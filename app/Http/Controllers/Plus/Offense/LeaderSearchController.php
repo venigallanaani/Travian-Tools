@@ -19,258 +19,227 @@ use App\Account;
 
 class LeaderSearchController extends Controller
 {
-    public function troopsList(Request $request){        
+    public function hammersList(Request $request){        
         session(['title'=>'Offense']);
+        session(['menu'=>4]);
         
         $tribes = null; $troops=array();
         
         $villages = Troops::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('type','OFFENSE')->orderBy('upkeep','desc')->get();
+                        ->whereIn('type',['OFFENSE','GHOST','WWH'])->where('upkeep','>',0)->orderBy('upkeep','desc')->get();
+
+        date_default_timezone_set($request->session()->get('server.tmz'));
+        $today = Carbon::now();
         
         if(count($villages)>0){
-            $rows = Units::select('tribe_id','name','image')->get();
+            $rows = Units::select('tribe','tribe_id','name','type','upkeep','image')
+                            ->whereIn('tribe_id',[1,2,3,6,7])->get();
+            
+            $rows=$rows->toArray();
             foreach($rows as $row){
-                $tribes[$row->tribe_id][]=$row;
+                $tribes[$row['tribe_id']][]=$row;              
             }
+
+            $i=0;
             foreach($villages as $village){
                 
                 $player = Diff::where('server_id',$request->session()->get('server.id'))
-                ->where('vid',$village->vid)->first();
+                                ->where('vid',$village->vid)->first();
                 
-                $troops[]=array(
-                    'player'=>$player->player,
-                    'tribe'=>$player->id,
-                    'village'=>$village->village,
-                    'x'=>$village->x,
-                    'y'=>$village->y,
-                    'unit01'=>$village->unit01,
-                    'unit02'=>$village->unit02,
-                    'unit03'=>$village->unit03,
-                    'unit04'=>$village->unit04,
-                    'unit05'=>$village->unit05,
-                    'unit06'=>$village->unit06,
-                    'unit07'=>$village->unit07,
-                    'unit08'=>$village->unit08,
-                    'unit09'=>$village->unit09,
-                    'unit10'=>$village->unit10,
-                    'upkeep'=>$village->upkeep,
-                    'tsq'=>$village->Tsq,
-                    'update'=>explode(" ",$village->updated_at)[0]
-                );
+                if($player!==null){
+                    $troops[$i]['player']=$player->player;
+                    $troops[$i]['tribe']=$player->id;
+                    $troops[$i]['village']=$village->village;
+                    $troops[$i]['x']=$village->x;
+                    $troops[$i]['y']=$village->y;
+                    
+                    if($tribes[$player->id][0]['type']=='O'||$tribes[$player->id][0]['type']=='H'){
+                        $troops[$i]['unit01']=$village->unit01;
+                    }else{  $troops[$i]['unit01']=0;        }
+                    if($tribes[$player->id][1]['type']=='O'||$tribes[$player->id][1]['type']=='H'){
+                        $troops[$i]['unit02']=$village->unit02;
+                    }else{  $troops[$i]['unit02']=0;        }
+                    if($tribes[$player->id][2]['type']=='O'||$tribes[$player->id][2]['type']=='H'){
+                        $troops[$i]['unit03']=$village->unit03;
+                    }else{  $troops[$i]['unit03']=0;        }
+                    if($tribes[$player->id][3]['type']=='O'||$tribes[$player->id][3]['type']=='H'){
+                        $troops[$i]['unit04']=$village->unit04;
+                    }else{  $troops[$i]['unit04']=0;        }
+                    if($tribes[$player->id][4]['type']=='O'||$tribes[$player->id][4]['type']=='H'){
+                        $troops[$i]['unit05']=$village->unit05;
+                    }else{  $troops[$i]['unit05']=0;        }
+                    if($tribes[$player->id][5]['type']=='O'||$tribes[$player->id][5]['type']=='H'){
+                        $troops[$i]['unit06']=$village->unit06;
+                    }else{  $troops[$i]['unit06']=0;        }
+                    if($tribes[$player->id][6]['type']=='O'||$tribes[$player->id][6]['type']=='H'){
+                        $troops[$i]['unit07']=$village->unit07;
+                    }else{  $troops[$i]['unit07']=0;        }
+                    if($tribes[$player->id][7]['type']=='O'||$tribes[$player->id][7]['type']=='H'){
+                        $troops[$i]['unit08']=$village->unit08;
+                    }else{  $troops[$i]['unit08']=0;        }
+                    if($tribes[$player->id][8]['type']=='O'||$tribes[$player->id][8]['type']=='H'){
+                        $troops[$i]['unit09']=$village->unit09;
+                    }else{  $troops[$i]['unit09']=0;        }
+                    if($tribes[$player->id][9]['type']=='O'||$tribes[$player->id][9]['type']=='H'){
+                        $troops[$i]['unit10']=$village->unit10;
+                    }else{  $troops[$i]['unit10']=0;        }
+                    
+                    $troops[$i]['upkeep']=$tribes[$player->id][0]['upkeep']*$troops[$i]['unit01']+$tribes[$player->id][1]['upkeep']*$troops[$i]['unit02']+
+                                            $tribes[$player->id][2]['upkeep']*$troops[$i]['unit03']+$tribes[$player->id][3]['upkeep']*$troops[$i]['unit04']+
+                                            $tribes[$player->id][4]['upkeep']*$troops[$i]['unit05']+$tribes[$player->id][5]['upkeep']*$troops[$i]['unit06']+
+                                            $tribes[$player->id][6]['upkeep']*$troops[$i]['unit07']+$tribes[$player->id][7]['upkeep']*$troops[$i]['unit08']+
+                                            $tribes[$player->id][8]['upkeep']*$troops[$i]['unit09']+$tribes[$player->id][9]['upkeep']*$troops[$i]['unit10'];
+                    
+                    $troops[$i]['tsq']=$village->Tsq;
+                    $troops[$i]['type']=$village->type;
+                    $troops[$i]['update']=explode(" ",$village->updated_at)[0];
+                    
+                    $date = Carbon::parse($troops[$i]['update']);
+                    
+                    if($date < $today->subDays(7)){
+                        if($date < $today->subDays(14)){
+                            $troops[$i]['color'] = 'text-danger';
+                        }else{
+                            $troops[$i]['color'] = 'text-warning';
+                        }                        
+                    }else{
+                        $troops[$i]['color']='';
+                    }
+                    
+                    $i++;
+                }                
             }
-        }else{
-            $troops = $villages;
-        }        
-        return view("Plus.Offense.Search.displayTroops")->with(['troops'=>$troops])
+        }
+        
+        $keys = array_column($troops, 'upkeep');        
+        array_multisort($keys, SORT_DESC, $troops);
+
+        return view("Plus.Offense.Search.displayHammers")->with(['troops'=>$troops])
                             ->with(['tribes'=>$tribes]);        
     }
     
-    public function show(){
+    public function searchOffense(){
         
         session(['title'=>'Offense']);
+        session(['menu'=>4]);
+        
         return view("Plus.Offense.Search.search");
         
     }
     
-    public function search(Request $request){
+    public function resultOffense(Request $request){
         
         session(['title'=>'Offense']);
+        session(['menu'=>4]);
         
-        $xCor=Input::get('xCor');
-        $yCor=Input::get('yCor');
-        $def=Input::get('offNeed');        
+        $x=Input::get('xCor');
+        $y=Input::get('yCor');
+        $off=Input::get('offNeed');
         $siege=Input::get('siege');
         $cav=Input::get('cavalry');
         
-        //dd($cav);
-        
         date_default_timezone_set($request->session()->get('server.tmz'));
-        $tribes = array(); $troops=array();
+        $now = strtotime(Carbon::now());    $tribes = array();      $troops=array();
         
-        $rows = Units::select('tribe','name','image')->get();
+        $rows = Units::select('tribe','tribe_id','name','type','class','speed','upkeep','image')
+                            ->whereIn('tribe_id',[1,2,3,6,7])->get();
+        $rows=$rows->toArray();
         foreach($rows as $row){
-            $tribes[$row->tribe][]=$row;
+            $tribes[$row['tribe']][]=$row;
         }
-        
-        $accounts = Account::where('server_id',$request->session()->get('server.id'))
-                ->where('plus',$request->session()->get('plus.plus_id'))
-                ->distinct()->get();
+
+        $accounts = Account::select('account','account_id','tribe')->where('server_id',$request->session()->get('server.id'))
+                        ->where('plus',$request->session()->get('plus.plus_id'))->distinct()->get();
         
         foreach($accounts as $account){
             
-            if(!Input::get('targetTime')==null){
-                
-                $landTime=strtotime(Input::get('targetTime'));
-                $now = strtotime(Carbon::now());
-                
-                $diff = $landTime - $now;
-                $hours = $diff/(60*60);
-                
-                if($hours <= 4){
-                    $dist = ceil($hours/5);
-                }else{
-                    $dist = ceil((5*$hours-20)*3 + 20);
-                }
-                
-                $sqlStr = "SELECT a.* FROM troops a, servers b WHERE a.server_id = b.server_id AND b.server_id='".$request->session()->get('server.id')."' AND".
-                    " ((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) <= ".$dist."*".$dist.
-                    " AND a.account_id=".$account->account_id." AND a.type='OFFENSE' AND a.upkeep >= ".$def." ".
-                    " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
-                
-                $villages= DB::select(DB::raw($sqlStr));
-            }else{
-                $sqlStr = "SELECT a.* FROM troops a, servers b WHERE a.server_id = b.server_id AND b.server_id='".$request->session()->get('server.id')."' AND".
-                    " a.account_id=".$account->account_id." AND a.type='OFFENSE' AND a.upkeep >= ".$def." ".
-                    " ORDER BY "."((".$xCor."- a.x)*(".$xCor."- a.x) + (".$yCor."- a.y)*(".$yCor."- a.y)) ASC";
-                
-                $villages= DB::select(DB::raw($sqlStr));
-                
-            }
+            $villages = Troops::selectRaw('*,SQRT(POWER(?-x,2)+POWER(?-y,2)) as distance',[$x,$y])
+                                ->where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                ->whereIn('type',['OFFENSE','GHOST','WWH'])->where('upkeep','>=',$off)
+                                ->where('account_id',$account->account_id)->orderBy('distance','asc')->get();
             
-            if(count($villages) > 0){
+            if(count($villages)>0){
+                
                 foreach($villages as $village){
-                    $t_dist=round(sqrt(pow($xCor-$village->x,2)+pow($yCor-$village->y,2)),2);
+                    $troop['player']=$account->account;
+                    $troop['village']=$village->village;
+                    $troop['x']=$village->x;   $troop['y']=$village->y;
+                    $troop['type']=$village->type;
+                    $troop['tribe']=$account->tribe;
+                    $troop['units'][0]=$village->unit01;                $troop['units'][1]=$village->unit02;
+                    $troop['units'][2]=$village->unit03;                $troop['units'][3]=$village->unit04;
+                    $troop['units'][4]=$village->unit05;                $troop['units'][5]=$village->unit06;
+                    $troop['units'][6]=$village->unit07;                $troop['units'][7]=$village->unit08;
+                    $troop['units'][8]=$village->unit09;                $troop['units'][9]=$village->unit10;
+                    $troop['dist']=$village->distance;                  $troop['tsq']=$village->Tsq;
+                    $troop['update']=explode(' ',$village->updated_at)[0];
+                    $troop['speed']=20;
+                    $troop['upkeep']=0;
+                    $troop['start']=null;
                     
-                    if(Input::get('targetTime')==null){
-                        $troops[] = array(
-                            'player'=>$account->account,
-                            'tribe'=>$account->tribe,
-                            'village'=>$village->village,
-                            'x'=>$village->x,
-                            'y'=>$village->y,
-                            'unit01'=>$village->unit01,
-                            'unit02'=>$village->unit02,
-                            'unit03'=>$village->unit03,
-                            'unit04'=>$village->unit04,
-                            'unit05'=>$village->unit05,
-                            'unit06'=>$village->unit06,
-                            'unit07'=>$village->unit07,
-                            'unit08'=>$village->unit08,
-                            'unit09'=>$village->unit09,
-                            'unit10'=>$village->unit10,
-                            'upkeep'=>$village->upkeep,
-                            'dist'=>$t_dist,
-                            'startTime'=>''
-                        );
-                    }else{
-                        //Teuton Calculations
-                        if($account->tribe == "Teuton"){
-                            if($village->unit02 == 0){
-                                if($village->Tsq == 0){
-                                    $t_time=ceil(($t_dist/10)*3600);
-                                }else{
-                                    $t_time=ceil(((20+($t_dist-20)/(1+0.1*$village->Tsq))/10)*3600);
-                                }
-                            }else{
-                                if($village->Tsq == 0){
-                                    $t_time=ceil(($t_dist/7)*3600);
-                                }else{
-                                    $t_time=ceil(((20+($t_dist-20)/(1+0.1*$village->Tsq))/7)*3600);
+                    $i=0;
+                    foreach($tribes[$account->tribe] as $unit){                        
+                        if($unit['type']=='O' || $unit['type']=='H'){                            
+                            if($cav!=null){
+                                if($unit['class']!='C'){
+                                    $troop['units'][$i]=0;      $siege=null;
                                 }
                             }
-                            $startTime = $landTime-$t_time;
-                        }
-                        //Roman Calculations
-                        if($account->tribe == "Roman"){
-                            if($village->unit02 == 0){
-                                if($village->Tsq == 0){
-                                    $t_time=ceil(($t_dist/10)*3600);
+                            if($siege!=null){
+                                if($unit['class']=='S'){
+                                    $troop['units'][$i]=0;
+                                }
+                            }                            
+                        }else{
+                            $troop['units'][$i]=0;
+                        }                        
+                        $i++;
+                    }
+                    
+                    $i=0;
+                    foreach($troop['units'] as $unit){
+                        if($unit>0){
+                            $troop['upkeep']+=$unit*$tribes[$account->tribe][$i]['upkeep'];
+                            if($tribes[$account->tribe][$i]['speed']<$troop['speed']){
+                                $troop['speed']=$tribes[$account->tribe][$i]['speed'];
+                            }
+                        } 
+                        $i++;
+                    }
+                    
+                    if($troop['upkeep']>=$off){
+                        if(Input::get('targetTime')!=null){
+                            $target=strtotime(Input::get('targetTime'));                            
+                            if($troop['tsq']>0){
+                                if($troop['dist']<=20){
+                                    $time=$troop['dist']/$troop['speed'];
                                 }else{
-                                    $t_time=ceil(((20+($t_dist-20)/(1+0.1*$village->Tsq))/10)*3600);
+                                    $time=(20+($troop['dist']-20)/(1+$troop['tsq']*0.1*$request->session()->get('server.tsq')))/$troop['speed'];
                                 }
                             }else{
-                                if($village->Tsq == 0){
-                                    $t_time=ceil(($t_dist/5)*3600);
-                                }else{
-                                    $t_time=ceil(((20+($t_dist-20)/(1+0.1*$village->Tsq))/5)*3600);
-                                }
+                                $time=$troop['dist']/$troop['speed'];
                             }
-                            $startTime = $landTime-$t_time;
-                        }
-                        //Gaul Calculations
-                        if($account->tribe == "Gaul"){
-                            if($village->unit02 == 0){
-                                if($village->Tsq == 0){
-                                    $t_time=ceil(($t_dist/16)*3600);
-                                }else{
-                                    $t_time=ceil(((20+($t_dist-20)/(1+0.1*$village->Tsq))/16)*3600);
-                                }
-                            }else{
-                                if($village->Tsq == 0){
-                                    $t_time=ceil(($t_dist/7)*3600);
-                                }else{
-                                    $t_time=ceil(((20+($t_dist-20)/(1+0.1*$village->Tsq))/7)*3600);
-                                }
-                            }
-                            $startTime = $landTime-$t_time;
-                        }
-                        //Egyptian Calculations
-                        if($account->tribe == "Egyptian"){
-                            if($village->unit02 == 0){
-                                if($village->Tsq == 0){
-                                    $t_time=ceil(($t_dist/10)*3600);
-                                }else{
-                                    $t_time=ceil(((20+($t_dist-20)/(1+0.1*$village->Tsq))/10)*3600);
-                                }
-                            }else{
-                                if($village->Tsq == 0){
-                                    $t_time=ceil(($t_dist/6)*3600);
-                                }else{
-                                    $t_time=ceil(((20+($t_dist-20)/(1+0.1*$village->Tsq))/6)*3600);
-                                }
-                            }
-                            $startTime = $landTime-$t_time;
-                        }
-                        //Hun Calculations
-                        if($account->tribe == "Hun"){
-                            if($village->unit02 == 0){
-                                if($village->Tsq == 0){
-                                    $t_time=ceil(($t_dist/16)*3600);
-                                }else{
-                                    $t_time=ceil(((20+($t_dist-20)/(1+0.1*$village->Tsq))/16)*3600);
-                                }
-                            }else{
-                                if($village->Tsq == 0){
-                                    $t_time=ceil(($t_dist/6)*3600);
-                                }else{
-                                    $t_time=ceil(((20+($t_dist-20)/(1+0.1*$village->Tsq))/6)*3600);
-                                }
-                            }
-                            $startTime = $landTime-$t_time;
+                            
+                            $start=$target-intval(ceil($time*(60*60)));
+                            if($now<$start){
+                                $troop['start']=date('Y-m-d H:i:s',$start);
+                                $troops[]=$troop;
+                            }                            
+                        }else{
+                            $troops[]=$troop;
                         }
                         
-                        $troops[] = array(
-                            'player'=>$account->account,
-                            'tribe'=>$account->tribe,
-                            'village'=>$village->village,
-                            'x'=>$village->x,
-                            'y'=>$village->y,
-                            'unit01'=>$village->unit01,
-                            'unit02'=>$village->unit02,
-                            'unit03'=>$village->unit03,
-                            'unit04'=>$village->unit04,
-                            'unit05'=>$village->unit05,
-                            'unit06'=>$village->unit06,
-                            'unit07'=>$village->unit07,
-                            'unit08'=>$village->unit08,
-                            'unit09'=>$village->unit09,
-                            'unit10'=>$village->unit10,
-                            'upkeep'=>$village->upkeep,
-                            'dist'=>$t_dist,
-                            'startTime'=>date('Y-m-d H:i:s',$startTime)
-                        );
                     }
                 }
             }
-            
-            usort($troops, function($a, $b) {
-                return $a['dist'] <=> $b['dist'];
-            });                
-        }        
+        }
+        
+        //dd($troops);
         return view("Plus.Offense.Search.results")->with(['troops'=>$troops])
-                        ->with(['tribes'=>$tribes]);
+                        ->with(['tribes'=>$tribes])->with(['target'=>Input::get('targetTime')]);
     }
-    
+   
     
 }

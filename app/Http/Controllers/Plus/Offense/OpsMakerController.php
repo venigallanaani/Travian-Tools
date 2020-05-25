@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use App\OPSPlan;
 use App\OPSWaves;
-use App\OPS;
+use App\OPSItems;
 use App\Troops;
 use App\Units;
 use App\Diff;
@@ -25,21 +27,21 @@ class OpsMakerController extends Controller
     public function showPlanLayout(Request $request, $id){
         
         session(['title'=>'Ops Planner']);
+        session(['menu'=>4]);
         
         $plan=OPSPlan::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
                         ->where('id',$id)->first();
-        
-        $items = OPS::where('server_id',$request->session()->get('server.id'))
+
+        $items = OPSItems::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('ops_id',$plan->id)->get();
+                        ->where('plan_id',$plan->id)->orderBy('created_at','desc')->get();
         
         $attackers = array();      $targets = array();
         if(count($items)>0){
-            $a=0;   $t=0;
             foreach($items as $item){
-                if($item->type=='ATTACKER'){    $attackers[$a]=$item;   $a++;     }
-                if($item->type=='TARGET'){      $targets[$t]['TARGET']=$item;     $t++;     }
+                if($item->type=='ATTACKER') {   $attackers[]=$item->toArray();  }
+                if($item->type=='TARGET')   {   $targets[]=$item->toArray();    }
             }            
         }
         
@@ -47,37 +49,44 @@ class OpsMakerController extends Controller
             foreach($targets as $index=>$target){
                 $waves = OPSWaves::where('server_id',$request->session()->get('server.id'))
                                 ->where('plus_id',$request->session()->get('plus.plus_id'))
-                                ->where('plan_id',$plan->id)->with('d_id',$target['TARGET']->item_id)->get();
+                                ->where('plan_id',$plan->id)->where('d_id',$target['item_id'])
+                                ->orderBy('landtime','asc')->get();
                 
                 if(count($waves)>0){
-                    foreach($waves as $i=>$wave){
-                        $targets[$index]['WAVES'][$i]=$wave;
-                    }
+                        $targets[$index]['WAVES']=$waves->toArray();
                 }else{
                     $targets[$index]['WAVES']=null;
                 }                
             }
         }
+        $rows = Units::select('tribe','name','image')
+                        ->whereIn('tribe_id',[1,2,3,6,7])->get();
         
-        //dd($attackers);
-        return view('Plus.Offense.Plan.display')->with(['plan'=>$plan])->with(['attackers'=>$attackers])->with(['targets'=>$targets]);   
+        $rows=$rows->toArray();
+        foreach($rows as $row){
+            $units[strtoupper($row['tribe'])][$row['image']]=$row['name'];
+        }
+        //dd($targets);
+        return view('Plus.Offense.OPS.editor')->with(['plan'=>$plan])->with(['attackers'=>$attackers])->with(['targets'=>$targets])->with(['units'=>$units]);   
                 
     }
     
-
+//----------------------------------------------------------------------------------------------------
+//--------------------------------Adds Ops Item from the plan---------------------------------------
+//----------------------------------------------------------------------------------------------------
 // Add attackers or defenders to the ops plan
     public function addOpsItem(Request $request) {
     // fetch or compile inputs
-        $x=Input::get("x");    $y=Input::get("y");
+        $x=Input::get("x");     $y=Input::get("y");        
+        $attacker = 0;          $target = 0;
         
         if(Input::has("attack")){
             $id=Input::get("attack");
-            $type='ATTACKER';
+            $type='ATTACKER';   $attacker=1;
         }else{
             $id=Input::get("target");
-            $type='TARGET';
-        }
-        
+            $type='TARGET';     $target = 1;
+        }        
         
         $plan=OPSPlan::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -110,20 +119,20 @@ class OpsMakerController extends Controller
         }else{  $tribe = "NATAR";   }
         
 // Check if the item already exists in Ops plan        
-        $item = OPS::where('server_id',$request->session()->get('server.id'))
+        $item = OPSItems::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('ops_id',$id)->where('item_id',$player)->where('type',$type)->first();
+                        ->where('plan_id',$id)->where('item_id',$player)->where('type',$type)->first();
         if($item!=null){
             Session::flash('warning', 'Player is already added to the Offense plan');
             return Redirect::to('/offense/plan/edit/'.$id);
         }else{
 // Add the new item
-            $item = new OPS;
+            $item = new OPSItems;
             
             $item->item_id      = $player;
             $item->server_id    = $request->session()->get('server.id');
             $item->plus_id      = $request->session()->get('plus.plus_id');
-            $item->ops_id       = $id;
+            $item->plan_id      = $id;
             $item->type         = $type;
             $item->player       = $village->player;
             $item->uid          = $village->uid;
@@ -139,40 +148,394 @@ class OpsMakerController extends Controller
             
             $item->save();
             
+// update plan with attacker & target count
+            OPSPlan::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))->where('id',$id)
+                        ->update([
+                            'attackers'=>$plan->attackers+$attacker,
+                            'targets'=>$plan->targets+$target
+                        ]);
+            
             Session::flash('success',ucfirst(strtolower($type)).' added successfully');
             
         }        
         return Redirect::to('/offense/plan/edit/'.$id);        
     }
     
+//----------------------------------------------------------------------------------------------------
+//--------------------------------Delete Ops Item from the plan---------------------------------------
+//----------------------------------------------------------------------------------------------------
+// Add attackers or defenders to the ops plan
     public function delOpsItem(Request $request, $plan, $type, $id){
         
-        if($type=="attacker"||$type=="target"){
-            $items=OPS::where('server_id',$request->session()->get('server.id'))
+        $item=OPSItems::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('ops_id',$plan)->where('item_id',$id)->where('type',strtoupper($type))->get();
-            
-            // Operations for the Items -- TBD
-            
-            
-            OPS::where('server_id',$request->session()->get('server.id'))
+                        ->where('plan_id',$plan)->where('item_id',$id)->where('type',strtoupper($type))->first();
+
+        $plan = OPSPlan::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('ops_id',$plan)->where('item_id',$id)->where('type',strtoupper($type))->delete();
-        }
-        if($type=="target"){
-            $items=OPS::where('server_id',$request->session()->get('server.id'))
-                        ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('ops_id',$plan)->where('item_id',$id)->where('type',strtoupper($type))->get();
+                        ->where('id',$plan)->first();
+        
+        $real=0;   $fake=0;   $other=0;
+        
+        if($type=="attacker"){
+            $target = $plan->targets;
+            if($plan->attackers > 0){ $attacker = $plan->attackers-1; }
+            else    {   $attacker = 0;     }
             
-            // Operations for the Items -- TBD
+            $waves = OPSWaves::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('plan_id',$plan->id)->where('a_id',$id)->get();
             
-            
-            OPS::where('server_id',$request->session()->get('server.id'))
-                        ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('ops_id',$plan)->where('item_id',$id)->where('type',strtoupper($type))->delete();
+            if(count($waves)>0){
+                foreach($waves as $i=>$wave){
+                    if(strtoupper($wave->type)=="REAL"){
+                        $real+=$wave->waves;
+                        OPSItems::where('server_id',$request->session()->get('server.id'))
+                                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                    ->where('plan_id',$plan->id)->where('item_id',$wave->d_id)->where('type','TARGET')
+                                    ->decrement('real',$wave->waves);
+                                    
+                    }elseif(strtoupper($wave->type)=="FAKE"){
+                        $fake+=$wave->waves;
+                        OPSItems::where('server_id',$request->session()->get('server.id'))
+                                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                    ->where('plan_id',$plan->id)->where('item_id',$wave->d_id)->where('type','TARGET')
+                                    ->decrement('fake',$wave->waves);
+                    }else{
+                        $other+=$wave->waves;
+                        OPSItems::where('server_id',$request->session()->get('server.id'))
+                                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                    ->where('plan_id',$plan->id)->where('item_id',$wave->d_id)->where('type','TARGET')
+                                    ->decrement('other',$wave->waves);
+                    }
+                    
+                    OPSWaves::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                ->where('plan_id',$plan->id)->where('id',$wave->id)->delete();
+                }
+            }            
         }
         
-        ////////////// TO BE Developed ///////////////////////////
+        if($type=="target"){
+            $attacker = $plan->attackers;            
+            if($plan->targets > 0){ $target = $plan->targets-1; }
+            else    {   $target = 0;     }         
+            
+            $waves = OPSWaves::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('plan_id',$plan->id)->where('d_id',$id)->get();
+            
+            if(count($waves)>0){
+                foreach($waves as $i=>$wave){
+                    if(strtoupper($wave->type)=="REAL"){
+                        $real+=$wave->waves;
+                        OPSItems::where('server_id',$request->session()->get('server.id'))
+                                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                    ->where('plan_id',$plan->id)->where('item_id',$wave->a_id)->where('type','ATTACKER')
+                                    ->decrement('real',$wave->waves);
+                        
+                    }elseif(strtoupper($wave->type)=="FAKE"){
+                        $fake+=$wave->waves;
+                        OPSItems::where('server_id',$request->session()->get('server.id'))
+                                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                    ->where('plan_id',$plan->id)->where('item_id',$wave->a_id)->where('type','ATTACKER')
+                                    ->decrement('fake',$wave->waves);
+                        
+                    }else{
+                        $other+=$wave->waves;
+                        OPSItems::where('server_id',$request->session()->get('server.id'))
+                                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                    ->where('plan_id',$plan->id)->where('item_id',$wave->a_id)->where('type','ATTACKER')
+                                    ->decrement('other',$wave->waves);
+                    }
+                    
+                    OPSWaves::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                ->where('plan_id',$plan->id)->where('id',$wave->id)->delete();
+                }
+            }
+
+        }
+        OPSPlan::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('id',$plan->id)->update([   'attackers' =>$attacker,
+                                                            'targets'   =>$target,
+                                                            'waves'     =>$plan->waves-($real+$fake+$other),
+                                                            'real'      =>$plan->real-$real,
+                                                            'fake'      =>$plan->fake-$fake,
+                                                            'other'     =>$plan->other-$other
+                                                        ]);
+                        
+        OPSItems::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('plan_id',$plan->id)->where('item_id',$id)
+                    ->where('type',strtoupper($type))->delete();
+        
+    }
+    
+    
+//----------------------------------------------------------------------------------------------------
+//--------------------------------Adds Ops wave from the plan---------------------------------------
+//----------------------------------------------------------------------------------------------------
+    public function addWave(Request $request, $plan, $id){
+        
+        $input = explode('-',$id);
+        $attacker = OPSItems::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                ->where('plan_id',$plan)->where('item_id',$input[0])->where('type','ATTACKER')->first();
+        
+        $target = OPSItems::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                ->where('plan_id',$plan)->where('item_id',$input[1])->where('type','TARGET')->first();
+        
+        $wave = OPSwaves::where('server_id',$request->session()->get('server.id'))
+                                ->where('plus_id',$request->session()->get('plus.plus_id'))
+                                ->where('a_id',$attacker->item_id)->where('d_id',$target->item_id)
+                                ->where('plan_id',$plan)->first();
+        if($input[0]==$input[1]){
+            Session::flash('warning', "Wave not created, Target and Attacker are same.");
+        }else{
+            if($wave==null){
+                
+                if($attacker->tribe=='ROMAN')         {$unit='r08';
+                }elseif($attacker->tribe=='TEUTON')   {$unit='t08';
+                }elseif($attacker->tribe=='GAUL')     {$unit='g08';
+                }elseif($attacker->tribe=='HUN')      {$unit='h08';
+                }else                                 {$unit='e08';
+                }
+                
+                $wave = new OPSwaves;
+                
+                $wave->plan_id          = $plan;
+                $wave->plus_id          = $request->session()->get('plus.plus_id');
+                $wave->server_id        = $request->session()->get('server.id');
+                $wave->a_id             = $attacker->item_id;
+                $wave->a_uid            = $attacker->uid;
+                $wave->a_x              = $attacker->x;
+                $wave->a_y              = $attacker->y;
+                $wave->a_player         = $attacker->player;
+                $wave->a_village        = $attacker->village;
+                $wave->a_tribe          = $attacker->tribe;
+                $wave->d_id             = $target->item_id;
+                $wave->d_uid            = $target->uid;
+                $wave->d_x              = $target->x;
+                $wave->d_y              = $target->y;
+                $wave->d_player         = $target->player;
+                $wave->d_village        = $target->village;
+                $wave->waves            = 0;
+                $wave->type             = 'OTHER';
+                $wave->unit             = $unit;
+                $wave->landtime         = '';
+                
+                $wave->save();            
+                
+            }else{
+                Session::flash('warning', "Target is already on the Attacker's list");
+            }        
+        }
+    }
+    
+    public function deleteWave(Request $request) {
+        
+        $planid=$request->plan;     $id=$request->wave;
+        $message = null;
+        
+        $wave = OPSwaves::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))                    
+                    ->where('plan_id',$planid)->where('id',$id)->first();
+        
+        $plan = OPSPlan::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('id',$planid)->first();
+        
+        if($wave==null || $plan==null){
+            $message = "Plan items are missing, please refresh the plan to update";
+        }else{
+            
+            $attacker = OPSItems::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('plan_id',$planid)->where('item_id',$wave->a_id)->where('type','ATTACKER')->first();
+            
+            $target = OPSItems::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('plan_id',$planid)->where('item_id',$wave->d_id)->where('type','TARGET')->first(); 
+            
+            if($attacker==null || $target==null){
+                $message = "Plan items are missing, please refresh the plan to update";
+            }
+        }
+        $areal=0;   $afake=0;   $aother=0;
+        $treal=0;   $tfake=0;   $tother=0;
+        $att_id = null;
+        if($message==null){
+
+            $real=0;    $fake=0;    $other=0;
+            if($wave->type=='REAL')    {   $real   = $wave->waves;   }
+            elseif($wave->type=='FAKE'){   $fake   = $wave->waves;   }
+            else                       {   $other  = $wave->waves;   }
+            
+            $att_id=$attacker->item_id;
+            $areal=$attacker->real-$real;       $afake=$attacker->fake-$fake;           $aother=$attacker->other-$other;
+            $treal=$target->real-$real;         $tfake=$target->fake-$fake;             $tother=$target->other-$other;
+            
+            OPSPlan::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('id',$planid)->update([ 'real'=>$plan->real-$real,
+                                                        'fake'=>$plan->fake-$fake,
+                                                        'other'=>$plan->other-$other,
+                                                        'waves'=>$plan->waves-$wave->waves
+                                                     ]);
+                        
+            OPSItems::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('item_id',$wave->a_id)->where('type','ATTACKER')
+                        ->where('plan_id',$planid)->update([  'real'=>$areal,
+                                                              'fake'=>$afake,
+                                                              'other'=>$aother
+                                                            ]);
+                        
+            OPSItems::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('item_id',$wave->d_id)->where('type','TARGET')
+                        ->where('plan_id',$planid)->update([  'real'=>$treal,
+                                                              'fake'=>$tfake,
+                                                              'other'=>$tother
+                                                            ]); 
+                        
+            $wave->delete();
+            
+            $message = "Wave deleted";
+        }                  
+        
+        return response()->json([   'message'=>$message,                                   
+                                    'attacker'=>$att_id,
+                                    'areal'=>$areal,
+                                    'afake'=>$afake,
+                                    'aother'=>$aother,
+                                    'treal'=>$treal,
+                                    'tfake'=>$tfake,
+                                    'tother'=>$tother
+                                ]);
+
+    }
+    
+    
+    
+    public function editWave(Request $request) {
+        
+        $planid=$request->plan;     $id=$request->id;           
+        $unit=$request->unit;       $waves=intval($request->wave);
+        $type=$request->type;       $notes=$request->notes;
+        $landTime=$request->landTime;
+        
+        $message = null;    $name='';   $att_id=null; 
+        //dd($request);
+        $wave = OPSwaves::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('plan_id',$planid)->where('id',$id)->first(); 
+        
+        $plan = OPSPlan::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('id',$planid)->first();
+        
+        $attacker = OPSItems::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('plan_id',$planid)->where('item_id',$wave->a_id)->where('type','ATTACKER')->first();
+                        
+        $target = OPSItems::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('plan_id',$planid)->where('item_id',$wave->d_id)->where('type','TARGET')->first();
+        
+        if($target==null || $attacker==null || $wave==null || $plan==null){
+            $message = "Plan items are missing, please refresh the plan to update";
+        }
+        
+        if($landTime==null && $message==null){
+            $message = "Land Time not filled";
+        }else{
+            date_default_timezone_set($request->session()->get('timezone'));
+            $time = strtotime($landTime) - strtotime(Carbon::now());
+            if($time<0 && $message==null){
+                $message = "Selected Landing time is old than current time, please select another land time.";
+                $landTime='';
+            }
+        }
+        
+        $areal=0;   $afake=0;   $aother=0;
+        $treal=0;   $tfake=0;   $tother=0;        
+        
+        if($message==null){  
+            $real=0;    $fake=0;    $other=0;
+            $areal=$attacker->real;         $afake=$attacker->fake;         $aother=$attacker->other;
+            $treal=$target->real;           $tfake=$target->fake;           $tother=$target->other;
+            
+            if(strtoupper($type)=="REAL"){          $real=$waves;
+            }elseif(strtoupper($type)=="FAKE"){     $fake=$waves;
+            }else{                                  $other=$waves;
+            }
+            
+            if(strtoupper($wave->type)=="REAL"){        $real=$real-$wave->waves;
+            }elseif(strtoupper($wave->type)=="FAKE"){   $fake=$fake-$wave->waves;
+            }else{                                      $other=$other-$wave->waves;
+            }
+            
+            $areal+=$real;          $afake+=$fake;          $aother+=$other;
+            $treal+=$real;          $tfake+=$fake;          $tother+=$other;
+            
+            OPSwaves::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('plan_id',$planid)->where('id',$id)
+                        ->update([  'waves'=>$waves,
+                                    'type'=>$type,
+                                    'unit'=>$unit,
+                                    'landtime'=>$landTime,
+                                    'notes'=>$notes,
+                                    'status'=>'DRAFT'                            
+                                ]);
+            
+            OPSPlan::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('id',$planid)->update([ 'waves'=>$plan->waves+$waves-$wave->waves,
+                                                        'real'=>$plan->real+$real,
+                                                        'fake'=>$plan->fake+$fake,
+                                                        'other'=>$plan->other+$other,
+                                                        'update_by'=>$request->session()->get('plus.user')
+                                                      ]);
+            
+            OPSItems::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('plan_id',$planid)->where('item_id',$wave->a_id)->where('type','ATTACKER')
+                        ->update([  'real'=>$areal,
+                                    'fake'=>$afake,
+                                    'other'=>$aother
+                                ]);
+            OPSItems::where('server_id',$request->session()->get('server.id'))
+                        ->where('plus_id',$request->session()->get('plus.plus_id'))
+                        ->where('plan_id',$planid)->where('item_id',$wave->d_id)->where('type','TARGET')
+                        ->update([  'real'=>$treal,
+                                    'fake'=>$tfake,
+                                    'other'=>$tother
+                                ]);
+            $name = Units::select('name')->where('id',$unit)->first();
+            $att_id = $attacker->item_id;
+            $message = 'Success';
+        }
+        
+        return response()->json([   'message'=>$message,
+                                    'type'=>ucfirst(strtolower($type)),
+                                    'waves'=>$waves,
+                                    'unit'=>$unit,
+                                    'name'=>$name,
+                                    'attacker'=>$att_id,
+                                    'landTime'=>$landTime,
+                                    'areal'=>$areal,
+                                    'afake'=>$afake,
+                                    'aother'=>$aother,
+                                    'treal'=>$treal,
+                                    'tfake'=>$tfake,
+                                    'tother'=>$tother
+                                ]);
         
     }
 

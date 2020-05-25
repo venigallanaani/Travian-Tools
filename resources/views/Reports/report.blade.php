@@ -11,8 +11,8 @@
 	@foreach($reports as $report)
 	
 		<div class="card col-md-12 my-2 shadow p-0">
-			<div class="card-header text-center text-white py-0 bg-info">
-				<p class="h5">{{$report['TITLE']}}</p>
+			<div class="card-header text-center py-1 bg-warning">
+				<span class="h5">{{$report['TITLE']}}</span>
 			</div>
 			<p class="text-center h6 py-2"><span class="text-info"><strong>Report Date:  </strong></span>{{$report['TIME']}}</p>
 
@@ -168,15 +168,15 @@
 					<tr>
 						<td class="h6">Experience</td>
 						<td class="" colspan="2" style="font-size:0.8em;"> 
-						@if($report['STATS']['OFFENSE']['HERO'] == 0)
-							0
+						@if($report['STATS']['OFFENSE']['HERO'] == '??' )
+							??
 						@else
-							<img alt="" src="/images/x.gif" class="hero"> {{number_format($report['STATS']['DEFENSE']['LOSS'])}}
+							<img alt="" src="/images/x.gif" class="hero"> {{number_format(intval($report['STATS']['DEFENSE']['LOSS']))}}
 						@endif						 
 						</td>
 						<td class="" colspan="2" style="font-size:0.8em;">
-						@if($report['STATS']['DEFENSE']['HERO'] == 0)
-							0 
+						@if($report['STATS']['DEFENSE']['HERO'] == '??')
+							??
 						@else
 							<img alt="" src="/images/x.gif" class="hero"> {{$report['STATS']['DEFENSE']['HERO']}} / {{number_format($report['STATS']['OFFENSE']['LOSS'])}} 
 						@endif 

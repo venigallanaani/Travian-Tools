@@ -25,6 +25,7 @@ class ReportController extends Controller
         //try{
             $stats = array(); $hero=0;
             $parseData = ParseReports(Input::get('report'));
+
             if($parseData==null){
                 
                 Session::flash('danger', 'Something went wrong, cannot create report. Please contact administrator.');
@@ -151,6 +152,7 @@ class ReportController extends Controller
             //Defense Information
                 $defender['SUBJECT']=$parseData['DEFENDER']['SUBJECT'];
                 $defender['TRIBE']=$parseData['DEFENDER']['TRIBE'];
+                
                 if(Input::get('defender')=='yes'){
                     $stats['DEFENDER']['UNITS']='?????';  $stats['DEFENDER']['LOSES']='?????';  $stats['DEFENDER']['SURVIVORS']='?????';
                     $stats['DEFENDER']['PERCENT']='??';

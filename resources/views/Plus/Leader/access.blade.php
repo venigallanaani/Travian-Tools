@@ -2,8 +2,8 @@
 
 @section('body')
 <!-- ==================================== Main Content of the Plus Menu ================================= -->
-		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Leader Access</strong></div>
+		<div class="card float-md-left col-md-10 p-0 shadow">
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Leader Access</strong></div>
 			<div class="card-text">
 
 		<!-- ============================ Add success/failure notifications ============================== -->

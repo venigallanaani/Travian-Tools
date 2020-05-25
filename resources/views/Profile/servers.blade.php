@@ -34,7 +34,7 @@
 								{{$profile['plus']}}
 							@endif
 						</td>
-						<td><button class="btn btn-warning btn-sm" id="details" name="button" value=""><i class="fa fa-arrow-down" aria-hidden="true"></i></td>
+						<td><button class="badge badge-warning" id="details" name="button" value=""><i class="fas fa-angle-double-down px-1"></i></td>
 					</tr>
 					<tr style="display: none; background-color:#dbeef4">
 						<td>

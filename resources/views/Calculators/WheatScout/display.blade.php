@@ -12,40 +12,19 @@
             	{{ csrf_field() }}
                 <table class="table table-borderless mt-2">
                     <tr>
-                        <td class="py-0">
-                            <div class="">
-                                <strong>First Report</strong>
-                            </div>
-                        </td>
-                        <td class="py-0">
-                            <div class="">
-                                <strong>Second Report</strong>
-                            </div>
-                        </td>
+                        <td class="py-0">First Report</td>
+                        <td class="py-0">Second Report</td>
                     </tr>
                     <tr>
-                        <td class="py-0">
-                            <div class="">
-                                <textarea class="form-control" rows="3" name="report1" required></textarea>
-                            </div>
-                        </td>
-                        <td class="py-0">
-                            <div class="">
-                                <textarea class="form-control" rows="3" name="report2" required></textarea>
-                            </div>
-                        </td>
+                        <td class="py-0"><textarea class="form-control" rows="3" name="report1" required></textarea></td>
+                        <td class="py-0"><textarea class="form-control" rows="3" name="report2" required></textarea></td>
                     </tr>
                     <tr>
                     	<td class="py-2" colspan="2">
-                        	<span class="px-2">
-                    			<strong>Reports Interval </strong><input type="text" size="3" name="intrl" required/><small>secs</small>
-                    		</span>
-                    		<span class="px-2">
-                    			<strong>Population </strong><input type="text" size="3" name="pop"/>
-                    		</span>
-                    		<span class="px-2">
-                    			<strong>Target </strong>
-                				<select name="tar">
+                        	<span class="px-2">Reports Interval <input type="number" min=1 style="width:3em" name="intrl" required/><small> secs</small></span>
+                    		<span class="px-2">Population <input type="text" size="3" name="pop"/></span>
+                    		<span class="px-2">Target 
+                				<select class="small" name="tar">
         							<option value="village">Village</option>
         							<option value="oasis">Oasis</option>
         						</select>                			
@@ -54,9 +33,8 @@
                 	</tr>
                 	<tr>
                     	<td class="py-2" colspan="2">
-                    		<span class="px-3">
-                    			<strong>Crop Fields </strong>
-                    				<select name="fields">
+                    		<span class="px-3">Crop Fields 
+                    				<select class="small" name="fields">
                     					<option value="6">6 Crop</option>
                     					<option value="7">7 Crop</option>
                     					<option value="9">9 Crop</option>
@@ -64,11 +42,10 @@
                     				</select>
                     		</span>
                     		<span class="px-3">
-	                			<input type="checkbox" name="cap"/><strong> Capital</strong>
+	                			<input type="checkbox" name="cap"/> Capital
                     		</span>
-                    		<span class="px-3">
-                    			<strong>Oasis</strong>                    				                			
-                    				<select name="oasis">
+                    		<span class="px-3">Oasis                    				                			
+                    				<select class="small" name="oasis">
         								<option value="0">0%</option>
         								<option value="0.25">25%</option>
         								<option value="0.50">50%</option>
@@ -81,9 +58,8 @@
                     	</td>                    	
                     </tr>
                     <tr>
-                		<td class="py-2">
-                			<strong>Artifact </strong>
-            				<select name="arty">
+                		<td class="py-2">Artifact 
+            				<select class="small" name="arty">
 								<option value="1">No Artifact</option>
 								<option value="0.5">1/2 X Diet</option>
 								<option value="0.75">3/4 X Diet</option>

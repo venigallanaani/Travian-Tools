@@ -29,15 +29,12 @@
         </header>
         <header id="main-header" class="py-1 bg-info text-white">
             <div class="container">
-                <table class="col-md-12 text-center">
-                	<tr>
-                		<td class="h5 font-weight-bold col-md-6">Offense Plan : <span class="h6 font-italic">{{$plan->name}}</span></td>
-                		<td class="align-right col-md-6">
-                			<a href='/offense/plan/edit/{{$plan->id}}'><button class="btn btn-warning btn-sm px-3 font-weight-bold">
-                			<i class="fas fa-sync"></i>  Refresh plan</button></a>                    			
-            			</td>
-                	</tr>
-                </table>                
+            	<span class="h5 font-weight-bold d-inline-block px-5">Offense Plan : <span class="h6 font-italic">{{$plan->name}}</span></span>
+            	<span class="h5 font-weight-bold d-inline-block float-right">
+            		<a href="/offense/plan/edit/{{$plan->id}}">
+     					<button class="btn btn-warning btn-sm px-4"><i class="fas fa-sync"></i> Refresh Plan</button>
+ 					</a>
+				</span>
             </div>
         </header> 
         <div class="container">
@@ -56,6 +53,7 @@
 <!-- == Bootstrap additions == -->
 		       
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>        

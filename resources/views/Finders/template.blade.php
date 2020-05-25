@@ -24,7 +24,7 @@
         <div class="d-inline">
             <!-- ======================================= Finders Side menu =================================== -->
             <div class="list-group text-center text-white mt-1 mx-1 float-md-left">
-                <a class="list-group-item py-1 bg-dark h5">Finders Menu</a>
+                <a class="list-group-item py-1 bg-dark h5">Finders</a>
                 <a href="{{route('findPlayer')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h6">Player Finder</a>
                 <a href="{{route('findAlliance')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h6">Alliance Finder</a>
                 <a href="{{route('findInactive')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h6">Inactive Finder</a>

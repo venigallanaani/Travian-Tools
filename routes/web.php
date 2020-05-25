@@ -74,8 +74,12 @@ Route::get('/cropper',function(){
 Route::get('/calculators/raid','Calculators\RaidCalculateController@display')->name('calcRaid');      // Calculates the troops needed to complete raid
 Route::post('/calculators/raid','Calculators\RaidCalculateController@calculateRaid');  //Displays result for raid troops
 
+/* ------------------------------- Merchants Trade Route calculator ------------------------------*/
+Route::get('/calculators/trade','Calculators\TradeCalculateController@display')->name('calcTrade');      // Displays the merchant routes calculation
+Route::post('/calculators/trade','Calculators\TradeCalculateController@calculateTrade');  //Displays result for merchant routes calculations
+
 /*----------------------------------------------------------------------------------*/
-/* -------------------------- Controller for Account Page -------------------------- */
+/* ------------------------- Controllers for Account Page ------------------------- */
 /*----------------------------------------------------------------------------------*/
 Route::get('/account','Account\AccountController@overview')->name('account');			// Account main page
 Route::post('/account/find','Account\AccountController@findAccount');
@@ -235,8 +239,8 @@ Route::post('/defense/cfd/update','Plus\Defense\CFD\LeaderCFDController@processC
 
 
 /* -------------------- Plus leader Search Defense -----------------------*/
-Route::get('/defense/search','Plus\Defense\Search\DefenseController@show');
-Route::post('/defense/search','Plus\Defense\Search\DefenseController@process');
+Route::get('/defense/search','Plus\Defense\Search\SearchDefenseController@show');
+Route::post('/defense/search','Plus\Defense\Search\SearchDefenseController@process');
 
 
 
@@ -254,15 +258,22 @@ Route::post('/offense/create','Plus\Offense\LeaderOffenseController@createOffens
 Route::get('/offense/status/{id}','Plus\Offense\LeaderOffenseController@displayOffensePlan');
 Route::post('/offense/status/update','Plus\Offense\LeaderOffenseController@updateOffensePlan');
 
-Route::get('/offense/troops','Plus\Offense\LeaderSearchController@troopsList');
-Route::get('/offense/search','Plus\Offense\LeaderSearchController@show');
-Route::post('/offense/search','Plus\Offense\LeaderSearchController@search');
+Route::get('/offense/troops','Plus\Offense\LeaderSearchController@hammersList');
+Route::get('/offense/search','Plus\Offense\LeaderSearchController@searchOffense');
+Route::post('/offense/search','Plus\Offense\LeaderSearchController@resultOffense');
 
 /* ----------------------- Plus Leader Offense make and edit plan ------------------------ */
 Route::get('/offense/plan/edit/{id}','Plus\Offense\OpsMakerController@showPlanLayout');
 /* ----------------------------------- D-D Version --------------------------------- */
+/* -- add and delete items - target & attacker -- */
 Route::post('/offense/plan/additem','Plus\Offense\OpsMakerController@addOpsItem');
 Route::get('/offense/plan/delitem/{plan}/{type}/{id}','Plus\Offense\OpsMakerController@delOpsItem');
+/* -- add and delete waves in the plan -- */
+Route::get('/offense/plan/addwave/{plan}/{id}','Plus\Offense\OpsMakerController@addWave');
+
+Route::post('/offense/plan/deletewave','Plus\Offense\OpsMakerController@deleteWave');
+/* -- edit waves in the plan -- */
+Route::post('/offense/plan/editwave','Plus\Offense\OpsMakerController@editWave');
 
 
 /* ----------------------------------- Coords Version ------------------------------- */

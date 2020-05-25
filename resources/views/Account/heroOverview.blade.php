@@ -1,7 +1,7 @@
 @extends('Account.template')
 @section('body')
 
-    <div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+    <div class="card float-md-left col-md-10 mt-1 p-0 shadow">
     	<div class="card-header h5 py-2 bg-warning text-white">
     		<strong>Hero Details</strong>
     	</div>

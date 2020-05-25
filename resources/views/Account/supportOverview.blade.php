@@ -2,7 +2,7 @@
 
 @section('body')
 <!-- =================================== Account Overview screen================================== -->
-		<div class="float-md-left col-md-9 mt-1 p-0">
+		<div class="float-md-left col-md-10 mt-1 p-0">
 			<div class="card-text">
 		@foreach(['danger','success','warning','info'] as $msg)
     		@if(Session::has($msg))
@@ -63,12 +63,12 @@
     					<table class="table table-hover table-sm table-bordered col-md-8 text-center mx-auto">
     						<thead class="bg-warning">
     							<tr class="h6">
-        							<th class="text-center">TT Account Name</th>
-        							<th class="text-center">Account Type</th>
-        							<th class="text-center">Options</th>
+        							<th class="">TT Account Name</th>
+        							<th class="">Account Type</th>
+        							<th class="">Options</th>
     							</tr>
     						</thead>
-    						<tr style="font-size:0.9em">    					
+    						<tr style="font-size:0.9em" class="h6">    					
     							<td>{{$account->user_name}}</td>
     							<td>{{ucfirst(strtolower($account->status))}}</td>
     							<td>

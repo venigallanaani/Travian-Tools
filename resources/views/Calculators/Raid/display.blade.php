@@ -24,7 +24,7 @@
 							Cranny Capacity:<input type="number" name="cranny" required value=0 min=0 style="width:4em" >
 						</td>    
 						<td>Hero Equipment:
-							<select name="hero"  style="width:10em">
+							<select name="hero"  style="width:10em; font-size:0.9em;">
 								<option value="1">None</option>
 								<option value="1.1">Pouch of the Theif (+10%)</option>
 								<option value="1.15">Bag of the Theif (+15%)</option>
@@ -34,11 +34,11 @@
                 	</tr>
                 	<tr>
 						<td colspan="2" class="py-1">Raider Tribe:
-    						<input type="radio" name="tribe" value=1 data-toggle="tooltip" data-placement="top" title="Roman"> <img alt="Roman" src="/images/x.gif" class="tribe Roman"> 
-    						<input type="radio" name="tribe" value=3 data-toggle="tooltip" data-placement="top" title="Gaul"> <img alt="Gaul" src="/images/x.gif" class="tribe Gaul"> 
-    						<input type="radio" name="tribe" value=2 data-toggle="tooltip" data-placement="top" title="Teuton"> <img alt="Teuton" src="/images/x.gif" class="tribe Teuton">
-    						<input type="radio" name="tribe" value=7 data-toggle="tooltip" data-placement="top" title="Hun"> <img alt="Hun" src="/images/x.gif" class="tribe Hun">
-    						<input type="radio" name="tribe" value=6 data-toggle="tooltip" data-placement="top" title="Egyptian"> <img alt="Egyptian" src="/images/x.gif" class="tribe Egyptian">
+    						<input type="radio" name="tribe" value=1> <img alt="Roman" src="/images/x.gif" class="tribe Roman" data-toggle="tooltip" data-placement="top" title="Roman"> 
+    						<input type="radio" name="tribe" value=2> <img alt="Teuton" src="/images/x.gif" class="tribe Teuton" data-toggle="tooltip" data-placement="top" title="Teuton"> 
+    						<input type="radio" name="tribe" value=3> <img alt="Gaul" src="/images/x.gif" class="tribe Gaul" data-toggle="tooltip" data-placement="top" title="Gaul"> 
+    						<input type="radio" name="tribe" value=6> <img alt="Egyptian" src="/images/x.gif" class="tribe Egyptian" data-toggle="tooltip" data-placement="top" title="Egyptian"> 
+    						<input type="radio" name="tribe" value=7> <img alt="Hun" src="/images/x.gif" class="tribe Hun" data-toggle="tooltip" data-placement="top" title="Hun">    						
     					</td>
                 	</tr>
                     <tr>

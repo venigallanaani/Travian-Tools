@@ -29,7 +29,7 @@
       <div class="d-inline">
           <!-- ======================================= Account Side menu =================================== -->
   			<div class="list-group text-center text-white mt-1 float-md-left mx-1">
-				<a class="list-group-item py-1 bg-dark h5 px-5">Profile Menu</a>
+				<a class="list-group-item py-1 bg-dark h5 px-5">Profile</a>
 				<a href="{{route('profile')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">Overview</a>
 				<a href="{{route('profileServers')}}" class="list-group-item py-1 list-group-item-action bg-warning text-white h6">My Servers</a>
   			</div>	

@@ -37,9 +37,9 @@ class OffensePlanController extends Controller
         }else{
             foreach($waves as $wave){
                 
-                if($wave->type=='Real'){
+                if($wave->type=='REAL'){
                     $color = 'RED';
-                }elseif($wave->type == 'Fake'){
+                }elseif($wave->type == 'FAKE'){
                     $color = '#007bff';
                 }else{
                     $color='GREY';

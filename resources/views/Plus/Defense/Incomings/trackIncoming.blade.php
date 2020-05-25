@@ -92,7 +92,7 @@
             				<tr>
             					<td colspan="6" class="py-2 h5 bg-warning">Attacker Tracking</td>
             				</tr>
-    						<tr class="text-info font-weight-bold h5">
+    						<tr class="text-info font-weight-bold h6">
     							<td class="px-0">Hero XP</td>
     							<td class="px-0">Attack Points</td>
     							<td class="px-0">Defense Points</td>
@@ -105,21 +105,21 @@
 							<tr class="">
 								<td class="px-0 @if($track['exp_change']!=0) table-warning @endif">
 									@if($track['exp']!=null)
-										{{number_format($track['exp'])}} @if($track['exp_change']!=0) <strong>(+{{number_format($track['exp_change'])}})</strong> @endif
+										{{number_format($track['exp'])}} @if($track['exp_change']!=0) <small><strong>(+{{number_format($track['exp_change'])}})</strong></small> @endif
 									@else
 										N/A
 									@endif
 								</td>
 								<td class="px-0 @if($track['attack_change']!=0) table-warning @endif">
 									@if($track['attack']!=null)
-										{{number_format($track['attack'])}} @if($track['attack_change']!=0) <strong>(+{{number_format($track['attack_change'])}})</strong> @endif
+										{{number_format($track['attack'])}} @if($track['attack_change']!=0) <small><strong>(+{{number_format($track['attack_change'])}})</strong></small> @endif
 									@else
 										N/A
 									@endif									
 								</td>
 								<td class="px-0 @if($track['defense_change']!=0) table-warning @endif">
 									@if($track['defense']!=null)
-										{{number_format($track['defense'])}} @if($track['defense_change']!=0) <strong>(+{{number_format($track['defense_change'])}})</strong> @endif
+										{{number_format($track['defense'])}} @if($track['defense_change']!=0) <small><strong>(+{{number_format($track['defense_change'])}})</strong></small> @endif
 									@else
 										N/A
 									@endif									

@@ -1,7 +1,7 @@
 @extends('Account.template')
 
 @section('body')
-		<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
+		<div class="card float-md-left col-md-10 mt-1 mb-5 p-0 shadow">
 			<div class="card-header h5 py-2 bg-warning text-white">
 				<strong>Troops Development Plans</strong>
 			</div>
@@ -74,16 +74,16 @@
         						</thead>
         						<tr class="table-info font-weight-bold" id="planned">
             							<td>Planned *</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][0]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][1]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][2]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][3]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][4]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][5]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][6]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][7]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][8]}}</td>
-        								<td contenteditable="true" class="px-0">{{$plan['PLANNED'][9]}}</td>
+        								<td contenteditable="true" class="px-0">{{number_format($plan['PLANNED'][0])}}</td>
+        								<td contenteditable="true" class="px-0">{{number_format($plan['PLANNED'][1])}}</td>
+        								<td contenteditable="true" class="px-0">{{number_format($plan['PLANNED'][2])}}</td>
+        								<td contenteditable="true" class="px-0">{{number_format($plan['PLANNED'][3])}}</td>
+        								<td contenteditable="true" class="px-0">{{number_format($plan['PLANNED'][4])}}</td>
+        								<td contenteditable="true" class="px-0">{{number_format($plan['PLANNED'][5])}}</td>
+        								<td contenteditable="true" class="px-0">{{number_format($plan['PLANNED'][6])}}</td>
+        								<td contenteditable="true" class="px-0">{{number_format($plan['PLANNED'][7])}}</td>
+        								<td contenteditable="true" class="px-0">{{number_format($plan['PLANNED'][8])}}</td>
+        								<td contenteditable="true" class="px-0">{{number_format($plan['PLANNED'][9])}}</td>
         								<td class="px-0">{{number_format($plan['PLANNED_UPKEEP'])}}</td>
         						</tr>
         						<tr class="">
@@ -95,16 +95,16 @@
         						</tr>
         						<tr class="" id="queued">
         							<td class="font-weight-bold px-0">In Queue *</td>
-    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][0]}}</td>
-    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][1]}}</td>
-    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][2]}}</td>
-    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][3]}}</td>
-    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][4]}}</td>
-    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][5]}}</td>
-    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][6]}}</td>
-    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][7]}}</td>
-    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][8]}}</td>
-    								<td contenteditable="true" class="px-0">{{$plan['PROGRESS'][9]}}</td>
+    								<td contenteditable="true" class="px-0">{{number_format($plan['PROGRESS'][0])}}</td>
+    								<td contenteditable="true" class="px-0">{{number_format($plan['PROGRESS'][1])}}</td>
+    								<td contenteditable="true" class="px-0">{{number_format($plan['PROGRESS'][2])}}</td>
+    								<td contenteditable="true" class="px-0">{{number_format($plan['PROGRESS'][3])}}</td>
+    								<td contenteditable="true" class="px-0">{{number_format($plan['PROGRESS'][4])}}</td>
+    								<td contenteditable="true" class="px-0">{{number_format($plan['PROGRESS'][5])}}</td>
+    								<td contenteditable="true" class="px-0">{{number_format($plan['PROGRESS'][6])}}</td>
+    								<td contenteditable="true" class="px-0">{{number_format($plan['PROGRESS'][7])}}</td>
+    								<td contenteditable="true" class="px-0">{{number_format($plan['PROGRESS'][8])}}</td>
+    								<td contenteditable="true" class="px-0">{{number_format($plan['PROGRESS'][9])}}</td>
     								<td class="px-0">{{number_format($plan['PROGRESS_UPKEEP'])}}</td>
         						</tr>
         						<tr class="table-success font-weight-bold">
@@ -183,8 +183,7 @@
             	   	//alert(data.success)
             	    location.reload();
                }
-            });  
-    
+            });
     	});
 	</script>
 @endpush

@@ -2,8 +2,8 @@
 
 @section('body')
 
-		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
-			<div class="card-header h4 py-2 bg-info text-white"><strong>Leader Reports</strong></div>
+		<div class="card float-md-left col-md-10 p-0 shadow">
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Leader Reports</strong></div>
 			<div class="card-text">	
 		@foreach(['danger','success','warning','info'] as $msg)
 			@if(Session::has($msg))
@@ -33,7 +33,7 @@
 							<td class="px-1">{{$report['title']}}</td>
 							<td class="px-1"><a href="{{$report['report']}}" target="_blank">Link <i class="fas fa-external-link-alt"></a></td>
 							<td class="px-1">{{$report['date']}}</td>
-							<td class="px-0"><button class="btn btn-danger btn-sm" id="delRep" value="{{$report['id']}}"><i class="fa fa-trash" aria-hidden="true"></i></button></td>							
+							<td class="px-0"><button class="badge badge-danger" id="delRep" value="{{$report['id']}}"><i class="fa fa-trash" aria-hidden="true"></i></button></td>							
 						</tr>
     				@endforeach
         			</table>

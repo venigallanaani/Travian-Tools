@@ -67,7 +67,6 @@ class CFDController extends Controller
                         ->with(['troops'=>$task['TROOPS']])->with(['travels'=>$travels]);
         
     }
-
     
     public function updateDefenseTask(Request $request, $id){
         
@@ -80,9 +79,7 @@ class CFDController extends Controller
             $village=Diff::where('server_id',$request->session()->get('server.id'))
                         ->where('x',Input::get('$xCor'))
                         ->where('y',Input::get('$yCor'))->first();
-        }
-        
-        
+        }  
         
         if($village){
             
@@ -278,7 +275,7 @@ class CFDController extends Controller
                 
                 $dist = (($village['x']-$x)**2+($village['y']-$y)**2)**0.5;
                 if($village['Tsq'] > 0 && $dist > 20){
-                    $dist = 20 + ($dist-20)/(1+0.1*$village['Tsq']);
+                    $dist = 20 + ($dist-20)/(1+0.1*$village['Tsq']*$request->session()->get('server.tsq'));
                 }
                 
                 for($j=0;$j<10;$j++){

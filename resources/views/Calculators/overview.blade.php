@@ -21,6 +21,10 @@
                 <tr>
                     <td class="align-middle h6"><a href="{{route('wheatScout')}}" class="text-primary"><strong>Wheat Scout</strong></a></td>
                     <td class="font-italic">Helps in determining the troops away from the village based on the crop consumption reports.</td>
+                </tr> 
+                <tr>
+                    <td class="align-middle h6"><a href="{{route('calcTrade')}}" class="text-primary"><strong>Trade Routes</strong></a></td>
+                    <td class="font-italic">Calculates the trade routes schedule setup for the villages.</td>
                 </tr>                  
             </table>
         </div>

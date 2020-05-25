@@ -2,7 +2,7 @@
 
 @section('body')
 
-		<div class="card float-md-left col-md-9 mt-1 p-0 shadow">
+		<div class="card float-md-left col-md-10 p-0 shadow">
 			<div class="card-header h5 py-2 bg-info text-white"><strong>Offense Plans Status</strong></div>
 			<div class="card-text">
 		<!-- ========================== Create CFD Options ============================== -->
@@ -54,15 +54,19 @@
     						</tr>
 						</thead>
 						@foreach($plans as $plan)
-    						<tr class="py-1">
-    							<td class="py-1"><strong>{{$plan->name}}</strong></td>
+    						<tr class="">
+    							<td class="py-1">{{$plan->name}}</td>
     							<td class="py-1">{{ucfirst(strtolower($plan->status))}}</td>
     							<td class="py-1">{{$plan->attackers}}</td>
     							<td class="py-1">{{$plan->targets}}</td>
-    							<td class="py-1"><strong><span class="text-danger">{{$plan->real}}</span> | <span class="text-primary">{{$plan->fake}}</span> | {{$plan->other}}</strong></td>    							
+    							<td class="py-1"><strong>{{$plan->waves}} (
+    								<span class="text-danger">{{$plan->real}}</span> | 
+    								<span class="text-primary">{{$plan->fake}}</span> | 
+    								{{$plan->other}} )</strong>
+								</td>    							
     							<td class="py-1"><a href="/plus/member/{{$plan->create_by}}">{{$plan->create_by}}</a></td>    							
-    							<td class="py-1"><a class="btn btn-outline-secondary btn-sm py-1" href="/offense/status/{{$plan->id}}">
-    								<i class="fa fa-angle-double-right"></i> Details</a>
+    							<td class="py-1"><small><a class="btn btn-outline-secondary btn-sm py-1" href="/offense/status/{{$plan->id}}">
+    								<i class="fa fa-angle-double-right"></i> Details</a></small>
     							</td>
     						</tr>
 						@endforeach

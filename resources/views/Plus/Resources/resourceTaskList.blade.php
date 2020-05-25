@@ -3,7 +3,7 @@
 @section('body')
 
 <!-- ================================= Main Content of the Resource Tasks in the Plus general Overview Menu ============================= -->
-		<div class="card float-md-left col-md-9 mt-1 p-0 mb-5 shadow">
+		<div class="card float-md-left col-md-10 p-0 mb-5 shadow">
 			<div class="card-header h5 py-2 bg-info text-white"><strong>Resource Tasks</strong></div>
 			<div class="card-text">
     <!-- ==================================== List of tasks is progress ======================================= -->		

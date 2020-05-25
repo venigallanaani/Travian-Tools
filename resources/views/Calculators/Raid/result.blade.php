@@ -5,7 +5,7 @@
         <div class="card-header h5 py-1 bg-primary text-white col-md-12">
             <strong>Result</strong>
         </div>
-        <div class="card-text mx-auto text-center mt-2 h6">
+        <div class="card-text mx-auto text-center mt-2 ">
 			<p class="">Effective Cranny Capacity - <strong>{{number_format($result['CRANNY'])}}</strong></p>  			
 		@if($result['UNITS']!==null)
 			<p class="">Total Raidable Resources - <strong>{{number_format($result['RESOURCES'])}}</strong></p> 
@@ -24,17 +24,17 @@
 							<th class="px-2 py-1" data-toggle="tooltip" data-placement="top" title="{{$result['UNITS'][8]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$result['UNITS'][8]['IMAGE']}}"></th>
 							<th class="px-2 py-1" data-toggle="tooltip" data-placement="top" title="{{$result['UNITS'][9]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$result['UNITS'][9]['IMAGE']}}"></th> 
 						</tr>
-						<tr class="font-weight-bold">
-							<td class="py-1">{{number_format($result['UNITS'][0]['NUM'])}}</td>
-							<td class="py-1">{{number_format($result['UNITS'][1]['NUM'])}}</td>
-							<td class="py-1">{{number_format($result['UNITS'][2]['NUM'])}}</td>
-							<td class="py-1">{{number_format($result['UNITS'][3]['NUM'])}}</td>
-							<td class="py-1">{{number_format($result['UNITS'][4]['NUM'])}}</td>
-							<td class="py-1">{{number_format($result['UNITS'][5]['NUM'])}}</td>
-							<td class="py-1">{{number_format($result['UNITS'][6]['NUM'])}}</td>
-							<td class="py-1">{{number_format($result['UNITS'][7]['NUM'])}}</td>
-							<td class="py-1">{{number_format($result['UNITS'][8]['NUM'])}}</td>
-							<td class="py-1">{{number_format($result['UNITS'][9]['NUM'])}}</td>
+						<tr class="h6">
+							<td class="py-1">{{number_format($result['UNITS'][0]['VALUE'])}}</td>
+							<td class="py-1">{{number_format($result['UNITS'][1]['VALUE'])}}</td>
+							<td class="py-1">{{number_format($result['UNITS'][2]['VALUE'])}}</td>
+							<td class="py-1">{{number_format($result['UNITS'][3]['VALUE'])}}</td>
+							<td class="py-1">{{number_format($result['UNITS'][4]['VALUE'])}}</td>
+							<td class="py-1">{{number_format($result['UNITS'][5]['VALUE'])}}</td>
+							<td class="py-1">{{number_format($result['UNITS'][6]['VALUE'])}}</td>
+							<td class="py-1">{{number_format($result['UNITS'][7]['VALUE'])}}</td>
+							<td class="py-1">{{number_format($result['UNITS'][8]['VALUE'])}}</td>
+							<td class="py-1">{{number_format($result['UNITS'][9]['VALUE'])}}</td>
 						</tr>
 				</table>
 			</div>
