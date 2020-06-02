@@ -31,10 +31,10 @@ class NatarFinderController extends Controller
             //dd($natars);
             if(count($natars)==0){
                 return view('Finders.Natar.noNatar')
-                ->with(['xCor'=>$x,'yCor'=>$y,'pop'=>$pop]);
+                                ->with(['xCor'=>$x,'yCor'=>$y,'pop'=>$pop]);
             }else{
                 return view('Finders.Natar.natarList')->with(['natars'=>$natars])
-                ->with(['xCor'=>$x,'yCor'=>$y,'pop'=>$pop]);
+                                    ->with(['xCor'=>$x,'yCor'=>$y,'pop'=>$pop]);
             }
             
         }

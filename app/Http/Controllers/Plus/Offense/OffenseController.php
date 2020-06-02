@@ -22,7 +22,6 @@ class OffenseController extends Controller
         
         session(['title'=>'Offense']);        
         $ops = null;
-        
         $plans = OPSPlan::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
                         ->where('status','<>','DRAFT')->where('status','<>','ARCHIVE')->get();
@@ -37,7 +36,7 @@ class OffenseController extends Controller
                 $units[$row->image]['name']=$row->name;
                 $units[$row->image]['speed']=$row->speed;
             }
-            
+
             foreach($plans as $plan){                
                 $waves=OPSWaves::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -54,15 +53,19 @@ class OffenseController extends Controller
                                         ->where('x',$wave['a_x'])->where('y',$wave['a_y'])->first();
                         
                         date_default_timezone_set($request->session()->get('timezone'));
-                        $time = (strtotime($wave['landtime']) - strtotime(Carbon::now()))/3600;
+                        $now = strtotime(Carbon::now());
+                        $time = (strtotime($wave['landtime']) - $now)/3600;
                         
                         $dist = (($wave['a_x']-$wave['d_x'])**2+($wave['a_y']-$wave['d_y'])**2)**0.5;                        
                         if($village->Tsq > 0 && $dist > 20){
                             $dist = 20 + ($dist-20)/(1+0.1*$village->Tsq*$request->session()->get('server.tsq'));
-                        }
+                        }                        
                         $dist = $dist/$village->arty;
-                        $sTime=strtotime($wave['landtime'])-($dist/$units[$wave['unit']]['speed'])*3600;                        
+                        $sTime=strtotime($wave['landtime'])-($dist/($units[$wave['unit']]['speed']*$request->session()->get('server.speed')))*3600;                        
                         $waves[$i]['starttime']=Carbon::createFromTimestamp(floor($sTime))->toDateTimeString();
+                        if($sTime < $now){
+                            $waves[$i]['timer']=1;
+                        }
                         
                     }
                     $ops[]=array(
@@ -98,8 +101,24 @@ class OffenseController extends Controller
             OPSWaves::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('id',$id)->update([ 'report'=> $value ]);
-        }        
+        }
+        
+        // Discord Notifications
+        if($request->session()->get('discord')==1 && $type=="STATUS"){
+            
+            $discord['plan_link']   = env("SITE_URL","https://www.travian-tools.com").'/offense/status/'.$task->plan_id;
+            $discord['status']      = ucfirst(strtolower($value));
+            $discord['attack']      = $task->a_player.' ('.$task->a_village.')';
+            $discord['a_link']      = 'https://'.$request->session()->get('server.url').'/position_details.php?x='.$task->a_x.'&y='.$task->a_y;
+            $discord['target']      = $task->d_player.' ('.$task->d_village.')';
+            $discord['t_link']      = 'https://'.$request->session()->get('server.url').'/position_details.php?x='.$task->d_x.'&y='.$task->d_y;
+            $discord['waves']       = $task->waves;
+            $discord['type']        = ucfirst(strtolower($task->type));
+            
+            DiscordOpsWaveNotification($discord,$request->session()->get('server.id'),$request->session()->get('plus.plus_id'));
                         
+        }  
+        
         $message = 'success';
         return response()->json(['message'=>$message]);    
     }

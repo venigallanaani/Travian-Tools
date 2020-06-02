@@ -32,7 +32,7 @@
                 <a href="{{route('findNeighbour')}}" class="list-group-item py-1 list-group-item-action bg-success text-white h6">Neighbour Finder</a>
             </div>
         </div>
-        <div class="float-md-left col-md-9 mt-1 p-0">
+        <div class="float-md-left col-md-9 mb-5 mt-1 p-0">
         @if(!Session::has('server'))
             <div class="alert alert-warning text-center my-1" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

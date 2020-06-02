@@ -194,6 +194,4 @@
 	<script>
         countDown("{{$task['task_id']}}","{{$task['target_time']}}","{{Session::get('timezone')}}");
 	</script>
-
-
 @endpush

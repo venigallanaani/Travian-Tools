@@ -58,7 +58,7 @@
                 	</div>
                 </div>
 				<div class="text-center col-md-11 mx-auto my-5 p-0">
-					<table class="table align-middle table-sm table-hover">
+					<table class="table align-middle table-sm table-hover" id="offenseplan">
 						<thead class="thead-inverse h6">
     						<tr>
     							<th style="width:7em" class="">Attacker</th>
@@ -80,19 +80,31 @@
                             	elseif($wave['type'] == 'SCOUT'){	$color='text-success';	}
                             	else{	$color='text-dark';	}
                             @endphp	
-    						<tr class="small">
+    						<tr class="small" id="wave">
     							<td class="align-middle"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$wave['a_x']}}&y={{$wave['a_y']}}" target="_blank">
     								<strong>{{$wave['a_player']}}</strong> ({{$wave['a_village']}})</a>
     							</td>
     							<td class="align-middle"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$wave['d_x']}}&y={{$wave['d_y']}}" target="_blank">
     								<strong>{{$wave['d_player']}}</strong> ({{$wave['d_village']}})</a>
     							</td>    							
-    							<td class="align-middle">{{$wave['landtime']}}</td>
+    							<td id="start" rel="{{$wave['starttime']}}" class="align-middle">{{$wave['landtime']}}</td>
     							<td class="{{$color}} align-middle"><strong>{{ucfirst(strtolower($wave['type']))}}</strong></td>
     							<td class="align-middle">{{$wave['waves']}}</td>
     							<td data-toggle="tooltip" data-placement="top" title="{{$wave['name']}}"><img alt="" src="/images/x.gif" class="units {{$wave['unit']}}"></td>
     							<td class="align-middle small">{{$wave['notes']}}</td>
-    							<td class="align-middle">{{ucfirst(strtolower($wave['status']))}}</td>    							
+    							<td class="align-middle">
+    							@if($wave['timer']==1)
+    								<span id="timer" class="font-weight-bold" data-toggle="tooltip" data-placement="top" title="Send Time Countdown">00:00:00</span>
+    							@else
+        							@if($wave['status']=="LAUNCH")
+        								<span style="font-weight:bold;color:green">Launched</i></span>
+        							@elseif($wave['status']=="MISS")
+        								<span style="font-weight:bold;color:red">Missed</i></span>
+        							@else
+        								<span id="timer" class="font-weight-bold" data-toggle="tooltip" data-placement="top" title="Send Time Countdown">00:00:00</span>
+        							@endif
+    							@endif
+    							</td>							
     							<td class="align-middle">@if($wave['report']!=null)    								
     								<a href="{{$wave['report']}}" target="_blank"><strong>Link <i class="fas fa-external-link-alt small"></i></strong></a>
     								@endif
@@ -112,4 +124,39 @@
 		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     	{{	createSankey($sankeyData)	}}
 	@endif
+	
+<script>
+	$(document).ready(function(){       	
+		setInterval(function(){
+    		$('#offenseplan tr').each(function (i, row){
+    			if(i>0){
+    				var row = $(row);
+    				var id = row.attr("id");
+    				if(id == 'wave'){
+						var start = row.find('#start').attr("rel");
+						var dist = new Date(start).getTime()-new Date(moment()).getTime();
+						
+						if(dist<0){
+    			      		row.find('#timer').text("00:00:00");
+    			      		row.find('#timer').css('color','red');
+    			      	}else{
+    			      		var days = Math.floor(dist / (1000 * 60 * 60 * 24));
+    			      		var hours = days * 24 + Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    			      		var mins = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+    			      		var secs = Math.floor((dist % (1000 * 60)) / 1000);
+
+    			      		if(hours<10){	hours='0'+hours;	}
+    			      		if(mins<10) {	mins='0'+mins;		}
+    			      		if(secs<10) {	secs='0'+secs;		}
+    			      		
+    			      		row.find('#timer').text(hours+':'+mins+':'+secs);
+    			      		row.find('#timer').css('color','blue');
+    			      	}   						
+    				}
+    			}			
+    		});	
+		}, 1000);	
+	});	
+</script>
+	
 @endpush

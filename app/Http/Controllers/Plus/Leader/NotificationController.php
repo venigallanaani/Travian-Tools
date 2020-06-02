@@ -62,7 +62,7 @@ class NotificationController extends Controller
                                     'ldr_def_link'=>Input::get('def_ldr'),
                                     'res_link'=>Input::get('res'),
                                     'off_link'=>Input::get('off'),
-                                    'off_link'=>Input::get('off_ldr'),
+                                    'ldr_off_link'=>Input::get('off_ldr'),
                                     'art_link'=>Input::get('art'),
                                     'ww_link'=>Input::get('ww'),
                                     'ldr_ww_link'=>Input::get('ww_ldr')

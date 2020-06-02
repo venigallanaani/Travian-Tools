@@ -12,7 +12,7 @@
             <form action="{{route('findPlayer')}}" method="POST">
             	{{ csrf_field() }}
                 <table class="table table-borderless mt-2">
-                    <tr class="h6">
+                    <tr class="">
                         <td class="">
                             <div class="p-2">
                                 <strong>Player Name: </strong><input type="text" size="15" name="plrNm" value="{{isset($plrNm)? $plrNm : ''}}" required/>

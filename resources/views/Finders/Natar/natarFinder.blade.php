@@ -2,8 +2,8 @@
 
 @section('body')
 <!-- =================================== Natar Finder input screen================================== -->
-    <div class="card float-md-left my-1 p-0 shadow">
-        <div class="card-header h4 py-2 bg-success text-white">
+    <div class="card float-md-left mb-1 p-0 shadow">
+        <div class="card-header h5 py-2 bg-success text-white">
             <strong>Natar Finder</strong>
         </div>
         <div class="card-text mx-auto text-center">

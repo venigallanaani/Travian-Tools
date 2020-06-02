@@ -2,7 +2,7 @@
 
 @section('results')
 	
-	<div class="card float-md-left col-md-9 mt-1 mb-5 p-0 shadow">
+	<div class="card float-md-left col-md-10 mt-1 mb-5 p-0 shadow">
 		<div class="card-header h5 py-2 bg-info text-white"><strong>Offense Search Results</strong></div>
 		<div class="card-text">	
 		@if(count($troops)==0)

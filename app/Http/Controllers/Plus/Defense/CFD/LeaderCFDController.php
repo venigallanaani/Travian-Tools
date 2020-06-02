@@ -80,7 +80,7 @@ class LeaderCFDController extends Controller
             $units[$row->tribe_id][]=$row;
         }    
         
-        //dd($tribes);
+        //dd($task);
         return view("Plus.Defense.CFD.cfdDetail")->with(['task'=>$task])
                 ->with(['tribes'=>$tribes])->with(['players'=>$players])->with(['units'=>$units]);
         
@@ -164,12 +164,8 @@ class LeaderCFDController extends Controller
                 $discord['crop']    = $crop;
                 $discord['notes']   = $comments;
                 
-                
-                //dd($discord);
                 DiscordCFDNotification($discord,$request->session()->get('server.id'),$request->session()->get('plus.plus_id'));   
             }
-            //dd($result);
-
         }
         
         return Redirect::to('/defense/cfd');

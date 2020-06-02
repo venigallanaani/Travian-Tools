@@ -22,7 +22,7 @@
 			</table>
         </div>
     @else
-    	<div class="h4 text-center m-5">
+    	<div class="h5 text-center m-5">
     		<p>Contact information not found</p>
     	</div>    	
 	@endif

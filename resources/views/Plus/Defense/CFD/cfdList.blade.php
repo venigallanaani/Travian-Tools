@@ -71,20 +71,20 @@
     <!-- ==================================== List of CFD is progress ======================================= -->		
     			@if(count($atasks)>0)
 				<div class="text-center col-md-11 mx-auto my-2 p-0">
-					<table class="table align-middle table-sm">
+					<table id="cfdtable" class="table align-middle table-sm">
 						<thead class="thead-inverse h5">
-    						<tr>
+    						<tr id="header">
     							<td colspan="8" class="table-success text-center mx-5 py-2">Active CFDs List</td>    							
     						</tr>
 						</thead>
 						<thead class="h6">
-    						<tr>
+    						<tr id="header">
     							<th class="">Player</th>    							
     							<th class="">Type</th>
     							<th class="">Priority</th>
     							<th class="">Total</th>
     							<th class="">Received</th>
-    							<th class="">Land time</th>
+    							<th class="">Target time</th>
     							<th class="">Time left</th>
     							<th class=""></th>    							
     						</tr>
@@ -111,8 +111,8 @@
     							<td class="{{$color}}">{{ucfirst($task->priority)}}</td>    
     							<td class="px-0">{{number_format($task->def_total)}}</td>							
     							<td class="px-0">{{number_format($task->def_received)}} <small>({{$task->def_percent}}%)</small></td>
-    							<td class="px-0">{{$task->target_time}}</td>
-    							<td><span id="{{$task->task_id}}"></span></td>
+    							<td id="target" class="px-0">{{$task->target_time}}</td>
+    							<td id="timer" class="font-weight-bold">00:00:00</td>
     							<td class="py-1"><a class="btn btn-outline-secondary py-0" href="/defense/cfd/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> <small>Details</small></a>
     							</td>
@@ -178,18 +178,46 @@
             format: "yyyy-mm-dd hh:ii:ss",
             showSecond:true
         });
-	</script>    
-	
-	@if(count($atasks)>0)	
+	</script> 
 	<script>
-		@foreach($atasks as $task)
-			countDown("{{$task->task_id}}","{{$task->target_time}}","{{Session::get('timezone')}}");
-		@endforeach
-	</script>
-	@endif     
+		$(document).ready(function(){       	
+    		setInterval(function(){
+        		$('#cfdtable tr').each(function (i, row){
+        			if(i>0){
+        				var row = $(row);
+        				var id = row.attr("id");
+        				var zone = $('meta[name="timezone"]').attr('content');
+        				if(id !== 'header'){
+							var target = row.find('#target').text();
+							var time = moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');
+							var dist = new Date(target).getTime()-new Date(time).getTime();
+							
+							if(dist<0){
+        			      		row.find('#timer').text("00:00:00");
+        			      		row.find('#timer').css('color','red');
+        			      	}else{
+        			      		var days = Math.floor(dist / (1000 * 60 * 60 * 24));
+        			      		var hours = days * 24 + Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        			      		var mins = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+        			      		var secs = Math.floor((dist % (1000 * 60)) / 1000);
+
+        			      		if(hours<10){	hours='0'+hours;	}
+        			      		if(mins<10) {	mins='0'+mins;		}
+        			      		if(secs<10) {	secs='0'+secs;		}
+        			      		
+        			      		row.find('#timer').text(hours+':'+mins+':'+secs);
+        			      		row.find('#timer').css('color','blue');
+        			      	}   						
+        				}
+        			}			
+        		});	
+    		}, 1000);	
+    	});
+	</script>    
 
 @endpush
 
 @push('extensions')
 	<link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+	<meta name="timezone" content="{{ Session::get('timezone') }}" />
 @endpush

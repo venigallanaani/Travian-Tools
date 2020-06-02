@@ -136,15 +136,6 @@ Route::post('/servers','ServersController@process');
 
 
 
-
-
-
-
-
-
-
-
-
 /*-----------------------------------------------------------------------------------------------------------------------------*/
 /* -------------------------------------------------- Plus Page Routes ------------------------------------------------------- */
 /*-----------------------------------------------------------------------------------------------------------------------------*/
@@ -154,7 +145,7 @@ Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu 
 Route::get('/plus/members','Plus\PlusController@members');                  // Plus members list
 Route::get('/plus/member/{id}','Plus\PlusController@member');               // Plus member details 
 
-Route::get('/plus/rankings','Plus\PlusController@rankings');
+Route::get('/plus/rankings','Plus\PlusController@tdbRoute');
 
 
 /* --------------------- Join Plus Group -------------------------- */
@@ -270,27 +261,14 @@ Route::post('/offense/plan/additem','Plus\Offense\OpsMakerController@addOpsItem'
 Route::get('/offense/plan/delitem/{plan}/{type}/{id}','Plus\Offense\OpsMakerController@delOpsItem');
 /* -- add and delete waves in the plan -- */
 Route::get('/offense/plan/addwave/{plan}/{id}','Plus\Offense\OpsMakerController@addWave');
-
 Route::post('/offense/plan/deletewave','Plus\Offense\OpsMakerController@deleteWave');
-/* -- edit waves in the plan -- */
 Route::post('/offense/plan/editwave','Plus\Offense\OpsMakerController@editWave');
-
-
-/* ----------------------------------- Coords Version ------------------------------- */
-//Route::get('/offense/plan/edit/{id}','Plus\Offense\OffensePlanController@showPlanLayout');
-//Route::post('/offense/plan/update','Plus\Offense\OffensePlanController@updatePlan');
-//Route::post('/offense/plan/add','Plus\Offense\OffensePlanController@addWave');
-//Route::get('/offense/plan/add/{wave}','Plus\Offense\OffensePlanController@addWave');
-//Route::get('/offense/plan/delete/{id}','Plus\Offense\OffensePlanController@deleteWave');
 
 /* ----------------------- Plus Leader Offense archive plan options ------------------------ */
 Route::get('/offense/archive','Plus\Offense\offenseArchiveController@archiveList');
 Route::get('/offense/archive/{id}','Plus\Offense\offenseArchiveController@displayArchivePlan');
 Route::post('/offense/archive/update','Plus\Offense\offenseArchiveController@updateArchivePlan');
 
-
-
-/* ---------------------------------------- Plus Offense Routes ------------------------------------------------- */
 
 /* ---------------------- Plus member Artifact Options ------------------------------- */
 

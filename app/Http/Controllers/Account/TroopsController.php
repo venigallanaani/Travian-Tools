@@ -170,12 +170,9 @@ class TroopsController extends Controller
                     
     }
     
-    public function processTroops(Request $request){
-        
+    public function processTroops(Request $request){        
         
         $troopsData = ParseTroops(Input::get('troopStr'));
-        
-        //dd($troopsData);
         
         if(empty($troopsData)){
             Session::flash('danger',"Something went wrong, Troops details not updated");            
@@ -294,18 +291,24 @@ class TroopsController extends Controller
             $upkeep = $unit01*$units[0]['upkeep'] + $unit02*$units[1]['upkeep'] + $unit03*$units[2]['upkeep'] + $unit04*$units[3]['upkeep'] +
                                     $unit05*$units[4]['upkeep'] + $unit06*$units[5]['upkeep'] + $unit07*$units[6]['upkeep'] + 
                                     $unit08*$units[7]['upkeep'] + $unit09*$units[8]['upkeep'] + $unit10*$units[9]['upkeep'];
-            
-            Troops::where('server_id',$request->session()->get('server.id'))
-                        ->where('account_id',$account->account_id)->where('vid',$village->vid)
-                        ->update([
-                            'unit01'=>$unit01,          'unit02'=>$unit02,
-                            'unit03'=>$unit03,          'unit04'=>$unit04,
-                            'unit05'=>$unit05,          'unit06'=>$unit06,
-                            'unit07'=>$unit07,          'unit08'=>$unit08,
-                            'unit09'=>$unit09,          'unit10'=>$unit10,
-                            'upkeep'=>$upkeep,          'Tsq'=>$tsq,                
-                            'type'=>$type,              'arty'=>$arty
-                        ]);
+                        
+            Troops::updateOrInsert( [   'server_id'=>$request->session()->get('server.id'),
+                                        'account_id'=>$account->account_id,
+                                        'vid'=>$village->vid,
+                                        'x'=>$village->x,           
+                                        'y'=>$village->y
+                                    ],
+                                    [
+                                        'plus_id'=>$account->plus,
+                                        'village'=>$village->village,                                        
+                                        'unit01'=>$unit01,          'unit02'=>$unit02,
+                                        'unit03'=>$unit03,          'unit04'=>$unit04,
+                                        'unit05'=>$unit05,          'unit06'=>$unit06,
+                                        'unit07'=>$unit07,          'unit08'=>$unit08,
+                                        'unit09'=>$unit09,          'unit10'=>$unit10,
+                                        'upkeep'=>$upkeep,          'Tsq'=>$tsq,
+                                        'type'=>$type,              'arty'=>$arty
+                                    ]);
             
         }
         Session::flash('success',"Troops details are successfully updated"); 

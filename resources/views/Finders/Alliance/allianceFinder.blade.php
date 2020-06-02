@@ -4,14 +4,14 @@
 
 <!-- =================================== Alliance Finder input screen================================== -->
     <div class="card float-md-left shadow mb-1">
-        <div class="card-header h4 py-2 bg-success text-white">
+        <div class="card-header h5 py-2 bg-success text-white">
             <strong>Alliance Finder</strong>
         </div>
         <div class="card-text mx-auto text-center">
             <form action="{{route('findAlliance')}}" method="POST">
             	{{ csrf_field() }}
                 <table class="table table-borderless mt-2">
-                    <tr>
+                    <tr class="">
                         <td class="">
                             <div class="p-2">
                                 <strong>Alliance Name: </strong><input type="text" size="15" name="allyNm" value="{{isset($allyNm)? $allyNm : ''}}" required/>

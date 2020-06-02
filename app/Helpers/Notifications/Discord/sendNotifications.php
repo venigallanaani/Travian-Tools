@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Session;
 
 
 if(!function_exists('sendDiscordNotification')){
-    // Calculates the coords from the string (x|y)
     function sendDiscordNotification($data,$webhook){
         
         $curl = curl_init($webhook);

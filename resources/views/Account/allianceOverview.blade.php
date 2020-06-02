@@ -30,7 +30,7 @@
                                 </tr>
                                 <tr>
                                     <td class="py-1"><strong><span class="text-warning">Villages</span></strong></td>
-                                    <td class="py-1">: {{$alliance->villages}}</td>
+                                    <td class="py-1">: {{number_format($alliance->villages)}}</td>
                                 </tr>
                             </table>
                         </td>

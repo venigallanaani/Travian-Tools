@@ -41,7 +41,7 @@
             				</thead>
             				@foreach($villages as $village)
                 				<tr>
-                					<td class="px-1 h6"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village['X']}}&y={{$village['Y']}}" target="_blank">{{$village['NAME']}}</a></td>
+                					<td class="px-1 h6" style="font-size: 0.9em"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village['X']}}&y={{$village['Y']}}" target="_blank">{{$village['NAME']}}</a></td>
                 					<td class="px-1"><input type="checkbox" name="{{$village['VID']}}_cap"  @if($village['CAP']!=null) checked @endif></td>                					
                 					<td class="px-1 small"><select name="{{$village['VID']}}_tiles" style="border:1px">
         									<option value="4-4-4-6" @if($village['TILES']=='4-4-4-6') selected @endif>4-4-4-6</option>

@@ -24,6 +24,7 @@ class CreateServersTable extends Migration
             $table->string('diff_table');            
             $table->string('timezone');
             $table->int('tsq');
+            $table->int('speed')->default(1);
             $table->string('table_id');
             $table->timestamps();
         });

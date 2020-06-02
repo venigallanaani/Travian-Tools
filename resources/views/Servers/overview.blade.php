@@ -4,7 +4,7 @@
 
     <header id="main-header" class="py-1 bg-warning text-white">
         <div class="container">
-            <p class="h3 font-weight-bold d-inline-block">Servers</p>
+            <p class="h4 font-weight-bold d-inline-block">Servers</p>
             <div class="float-right">
                 <div class="btn btn-light dropdown d-inline-block">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -17,9 +17,6 @@
                         <a href="{{route('servers')}}" class="dropdown-item"><i class="fas fa-server"></i> Change Server</a>
                     </div>              
                 </div>
-            @if(Session::has('server'))
-            	<p class="h6 d-inline-block px-2" data-toggle="tooltip" data-placement="top" title="Server Time"><span id="clock"></span></p>
-        	@endif
             </div>
         </div>
     </header>
@@ -33,22 +30,22 @@
         @endif
     @endforeach
     <div class="container">
-    	<p class="h4 py-2">Select Server</p>
+    	<p class="h5 pt-2 text-center">Select Server</p>
     	<form action="{{route('servers')}}" method="POST">
     		{{ csrf_field() }}
-    		@foreach($servers as $index=>$country)
+    		@foreach($servers as $index=>$domains)
         		<div class="py-2">
                 	<div class="card card-header text-center btn btn-block bg-warning collapsed shadow text-dark my-2" data-toggle="collapse" href="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
-                		<p class="p-1 m-0 h5 font-weight-bold">
+                		<p class="p-1 m-0 h6 font-weight-bold">
                     		<span class="text-uppercase">{{$index}}</span> Servers <small><i class="fa fa-angle-double-down"></i></small>
             		 	</p>
             		</div>
             		<div class="collapse" id="{{$index}}" style="">
               			<div class="card card-body">
-                			<p class="my-0 p-2">
-            				@foreach($country as $server)
+                			<p class="my-0 px-2">
+            				@foreach($domains as $server)
 				  				<button class="btn btn-outline-warning text-dark" type="submit" name="server" value="{{$server->server_id}}">
-                  					<strong>{{$server->url}} <small>({{$server->days}} days)</small></strong>
+                  					<span class="h6">{{$server->url}} <small>({{$server->days}} days)</small></span>
                 				</button>                				
             				@endforeach
             				</p>

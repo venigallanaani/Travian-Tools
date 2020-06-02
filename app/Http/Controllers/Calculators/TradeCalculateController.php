@@ -12,7 +12,10 @@ class TradeCalculateController extends Controller
     public function display(){
         
         session(['title'=>'Calculators']);
-        return view('Calculators.Trade.display');
+        $input['wood']=0;       $input['clay']=0;       $input['iron']=0;       $input['crop']=0;
+        $input['delivery']=0;   $input['frequency']=0;  $input['townhall']=0;   $input['party']='none';
+
+        return view('Calculators.Trade.display')->with(['input'=>$input]);
         
     }
     
@@ -43,17 +46,22 @@ class TradeCalculateController extends Controller
         
         $th = Input::get('townhall');       $result=array();
         
-        $prod['wood']=Input::get('wood');   $prod['clay']=Input::get('clay');
-        $prod['iron']=Input::get('iron');   $prod['crop']=Input::get('crop');
+        $prod['wood']=intval(Input::get('wood'));       $prod['clay']=intval(Input::get('clay'));
+        $prod['iron']=intval(Input::get('iron'));       $prod['crop']=intval(Input::get('crop'));
         
         $del = Input::get('deliveries');    $freq = Input::get('frequency');
+        
+        $input['wood']=$prod['wood'];       $input['clay']=$prod['clay'];       
+        $input['iron']=$prod['iron'];       $input['crop']=$prod['crop'];
+        $input['delivery']=$del;            $input['frequency']=$freq;      
+        $input['townhall']=$th;             $input['party']=$party;
         
         $result['message']=null;
         if($th<10 && $party=='great'){
             $result['message']='Town Hall level not enough for Great Celebration';
             $party=null;
         }
-        if($th==0 && $party!=null){
+        if($th==0 && ($party!=null || $party!='none')){
             $result['message']='Town Hall level not enough for Celebrations';
             $party=null;
         }
@@ -97,7 +105,7 @@ class TradeCalculateController extends Controller
             
         }
         
-        return view('Calculators.Trade.result')->with(['result'=>$result]);
+        return view('Calculators.Trade.result')->with(['result'=>$result])->with(['input'=>$input]);
         
     }
 }

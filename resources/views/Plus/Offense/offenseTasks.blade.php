@@ -138,6 +138,7 @@
 							if(dist<0){
         			      		row.find('#timer').text("00:00:00");
         			      		row.find('#timer').css('color','red');
+//        			      		location.reload();
         			      	}else{
         			      		var days = Math.floor(dist / (1000 * 60 * 60 * 24));
         			      		var hours = days * 24 + Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

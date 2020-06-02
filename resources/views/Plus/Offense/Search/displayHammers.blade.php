@@ -2,7 +2,7 @@
 
 @section('body')
 
-	<div class="card float-md-left col-md-9 p-0 shadow">
+	<div class="card float-md-left col-md-10 p-0 shadow">
 		<div class="card-header h5 py-2 bg-info text-white"><strong>Hammers List</strong></div>
 		<div class="card-text">
 	@foreach(['danger','success','warning','info'] as $msg)

@@ -21,9 +21,9 @@
                 @endforeach	
                 	
 				<div class="text-center col-md-11 mx-auto my-2 p-0">					
-					<table class="table align-middle" id="listTable">
+					<table class="table align-middle" id="cfdtable">
 						<thead class="thead-inverse h6">
-    						<tr class="">
+    						<tr id="header" class="">
     							<th class="">Player</th>
     							<th class="">Village</th>
     							<th class="">Defense</th>
@@ -58,8 +58,8 @@
     							<td class="py-1 px-0">{{number_format($task->def_remain)}}</td>
     							<td class="py-1 px-0"><strong>{{ucfirst(strtolower($task->type))}}</strong></td>
     							<td class="{{$color}} py-1 px-0"><strong>{{ucfirst($task->priority)}}</strong></td>
-    							<td class="py-1 px-0">{{$task->target_time}}</td>
-    							<td class="py-1 px-0"><strong><span id="{{$task->task_id}}"></span></strong></td>
+    							<td id="target" class="py-1 px-0">{{$task->target_time}}</td>
+    							<td id="timer" class="py-1 px-0 font-weight-bold">00:00:00</td>
     							<td class="py-1 px-0"><a class="btn btn-outline-secondary btn-sm py-0" href="/plus/defense/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
@@ -82,12 +82,43 @@
 @endsection
 
 @push('scripts')
-	@if(count($tasks)>0)	
 	<script>
-		@foreach($tasks as $task)
-			countDown("{{$task->task_id}}","{{$task->target_time}}","{{Session::get('timezone')}}");
-		@endforeach
-	</script>
-	@endif
+		$(document).ready(function(){       	
+    		setInterval(function(){
+        		$('#cfdtable tr').each(function (i, row){
+        			if(i>0){
+        				var row = $(row);
+        				var id = row.attr("id");
+        				var zone = $('meta[name="timezone"]').attr('content');
+        				if(id !== 'header'){
+							var target = row.find('#target').text();
+							var time = moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');
+							var dist = new Date(target).getTime()-new Date(time).getTime();
+							
+							if(dist<0){
+        			      		row.find('#timer').text("00:00:00");
+        			      		row.find('#timer').css('color','red');
+        			      	}else{
+        			      		var days = Math.floor(dist / (1000 * 60 * 60 * 24));
+        			      		var hours = days * 24 + Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        			      		var mins = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+        			      		var secs = Math.floor((dist % (1000 * 60)) / 1000);
 
+        			      		if(hours<10){	hours='0'+hours;	}
+        			      		if(mins<10) {	mins='0'+mins;		}
+        			      		if(secs<10) {	secs='0'+secs;		}
+        			      		
+        			      		row.find('#timer').text(hours+':'+mins+':'+secs);
+        			      		row.find('#timer').css('color','blue');
+        			      	}   						
+        				}
+        			}			
+        		});	
+    		}, 1000);	
+    	});
+	</script>
+@endpush
+
+@push('extensions')
+	<meta name="timezone" content="{{ Session::get('timezone') }}" />
 @endpush

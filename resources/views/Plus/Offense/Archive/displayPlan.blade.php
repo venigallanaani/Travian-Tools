@@ -2,7 +2,7 @@
 
 @section('body')
 	<!-- ==================================== Main Content of the CFD tasks list ================================= -->
-		<div class="card float-md-left col-md-9 mb-5 p-0 shadow">
+		<div class="card float-md-left col-md-10 mb-5 p-0 shadow">
 			<div class="card-header h5 py-2 bg-info text-white"><strong>Offense Plan - {{$plan->name}}</strong></div>
 			<div class="card-text">
     <!-- ==================================== List of CFD is progress ======================================= -->

@@ -37,6 +37,7 @@
 			"app/Helpers/Parsers/AccountParser.php",
 			"app/Helpers/Notifications/Discord/sendNotifications.php",
 			"app/Helpers/Notifications/Discord/DefenseNotifications.php",
+			"app/Helpers/Notifications/Discord/OffenseNotifications.php",
 			"app/Helpers/Graphics.php"
 		]
 	},

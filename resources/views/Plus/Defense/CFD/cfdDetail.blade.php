@@ -48,8 +48,12 @@
 								</td>
 								<td class="py-2">									
 									<p class="py-1 my-1"><button class="btn btn-primary px-5 shadow btn-sm" name="update" value="{{$task->task_id}}">Update Task</button></p>
-									<p class="py-1 my-1"><button class="btn btn-success px-5 shadow btn-sm" name="complete" value="{{$task->task_id}}">Mark as Complete</button></p>
-									<p class="py-1 my-1"><button class="btn btn-warning px-5 shadow btn-sm" name="withdraw" value="{{$task->task_id}}">Withdraw Troops</button></p>
+									@if($task->status=='ACTIVE')
+										<p class="py-1 my-1"><button class="btn btn-success px-5 shadow btn-sm" name="complete" value="{{$task->task_id}}">Mark as Complete</button></p>
+									@endif
+									@if($task->status!='WITHDRAW')
+										<p class="py-1 my-1"><button class="btn btn-warning px-5 shadow btn-sm" name="withdraw" value="{{$task->task_id}}">Withdraw Troops</button></p>
+									@endif
 									<p class="py-1 my-1"><button class="btn btn-danger px-5 shadow btn-sm" name="delete" value="{{$task->task_id}}">Delete Task</button></p>								
 									<br>
 									<p class="py-1 my-1"><strong>Created By:</strong> {{$task->created_by}}</p>

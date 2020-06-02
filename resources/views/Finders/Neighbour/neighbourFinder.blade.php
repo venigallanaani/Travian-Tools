@@ -3,8 +3,8 @@
 @section('body')
 
 <!-- =================================== Neighbour Finder input screen================================== -->
-    <div class="card float-md-left col-md-12 mt-1 p-0 shadow">
-        <div class="card-header h4 py-2 bg-success text-white">
+    <div class="card float-md-left col-md-12 mb-1 p-0 shadow">
+        <div class="card-header h5 py-2 bg-success text-white">
             <strong>Neighbour Finder</strong>
         </div>
         <div class="card-text mx-auto text-center">

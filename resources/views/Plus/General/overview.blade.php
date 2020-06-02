@@ -43,7 +43,7 @@
 				@if($counts['off']>0)				
 					<p><strong>{{$counts['off']}} <a href="/plus/offense" class="text-info">Offense Plans</strong></a> are in progress</p>
 				@else
-					<p>No <span class="text-info"><strong>Offense plans</strong></span> are currently active <span class="text-danger">-- under development</span></p>
+					<p>No <span class="text-info"><strong>Offense plans</strong></span> are currently active</p>
 				@endif	
 				
 				@if($counts['res']>0)				

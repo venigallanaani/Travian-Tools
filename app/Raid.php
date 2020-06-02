@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Troops extends Model
+class Raid extends Model
 {
-    protected $table='troops';
+    protected $table='raids';
     
-    protected $guarded = ['*'];
+    protected $fillable = ['*'];
     
     public $timestamps=true;
 }

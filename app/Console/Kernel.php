@@ -13,36 +13,39 @@ class Kernel extends ConsoleKernel
     ];
     
     protected function schedule(Schedule $schedule)
-    {
+    {   $schedule->command('Load:Servers')
+            //->dailyAt('02:30')
+            ->everyminute()
+            ->appendOutputTo(storage_path('logs/LoadServers.log'));
         // Loads all th commands from the map.sql files of all the active servers.
-        $schedule->command('Load:Maps')
-            ->dailyAt('00:00')
-            //->everyminute()
-            ->appendOutputTo(storage_path('logs/processLoads.log')); 
+//         $schedule->command('Load:Maps')
+//             ->dailyAt('00:00')
+//             //->everyminute()
+//             ->appendOutputTo(storage_path('logs/processLoads.log')); 
         
-        // Loads all th commands from the map.sql files of all the active servers.
-        $schedule->command('Load:Diff')
-            ->dailyAt('00:15')
-            //->everyminute()
-            ->appendOutputTo(storage_path('logs/processLoads.log')); 
+//         // Loads all th commands from the map.sql files of all the active servers.
+//         $schedule->command('Load:Diff')
+//             ->dailyAt('00:15')
+//             //->everyminute()
+//             ->appendOutputTo(storage_path('logs/processLoads.log')); 
         
-        // Loads all th commands from the map.sql files of all the active servers.
-        $schedule->command('Process:Players')
-            ->dailyAt('00:30')
-            //->everyminute()
-            ->appendOutputTo(storage_path('logs/processLoads.log'));   
+//         // Loads all th commands from the map.sql files of all the active servers.
+//         $schedule->command('Process:Players')
+//             ->dailyAt('00:30')
+//             //->everyminute()
+//             ->appendOutputTo(storage_path('logs/processLoads.log'));   
         
-        // Loads all th commands from the map.sql files of all the active servers.
-        $schedule->command('Process:Alliances')
-            ->dailyAt('00:45')
-            //->everyminute()
-            ->appendOutputTo(storage_path('logs/processLoads.log'));   
+//         // Loads all th commands from the map.sql files of all the active servers.
+//         $schedule->command('Process:Alliances')
+//             ->dailyAt('00:45')
+//             //->everyminute()
+//             ->appendOutputTo(storage_path('logs/processLoads.log'));   
         
-        // Loads all th commands from the map.sql files of all the active servers.
-        $schedule->command('process:CleanUp')
-            ->dailyAt('01:00')
-            //->everyminute()
-            ->appendOutputTo(storage_path('logs/cleanUp.log'));
+//         // Loads all th commands from the map.sql files of all the active servers.
+//         $schedule->command('process:CleanUp')
+//             ->dailyAt('01:00')
+//             //->everyminute()
+//             ->appendOutputTo(storage_path('logs/cleanUp.log'));
         
         // Deletes the reports which are not used for 100 days
 //         $schedule->command('Delete:Reports')

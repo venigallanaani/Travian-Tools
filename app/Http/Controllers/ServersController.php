@@ -39,6 +39,7 @@ class ServersController extends Controller
         $request->session()->put('server.url',$server->url);
         $request->session()->put('server.tmz',$server->timezone);
         $request->session()->put('server.tsq',$server->tsq);
+        $request->session()->put('server.speed',$server->speed);
         
     // load personanlized raid lists
         if(Auth::check()){
@@ -55,6 +56,7 @@ class ServersController extends Controller
         date_default_timezone_set($server->timezone);
 //dd($request->session()->get('server'));        
         Session::flash('success',$server->url.' is loaded');
+        
         return Redirect::to('/') ;        
     }
     
