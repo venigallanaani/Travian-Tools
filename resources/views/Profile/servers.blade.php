@@ -20,7 +20,11 @@
 						</tr>
 					</thead>
 				@foreach($profiles as $profile)
+					@if($profile['server_id']==Session::get('server.id'))
+					<tr class="table-primary">
+					@else
 					<tr>
+					@endif
 						<td>{{$profile['name']}}</td>
 						<td>{{$profile['start_date']}}</td>
 						<td>{{$profile['days']}}</td>
@@ -43,11 +47,13 @@
 								<button class="btn btn-success" name="server" value="{{$profile['server_id']}}"><i class="fa fa-angle-double-right"></i> <strong>Load Server</strong></button>
 							</form>
 						</td>
-						<td colspan="3"><a href="{{route('accountDelete')}}"><button class="btn btn-warning"><strong>Delete Account</strong></button></a></td>
+						<td colspan="3">
+						@if($profile['server_id']==Session::get('server.id'))
+							<a href="{{route('accountDelete')}}"><button class="btn btn-warning"><strong>Delete Account</strong></button></a>
+						@endif
+						</td>
 						<td colspan="2">
-							@if($profile['plus']==null)
-								<button class="btn btn-info" disabled><strong>Leave Plus Group</strong></button>
-							@else
+							@if($profile['plus']!=null && $profile['server_id']==Session::get('server.id'))
 								<a href="{{route('plusLeave')}}"><button class="btn btn-info"><strong>Leave Plus Group</strong></button></a>
 							@endif
 						</td>

@@ -251,6 +251,12 @@
 	@push('scripts')
 		<script type="text/javascript" src="{{ asset('js/moment.js') }}"></script> 
         <script type="text/javascript" src="{{ asset('js/moment-timezone-with-data-2012-2022.min.js') }}"></script> 
+        <script>$(function(){                
+                	setInterval(function(){
+                  		var now = moment().tz("{{Session::get('timezone')}}");
+                 		$('#clock').html(now.format('YYYY-MM-DD HH:mm:ss'));    		 		
+                	},1000);
+        		});</script>
     @endpush
 
 @endsection
