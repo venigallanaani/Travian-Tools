@@ -46,11 +46,11 @@
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][7]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][7]['IMAGE']}}"></td>
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][8]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][8]['IMAGE']}}"></td>
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][9]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][9]['IMAGE']}}"></td>            			
-            			<td rowspan="2" class="px-1 py-1">{{number_format($village['UPKEEP'])}}</td>
+            			<td rowspan="2" class="px-1 py-1 font-weight-bold">{{number_format($village['UPKEEP'])}}</td>
             			<td rowspan="2" class="px-1 py-1">{{$village['TRAVEL']}}</td>
             			<td rowspan="2" class="px-1 py-1">{{$village['START']}}</td>            	
         			</tr>
-        			<tr>
+        			<tr class="small">
         				<td class="p-0">{{number_format($village['TROOPS'][0])}}</td>
         				<td class="p-0">{{number_format($village['TROOPS'][1])}}</td>
         				<td class="p-0">{{number_format($village['TROOPS'][2])}}</td>

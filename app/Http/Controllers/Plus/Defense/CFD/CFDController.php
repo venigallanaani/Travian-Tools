@@ -21,7 +21,7 @@ class CFDController extends Controller
         
         session(['title'=>'Plus']);
         
-        $tasks = array();   $withdraws = array();   $index=0;
+        $tasks = array();   $withdraws = array();   $i=0;   $j=0;
         
         $CFDs=CFDTask::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -34,20 +34,20 @@ class CFDController extends Controller
                 $troops = CFDUpd::where('server_id',$request->session()->get('server.id'))
                                         ->where('plus_id',$request->session()->get('plus.plus_id'))
                                         ->where('task_id',$CFD->task_id)->where('player_id',$request->session()->get('plus.account_id'))->get();
-// dd($CFD);
-// dd($troops);  
+
                 if($troops!=null){
-                    $withdraws[$index]['PLAYER']=$CFD->player;
-                    $withdraws[$index]['VILLAGE']=$CFD->village;
-                    $withdraws[$index]['X']=$CFD->x;
-                    $withdraws[$index]['Y']=$CFD->y;                    
-                    $index++;
+                    $withdraws[$i]['PLAYER']=$CFD->player;
+                    $withdraws[$i]['VILLAGE']=$CFD->village;
+                    $withdraws[$i]['X']=$CFD->x;
+                    $withdraws[$i]['Y']=$CFD->y;                    
+                    $i++;
                 }
             }else{
-                $tasks[]=$CFD;                
+                $CFD->target_time=date_format(date_create($CFD->target_time),$request->session()->get('dateFormat'));
+                $tasks[]=$CFD;                 
             }
         }
-//dd($withdraws);
+        //dd($tasks);
         return view("Plus.Defense.CFD.defenseTaskList")->with(['tasks'=>$tasks])->with(['withdraws'=>$withdraws]);
         
     }
@@ -56,11 +56,10 @@ class CFDController extends Controller
         
         session(['title'=>'Plus']);
         
-        ///$result = $this->taskDetails($request, $id);
-        $task = $this->taskDetails($request, $id);
-//dd($task);
-        
+        $task = $this->taskDetails($request, $id);        
         $travels = $this->defenseTravelTime($request, $task['UNITS'], $task['TASK'],$request->session()->get('plus.account_id'));
+        
+        $task['TASK']->target_time=date_format(date_create($task['TASK']->target_time),$request->session()->get('dateFormat'));
         
         return view("Plus.Defense.CFD.defenseTask")->with(['task'=>$task['TASK']])
                         ->with(['villages'=>$task['VILLAGES']])->with(['units'=>$task['UNITS']])
@@ -225,8 +224,8 @@ class CFDController extends Controller
     public function taskDetails($request, $id){
         
         $task=CFDTask::where('server_id',$request->session()->get('server.id'))
-        ->where('plus_id',$request->session()->get('plus.plus_id'))
-        ->where('task_id',$id)->first();
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('task_id',$id)->first();
         
         $villages=Diff::where('server_id',$request->session()->get('server.id'))
                     ->where('uid',$request->session()->get('plus.uid'))->get();
@@ -303,12 +302,11 @@ class CFDController extends Controller
                 }
                 if($flag == 1){
                     
-                    for($j=0;$j<10;$j++){
-                        
+                    for($j=0;$j<10;$j++){                        
                         $upkeep+=$units[$j]['upkeep']*$troops[$j]['COUNT'];
                     }
                     if($upkeep>0){
-                        $tTime=($dist/$minSpeed)*3600;
+                        $tTime=($dist/($minSpeed*$request->session()->get('server.speed')))*3600;
                         $sTime=strtotime($task->target_time)-$tTime;
                         
                         $result[$i]['VILLAGE']=$village['village'];
@@ -317,7 +315,7 @@ class CFDController extends Controller
                         $result[$i]['TROOPS']=array_column($troops, 'COUNT');
                         $result[$i]['UPKEEP']=$upkeep;
                         $result[$i]['TRAVEL']=gmdate('H:i:s',floor($tTime));
-                        $result[$i]['START']=Carbon::createFromTimestamp(floor($sTime))->toDateTimeString();
+                        $result[$i]['START']=Carbon::createFromTimestamp(floor($sTime))->format($request->session()->get('dateFormat'));
                         
                         $i++;
                     }
@@ -325,7 +323,6 @@ class CFDController extends Controller
                 }
             }
         }
-        //dd($result);
         return $result;
     }
         

@@ -120,7 +120,7 @@ Route::get('/account/alliance','Account\AllianceController@allianceOverview')->n
 /* ---------------------------- Profile Controller Page --------------------------- */
 /*----------------------------------------------------------------------------------*/
 Route::get('/profile','Profile\profileController@overview')->name('profile');
-Route::post('/profile/contact','Profile\profileController@updateContact')->name('profileContact');
+Route::post('/profile/update','Profile\profileController@updateProfile')->name('profileUpdate');
 
 Route::get('/profile/servers','Profile\profileController@servers')->name('profileServers');
 Route::post('/profile/servers/load','ServersController@process');

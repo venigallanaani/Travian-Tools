@@ -68,6 +68,9 @@ class LeaderIncomingController extends Controller
         $attackers=array();         $defenders=array();         $temp['A']=array();     $temp['D']=array();      $att = 0;   $def = 0;
         
         foreach($incomings as $incoming){
+
+            $incoming['landTime']=Carbon::parse($incoming['landTime'])->format($request->session()->get('dateFormat'));
+            $incoming['noticeTime']=Carbon::parse($incoming['noticeTime'])->format($request->session()->get('dateFormat'));
             
             $result[$index]=$incoming;
             $result[$index]['dist']=pow(pow($incoming['att_x']-$incoming['def_x'],2)+pow($incoming['att_y']-$incoming['def_y'],2),0.5);
@@ -140,6 +143,10 @@ class LeaderIncomingController extends Controller
                         ->orderBy('report_date','desc')->first();
         
         $incomings= $incomings->toArray();
+        foreach($incomings as $i=>$incoming){
+            $incomings[$i]['landTime']=Carbon::parse($incoming['landTime'])->format($request->session()->get('dateFormat'));
+            $incomings[$i]['noticeTime']=Carbon::parse($incoming['noticeTime'])->format($request->session()->get('dateFormat'));
+        }
         
         $units = Units::select('name','image')->where('tribe',$incomings[0]['att_tribe'])
                             ->orderBy('id','asc')->get();

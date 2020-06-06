@@ -83,17 +83,13 @@
 
 @push('scripts')
 	<script>
-		$(document).ready(function(){       	
+		$(document).ready(function(){		
     		setInterval(function(){
         		$('#cfdtable tr').each(function (i, row){
         			if(i>0){
         				var row = $(row);
-        				var id = row.attr("id");
-        				var zone = $('meta[name="timezone"]').attr('content');
-        				if(id !== 'header'){
-							var target = row.find('#target').text();
-							var time = moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');
-							var dist = new Date(target).getTime()-new Date(time).getTime();
+        				if(row.attr("id") !== 'header'){
+							var dist = new Date(row.find('#target').text()).getTime()-new Date(moment().tz("{{ Session::get('timezone') }}")).getTime();
 							
 							if(dist<0){
         			      		row.find('#timer').text("00:00:00");

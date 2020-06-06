@@ -58,11 +58,11 @@
 
 		<table class="table mx-auto col-md-12 table-hover table-sm table-bordered shadow align-center" id="incTable">
 			<thead class="thead-inverse bg-info text-white">
-				<tr class="header show">
-					<th class="">Land Time</th>
+				<tr class="header show">					
 					<th class="">Attacker</th>
 					<th class="">Waves</th>
 					<th class="">Defender</th>
+					<th class="">Land Time</th>
 					<th class="">Notice Time</th>
 					<th class="">Start Time</th>										
 					<th class="">Unit</th>
@@ -77,20 +77,20 @@
 				@php
 					if		($incoming['ldr_sts']=='SCOUT')		{$color='table-warning';	}
 					elseif	($incoming['ldr_sts']=='THINKING')	{$color='table-info';		}
-					elseif	($incoming['ldr_sts']=='DEFEND')	{$color='table-success';	}	
+					elseif	($incoming['ldr_sts']=='DEFEND')	{$color='table-success';	}
 					elseif	($incoming['ldr_sts']=='ARTEFACT')	{$color='table-primary';	}	
 					elseif	($incoming['ldr_sts']=='SNIPE')		{$color='table-danger';		}
 					elseif	($incoming['ldr_sts']=='FAKE')		{$color='table-secondary';	}								
 					else	{	$color='table-white';	}					
 				@endphp				
 						
-    			<tr class="{{$color}} show" id="{{$incoming['incid']}}" style="font-size:0.8em">
-    				<td class="" id="land">{{$incoming['landTime']}}</td>
+    			<tr class="{{$color}} show" id="{{$incoming['incid']}}" style="font-size:0.8em">    				
     				<td class="attack" rel="{{$incoming['att_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['att_x']}}&y={{$incoming['att_y']}}" target="_blank"><strong>{{$incoming['att_player']}}</strong> 
     						({{$incoming['att_village']}}) </a></td>
 					<td class=""><strong>{{$incoming['waves']}}</strong></td>					
     				<td class="defend" rel="{{$incoming['def_id']}}"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$incoming['def_x']}}&y={{$incoming['def_y']}}" target="_blank"><strong>{{$incoming['def_player']}}</strong>
     						 ({{$incoming['def_village']}})</a></td>
+					<td class="" id="land">{{$incoming['landTime']}}</td>
 				 	<td class="" id="notice">{{$incoming['noticeTime']}}</td>
 			 		<td class="" id="start">...</td>   				
     				<td><select id="unit" style="width:6em" class="small">
@@ -341,7 +341,7 @@
 				var rel = row.find(".attack").attr('rel');					
 				if(rel == att){		
 					//alert(rel);	
-    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}","{{Session::get('dateFormatLong')}}",{{Session::get('server.speed')}});
     				row.find("#start").html(time);
     				
     				var notice = new Date(row.find('#notice').html()).getTime();
@@ -377,7 +377,7 @@
 				var row = $(row);
 				var rel = row.find(".attack").attr('rel');					
 				if(rel == att){		
-    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}","{{Session::get('dateFormatLong')}}",{{Session::get('server.speed')}});
     				row.find("#start").html(time);
     				
     				var notice = new Date(row.find('#notice').html()).getTime();
@@ -406,7 +406,7 @@
 	    xmlhttp.open("GET", "/defense/incomings/update/unit/"+id+"/"+unit, true);		
 	    xmlhttp.send();	
 
-		var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+		var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}","{{Session::get('dateFormatLong')}}",{{Session::get('server.speed')}});
 		row.find("#start").html(time);
 		
 		var notice = new Date(row.find('#notice').html()).getTime();
@@ -422,7 +422,7 @@
 				var row = $(row);
 				var id = '"'+row.attr("id")+'"';
 				if(id !== '"undefined"'){
-    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}");
+    				var time = startTime(row.find('#land').html(),row.find('#notice').html(),row.find('#details').val(),row.find('#unit').val(),row.find('#tsq').val(),row.find('#boots').val(),row.find('#art').val(),"{{Session::get('server.tsq')}}","{{Session::get('timezone')}}","{{Session::get('dateFormatLong')}}",{{Session::get('server.speed')}});
     				row.find("#start").html(time);
     				
     				var notice = new Date(row.find('#notice').html()).getTime();

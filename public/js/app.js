@@ -34,12 +34,13 @@ function countDown(elementId, date, zone) {
     }, 1000); 
 }
 
-function startTime(landTime,noticeTime,dist,unit,tsq,boots,art,speed,tmz){
+function startTime(landTime,noticeTime,dist,unit,tsq,boots,art,speed,tmz,dateFormat,server){
 	
 	var land = new Date(landTime).getTime();
 	var notice = new Date(noticeTime).getTime();
 	
 	var speedtsq = (1+tsq*0.1*speed)*(1+boots/100);
+	dist=dist/server;
 	if(dist>20){	
 		var time = (20+(dist-20)/speedtsq)/(unit*art/4);
 	}else{	
@@ -48,7 +49,7 @@ function startTime(landTime,noticeTime,dist,unit,tsq,boots,art,speed,tmz){
 	var travel = Math.floor(time*60*60*1000);
 
 	var date = moment(land-travel);
-	var start = moment(date).tz(tmz).format('YYYY-MM-DD HH:mm:ss');
+	var start = moment(date).tz(tmz).format(dateFormat);
 
 	return start;	
 }

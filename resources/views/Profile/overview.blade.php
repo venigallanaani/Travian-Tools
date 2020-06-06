@@ -16,52 +16,37 @@
 					<td class="py-1">: {{Auth::user()->email}}</td>
 				</tr>
 			</table>
-			<div class="card shadow col-md-8 p-0 mx-auto">
-				<div class="card-header h5 py-2 bg-warning text-white text-center">
-					<strong>Contact Details</strong>
-				</div>
-				<div class="card-text" style="font-size: 1em">
-					<table class="table table-hover col-md-8 mx-auto text-center">
-						<tr>
-							<td class="text-right" style="width:10em;"><strong>Skype :</strong></td>
-							<td contenteditable="true" class="text-left " id="skypeEdit" style="width:10em;">{{ $contact['skype'] }}</td>
-						</tr>
-						<tr>
-							<td class="text-right" style="width:10em;"><strong>Discord :</strong></td>
-							<td contenteditable="true" class="text-left " id="discordEdit" style="width:10em;">{{ $contact['discord'] }}</td>
-						</tr>
-						<tr>
-							<td colspan="2" class="text-center">
-								<form id="form" action="{{route('profileContact')}}" method="POST" onsubmit="return getContent()" class="text-center pb-3">
-            						{{ csrf_field() }}
-            						<input id="skype" name="skype" style="display:none">
-            						<input id="discord" name="discord" style="display:none">
-            						<button class="btn btn-warning btn-lg px-5 py-1" type="submit">Save</button>						
-            					</form>							
-							</td>							
-						</tr>
-					</table>			
-				</div>			
+			
+			<div class="py-5 col-md-8 mx-auto text-center">
+				<p class="bg-warning h5 text-white card-header py-2">Profile Details</p>
+				<form id="form" action="{{route('profileUpdate')}}" method="POST" class="text-center pb-3">
+					{{ csrf_field() }}
+        			<table class="table table-hover">
+        				<tr>
+        					<td class="text-right py-1" style="width:10em;"><strong>Skype ID:</strong></td>
+        					<td class="text-left py-1" style="width:10em;"><input name="skype" value="{{ $profile['skype'] }}" style="border:1px"></td>
+        				</tr>
+        				<tr>
+        					<td class="text-right py-1" style="width:10em;"><strong>Discord ID:</strong></td>
+        					<td class="text-left py-1" style="width:10em;"><input name="discord" value="{{ $profile['discord'] }}" style="border:1px"></td>
+        				</tr>
+        				<tr>
+        					<td class="text-right py-1" style="width:10em;"><strong>Date Format:</strong></td>
+        					<td class="text-left py-1" style="width:10em;">
+            					<select name="dateformat"  style="border:2px" class="small">
+									<option value="Y-m-d H:i:s" 	@if($profile['dateformat']=='Y-m-d H:i:s') selected 	@endif>YYYY-MM-DD hh:mm:ss</option>
+									<option value="m-d-Y H:i:s" 	@if($profile['dateformat']=='m-d-Y H:i:s') selected 	@endif>MM-DD-YYYY hh:mm:ss</option>
+									<option value="d-m-y H:i:s" 	@if($profile['dateformat']=='d-m-y H:i:s') selected 	@endif>DD-MM-YYYY hh:mm:ss</option>
+								</select>
+        					</td>
+        				</tr>
+    				</table>
+					<p class="text-center"><button class="btn btn-warning px-5 py-1" type="submit">Save</button></p>
+    			</form>
 			</div>
 		</div>
 	</div>
 @endsection
 
-@push('scripts')
-        <script>
-            function getContent() {
-    			skype=document.getElementById("skypeEdit").innerHTML;
-    			if(skype=='<br>'){ skype='';}
-                document.getElementById("skype").value = skype;
-                
-                discord=document.getElementById("discordEdit").innerHTML;
-                if(discord=='<br>'){ discord='';}
-                document.getElementById("discord").value = discord;
 
-                phone=document.getElementById("phoneEdit").innerHTML;
-                if(phone=='<br>'){ phone='';}
-                document.getElementById("phone").value = phone;                
-            }
-    	</script>
-@endpush
 

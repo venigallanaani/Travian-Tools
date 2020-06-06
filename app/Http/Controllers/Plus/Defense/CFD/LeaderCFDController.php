@@ -33,15 +33,13 @@ class LeaderCFDController extends Controller
         
         $atasks=array();    $ctasks=array();
         foreach($tasks as $task){
-            
+            $task->target_time=date_format(date_create($task->target_time),$request->session()->get('dateFormat'));
             if($task->status=="ACTIVE"){
                 $atasks[]=$task;
             }else{
                 $ctasks[]=$task;
             }            
-            
         }
-
         return view('Plus.Defense.CFD.cfdList')->with(['atasks'=>$atasks, 'ctasks'=>$ctasks]);
         
     }
@@ -310,7 +308,7 @@ class LeaderCFDController extends Controller
             if($request->session()->get('discord')==1){
                 
                 $task=CFDTask::where('server_id',$request->session()->get('server.id'))
-                ->where('task_id',$task_id)->first();
+                            ->where('task_id',$task_id)->first();
                 
                 $discord['status']  = 'WITHDRAW';
                 $discord['village'] = $task->village;
@@ -365,6 +363,7 @@ class LeaderCFDController extends Controller
             }            
         }       
 //dd($villages);
+        $task->target_time=date_format(date_create($task->target_time),$request->session()->get('dateFormat'));
         return view('Plus.Defense.CFD.cfdTravel')->with(['task'=>$task])->with(['villages'=>$villages]);
         
     }
@@ -405,6 +404,7 @@ class LeaderCFDController extends Controller
                 if($village['Tsq'] > 0 && $dist > 20){
                     $dist = 20 + ($dist-20)/(1+0.1*$village['Tsq']);
                 }
+                $dist = $dist/$request->session()->get('server.speed');
                 
                 for($j=0;$j<10;$j++){
                     if($units[$j]['type']=='H'||$units[$j]['type']=='D'){ $troops[$j]['SPEED'] = $units[$j]['speed'];   }
@@ -447,7 +447,7 @@ class LeaderCFDController extends Controller
                         $result[$i]['UPKEEP']=$upkeep;
                         $result[$i]['UNITS']=$images;
                         $result[$i]['TRAVEL']=gmdate('H:i:s',floor($tTime));
-                        $result[$i]['START']=Carbon::createFromTimestamp(floor($sTime))->toDateTimeString();
+                        $result[$i]['START']=Carbon::createFromTimestamp(floor($sTime))->format($request->session()->get('dateFormat'));
                         
                         $i++;
                     }

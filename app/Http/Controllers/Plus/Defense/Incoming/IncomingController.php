@@ -38,6 +38,8 @@ class IncomingController extends Controller
                             ->where('status','SAVED')->orderBy('landTime','asc')->get();                        
 //dd($waves);
         foreach($waves as $wave){
+            $wave->landTime=Carbon::parse($wave->landTime)->format($request->session()->get('dateFormat'));
+            $wave->noticeTime=Carbon::parse($wave->noticeTime)->format($request->session()->get('dateFormat'));
             if($wave->uid == $wave->def_uid){
                 $owaves[]=$wave;
             }else{

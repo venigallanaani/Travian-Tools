@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Contacts;
+use App\Profile;
 use App\Servers;
 use App\Account;
 use App\Plus;
@@ -21,34 +22,73 @@ class profileController extends Controller
         
         session(['title'=>'Profile']);
         
-        $contact=Contacts::where('id',Auth::user()->id)->first();
-                
-        return view('Profile.overview')->with(['contact'=>$contact]);
+        $profile=Profile::where('id',Auth::user()->id)->first();
+        if($profile==null){
+            $profile['skype']=null;
+            $profile['discord']=null;
+            $profile['dateformat']='Y-m-d H:i:s';
+            $profile['dateformatLong']='YYYY-MM-DD HH:mm:ss';
+            $profile['raid']=0;
+        }else{
+            $profile=$profile->toArray();
+        }
+        
+        if($request->session()->has('dateFormat') || $request->session()->has('dateFormatLong')){
+            $request->session()->forget('dateFormat');
+            $request->session()->forget('dateFormatLong');
+            $request->session()->forget('raid');
+            
+            $request->session()->put('dateFormat',$profile['dateformat']);
+            $request->session()->put('dateFormatLong',$profile['dateformatLong']);
+            $request->session()->put('raid',$profile['raid']);
+        }
+        
+        return view('Profile.overview')->with(['profile'=>$profile]);
     }
         
-    public function updateContact(Request $request){
+    public function updateProfile(Request $request){
         
-        session(['title'=>'Profile']);
-       
+        session(['title'=>'Profile']);       
         
-        $contact=Contacts::where('id',Auth::user()->id)->first();
-        
-        if($contact==null){
-            $contact=new Contacts;
-            $contact->id=Auth::user()->id;
-            $contact->skype=str_replace('<br>','',Input::get('skype'));
-            $contact->discord=str_replace('<br>','',Input::get('discord'));
-            $contact->phone=str_replace('<br>','',Input::get('phone'));
-            
-            $contact->save();
+        if(Input::get('dateformat')=='m-d-Y H:i:s'){
+            $dateLong='MM-DD-YYYY HH:mm:ss';
+        }elseif(Input::get('dateformat')=='d-m-Y H:i:s'){
+            $dateLong='DD-MM-YYYY HH:mm:ss';
         }else{
-            $contact=Contacts::where('id',Auth::user()->id)
+            $dateLong='YYYY-MM-DD HH:mm:ss';
+        }
+        
+        $profile = Profile::where('id',Auth::user()->id)->first();
+        if($profile==null){
+            $profile=new Profile;
+            $profile->id        =Auth::user()->id;
+            $profile->skype     =str_replace('<br>','',Input::get('skype'));
+            $profile->discord   =str_replace('<br>','',Input::get('discord'));
+            $profile->phone     =str_replace('<br>','',Input::get('phone'));
+            $profile->dateformat=Input::get('dateformat');
+            $profile->dateformatLong=$dateLong;
+            $profile->raid      ='0';
+            
+            $profile->save();
+        }else{
+            Profile::where('id',Auth::user()->id)
                     ->update([  'skype'=>str_replace('<br>','',Input::get('skype')),
                                 'discord'=>str_replace('<br>','',Input::get('discord')),
-                                'phone'=>str_replace('<br>','',Input::get('phone'))     ]);                           
-            
+                                'phone'=>str_replace('<br>','',Input::get('phone')),
+                                'dateformat'=>Input::get('dateformat'),
+                                'dateformatlong'=>$dateLong,
+                                'raid'=>'0'
+                            ]);
         }
-                    
+        
+        $request->session()->forget('dateFormat');
+        $request->session()->forget('dateFormatLong');
+        $request->session()->forget('raid');
+        
+        $request->session()->put('dateFormat',Input::get('dateformat'));
+        $request->session()->put('dateFormatLong',$dateLong);
+        $request->session()->put('raid',0);
+        
         return Redirect::back();
     }
     

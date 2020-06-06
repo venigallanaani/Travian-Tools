@@ -21,25 +21,23 @@
             				<tr>
             					<td colspan="4" class="py-2 h5 text-white bg-info">Reports</td>
             				</tr>
-    						<tr class="text-info font-weight-bold">      							 							
+    						<tr class="text-info font-weight-bold">  
+    							<td class="px-1">Date</td>    							 							
     							<td class="px-1">Title</td>
-    							<td class="px-1">Report</td> 
-    							<td class="px-1">Date</td>
+    							<td class="px-1">Report</td>     							
     							<td></td>
     						</tr>
         				</thead>
     				@foreach($reports as $report)
-    					<tr>   						
+    					<tr>
+							<td class="px-1">{{$report['date']}}</td>  						
 							<td class="px-1">{{$report['title']}}</td>
-							<td class="px-1"><a href="{{$report['report']}}" target="_blank">Link <i class="fas fa-external-link-alt"></a></td>
-							<td class="px-1">{{$report['date']}}</td>
+							<td class="px-1"><a href="{{$report['report']}}" target="_blank">Link <i class="fas fa-external-link-alt"></a></td>							
 							<td class="px-0"><button class="badge badge-danger" id="delRep" value="{{$report['id']}}"><i class="fa fa-trash" aria-hidden="true"></i></button></td>							
 						</tr>
     				@endforeach
         			</table>
-
-    		@else
-    			
+    		@else    			
     			<p class="text-center h5 text-danger py-3">No Reports are saved for this group</p>
     			
     		@endif

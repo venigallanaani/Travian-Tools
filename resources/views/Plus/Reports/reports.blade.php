@@ -44,15 +44,15 @@
             					<td colspan="3" class="py-2 h6 text-white bg-info">Group Reports</td>
             				</tr>
     						<tr class="text-info h6">
-    							<td class="">Title</td>
     							<td class="">Date</td>
+    							<td class="">Title</td>    							
     							<td class="">Report</td>    							
     						</tr>
         				</thead>
     				@foreach($reports as $report)
-    					<tr style="font-size:0.9em">    						
+    					<tr style="font-size:0.9em">    
+    						<td class="px-1">{{$report['date']}}</td>						
 							<td class="px-1">{{$report['title']}}</td>							
-							<td class="px-1">{{$report['date']}}</td>
 							<td class="px-1"><a href="{{$report['report']}}" target="_blank">Link <i class="fas fa-external-link-alt"></a></td>							
 						</tr>
     				@endforeach

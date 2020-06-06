@@ -80,7 +80,7 @@
     						</tr>
         				</thead>
     				@foreach($hammers as $hammer)
-    					<tr class="h6" id="{{$hammer['id']}}">
+    					<tr class="h6" id="{{$hammer['id']}}" style="font-size:0.9em">
     						<td class="px-1"><a href="{{route('findAlliance')}}/{{$hammer['alliance']}}/1" target="_blank">{{$hammer['alliance']}}</a></td>
 							<td class="px-1"><a href="{{route('findPlayer')}}/{{$hammer['player']}}/1" target="_blank">{{$hammer['player']}}</a></td>
 							<td class="px-1"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$hammer['x']}}&y={{$hammer['y']}}" target="_blank">{{$hammer['village']}} <small>({{$hammer['x']}}|{{$hammer['y']}})</small></a></td>							
@@ -108,7 +108,7 @@
 									<option @if($hammer['art']==2) selected @endif value="2">0.5 X</option>
 								</select>
 							</td>
-							<td class="px-1 h6">{{number_format($hammer['upkeep'])}}</td>
+							<td class="px-1">{{number_format($hammer['upkeep'])}}</td>
 							<td class="px-1"><a href="{{route('reports')}}/{{$hammer['report']}}" target="_blank">Link <i class="fas fa-external-link-alt"></a></td>
 							<td class="px-1">{{$hammer['report_date']}}</td>
 							<td class="px-0"><button class="badge badge-danger" id="delRep" value="{{$hammer['id']}}"><i class="fa fa-trash" aria-hidden="true"></i></button></td>

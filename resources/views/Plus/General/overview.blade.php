@@ -40,8 +40,8 @@
 					<p>No <span class="text-info"><strong>Defense Calls</strong></span> are currently active</p>
 				@endif
 				
-				@if($counts['off']>0)				
-					<p><strong>{{$counts['off']}} <a href="/plus/offense" class="text-info">Offense Plans</strong></a> are in progress</p>
+				@if($counts['off']>0)
+					<p><strong>{{$counts['off']}} <a href="/plus/offense" class="text-info">Offense Waves</strong></a> are planned for your account</p>
 				@else
 					<p>No <span class="text-info"><strong>Offense plans</strong></span> are currently active</p>
 				@endif	

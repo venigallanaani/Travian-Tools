@@ -78,7 +78,7 @@
             $(function(){                
     	  		setInterval(function(){
         	  		var now = moment().tz("{{Session::get('timezone')}}");
-    		 		$('#clock').html(now.format('YYYY-MM-DD HH:mm:ss'));    		 		
+    		 		$('#clock').html(now.format("{{Session::get('dateFormatLong')}}"));    		 		
     	  		},1000);
         	});
          </script>

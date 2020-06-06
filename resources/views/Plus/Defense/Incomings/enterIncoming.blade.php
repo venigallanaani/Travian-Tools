@@ -130,8 +130,8 @@
     					else	{	$color='table-white';	}				
     				@endphp				
     						
-        			<tr class="{{$color}}">
-        				<td class="h6"><a href="{{route('findPlayer')}}/{{$wave->att_player}}/1" target="_blank">{{$wave->att_player}}</a> ({{$wave->att_village}})</td>
+        			<tr class="{{$color}}" style="font-size:0.8em">
+        				<td class="h6"><a href="{{route('findPlayer')}}/{{$wave->att_player}}/1" target="_blank">{{$wave->att_player}}</a> <a href="https://{{Session::get('server.url')}}/position_details.php?" target="_blank">({{$wave->att_village}})</a></td>
         				<td class="h6">{{$wave->def_village}}</td>    				
         				<td>{{$wave->landTime}}</td>
         				<td>{{$wave->waves}}</td>

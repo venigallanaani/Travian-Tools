@@ -95,7 +95,8 @@ class LeaderOffenseController extends Controller
                 }
                 $dist = $dist/$village->arty;
                 $sTime=strtotime($wave['landtime'])-($dist/($units[$wave['unit']]['speed']*$request->session()->get('server.speed')))*3600;
-                $waves[$i]['starttime']=Carbon::createFromTimestamp(floor($sTime))->toDateTimeString();
+                $waves[$i]['starttime']=Carbon::createFromTimestamp(floor($sTime))->format($request->session()->get('dateFormat'));
+                $waves[$i]['landtime'] =Carbon::createFromTimestamp(strtotime($wave['landtime']))->format($request->session()->get('dateFormat'));
                 if($wave['status']=="LAUNCH"||$wave['status']=="MISS"){
                     $waves[$i]['timer']=0;
                 }                

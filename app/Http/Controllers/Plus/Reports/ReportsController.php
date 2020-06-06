@@ -26,7 +26,10 @@ class ReportsController extends Controller
                         ->orderBy('date','desc')->get();
         
         $reports = $reports->toArray();
-        
+        foreach($reports as $i=>$report){
+            $reports[$i]['date']=Carbon::parse($report['date'])->format(explode(' ',$request->session()->get('dateFormat'))[0]);
+        }
+        //dd($reports);
         return view('Plus.Reports.reports')->with(['reports'=>$reports]);
         
     }
@@ -52,7 +55,7 @@ class ReportsController extends Controller
             
             $save->save();
             
-            Session::flash('success','Report added successfully');            
+            Session::flash('success','Report added');            
             
         }else{
             Session::flash('danger','Report not found');
@@ -69,7 +72,9 @@ class ReportsController extends Controller
                         ->orderBy('date','desc')->get();
         
         $reports = $reports->toArray();
-        
+        foreach($reports as $i=>$report){
+            $reports[$i]['date']=Carbon::parse($report['date'])->format(explode(' ',$request->session()->get('dateFormat'))[0]);
+        }
         return view('Plus.Reports.leaderReports')->with(['reports'=>$reports]);
         
     }
@@ -101,17 +106,17 @@ class ReportsController extends Controller
             if($i>=9){  $i=0;
             }else{  $i++;   }            
         }
-        
         foreach($troops as $troop){
             
             $troop['report_data'] = explode('|',$troop['report_data']);
             $village = Diff::where('server_id',$request->session()->get('server.id'))
                             ->where('vid',$troop['vid'])->pluck('village');
             $troop['village']=$village[0];
-            $hammers[] = $troop;
+            $troop['report_date']=Carbon::parse($troop['report_date'])->format(explode(' ',$request->session()->get('dateFormat'))[0]);
             
+            $hammers[] = $troop;            
         }        
-        //dd($hammers);
+
         return view('Plus.Reports.enemyHammers')->with(['units'=>$units])->with(['hammers'=>$hammers]);
         
     }
@@ -285,8 +290,7 @@ class ReportsController extends Controller
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
                             ->where('id',$id)
                             ->update([  'status'=>'TRACK'   ]);            
-        }
-        
+        }        
 
         
     }
