@@ -97,7 +97,9 @@
                     <a href="/leader/subscription" class="list-group-item py-1 list-group-item-action bg-info text-white">Subscription</a>
                     <a href="/leader/access" class="list-group-item py-1 list-group-item-action bg-info text-white">Access</a>
                     <a href="/leader/rankings" class="list-group-item py-1 list-group-item-action bg-info text-white">Rankings</a>
+                @if(Session::get('discord')==1)
                     <a href="/leader/discord" class="list-group-item py-1 list-group-item-action bg-info text-white">Discord Settings</a>
+                @endif
                 </div>
             </div>
         @endif  

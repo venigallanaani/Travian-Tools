@@ -12,6 +12,7 @@ use Carbon\Carbon;
 
 use App\OPSPlan;
 use App\OPSWaves;
+use App\OPSItems;
 use App\Troops;
 use App\Units;
 use App\Diff;
@@ -176,6 +177,10 @@ class LeaderOffenseController extends Controller
                     ->where('id',$planId)->delete();
             
             OPSWaves::where('server_id',$request->session()->get('server.id'))
+                    ->where('plus_id',$request->session()->get('plus.plus_id'))
+                    ->where('plan_id',$planId)->delete();
+            
+            OPSItems::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('plan_id',$planId)->delete();
             

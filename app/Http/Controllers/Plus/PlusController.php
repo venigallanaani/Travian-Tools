@@ -32,7 +32,7 @@ class PlusController extends Controller
     	
     	if(Auth::check()){
     	    $plus=Plus::where('server_id',$request->session()->get('server.id'))
-    	           ->where('id',Auth::user()->id)->first();
+    	                   ->where('id',Auth::user()->id)->first();
             if($request->session()->has('plus')){
                $request->session()->forget('plus');
             }
@@ -56,7 +56,8 @@ class PlusController extends Controller
                             ->where('user_id',$request->session()->get('plus.id'))->first();
                 
                 $inc = Incomings::where('server_id',$request->session()->get('server.id'))
-                            ->where('plus_id',$request->session()->get('plus.plus_id'))                            
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))   
+                            ->where('landTime','>',Carbon::now()->format('Y-m-d H:i:s'))
                             ->where('def_uid',$account->uid)->sum('waves');
 
                 $res = ResTask::where('plus_id',$plus->plus_id)
@@ -72,9 +73,14 @@ class PlusController extends Controller
                
                 $subscription = Subscription::where('id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))->first();
-                
+
+                $request->session()->forget('timezone');
                 $request->session()->put('timezone',$subscription->timezone);
+                
+                $request->session()->forget('discord');
                 $request->session()->put('discord',$subscription->discord);
+                
+                $request->session()->forget('slack');
                 $request->session()->put('slack',$subscription->slack);
                         
                 $counts=array(

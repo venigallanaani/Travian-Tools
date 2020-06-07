@@ -7,8 +7,8 @@
         <div class="card-header h5 py-2 bg-primary text-white col-md-12">
             <strong>Cropper Development</strong>
         </div>
-        <div class="card-text mx-auto text-center my-3">
-			<table>
+        <div class="card-text mx-auto text-center my-3 col-md-12">
+			<table class="mx-auto">
 				<tr>
 					<td colspan="3" class="text-left">
 						<div class="px-2 py-1">
@@ -26,7 +26,7 @@
 				</tr>
 				<tr>
 					<td>
-						<div class="px-2 py-1">
+						<div class="px-3 py-1">
 							<form name="o4">
     							<strong>Capital : </strong>
     								<select name="no4" onChange="seto4(document.o4.no4.options[document.o4.no4.options.selectedIndex].value)">
@@ -37,7 +37,7 @@
 						</div>
 					</td>
 					<td>
-						<div class="px-2 py-1">
+						<div class="px-3 py-1">
 							<form name="o5">
     							<strong>Plus : </strong>
     								<select name="no5" onChange="seto5(document.o5.no5.options[document.o5.no5.options.selectedIndex].value)">
@@ -48,7 +48,7 @@
 						</div>
 					</td>
 					<td>
-						<div class="px-2 py-1">
+						<div class="px-3 py-1">
 							<form name="o6">
     							<strong>Waterworks : </strong>
     								<select name="no6" onChange="seto6(document.o6.no6.options[document.o6.no6.options.selectedIndex].value)">
@@ -61,7 +61,7 @@
 				</tr>
 				<tr>
 					<td>
-						<div class="px-2 py-1">
+						<div class="px-3 py-1">
 							<form name="o1">
     							<strong>Oasis 1:</strong> 
     								<select name="no1" onChange="seto1(document.o1.no1.options[document.o1.no1.options.selectedIndex].value)">
@@ -85,7 +85,7 @@
 						</div>
 					</td>
 					<td>
-						<div class="px-2 py-1">
+						<div class="px-3 py-1">
 							<form name="o3">
     							<strong>Oasis 3:</strong> 
     								<select name="no3" onChange="seto3(document.o3.no3.options[document.o3.no3.options.selectedIndex].value)">

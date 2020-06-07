@@ -81,51 +81,49 @@ Route::post('/calculators/trade','Calculators\TradeCalculateController@calculate
 /*----------------------------------------------------------------------------------*/
 /* ------------------------- Controllers for Account Page ------------------------- */
 /*----------------------------------------------------------------------------------*/
-Route::get('/account','Account\AccountController@overview')->name('account');			// Account main page
-Route::post('/account/find','Account\AccountController@findAccount');
-Route::post('/account/add','Account\AccountController@addAccount');
+Route::get('/account','Account\AccountController@overview')->name('account')->middleware('auth');			// Account main page
+Route::post('/account/find','Account\AccountController@findAccount')->middleware('auth');
+Route::post('/account/add','Account\AccountController@addAccount')->middleware('auth');
 
-Route::get('/account/delete','Account\AccountController@showDelete')->name('accountDelete');
-Route::post('/account/delete','Account\AccountController@deleteAccount');
+Route::get('/account/delete','Account\AccountController@showDelete')->name('accountDelete')->middleware('auth');
+Route::post('/account/delete','Account\AccountController@deleteAccount')->middleware('auth');
 
 /* ------------------ Account Villages page --------------------------------*/
-Route::get('/account/villages','Account\VillagesController@villagesOverview')->name('accountVillages');
-Route::post('/account/villages','Account\VillagesController@updateVillages');
+Route::get('/account/villages','Account\VillagesController@villagesOverview')->name('accountVillages')->middleware('auth');
+Route::post('/account/villages','Account\VillagesController@updateVillages')->middleware('auth');
 
 /* ------------------ Account Hero page --------------------------------*/
-Route::get('/account/hero','Account\HeroController@heroOverview')->name('accountHero');
-Route::post('/account/hero','Account\HeroController@processHero');
+Route::get('/account/hero','Account\HeroController@heroOverview')->name('accountHero')->middleware('auth');
+Route::post('/account/hero','Account\HeroController@processHero')->middleware('auth');
 
 /* ------------------ Account Troops page --------------------------------*/
-Route::get('/account/troops','Account\TroopsController@troopsOverview')->name('accountTroops');
-Route::post('/account/troops/parse','Account\TroopsController@processTroops');
-Route::post('/account/troops/update','Account\TroopsController@updateTroops');
+Route::get('/account/troops','Account\TroopsController@troopsOverview')->name('accountTroops')->middleware('auth');
+Route::post('/account/troops/parse','Account\TroopsController@processTroops')->middleware('auth');
+Route::post('/account/troops/update','Account\TroopsController@updateTroops')->middleware('auth');
 
 /* ------------------ Account Troops Plan page --------------------------------*/
-Route::get('/account/plan','Account\PlanController@plansOverview')->name('accountPlan');
-Route::post('/account/plan/create','Account\PlanController@createPlan');
-Route::post('/account/plan/update','Account\PlanController@updatePlan');
-Route::post('/account/plan/delete','Account\PlanController@deletePlan');
+Route::get('/account/plan','Account\PlanController@plansOverview')->name('accountPlan')->middleware('auth');
+Route::post('/account/plan/create','Account\PlanController@createPlan')->middleware('auth');
+Route::post('/account/plan/update','Account\PlanController@updatePlan')->middleware('auth');
+Route::post('/account/plan/delete','Account\PlanController@deletePlan')->middleware('auth');
 
 /* ------------------------ Account Support page --------------------------------- */
-Route::get('/account/support','Account\SupportController@overview')->name('accountSupport');
-Route::post('/account/sitter/update', 'Account\SupportController@updateSitters')->name('accountSitter');
-Route::post('/account/dual/update', 'Account\SupportController@updateDuals')->name('accountDual');
+Route::get('/account/support','Account\SupportController@overview')->name('accountSupport')->middleware('auth');
+Route::post('/account/sitter/update', 'Account\SupportController@updateSitters')->name('accountSitter')->middleware('auth');
+Route::post('/account/dual/update', 'Account\SupportController@updateDuals')->name('accountDual')->middleware('auth');
 
 /* ------------------ Account Alliance page --------------------------------*/
-Route::get('/account/alliance','Account\AllianceController@allianceOverview')->name('accountAlliance');
+Route::get('/account/alliance','Account\AllianceController@allianceOverview')->name('accountAlliance')->middleware('auth');
 
 
 /*----------------------------------------------------------------------------------*/
 /* ---------------------------- Profile Controller Page --------------------------- */
 /*----------------------------------------------------------------------------------*/
-Route::get('/profile','Profile\profileController@overview')->name('profile');
-Route::post('/profile/update','Profile\profileController@updateProfile')->name('profileUpdate');
+Route::get('/profile','Profile\profileController@overview')->name('profile')->middleware('auth');
+Route::post('/profile/update','Profile\profileController@updateProfile')->name('profileUpdate')->middleware('auth');
 
-Route::get('/profile/servers','Profile\profileController@servers')->name('profileServers');
-Route::post('/profile/servers/load','ServersController@process');
-
-
+Route::get('/profile/servers','Profile\profileController@servers')->name('profileServers')->middleware('auth');
+Route::post('/profile/servers/load','ServersController@process')->middleware('auth');
 
 
 /* ------------------------------------------------------------- */
@@ -139,99 +137,99 @@ Route::post('/servers','ServersController@process');
 /*-----------------------------------------------------------------------------------------------------------------------------*/
 /* -------------------------------------------------- Plus Page Routes ------------------------------------------------------- */
 /*-----------------------------------------------------------------------------------------------------------------------------*/
-Route::get('/plus','Plus\PlusController@index')->name('plus');					// Plus Menu main page
+Route::get('/plus','Plus\PlusController@index')->name('plus')->middleware('auth');					// Plus Menu main page
 
 /*-----------------------------------------------   Plus overview routes --------------------------------------------------*/
-Route::get('/plus/members','Plus\PlusController@members');                  // Plus members list
-Route::get('/plus/member/{id}','Plus\PlusController@member');               // Plus member details 
+Route::get('/plus/members','Plus\PlusController@members')->middleware('auth','plus');                  // Plus members list
+Route::get('/plus/member/{id}','Plus\PlusController@member')->middleware('auth','plus');               // Plus member details 
 
-Route::get('/plus/rankings','Plus\PlusController@tdbRoute');
+Route::get('/plus/rankings','Plus\PlusController@tdbRoute')->middleware('auth','plus');
 
 
 /* --------------------- Join Plus Group -------------------------- */
-Route::get('/plus/join/{link}','Plus\Leader\LeaderController@joinPlusGroup');
-Route::post('/plus/join','Plus\Leader\SubscriptionController@refreshLink');
+Route::get('/plus/join/{link}','Plus\Leader\LeaderController@joinPlusGroup')->middleware('auth','plus');
+Route::post('/plus/join','Plus\Leader\SubscriptionController@refreshLink')->middleware('auth','plus');
 
-Route::get('/plus/leave','Plus\Leader\LeaderController@showLeaveGroup')->name('plusLeave');
-Route::post('/plus/leave','Plus\Leader\LeaderController@leavePlusGroup');
+Route::get('/plus/leave','Plus\Leader\LeaderController@showLeaveGroup')->name('plusLeave')->middleware('auth','plus');
+Route::post('/plus/leave','Plus\Leader\LeaderController@leavePlusGroup')->middleware('auth','plus');
 
 
 /* ---------------------------------------------- Controller for Plus leader routes -------------------------------------- */
-Route::get('/leader/access','Plus\Leader\LeaderController@access');
-Route::post('/leader/access/add','Plus\Leader\LeaderController@addAccess');
-Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@updateAccess');
+Route::get('/leader/access','Plus\Leader\LeaderController@access')->middleware('auth','plus');
+Route::post('/leader/access/add','Plus\Leader\LeaderController@addAccess')->middleware('auth','plus');
+Route::get('/leader/access/update/{id}/{role}','Plus\Leader\LeaderController@updateAccess')->middleware('auth','plus');
 
-Route::get('/leader/rankings','Plus\PlusController@tdbRoute');
+Route::get('/leader/rankings','Plus\PlusController@tdbRoute')->middleware('auth','plus');
 
-Route::get('/leader/subscription','Plus\Leader\SubscriptionController@subscriptions');
-Route::post('/leader/subscription/message','Plus\Leader\SubscriptionController@messageUpdate');
-Route::post('/leader/subscription/options','Plus\Leader\SubscriptionController@optionsUpdate');
+Route::get('/leader/subscription','Plus\Leader\SubscriptionController@subscriptions')->middleware('auth','plus');
+Route::post('/leader/subscription/message','Plus\Leader\SubscriptionController@messageUpdate')->middleware('auth','plus');
+Route::post('/leader/subscription/options','Plus\Leader\SubscriptionController@optionsUpdate')->middleware('auth','plus');
 
 /* ----------------------- Discord Settings ---------------------------------------- */
-Route::get('/leader/discord','Plus\Leader\NotificationController@showDiscord');
-Route::post('/leader/discord','Plus\Leader\NotificationController@updateDiscord');
+Route::get('/leader/discord','Plus\Leader\NotificationController@showDiscord')->middleware('auth','plus');
+Route::post('/leader/discord','Plus\Leader\NotificationController@updateDiscord')->middleware('auth','plus');
 
 /* -------------------------------------------- Plus Resoruces Routes ---------------------------------------------------- */
 
 /* --------------- Resource Member routes --------------- */
-Route::get('/plus/resource','Plus\Resources\ResourceController@showTaskList')->name('plusRes');
-Route::get('/plus/resource/{id}','Plus\Resources\ResourceController@showTask');
-Route::post('/plus/resource/{id}','Plus\Resources\ResourceController@updateTask');
+Route::get('/plus/resource','Plus\Resources\ResourceController@showTaskList')->name('plusRes')->middleware('auth','plus');
+Route::get('/plus/resource/{id}','Plus\Resources\ResourceController@showTask')->middleware('auth','plus');
+Route::post('/plus/resource/{id}','Plus\Resources\ResourceController@updateTask')->middleware('auth','plus');
 /* --------------- Resource Leader routes  --------------- */
-Route::get('/resource','Plus\Resources\LeaderResourceController@resourceTaskList')->name('plusResLdr');
-Route::get('/resource/{id}','Plus\Resources\LeaderResourceController@resourceTask');
-Route::post('/resource/create','Plus\Resources\LeaderResourceController@createResourceTask');
-Route::post('/resource/update','Plus\Resources\LeaderResourceController@processResourceTask');	
+Route::get('/resource','Plus\Resources\LeaderResourceController@resourceTaskList')->name('plusResLdr')->middleware('auth','plus');
+Route::get('/resource/{id}','Plus\Resources\LeaderResourceController@resourceTask')->middleware('auth','plus');
+Route::post('/resource/create','Plus\Resources\LeaderResourceController@createResourceTask')->middleware('auth','plus');
+Route::post('/resource/update','Plus\Resources\LeaderResourceController@processResourceTask')->middleware('auth','plus');	
 
 /* -------------------------------------------- Plus Scout Routes ---------------------------------------------------- */
 
-Route::get('/plus/reports','Plus\Reports\ReportsController@showPlusReports');
-Route::post('/plus/reports/add','Plus\Reports\ReportsController@addPlusReports');
+Route::get('/plus/reports','Plus\Reports\ReportsController@showPlusReports')->middleware('auth','plus');
+Route::post('/plus/reports/add','Plus\Reports\ReportsController@addPlusReports')->middleware('auth','plus');
 
-Route::get('/plus/ldrrpts','Plus\Reports\ReportsController@showLeaderReports');
-Route::get('/plus/ldrrpts/delete/{id}','Plus\Reports\ReportsController@deleteLeaderReports');
+Route::get('/plus/ldrrpts','Plus\Reports\ReportsController@showLeaderReports')->middleware('auth','plus');
+Route::get('/plus/ldrrpts/delete/{id}','Plus\Reports\ReportsController@deleteLeaderReports')->middleware('auth','plus');
 
-Route::get('/plus/reports/hammers','Plus\Reports\ReportsController@showEnemyHammers');
-Route::post('/plus/reports/hammers/add','Plus\Reports\ReportsController@addEnemyHammer');
-Route::get('/plus/reports/hammers/{action}/{id}/{value?}','Plus\Reports\ReportsController@processEnemyHammer');
+Route::get('/plus/reports/hammers','Plus\Reports\ReportsController@showEnemyHammers')->middleware('auth','plus');
+Route::post('/plus/reports/hammers/add','Plus\Reports\ReportsController@addEnemyHammer')->middleware('auth','plus');
+Route::get('/plus/reports/hammers/{action}/{id}/{value?}','Plus\Reports\ReportsController@processEnemyHammer')->middleware('auth','plus');
 
-Route::get('/plus/reports/scouts','Plus\PlusController@tdbRoute');
+Route::get('/plus/reports/scouts','Plus\PlusController@tdbRoute')->middleware('auth','plus');
 
 /* -------------------------------------------- Plus Defense Routes ---------------------------------------------------- */
 
 /* -------------------- Plus member incoming Options -----------------------*/
-Route::get('/plus/incoming','Plus\Defense\Incoming\IncomingController@enterIncoming')->name('incoming');
-Route::post('/plus/incoming','Plus\Defense\Incoming\IncomingController@processIncoming');
-Route::post('/plus/incoming/update','Plus\Defense\Incoming\IncomingController@updateIncoming');
+Route::get('/plus/incoming','Plus\Defense\Incoming\IncomingController@enterIncoming')->name('incoming')->middleware('auth','plus');
+Route::post('/plus/incoming','Plus\Defense\Incoming\IncomingController@processIncoming')->middleware('auth','plus');
+Route::post('/plus/incoming/update','Plus\Defense\Incoming\IncomingController@updateIncoming')->middleware('auth','plus');
 
 /* -------------------- Plus Leader incoming Options -----------------------*/
-Route::get('/defense/incomings','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomings');
-Route::get('/defense/incomings/list','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomingsList');
+Route::get('/defense/incomings','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomings')->middleware('auth','plus');
+Route::get('/defense/incomings/list','Plus\Defense\Incoming\LeaderIncomingController@LeaderIncomingsList')->middleware('auth','plus');
 
-Route::post('/defense/incomings/update/comments','Plus\Defense\Incoming\LeaderIncomingController@updateWaveNotes');
-Route::get('/defense/incomings/update/{action}/{id}/{value}','Plus\Defense\Incoming\LeaderIncomingController@updateWaveDetails');
+Route::post('/defense/incomings/update/comments','Plus\Defense\Incoming\LeaderIncomingController@updateWaveNotes')->middleware('auth','plus');
+Route::get('/defense/incomings/update/{action}/{id}/{value}','Plus\Defense\Incoming\LeaderIncomingController@updateWaveDetails')->middleware('auth','plus');
 
-Route::post('/defense/incomings/cfd','Plus\Defense\Incoming\LeaderIncomingController@createCFD');
-Route::get('/defense/attacker/{id}','Plus\Defense\Incoming\LeaderIncomingController@showAttacker');
+Route::post('/defense/incomings/cfd','Plus\Defense\Incoming\LeaderIncomingController@createCFD')->middleware('auth','plus');
+Route::get('/defense/attacker/{id}','Plus\Defense\Incoming\LeaderIncomingController@showAttacker')->middleware('auth','plus');
 
 
 /* --------------- Plus group member CFD routes  --------------- */
-Route::get('/plus/defense','Plus\Defense\CFD\CFDController@defenseTaskList');
-Route::get('/plus/defense/{id}','Plus\Defense\CFD\CFDController@defenseTask');
-Route::post('/plus/defense/{id}','Plus\Defense\CFD\CFDController@updateDefenseTask');
+Route::get('/plus/defense','Plus\Defense\CFD\CFDController@defenseTaskList')->middleware('auth','plus');
+Route::get('/plus/defense/{id}','Plus\Defense\CFD\CFDController@defenseTask')->middleware('auth','plus');
+Route::post('/plus/defense/{id}','Plus\Defense\CFD\CFDController@updateDefenseTask')->middleware('auth','plus');
 
 /* --------------- Plus leader CFD options routes  --------------- */
-Route::get('/defense/cfd','Plus\Defense\CFD\LeaderCFDController@CFDList');
-Route::get('/defense/cfd/{id}','Plus\Defense\CFD\LeaderCFDController@CFDDetail');
-Route::get('/defense/cfd/troops/{id}/{uid}','Plus\Defense\CFD\LeaderCFDController@CFDTroops');
-Route::get('/defense/cfd/travel/{id}','Plus\Defense\CFD\LeaderCFDController@CFDTravel');
-Route::post('/defense/cfd/create','Plus\Defense\CFD\LeaderCFDController@createCFD');
-Route::post('/defense/cfd/update','Plus\Defense\CFD\LeaderCFDController@processCFD');
+Route::get('/defense/cfd','Plus\Defense\CFD\LeaderCFDController@CFDList')->middleware('auth','plus');
+Route::get('/defense/cfd/{id}','Plus\Defense\CFD\LeaderCFDController@CFDDetail')->middleware('auth','plus');
+Route::get('/defense/cfd/troops/{id}/{uid}','Plus\Defense\CFD\LeaderCFDController@CFDTroops')->middleware('auth','plus');
+Route::get('/defense/cfd/travel/{id}','Plus\Defense\CFD\LeaderCFDController@CFDTravel')->middleware('auth','plus');
+Route::post('/defense/cfd/create','Plus\Defense\CFD\LeaderCFDController@createCFD')->middleware('auth','plus');
+Route::post('/defense/cfd/update','Plus\Defense\CFD\LeaderCFDController@processCFD')->middleware('auth','plus');
 
 
 /* -------------------- Plus leader Search Defense -----------------------*/
-Route::get('/defense/search','Plus\Defense\Search\SearchDefenseController@show');
-Route::post('/defense/search','Plus\Defense\Search\SearchDefenseController@process');
+Route::get('/defense/search','Plus\Defense\Search\SearchDefenseController@show')->middleware('auth','plus');
+Route::post('/defense/search','Plus\Defense\Search\SearchDefenseController@process')->middleware('auth','plus');
 
 
 
@@ -239,52 +237,52 @@ Route::post('/defense/search','Plus\Defense\Search\SearchDefenseController@proce
 /* ---------------------------------------- Plus Offense Routes ------------------------------------------------- */
 
 /* -------------------- Plus member Offense Options -----------------------*/
-Route::get('/plus/offense','Plus\Offense\OffenseController@offenseTaskList');
-Route::post('/plus/offense/update','Plus\Offense\OffenseController@updateOffenseTask');
+Route::get('/plus/offense','Plus\Offense\OffenseController@offenseTaskList')->middleware('auth','plus');
+Route::post('/plus/offense/update','Plus\Offense\OffenseController@updateOffenseTask')->middleware('auth','plus');
 
 /* -------------------- Plus Leader Offense Options -----------------------*/
-Route::get('/offense/status','Plus\Offense\LeaderOffenseController@offensePlanList');
-Route::post('/offense/create','Plus\Offense\LeaderOffenseController@createOffensePlan');
+Route::get('/offense/status','Plus\Offense\LeaderOffenseController@offensePlanList')->middleware('auth','plus');
+Route::post('/offense/create','Plus\Offense\LeaderOffenseController@createOffensePlan')->middleware('auth','plus');
 
-Route::get('/offense/status/{id}','Plus\Offense\LeaderOffenseController@displayOffensePlan');
-Route::post('/offense/status/update','Plus\Offense\LeaderOffenseController@updateOffensePlan');
+Route::get('/offense/status/{id}','Plus\Offense\LeaderOffenseController@displayOffensePlan')->middleware('auth','plus');
+Route::post('/offense/status/update','Plus\Offense\LeaderOffenseController@updateOffensePlan')->middleware('auth','plus');
 
-Route::get('/offense/troops','Plus\Offense\LeaderSearchController@hammersList');
-Route::get('/offense/search','Plus\Offense\LeaderSearchController@searchOffense');
-Route::post('/offense/search','Plus\Offense\LeaderSearchController@resultOffense');
+Route::get('/offense/troops','Plus\Offense\LeaderSearchController@hammersList')->middleware('auth','plus');
+Route::get('/offense/search','Plus\Offense\LeaderSearchController@searchOffense')->middleware('auth','plus');
+Route::post('/offense/search','Plus\Offense\LeaderSearchController@resultOffense')->middleware('auth','plus');
 
 /* ----------------------- Plus Leader Offense make and edit plan ------------------------ */
-Route::get('/offense/plan/edit/{id}','Plus\Offense\OpsMakerController@showPlanLayout');
+Route::get('/offense/plan/edit/{id}','Plus\Offense\OpsMakerController@showPlanLayout')->middleware('auth','plus');
 /* ----------------------------------- D-D Version --------------------------------- */
 /* -- add and delete items - target & attacker -- */
-Route::post('/offense/plan/additem','Plus\Offense\OpsMakerController@addOpsItem');
-Route::get('/offense/plan/delitem/{plan}/{type}/{id}','Plus\Offense\OpsMakerController@delOpsItem');
+Route::post('/offense/plan/additem','Plus\Offense\OpsMakerController@addOpsItem')->middleware('auth','plus');
+Route::get('/offense/plan/delitem/{plan}/{type}/{id}','Plus\Offense\OpsMakerController@delOpsItem')->middleware('auth','plus');
 /* -- add and delete waves in the plan -- */
-Route::get('/offense/plan/addwave/{plan}/{id}','Plus\Offense\OpsMakerController@addWave');
-Route::post('/offense/plan/deletewave','Plus\Offense\OpsMakerController@deleteWave');
-Route::post('/offense/plan/editwave','Plus\Offense\OpsMakerController@editWave');
+Route::get('/offense/plan/addwave/{plan}/{id}','Plus\Offense\OpsMakerController@addWave')->middleware('auth','plus');
+Route::post('/offense/plan/deletewave','Plus\Offense\OpsMakerController@deleteWave')->middleware('auth','plus');
+Route::post('/offense/plan/editwave','Plus\Offense\OpsMakerController@editWave')->middleware('auth','plus');
 
 /* ----------------------- Plus Leader Offense archive plan options ------------------------ */
-Route::get('/offense/archive','Plus\Offense\offenseArchiveController@archiveList');
-Route::get('/offense/archive/{id}','Plus\Offense\offenseArchiveController@displayArchivePlan');
-Route::post('/offense/archive/update','Plus\Offense\offenseArchiveController@updateArchivePlan');
+Route::get('/offense/archive','Plus\Offense\offenseArchiveController@archiveList')->middleware('auth','plus');
+Route::get('/offense/archive/{id}','Plus\Offense\offenseArchiveController@displayArchivePlan')->middleware('auth','plus');
+Route::post('/offense/archive/update','Plus\Offense\offenseArchiveController@updateArchivePlan')->middleware('auth','plus');
 
 
 /* ---------------------- Plus member Artifact Options ------------------------------- */
 
 
 /* ------------------------------- Plus leader Artifact Options -------------------------------- */
-//Route::get('/artifacts','Plus\Artifacts\artifactLeaderController@Overview')->name('ldrArt');
-Route::get('/artifacts','Plus\PlusController@tdbRoute')->name('ldrArt');
-//Route::get('/artifacts/schedule','Plus\Artifacts\artifactLeaderController@schedule');
-Route::get('/artifacts/schedule','Plus\PlusController@tdbRoute');
+//Route::get('/artifacts','Plus\Artifacts\artifactLeaderController@Overview')->name('ldrArt')->middleware('auth','plus');
+Route::get('/artifacts','Plus\PlusController@tdbRoute')->name('ldrArt')->middleware('auth','plus');
+//Route::get('/artifacts/schedule','Plus\Artifacts\artifactLeaderController@schedule')->middleware('auth','plus');
+Route::get('/artifacts/schedule','Plus\PlusController@tdbRoute')->middleware('auth','plus');
 
 
-Route::get('/artifacts/hammers','Plus\Artifacts\artifactCaptureController@hammerDisplay');
-Route::post('/artifacts/hammers','Plus\Artifacts\artifactCaptureController@hammerResult');
+Route::get('/artifacts/hammers','Plus\Artifacts\artifactCaptureController@hammerDisplay')->middleware('auth','plus');
+Route::post('/artifacts/hammers','Plus\Artifacts\artifactCaptureController@hammerResult')->middleware('auth','plus');
 
-Route::get('/artifacts/capture','Plus\Artifacts\artifactCaptureController@captureDisplay');
-Route::post('/artifacts/capture','Plus\Artifacts\artifactCaptureController@captureResult');
+Route::get('/artifacts/capture','Plus\Artifacts\artifactCaptureController@captureDisplay')->middleware('auth','plus');
+Route::post('/artifacts/capture','Plus\Artifacts\artifactCaptureController@captureResult')->middleware('auth','plus');
 
 
 
