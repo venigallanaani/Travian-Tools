@@ -76,8 +76,12 @@ class PlanController extends Controller
                     $array['NAME'] = $plan->plan_name;
                     $array['VILLAGE'] = $plan->village;
                     $array['VID'] = $plan->vid;
-                    $array['CREATE']=$plan->create_date;
-                    $array['UPDATE']=$plan->update_date;
+                    $array['CREATE']=Carbon::createFromTimestamp(strtotime($plan->create_date))->format(explode(' ',$request->session()->get('dateFormat'))[0]);
+                    if($plan->update_date!=null){
+                        $array['UPDATE']=Carbon::createFromTimestamp(strtotime($plan->update_date))->format(explode(' ',$request->session()->get('dateFormat'))[0]);
+                    }else{
+                        $array['UPDATE']=$plan->update_date;
+                    }
                     $array['COMMENTS']=$plan->comments;
                     
                     $planned_upkeep=0;

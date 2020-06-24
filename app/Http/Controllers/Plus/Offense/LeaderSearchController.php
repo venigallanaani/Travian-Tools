@@ -93,10 +93,9 @@ class LeaderSearchController extends Controller
                     
                     $troops[$i]['tsq']=$village->Tsq;
                     $troops[$i]['type']=$village->type;
-                    $troops[$i]['update']=explode(" ",$village->updated_at)[0];
+                    $troops[$i]['update']=explode(' ',Carbon::parse($village->updated_at)->format($request->session()->get('dateFormat')))[0];
                     
-                    $date = Carbon::parse($troops[$i]['update']);
-                    
+                    $date = $troops[$i]['update'];                    
                     if($date < $today->subDays(7)){
                         if($date < $today->subDays(14)){
                             $troops[$i]['color'] = 'text-danger';
@@ -124,7 +123,11 @@ class LeaderSearchController extends Controller
         session(['title'=>'Offense']);
         session(['menu'=>4]);
         
-        return view("Plus.Offense.Search.search");
+        $input['x']=0; $input['y']=0; $input['off']=0;
+        $input['siege']=null;         $input['cav']=null;
+        $input['time']=null;
+        
+        return view("Plus.Offense.Search.search")->with(['input'=>$input]);
         
     }
     
@@ -133,11 +136,16 @@ class LeaderSearchController extends Controller
         session(['title'=>'Offense']);
         session(['menu'=>4]);
         
-        $x=Input::get('xCor');
-        $y=Input::get('yCor');
-        $off=Input::get('offNeed');
+        $x=intval(Input::get('xCor'));
+        $y=intval(Input::get('yCor'));
+        $off=intval(Input::get('offNeed'));
         $siege=Input::get('siege');
         $cav=Input::get('cavalry');
+        //dd($request);
+        
+        $input['x']=$x;                 $input['y']=$y; 
+        $input['off']=$off;             $input['time']=null;
+        $input['siege']=$siege;         $input['cav']=$cav;        
         
         date_default_timezone_set($request->session()->get('server.tmz'));
         $now = strtotime(Carbon::now());    $tribes = array();      $troops=array();
@@ -211,6 +219,7 @@ class LeaderSearchController extends Controller
                     
                     if($troop['upkeep']>=$off){
                         if(Input::get('targetTime')!=null){
+                            $input['time']=Input::get('targetTime');
                             $target=strtotime(Input::get('targetTime'));                            
                             if($troop['tsq']>0){
                                 if($troop['dist']<=20){
@@ -222,9 +231,12 @@ class LeaderSearchController extends Controller
                                 $time=$troop['dist']/$troop['speed'];
                             }
                             
+                            $time=$time/$request->session()->get('server.speed');
+                            
                             $start=$target-intval(ceil($time*(60*60)));
                             if($now<$start){
-                                $troop['start']=date('Y-m-d H:i:s',$start);
+                                //$troop['start']=date('Y-m-d H:i:s',$start);
+                                $troop['start'] =Carbon::createFromTimestamp($start)->format($request->session()->get('dateFormat'));
                                 $troops[]=$troop;
                             }                            
                         }else{
@@ -236,8 +248,7 @@ class LeaderSearchController extends Controller
             }
         }
         
-        //dd($troops);
-        return view("Plus.Offense.Search.results")->with(['troops'=>$troops])
+        return view("Plus.Offense.Search.results")->with(['troops'=>$troops])->with(['input'=>$input])
                         ->with(['tribes'=>$tribes])->with(['target'=>Input::get('targetTime')]);
     }
    

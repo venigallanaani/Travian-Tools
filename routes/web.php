@@ -115,6 +115,11 @@ Route::post('/account/dual/update', 'Account\SupportController@updateDuals')->na
 /* ------------------ Account Alliance page --------------------------------*/
 Route::get('/account/alliance','Account\AllianceController@allianceOverview')->name('accountAlliance')->middleware('auth');
 
+/* ------------------ Account Timings page --------------------------------*/
+Route::get('/account/timings','Account\TimingsController@displayTimings')->name('accountTimings')->middleware('auth');
+Route::get('/account/timings/update/{day}/{time}','Account\TimingsController@updateTimings')->middleware('auth');
+Route::post('/account/timings/update','Account\TimingsController@updateTimezone')->middleware('auth');
+
 
 /*----------------------------------------------------------------------------------*/
 /* ---------------------------- Profile Controller Page --------------------------- */
@@ -142,12 +147,13 @@ Route::get('/plus','Plus\PlusController@index')->name('plus')->middleware('auth'
 /*-----------------------------------------------   Plus overview routes --------------------------------------------------*/
 Route::get('/plus/members','Plus\PlusController@members')->middleware('auth','plus');                  // Plus members list
 Route::get('/plus/member/{id}','Plus\PlusController@member')->middleware('auth','plus');               // Plus member details 
+Route::get('/plus/timings/{id}','Plus\PlusController@timings')->middleware('auth','plus');               // Plus member details 
 
 Route::get('/plus/rankings','Plus\PlusController@tdbRoute')->middleware('auth','plus');
 
 
 /* --------------------- Join Plus Group -------------------------- */
-Route::get('/plus/join/{link}','Plus\Leader\LeaderController@joinPlusGroup')->middleware('auth','plus');
+Route::get('/plus/join/{link}','Plus\Leader\LeaderController@joinPlusGroup')->middleware('auth');
 Route::post('/plus/join','Plus\Leader\SubscriptionController@refreshLink')->middleware('auth','plus');
 
 Route::get('/plus/leave','Plus\Leader\LeaderController@showLeaveGroup')->name('plusLeave')->middleware('auth','plus');

@@ -20,27 +20,27 @@
     				<table class="text-center mx-auto">
     					<tr>
     						<td colspan="2">
-		    					<p class="h6">X: <input name="xCor" type="number" style="width:4em" required value="0"> | 
-									Y: <input name="yCor" type="number" style="width:4em" required value="0"></p>
+		    					<p class="h6">X: <input name="xCor" type="number" style="width:4em" required value="{{$input['x']}}"> | 
+									Y: <input name="yCor" type="number" style="width:4em" required value="{{$input['y']}}"></p>
     						</td>
     					</tr>
 						<tr>
 							<td colspan="2">
 								<p class="h6">Offense (<img alt="" src="/images/x.gif" class="res upkeep">): 
-    								<input name="offNeed" type="number" style="width:7em" required min="0"></p>
+    								<input name="offNeed" type="number" style="width:7em" required min="0" value="{{$input['off']}}"></p>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p class="h6">Target Time: <input name="targetTime" type="text" size="20" class="dateTimePicker"></p>
+								<p class="h6">Target Time: <input name="targetTime" type="text" size="20" class="dateTimePicker" value="{{$input['time']}}"></p>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<p class="h6"><input type="checkbox" name="siege" value="yes"> No Siege/Palace Units</p>
+								<p class="h6 px-2"><input type="checkbox" name="siege" value="yes" @if($input['siege']!=null) checked @endif> No Siege/Palace Units</p>
 							</td>
 							<td>
-								<p class="h6"><input type="checkbox" name="cavalry" value="yes"> Cavalry Only</p>
+								<p class="h6 px-2"><input type="checkbox" name="cavalry" value="yes" @if($input['cav']!=null) checked @endif> Cavalry Only</p>
 							</td>
 						</tr> 				
     				</table>

@@ -23,7 +23,10 @@ class SearchDefenseController extends Controller
         session(['menu'=>3]);
         session(['title'=>'Defense']);
         
-        return view("Plus.Defense.Search.search");
+        $input['x']=0;          $input['y']=0;      $input['def']=0;
+        $input['time']=null;    $input['cav']=null;
+        
+        return view("Plus.Defense.Search.search")->with(['input'=>$input]);
         
     }
     
@@ -31,11 +34,14 @@ class SearchDefenseController extends Controller
         session(['menu'=>3]);
         session(['title'=>'Defense']);
         
-        $x=Input::get('xCor');
-        $y=Input::get('yCor');
-        $def=Input::get('defNeed');
+        $x=intval(Input::get('xCor'));          $y=intval(Input::get('yCor'));
+        $def=intval(Input::get('defNeed'));     $cav=Input::get('cavalry');
+        
+        $input['x']=$x;                 $input['y']=$y;
+        $input['def']=$def;             $input['time']=null;
+        $input['cav']=$cav;
+        
         if($def==0){    $def=1;     }
-        $cav=Input::get('cavalry');
         
         date_default_timezone_set($request->session()->get('server.tmz'));
         $now = strtotime(Carbon::now());    $tribes = array();      $troops=array();
@@ -115,11 +121,12 @@ class SearchDefenseController extends Controller
                                 }
                             }else{
                                 $time=$troop['dist']/$troop['speed'];
-                            }
+                            }                            
+                            $time = $time/$request->session()->get('server.speed');
                             
                             $start=$target-intval(ceil($time*(60*60)));
-                            if($now<$start){
-                                $troop['start']=$start;
+                            if($now<$start){   
+                                $troop['start'] =Carbon::createFromTimestamp($start)->format($request->session()->get('dateFormat'));
                                 $troops[]=$troop;
                             }
                         }else{
@@ -139,7 +146,7 @@ class SearchDefenseController extends Controller
             array_multisort($keys, SORT_DESC, $troops);
         }
         
-        return view("Plus.Defense.Search.results")->with(['troops'=>$troops])
+        return view("Plus.Defense.Search.results")->with(['troops'=>$troops])->with(['input'=>$input])
                         ->with(['tribes'=>$tribes])->with(['target'=>Input::get('targetTime')]);        
     }
 }

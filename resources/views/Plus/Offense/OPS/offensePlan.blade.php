@@ -51,11 +51,8 @@
             		<p class="h6">No attacks are planned yet</p>
             	</div>            
             @else	
-        		<div class="float-md-left p-2 shadow rounded mx-auto" >
-                	<div class="mx-auto">
-                		<svg id="sankeyChart" width="800" height="300" style="margin:auto"></svg>
-                		
-                	</div>
+        		<div class="p-2 shadow rounded mx-auto col-md-11" >
+            		<svg id="sankeyChart" width="800" height="300" style="margin:auto"></svg>                		
                 </div>
 				<div class="text-center col-md-11 mx-auto my-5 p-0">
 					<table class="table align-middle table-sm table-hover" id="offenseplan">
@@ -101,7 +98,7 @@
         							@elseif($wave['status']=="MISS")
         								<span style="font-weight:bold;color:red">Missed</i></span>
         							@else
-        								<span id="timer" class="font-weight-bold" data-toggle="tooltip" data-placement="top" title="Send Time Countdown">00:00:00</span>
+        								<span class="font-weight-bold" data-toggle="tooltip" data-placement="top" title="Send Time Countdown">00:00:00</span>
         							@endif
     							@endif
     							</td>							
@@ -118,7 +115,7 @@
 		</div>
 @endsection
 @push('scripts')
-    @if(!$sankeyData==null)
+    @if($sankeyData!=null)
     	<script type="text/javascript" src="{{ asset('js/d3.v3.js')	}}"></script>
 		<script type="text/javascript" src="{{ asset('js/sankey.js')}}"></script>
 		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

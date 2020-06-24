@@ -113,7 +113,7 @@
 	@if(count($tasks)>0)	
 	<script>
 		@foreach($tasks as $task)
-			countDown("{{$task->task_id}}","{{$task->target_time}}","{{Session::get('timezone')}}");
+			countDown("{{$task->task_id}}","{{$task->target_time}}","{{Session::get('timezone')}}","{{Session::get('dateFormatLong')}}");
 		@endforeach
 	</script>
 	@endif   

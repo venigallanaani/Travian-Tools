@@ -42,7 +42,7 @@
 						<td class="px-1 py-0"><img alt="" src="/images/x.gif" class="units {{$tribes[$troop['tribe']][9]['image']}}"></td>
 						<td rowspan="2" class="align-middle"><strong>{{number_format($troop['upkeep'])}}</strong></td>
 					@if($target !=null)
-						<td rowspan="2" class="align-middle">{{date('Y-m-d H:i:s',$troop['start'])}}</td>		
+						<td rowspan="2" class="align-middle">{{$troop['start']}}</td>		
 					@endif				
 					</tr>
 					<tr>

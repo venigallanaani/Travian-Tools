@@ -16,6 +16,7 @@ use App\Players;
 use App\OPSWaves;
 use App\Subscription;
 use App\Incomings;
+use App\Timings;
 
 class PlusController extends Controller
 {
@@ -66,14 +67,16 @@ class PlusController extends Controller
                 $def = CFDTask::where('plus_id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))
                         ->where('status','ACTIVE')->get()->count();               
-               
-                $off = OPSWaves::where('plus_id',$plus->plus_id)
-                        ->where('server_id',$request->session()->get('server.id'))
-                        ->where('a_uid',$account->uid)->get()->count();
-               
+                
+                $sqlStr = "SELECT count(*) as count FROM offensewaves a, offenseplans b ".
+                            "WHERE a.server_id = '".$request->session()->get('server.id')."' AND b.server_id='".$request->session()->get('server.id')."' ".
+                            "AND b.plus_id='".$request->session()->get('plus.plus_id')."' AND a.plus_id = b.plus_id AND b.status='PUBLISH' AND a.plan_id=b.id;";
+                $off = DB::select(DB::raw($sqlStr));
+             
                 $subscription = Subscription::where('id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))->first();
 
+                $subscription->message_date = Carbon::parse($subscription->message_date)->format(explode(' ',$request->session()->get('dateFormat'))[0]);
                 $request->session()->forget('timezone');
                 $request->session()->put('timezone',$subscription->timezone);
                 
@@ -82,12 +85,13 @@ class PlusController extends Controller
                 
                 $request->session()->forget('slack');
                 $request->session()->put('slack',$subscription->slack);
+                
                         
                 $counts=array(
                    'inc'=>$inc,
                    'res'=>$res,
                    'def'=>$def,
-                   'off'=>$off
+                   'off'=>$off[0]->count
                 );  
                 return view('Plus.General.overview')->with(['counts'=>$counts])->with(['subscription'=>$subscription]);
             }else{
@@ -225,4 +229,64 @@ class PlusController extends Controller
         
         return view('Plus.TBD');
     }
+    
+    public function timings(Request $request, $id){
+        
+        session(['title'=>'Plus']);
+        
+        if($request->session()->get('plus.leader')==1 || $request->session()->get('plus.defense')==1){
+            
+            $player = Account::where('server_id',$request->session()->get('server.id'))
+                                    ->where('user_id',$id)->first();
+            
+            $rows = Account::where('server_id',$request->session()->get('server.id'))
+                                    ->where('plus',$request->session()->get('plus.id'))
+                                    ->where('account_id',$player->account_id)->get();
+            
+            $week=array('sunday','monday','tuesday','wednesday','thursday','friday','saturday');        $accounts = null;
+             
+            if(count($rows)>0){     
+                $i=0;
+                foreach($rows as $account){
+                    
+                    $row = Timings::where('server_id',$request->session()->get('server.id'))
+                                        ->where('account_id',$account->account_id)->where('id',$account->user_id)->first();
+                    if($row!=null){
+                        $row=$row->toArray();
+                        
+                        $accounts[$i]['id']         =$row['id'];
+                        $accounts[$i]['name']       =$account->user_name;
+                        $accounts[$i]['timezone']   =$row['timezone'];
+                        
+                        $input[0]['timezone']=$row['timezone'];
+                        if($row['sunday']!=null)    {   $input[0]['sunday']=explode('|',$row['sunday']);         } else{  $input[0]['sunday']=array('');        }
+                        if($row['monday']!=null)    {   $input[0]['monday']=explode('|',$row['monday']);         } else{  $input[0]['monday']=array('');        }
+                        if($row['tuesday']!=null)   {   $input[0]['tuesday']=explode('|',$row['tuesday']);       } else{  $input[0]['tuesday']=array('');       }
+                        if($row['wednesday']!=null) {   $input[0]['wednesday']=explode('|',$row['wednesday']);   } else{  $input[0]['wednesday']=array('');     }
+                        if($row['thursday']!=null)  {   $input[0]['thursday']=explode('|',$row['thursday']);     } else{  $input[0]['thursday']=array('');      }
+                        if($row['friday']!=null)    {   $input[0]['friday']=explode('|',$row['friday']);         } else{  $input[0]['friday']=array('');        }
+                        if($row['saturday']!=null)  {   $input[0]['saturday']=explode('|',$row['saturday']);     } else{  $input[0]['saturday']=array('');      }
+                        
+                        $result=accountTimings($input,$request->session()->get('timezone'));
+                        $accounts[$i]['timings']=$result;
+                        
+                        $i++;
+                    }                
+                }
+            }
+            //dd($accounts);
+            return view('Plus.General.timings')->with(['accounts'=>$accounts])->with(['week'=>$week])->with(['name'=>$player->account]);
+            
+        }else{            
+            Session::flash('warning',"You don't have permissions to view this page");
+            return Redirect::to('/plus/members');            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
 }

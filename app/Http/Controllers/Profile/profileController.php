@@ -82,11 +82,12 @@ class profileController extends Controller
         }
         
         $request->session()->forget('dateFormat');
-        $request->session()->forget('dateFormatLong');
-        $request->session()->forget('raid');
-        
         $request->session()->put('dateFormat',Input::get('dateformat'));
+        
+        $request->session()->forget('dateFormatLong');
         $request->session()->put('dateFormatLong',$dateLong);
+        
+        $request->session()->forget('raid');
         $request->session()->put('raid',0);
         
         return Redirect::back();

@@ -33,6 +33,7 @@ class CreateOffensewavesTable extends Migration
             $table->integer('waves');
             $table->enum('type',['Real','Fake','Cheif','Scout','Other']);
             $table->string('unit');
+            $table->string('starttime')->nullable();
             $table->string('landtime');
             $table->string('comments')->nullable();
             $table->enum('status',['NEW','DRAFT','READY','LAUNCH','SKIP','OTHER'])->default('NEW');

@@ -21,13 +21,15 @@ class CFDController extends Controller
         
         session(['title'=>'Plus']);
         
-        $tasks = array();   $withdraws = array();   $i=0;   $j=0;
+        date_default_timezone_set($request->session()->get('timezone'));
+        $time = Carbon::now()->format('Y-m-d H:i:s');        
+        $tasks = array();   $withdraws = array();   $i=0;   $j=0;       
         
         $CFDs=CFDTask::where('server_id',$request->session()->get('server.id'))
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
-                    ->where('status','<>','COMPLETE')
+                    ->where('status','<>','COMPLETE')->where('target_time','>',$time)
                     ->orderBy('target_time','asc')->get();
-        
+       
         foreach($CFDs as $CFD){            
             if($CFD->status=='WITHDRAW'){
                 
@@ -217,7 +219,7 @@ class CFDController extends Controller
         }else{
             Session::flash('danger','Reinforcement Village not found');
         }                
-        return Redirect::to('/plus/defense/'.$id) ;
+        return Redirect::to('/plus/defense/'.$id);
     }    
     
     

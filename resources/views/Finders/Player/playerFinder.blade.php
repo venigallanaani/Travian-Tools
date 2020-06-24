@@ -31,7 +31,5 @@
     </div>
 	
 	@yield('result')  
-
-
-
+	
 @endsection

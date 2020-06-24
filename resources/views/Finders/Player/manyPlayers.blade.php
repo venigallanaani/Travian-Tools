@@ -8,14 +8,14 @@
             <strong>Search Results</strong>
         </div>
         <div class="card-text mx-auto text-center col-md-10">
-            <table class="table table-border-success small table-sm">
+            <table class="table table-border-success small table-sm" id="sortable">
                 <tr>
-                    <th class="">Rank</th>
+                    <th class="sort">Rank</th>
                     <th class="">Tribe</th>
-                    <th class="">Name</th>
-                    <th class="">Alliance</th>                    
-                    <th class="">Population</th>
-                    <th class="">Villages</th>
+                    <th class="sort">Name</th>
+                    <th class="sort">Alliance</th>                    
+                    <th class="sort">Population</th>
+                    <th class="sort">Villages</th>
                 </tr>
                 @foreach($players as $player)
                     <tr>
@@ -34,3 +34,4 @@
     </div>
     
 @endsection
+

@@ -112,10 +112,10 @@ class OpsMakerController extends Controller
         
         $player=$village->uid.'_'.$village->vid;
         if($village->id==1){        $tribe = "ROMAN";
-        }elseif($village->id==2){  $tribe = "TUETON";
-        }elseif($village->id==3){  $tribe = "GAUL";
-        }elseif($village->id==6){  $tribe = "EGYPTIAN";
-        }elseif($village->id==7){  $tribe = "HUN";
+        }elseif($village->id==2){   $tribe = "TUETON";
+        }elseif($village->id==3){   $tribe = "GAUL";
+        }elseif($village->id==6){   $tribe = "EGYPTIAN";
+        }elseif($village->id==7){   $tribe = "HUN";
         }else{  $tribe = "NATAR";   }
         
 // Check if the item already exists in Ops plan        
@@ -418,8 +418,7 @@ class OpsMakerController extends Controller
                                     'tother'=>$tother
                                 ]);
 
-    }
-    
+    } 
     
     
     public function editWave(Request $request) {
@@ -429,7 +428,7 @@ class OpsMakerController extends Controller
         $type=$request->type;       $notes=$request->notes;
         $landTime=$request->landTime;
         
-        $message = null;    $name='';   $att_id=null; 
+        $message = null;    $name='';   $att_id=null;   $comment=null;
         //dd($request);
         $wave = OPSwaves::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
@@ -455,21 +454,49 @@ class OpsMakerController extends Controller
             $message = "Land Time not filled";
         }else{
             date_default_timezone_set($request->session()->get('timezone'));
-            $time = strtotime($landTime) - strtotime(Carbon::now());
+            $now = strtotime(Carbon::now());
+            $time = (strtotime($landTime) - $now)/3600;
             if($time<0 && $message==null){
                 $message = "Selected Landing time is old than current time, please select another land time.";
-                $landTime='';
+                $landTime='';       $startTime='';
+                
+            }else{
+                $dist = (($wave->a_x-$wave->d_x)**2+($wave->a_y-$wave->d_y)**2)**0.5;
+                $village = Troops::where('server_id',$request->session()->get('server.id'))
+                            ->where('plus_id',$request->session()->get('plus.plus_id'))
+                            ->where('x',$wave->a_x)->where('y',$wave->a_y)->orderBy('updated_at','desc')->first();
+                            
+                if($dist > 20 && $village->Tsq > 0){
+                    $dist = 20 + ($dist-20)/(1+0.1*$village->Tsq*$request->session()->get('server.tsq'));
+                }
+                
+                $dist = $dist/($village->arty*$request->session()->get('server.speed'));
+                $troop = Units::select('speed')->where('id',$unit)->first();
+                $startTime=strtotime($landTime)-($dist/($troop->speed*$request->session()->get('server.speed')))*3600;
+                
+                if($startTime<$now){
+                    $message = "Start time of the wave old than current time, please select another land time.";
+                    $landTime='';       $startTime='';
+                }else{
+                    $startTime=Carbon::createFromTimestamp($startTime);
+                    $result = canTheyLaunchAttack($request, $attacker->uid, $request->session()->get('timezone'), $startTime->format('Y-m-d H:i:s'));
+                    
+                    if(!$result){
+                        $comment = "Warning : Player will not be online to send wave at ".$startTime->format($request->session()->get('dateFormat'));
+                    }
+                }                
+                
             }
         }
         
         $areal=0;   $afake=0;   $aother=0;
         $treal=0;   $tfake=0;   $tother=0;        
+        $real=0;    $fake=0;    $other=0;
+        $areal=$attacker->real;         $afake=$attacker->fake;         $aother=$attacker->other;
+        $treal=$target->real;           $tfake=$target->fake;           $tother=$target->other;
         
-        if($message==null){  
-            $real=0;    $fake=0;    $other=0;
-            $areal=$attacker->real;         $afake=$attacker->fake;         $aother=$attacker->other;
-            $treal=$target->real;           $tfake=$target->fake;           $tother=$target->other;
-            
+        if($message==null){    
+            $message=$comment;
             if(strtoupper($type)=="REAL"){          $real=$waves;
             }elseif(strtoupper($type)=="FAKE"){     $fake=$waves;
             }else{                                  $other=$waves;
@@ -489,6 +516,7 @@ class OpsMakerController extends Controller
                         ->update([  'waves'=>$waves,
                                     'type'=>$type,
                                     'unit'=>$unit,
+                                    'starttime'=>$startTime->format('Y-m-d H:i:s'),
                                     'landtime'=>$landTime,
                                     'notes'=>$notes,
                                     'status'=>'DRAFT'                            
@@ -519,7 +547,9 @@ class OpsMakerController extends Controller
                                 ]);
             $name = Units::select('name')->where('id',$unit)->first();
             $att_id = $attacker->item_id;
-            $message = 'Success';
+            if($message==null){
+                $message = 'Success';
+            }            
         }
         
         return response()->json([   'message'=>$message,

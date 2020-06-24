@@ -132,8 +132,8 @@
         				var row = $(row);
         				var id = row.attr("id");
         				if(id !== 'header'){
-							var start = row.find('#start').text();
-							var dist = new Date(start).getTime()-new Date(moment()).getTime();
+							var start = moment(row.find('#start').text(),"{{Session::get('dateFormatLong')}}").format('YYYY-MM-DD HH:mm:ss');
+							var dist = new Date(start).getTime()-new Date(moment().format('YYYY-MM-DD HH:mm:ss')).getTime();
 							
 							if(dist<0){
         			      		row.find('#timer').text("00:00:00");

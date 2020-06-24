@@ -26,13 +26,12 @@ class AccountController extends Controller
 
     	session(['title'=>'Account']);
     	
-    	if(!$request->session()->has('server.id')){    	    
+    	if(!$request->session()->has('server.id')){
     	    
     	    return view('Account.template');    	    
     	    
     	}    	
-    	if(Auth::check()){
-    	    
+    	if(Auth::check()){    	    
     	    $account=Account::where('server_id',$request->session()->get('server.id'))
     	                   ->where('user_id',Auth::user()->id)->first();
     	    //dd($account);
@@ -124,6 +123,9 @@ class AccountController extends Controller
        
         $account=Account::where('server_id',$request->session()->get('server.id'))
                     ->where('user_id',Auth::user()->id)->first();
+        if($account==null){
+            return Redirect::to('/account');
+        }
         $duals = Account::where('server_id',$request->session()->get('server_id'))
                     ->where('account_id',$account->account_id)->get();          
        

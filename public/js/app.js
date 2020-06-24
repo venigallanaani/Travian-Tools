@@ -4,33 +4,33 @@ function checkTime(i) {
 	return (i < 10) ? "0" + i : i;
 }
 
-function countDown(elementId, date, zone) {
-    var countDownDate = new Date(date).getTime();
+function countDown(elementId, date, zone, dateFormat) {
 
     var x = setInterval(function() {
+    	var countDownDate = new Date(moment(date,dateFormat).format('YYYY-MM-DD HH:mm:ss')).getTime();    	
+    	var time=moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');   
+    	
+    	var now= new Date(time).getTime();     
+    	var distance = countDownDate - now;
 
-      var time=moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');   
-      var now= new Date(time).getTime();      
+    	var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    	var hours = days * 24 + Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      var distance = countDownDate - now;
-
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = days * 24 + Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      hours = checkTime(hours);
-      minutes = checkTime(minutes);
-      seconds = checkTime(seconds);
-
-      document.getElementById(elementId).innerHTML = hours + ":"+ minutes + ":" + seconds;
-      document.getElementById(elementId).style.color = "blue";
+    	hours = checkTime(hours);
+    	minutes = checkTime(minutes);
+    	seconds = checkTime(seconds);
       
-      if (distance < 0) {
-        clearInterval(x);
-        document.getElementById(elementId).innerHTML = "00:00:00";
-		document.getElementById(elementId).style.color = "red";
-      }
+      
+    	document.getElementById(elementId).innerHTML = hours + ":"+ minutes + ":" + seconds;
+    	document.getElementById(elementId).style.color = "blue";
+      
+    	if (distance < 0) {
+    		clearInterval(x);
+    		document.getElementById(elementId).innerHTML = "00:00:00";
+    		document.getElementById(elementId).style.color = "red";
+    	}
     }, 1000); 
 }
 

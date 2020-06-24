@@ -8,7 +8,7 @@
             <strong>Finders Overview</strong>
         </div>
         <div class="card-text">
-            <p class="col-md-9 col-9 mx-auto align-middle pt-2">Finders will help you with finding details on the server such as player, alliance, neighbours, or inactive players.</p>
+            <p class="col-md-10 col-10 mx-auto align-middle pt-2">Finders will help you with finding details on the server such as player, alliance, neighbours, or inactive players.</p>
             <table class="table table-borderless col-md-10 col-10 mx-auto">
                 <tr>
                     <td class="align-middle h6" style="width:10em"><a href="{{route('findPlayer')}}" class="text-success"><strong>Player Finder</strong></a></td>

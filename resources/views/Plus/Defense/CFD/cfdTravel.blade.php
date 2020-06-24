@@ -34,8 +34,8 @@
                 	</thead>
             	@foreach($villages as $village)
             		<tr class="">
-            			<td rowspan="2" class="px-1 py-1"><a href="{{route('findPlayer')}}/{{$village['PLAYER']}}/1" target="_blank">{{$village['PLAYER']}}</a></td>
-            			<td rowspan="2" class="px-1 py-1"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village['X']}}&y={{$village['Y']}}" target="_blank">{{$village['VILLAGE']}}</a></td>
+            			<td rowspan="2" class="align-middle"><a href="{{route('findPlayer')}}/{{$village['PLAYER']}}/1" target="_blank">{{$village['PLAYER']}}</a></td>
+            			<td rowspan="2" class="align-middle"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$village['X']}}&y={{$village['Y']}}" target="_blank">{{$village['VILLAGE']}}</a></td>
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][0]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][0]['IMAGE']}}"></td>
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][1]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][1]['IMAGE']}}"></td>
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][2]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][2]['IMAGE']}}"></td>
@@ -46,9 +46,14 @@
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][7]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][7]['IMAGE']}}"></td>
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][8]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][8]['IMAGE']}}"></td>
             			<td class="py-0 px-1" data-toggle="tooltip" data-placement="top" title="{{$village['UNITS'][9]['NAME']}}"><img alt="" src="/images/x.gif" class="units {{$village['UNITS'][9]['IMAGE']}}"></td>            			
-            			<td rowspan="2" class="px-1 py-1 font-weight-bold">{{number_format($village['UPKEEP'])}}</td>
-            			<td rowspan="2" class="px-1 py-1">{{$village['TRAVEL']}}</td>
-            			<td rowspan="2" class="px-1 py-1">{{$village['START']}}</td>            	
+            			<td rowspan="2" class="align-middle font-weight-bold">{{number_format($village['UPKEEP'])}}</td>
+        			@if($village['CONTACTS']!=null)
+        				<td class="p-0">{{$village['TRAVEL']}}</td>
+            			<td class="p-0">{{$village['START']}}</td>
+        			@else
+            			<td rowspan="2" class="align-middle">{{$village['TRAVEL']}}</td>
+            			<td rowspan="2" class="align-middle">{{$village['START']}}</td>
+        			@endif
         			</tr>
         			<tr class="small">
         				<td class="p-0">{{number_format($village['TROOPS'][0])}}</td>
@@ -61,6 +66,13 @@
         				<td class="p-0">{{number_format($village['TROOPS'][7])}}</td>
         				<td class="p-0">{{number_format($village['TROOPS'][8])}}</td>
         				<td class="p-0">{{number_format($village['TROOPS'][9])}}</td>
+    				@if($village['CONTACTS']!=null)
+        				<td colspan="2" class="p-0 table-success">
+    					@foreach($village['CONTACTS'] as $contact)
+    						<a href="/plus/member/{{$contact['ID']}}" target="_blank">{{$contact['NAME']}}</a> 
+    					@endforeach        				
+        				</td>
+        			@endif
         			</tr>
             	@endforeach 
                 </table>

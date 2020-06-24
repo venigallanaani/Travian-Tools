@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 use App\ResTask;
 use App\ResUpd;
@@ -24,6 +25,9 @@ class LeaderResourceController extends Controller
                     ->where('plus_id',$request->session()->get('plus.plus_id'))->get();
         
         // displays the list of resource tasks details
+        foreach($tasks as $i=>$task){
+            $tasks[$i]->target_time = Carbon::parse($task->target_time)->format($request->session()->get('dateFormat'));
+        }
         return view('Plus.Resources.leaderOverview')->with(['tasks'=>$tasks]);
         
     }

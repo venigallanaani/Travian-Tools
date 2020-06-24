@@ -89,7 +89,8 @@
         			if(i>0){
         				var row = $(row);
         				if(row.attr("id") !== 'header'){
-							var dist = new Date(row.find('#target').text()).getTime()-new Date(moment().tz("{{ Session::get('timezone') }}")).getTime();
+            				var date = moment(row.find('#target').text(),"{{Session::get('dateFormatLong')}}").format('YYYY-MM-DD HH:mm:ss');            				
+							var dist = new Date(date).getTime()-new Date(moment().tz("{{ Session::get('timezone') }}").format('YYYY-MM-DD HH:mm:ss')).getTime();						
 							
 							if(dist<0){
         			      		row.find('#timer').text("00:00:00");
@@ -106,6 +107,7 @@
         			      		
         			      		row.find('#timer').text(hours+':'+mins+':'+secs);
         			      		row.find('#timer').css('color','blue');
+        			      		
         			      	}   						
         				}
         			}			
@@ -113,8 +115,4 @@
     		}, 1000);	
     	});
 	</script>
-@endpush
-
-@push('extensions')
-	<meta name="timezone" content="{{ Session::get('timezone') }}" />
 @endpush

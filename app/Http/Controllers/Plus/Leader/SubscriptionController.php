@@ -22,6 +22,7 @@ class SubscriptionController extends Controller
         
         $subscription = Subscription::where('server_id',$request->session()->get('server.id'))
                     ->where('id',$request->session()->get('plus.plus_id'))->first();
+        $subscription->end_date = Carbon::parse($subscription->end_date)->format(explode(' ',$request->session()->get('dateFormat'))[0]);
         
         return view('Plus.Leader.subscription')->with(['subscription'=>$subscription]);
     }

@@ -60,21 +60,21 @@
                 				</tr>
                 			</thead>
                 		@foreach($travels as $travel)
-                			<tr>
+                			<tr class='h6'>
                 				<td class="px-0 py-1 font-weight-bold"><a href="https://{{Session::get('server.url')}}/position_details.php?x={{$travel['X']}}&y={{$travel['Y']}}" target="_blank">{{$travel['VILLAGE']}}</a></td>
-                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][0])}}</td>
-                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][1])}}</td>
-                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][2])}}</td>
-                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][3])}}</td>
-                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][4])}}</td>
-                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][5])}}</td>
-                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][6])}}</td>
-                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][7])}}</td>
-                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][8])}}</td>
-                				<td class="px-0 py-1">{{number_format($travel['TROOPS'][9])}}</td>
+                				<td class="px-0 py-1 small">{{number_format($travel['TROOPS'][0])}}</td>
+                				<td class="px-0 py-1 small">{{number_format($travel['TROOPS'][1])}}</td>
+                				<td class="px-0 py-1 small">{{number_format($travel['TROOPS'][2])}}</td>
+                				<td class="px-0 py-1 small">{{number_format($travel['TROOPS'][3])}}</td>
+                				<td class="px-0 py-1 small">{{number_format($travel['TROOPS'][4])}}</td>
+                				<td class="px-0 py-1 small">{{number_format($travel['TROOPS'][5])}}</td>
+                				<td class="px-0 py-1 small">{{number_format($travel['TROOPS'][6])}}</td>
+                				<td class="px-0 py-1 small">{{number_format($travel['TROOPS'][7])}}</td>
+                				<td class="px-0 py-1 small">{{number_format($travel['TROOPS'][8])}}</td>
+                				<td class="px-0 py-1 small">{{number_format($travel['TROOPS'][9])}}</td>
                 				<td class="px-0 py-1"><strong>{{number_format($travel['UPKEEP'])}}</strong></td>
-                				<td class="px-0 py-1 text-primary font-weight-bold">{{$travel['TRAVEL']}}</td>
-                				<td class="px-0 py-1 text-primary font-weight-bold">{{$travel['START']}}</td>
+                				<td class="px-0 py-1 text-primary">{{$travel['TRAVEL']}}</td>
+                				<td class="px-0 py-1 text-primary">{{$travel['START']}}</td>
                 			</tr>
                 		@endforeach			
                 		</table>
@@ -192,6 +192,6 @@
 
 @push('scripts')
 	<script>
-        countDown("{{$task['task_id']}}","{{$task['target_time']}}","{{Session::get('timezone')}}");
+        countDown("{{$task['task_id']}}","{{$task['target_time']}}","{{Session::get('timezone')}}","{{Session::get('dateFormatLong')}}");
 	</script>
 @endpush

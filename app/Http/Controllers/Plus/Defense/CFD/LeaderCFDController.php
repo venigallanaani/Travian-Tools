@@ -27,16 +27,20 @@ class LeaderCFDController extends Controller
         session(['title'=>'Defense']);
         session(['menu'=>3]);
         
+        date_default_timezone_set($request->session()->get('timezone'));
+        $time = Carbon::now()->format('Y-m-d H:i:s');
+        
         $tasks = CFDTask::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
                         ->orderBy('target_time','desc')->get();
         
         $atasks=array();    $ctasks=array();
-        foreach($tasks as $task){
-            $task->target_time=date_format(date_create($task->target_time),$request->session()->get('dateFormat'));
-            if($task->status=="ACTIVE"){
+        foreach($tasks as $task){            
+            if($task->status=="ACTIVE" && $task->target_time > $time){
+                $task->target_time=date_format(date_create($task->target_time),$request->session()->get('dateFormat'));
                 $atasks[]=$task;
             }else{
+                $task->target_time=date_format(date_create($task->target_time),$request->session()->get('dateFormat'));
                 $ctasks[]=$task;
             }            
         }
@@ -170,11 +174,10 @@ class LeaderCFDController extends Controller
         
     }
     
-    public function processCFD(Request $request){
-        
-        //dd($request);
-        
+    public function processCFD(Request $request){     
         session(['menu'=>3]);
+        session(['title'=>'Defense']);
+        
         $def = Input::get('defNeed');
         $time = Input::get('targetTime');
         $comments = Input::get('comments');
@@ -267,7 +270,7 @@ class LeaderCFDController extends Controller
             if($request->session()->get('discord')==1){
                 
                 $task=CFDTask::where('server_id',$request->session()->get('server.id'))
-                ->where('task_id',$task_id)->first();
+                                ->where('task_id',$task_id)->first();
                 
                 $discord['status']  = 'DELETE';
                 $discord['village'] = $task->village;
@@ -332,6 +335,8 @@ class LeaderCFDController extends Controller
     
     public function CFDTravel(Request $request,$id){
         session(['menu'=>3]);
+        session(['title'=>'Defense']);
+        
         $task=CFDTask::where('server_id',$request->session()->get('server.id'))
                 ->where('plus_id',$request->session()->get('plus.plus_id'))
                 ->where('task_id',$id)->first();
@@ -357,10 +362,14 @@ class LeaderCFDController extends Controller
                 foreach($troops as $troop){
                     $villages[$i]=$troop;
                     $villages[$i]['PLAYER']=$account->account;
+                 
+                    $result = whoIsOnline($request, $account->account_id,$request->session()->get('timezone'),$villages[$i]['START']);
+                    $villages[$i]['CONTACTS']=$result;
+                    $villages[$i]['START']=$villages[$i]['START']->format($request->session()->get('dateFormat'));
                     $i++;
                 }
                 $i++;
-            }            
+            }
         }       
 //dd($villages);
         $task->target_time=date_format(date_create($task->target_time),$request->session()->get('dateFormat'));
@@ -380,8 +389,6 @@ class LeaderCFDController extends Controller
             $time = strtotime($task->target_time) - strtotime(Carbon::now());
             $time = $time/3600;
             
-            //$units = $units->toArray();
-            //dd($units);
             $images=array();    $i=0;
             foreach($units as $unit){
                 $images[$i]['NAME']=$unit['name'];
@@ -447,7 +454,7 @@ class LeaderCFDController extends Controller
                         $result[$i]['UPKEEP']=$upkeep;
                         $result[$i]['UNITS']=$images;
                         $result[$i]['TRAVEL']=gmdate('H:i:s',floor($tTime));
-                        $result[$i]['START']=Carbon::createFromTimestamp(floor($sTime))->format($request->session()->get('dateFormat'));
+                        $result[$i]['START']=Carbon::createFromTimestamp(floor($sTime));
                         
                         $i++;
                     }

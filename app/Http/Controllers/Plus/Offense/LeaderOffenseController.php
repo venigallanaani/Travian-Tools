@@ -51,7 +51,7 @@ class LeaderOffenseController extends Controller
         return Redirect::To('/offense/status');
     }
     
-    public function displayOffensePlan(Request $request, $id){
+    public function displayOffensePlan(Request $request, $id){        
         
         session(['title'=>'Offense']);
         session(['menu'=>4]);   $units=array();
@@ -65,9 +65,8 @@ class LeaderOffenseController extends Controller
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('plan_id',$id)->orderBy('landtime','asc')->get();
                     
-        if(count($waves)==0){
-            $sankeyData = null;
-        }else{
+        $sankeyData = null;
+        if(count($waves)!=0){
             $units = array();
             $rows = Units::select('image','name','speed')->whereIn('tribe_id',[1,2,3,6,7])
                         ->orderBy('id','asc')->get();
@@ -86,21 +85,16 @@ class LeaderOffenseController extends Controller
                                     ->where('x',$wave['a_x'])->where('y',$wave['a_y'])
                                     ->orderBy('updated_at','desc')->first();
                 
-                date_default_timezone_set($request->session()->get('timezone'));
-                $now = strtotime(Carbon::now());
-                $time = (strtotime($wave['landtime']) - $now)/3600;
-                
-                $dist = (($wave['a_x']-$wave['d_x'])**2+($wave['a_y']-$wave['d_y'])**2)**0.5;
-                if($village->Tsq > 0 && $dist > 20){
-                    $dist = 20 + ($dist-20)/(1+0.1*$village->Tsq*$request->session()->get('server.tsq'));
-                }
-                $dist = $dist/$village->arty;
-                $sTime=strtotime($wave['landtime'])-($dist/($units[$wave['unit']]['speed']*$request->session()->get('server.speed')))*3600;
-                $waves[$i]['starttime']=Carbon::createFromTimestamp(floor($sTime))->format($request->session()->get('dateFormat'));
-                $waves[$i]['landtime'] =Carbon::createFromTimestamp(strtotime($wave['landtime']))->format($request->session()->get('dateFormat'));
-                if($wave['status']=="LAUNCH"||$wave['status']=="MISS"){
+                if($wave['landtime']!=null){                    
+                    $waves[$i]['landtime'] =Carbon::createFromTimestamp(strtotime($wave['landtime']))->format($request->session()->get('dateFormat'));
+                    if($wave['status']=="LAUNCH"||$wave['status']=="MISS"){
+                        $waves[$i]['timer']=0;
+                    }
+                }else{
+                    $waves[$i]['starttime']=null;
                     $waves[$i]['timer']=0;
-                }                
+                }
+                                
                 
                 if($wave['waves']>0){
                     if($wave['type']=='REAL'){
@@ -184,7 +178,7 @@ class LeaderOffenseController extends Controller
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('plan_id',$planId)->delete();
             
-            Session::flash('warning','Plan is successfully delete');            
+            Session::flash('warning','Plan is successfully deleted');            
         }
         if(Input::has('archivePlan')){
             OPSPlan::where('server_id',$request->session()->get('server.id'))

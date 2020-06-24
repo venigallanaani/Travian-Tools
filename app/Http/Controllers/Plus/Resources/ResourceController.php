@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 use App\ResTask;
 use App\ResUpd;
@@ -21,8 +22,12 @@ class ResourceController extends Controller
                     ->where('plus_id',$request->session()->get('plus.plus_id'))
                     ->where('status','ACTIVE')
                     ->orderBy('target_time','asc')->get();        
-        
+
         // displays the list of resource tasks details
+        foreach($tasks as $i=>$task){
+            $tasks[$i]->target_time = Carbon::parse($task->target_time)->format($request->session()->get('dateFormat'));
+        }
+        //dd($tasks);
         return view('Plus.Resources.resourceTaskList')->with(['tasks'=>$tasks]);
         
     }
@@ -97,9 +102,9 @@ class ResourceController extends Controller
                 ->where('plus_id',$request->session()->get('plus.plus_id'))
                 ->where('task_id',$id)
                 ->where('player_id',$request->session()->get('plus.id'))
-                ->update([   'resources'=>$plrRes,
-                        'percent'=>$plrPercent
-                    ]);             
+                ->update([  'resources'=>$plrRes,
+                            'percent'=>$plrPercent
+                        ]);             
         }else{
             $plrRes=$res;
             $plrPercent = ceil(($plrRes/$resCollect)*100);

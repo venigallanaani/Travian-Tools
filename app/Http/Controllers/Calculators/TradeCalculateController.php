@@ -80,7 +80,7 @@ class TradeCalculateController extends Controller
         }elseif($freq==12){  $result['freq']='2 hours';
         }else{  $result['freq']='1 hour';   }
         
-        if($party==null){
+        if($party==null || $party=='none'){
             
             $result['wood']=floor($day['wood']/($del*$freq));      $result['clay']=floor($day['clay']/($del*$freq));
             $result['iron']=floor($day['iron']/($del*$freq));      $result['crop']=floor($day['crop']/($del*$freq));

@@ -120,8 +120,6 @@ class LeaderIncomingController extends Controller
             
             $index++;
         }
-//dd($attackers);
-//dd($result);
         return view('Plus.Defense.Incomings.leaderIncomingsList')->with(['incomings'=>$result])
                         ->with(['attackers'=>$attackers])->with(['defenders'=>$defenders]);
         

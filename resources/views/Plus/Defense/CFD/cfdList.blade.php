@@ -155,8 +155,8 @@
     							<td>{{number_format($task->def_total)}}</td>
     							<td>{{ucfirst(strtolower($task->type))}}</td>
     							<td class="{{$color}}"><strong>{{ucfirst($task->priority)}}</strong></td>    							
-    							<td>{{ucfirst(strtolower($task->status))}}</td>
-    							<td>{{$task->target_time}}</td>
+    							<td>{{ucfirst(strtolower($task->status))}} @if($task->status=='ACTIVE') ({{$task->def_percent}}%) @endif</td>
+    							<td @if($task->status=='ACTIVE') class="text-danger" @endif>{{$task->target_time}}</td>
     							<td class="py-1"><a class="btn btn-outline-secondary py-0" href="/defense/cfd/{{$task->task_id}}">
     								<i class="fa fa-angle-double-right"></i> <small>Details</small></a>
     							</td>
@@ -188,7 +188,7 @@
         				var id = row.attr("id");
         				var zone = $('meta[name="timezone"]').attr('content');
         				if(id !== 'header'){
-							var target = row.find('#target').text();
+							var target = moment(row.find('#target').text(),"{{Session::get('dateFormatLong')}}").format('YYYY-MM-DD HH:mm:ss');
 							var time = moment().tz(zone).format('YYYY-MM-DD HH:mm:ss');
 							var dist = new Date(target).getTime()-new Date(time).getTime();
 							

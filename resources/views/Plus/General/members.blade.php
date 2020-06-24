@@ -13,19 +13,25 @@
 						<thead class="bg-dark text-white">
     						<tr>
     							<th class="">Player</th>
-    							<th class="">TT Account</th>
+    							<th class="">Account</th>
     							<th class="">Alliance</th>
     							<th class="">Sitter 1</th>
-    							<th class="">Sitter 2</th>    							
+    							<th class="">Sitter 2</th> 
+    							<th class="">Activity</th>   							
     						</tr>
 						</thead>
-						@foreach($members as $member)
+						@foreach($members as $member)							
     						<tr class="" style="font-size: 0.9em">
     							<td><a href="{{route('findPlayer')}}/{{$member['player']}}/1" target="_blank">{{$member['player']}}</a></td>
     							<td><a href="/plus/member/{{$member['id']}}">{{$member['account']}}</a></td>
     							<td><a href="{{route('findAlliance')}}/{{$member['alliance']}}/1" target="_blank">{{$member['alliance']}}</a></td>
     							<td><a href="{{route('findPlayer')}}/{{$member['sitter1']}}/1" target="_blank">{{$member['sitter1']}}</a></td>
-    							<td><a href="{{route('findPlayer')}}/{{$member['sitter2']}}/1" target="_blank">{{$member['sitter2']}}</a></td>    														
+    							<td><a href="{{route('findPlayer')}}/{{$member['sitter2']}}/1" target="_blank">{{$member['sitter2']}}</a></td>  
+							@if(Session::get('plus.leader')==1 or Session::get('plus.defense')==1)
+								<td><a href="/plus/timings/{{$member['id']}}" target="_blank">Timings</a></td>
+							@else
+								<td></td>
+							@endif 														
     						</tr>
 						@endforeach
 					</table>

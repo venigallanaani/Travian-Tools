@@ -14,7 +14,11 @@
 				<span class="px-1"><img alt="clay" src="/images/x.gif" class="res clay"> {{number_format($result['clay'])}}</span>
 				<span class="px-1"><img alt="iron" src="/images/x.gif" class="res iron"> {{number_format($result['iron'])}}</span>
 				<span class="px-1"><img alt="crop" src="/images/x.gif" class="res crop"> {{number_format($result['crop'])}}</span>	
-			</p>		
+			</p>
+			<p class="mx-auto h6 py-2">Resources/Delivery - 
+				<img alt="all" src="/images/x.gif" class="res all"> {{number_format($result['wood']+$result['clay']+$result['iron']+$result['crop'])}}
+			</p>
+			<p>
 		</div>
 	@if($result['message']!=null)
 		<p class="h6 font-italic text-danger text-center">{{$result['message']}}</p>

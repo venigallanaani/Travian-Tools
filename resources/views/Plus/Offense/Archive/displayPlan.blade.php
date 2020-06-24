@@ -3,7 +3,7 @@
 @section('body')
 	<!-- ==================================== Main Content of the CFD tasks list ================================= -->
 		<div class="card float-md-left col-md-10 mb-5 p-0 shadow">
-			<div class="card-header h5 py-2 bg-info text-white"><strong>Offense Plan - {{$plan->name}}</strong></div>
+			<div class="card-header h5 py-2 bg-info text-white"><strong>Archived Plan - {{$plan['name']}}</strong></div>
 			<div class="card-text">
     <!-- ==================================== List of CFD is progress ======================================= -->
 				
@@ -20,17 +20,17 @@
                 <div class="text-center col-md-8 mx-auto p-2">
                 	<table class="table table-borderless table-sm text-left" style="font-size:0.9em">
                 		<tr>
-                			<td class="align-middle py-0">
-                				<p class="py-0 my-1"><strong>Status : </strong>{{ucfirst(strtolower($plan->status))}}</p>
-                				<p class="py-0 my-1"><strong>Created By : </strong>{{$plan->create_by}}</p>
-                				<p class="py-0 my-1"><strong>Updated By : </strong>{{$plan->update_by}}</p>
+                			<td class="align-middle py-0">                				
+                				<p class="py-0 my-1"><strong>Created By : </strong>{{$plan['create_by']}}</p>
+                				<p class="py-0 my-1"><strong>Archived By : </strong>{{$plan['update_by']}}</p>
+                				<p class="py-0 my-1"><strong>Archived Date : </strong>{{$plan['updated_at']}}</p>
                 			</td>
                 			<td class="text-center align middle">
             					<form action="/offense/archive/update" method="post" class="my-1">{{csrf_field()}}
-        							<p class="my-1"><button class="btn btn-info btn-sm px-5" name="plan" value="{{$plan->id}}">Copy Plan</button></p>
+        							<p class="my-1"><button class="btn btn-info btn-sm px-5" name="copy" value="{{$plan['id']}}">Copy Plan</button></p>
             					</form>
-                				<form action="/offense/status/update" method="post" class="my-1">{{csrf_field()}}
-        							<p class="my-1"><button class="btn btn-danger btn-sm px-5" name="deletePlan" value="{{$plan->id}}">Delete Plan</button></p>
+                				<form action="/offense/archive/update" method="post" class="my-1">{{csrf_field()}}
+        							<p class="my-1"><button class="btn btn-danger btn-sm px-5" name="delete" value="{{$plan['id']}}">Delete Plan</button></p>
             					</form>
                 			</td>                			
                 		</tr>                    		
@@ -56,6 +56,7 @@
     							<th class="" style="width:4em">Type</th>    							
     							<th class="" style="width:3em">Waves</th>
     							<th class="" style="width:3em">Troops</th>
+    							<th class="" style="width:3em">Status</th>
     							<th class="" style="width:8em">Notes</th>
     							<th class="" style="width:5em">Report</th>  							
     						</tr>
@@ -78,7 +79,8 @@
     							<td class="py-0 align-middle">{{$wave->landtime}}</td>
     							<td class="{{$color}} py-0 align-middle"><strong>{{ucfirst(strtolower($wave->type))}}</strong></td>
     							<td class="py-0 align-middle">{{$wave->waves}}</td>
-    							<td class="py-0 align-middle" data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="" src="/images/x.gif" class="units {{$wave->unit}}"></td>  							
+    							<td class="py-0 align-middle" data-toggle="tooltip" data-placement="top" title="Catapult"><img alt="" src="/images/x.gif" class="units {{$wave->unit}}"></td>
+    							<td class="py-0 align-middle">{{ucfirst(strtolower($wave->status))}}</td>					
     							<td class="py-0 align-middle small">{{$wave->notes}}</td>
     							<td class="py-0 align-middle">
     								@if($wave->report!=null)    								

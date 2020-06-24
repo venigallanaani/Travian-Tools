@@ -54,12 +54,11 @@
             			<div class="card-text p-2">
             				<table class="mx-auto col-md-8 my-2" style="font-size:0.9em">
                 				<tr>
-                					<td><strong>Created date - </strong>{{$plan['CREATE']}}</td>
-                					<td rowspan="2"><strong>Notes - </strong>{{$plan['COMMENTS']}}</td>
+                					<td class="text-left"><strong>Created date - </strong>{{$plan['CREATE']}}</td>
+                					<td class="text-left"><strong>Updated date - </strong>{{$plan['UPDATE']}}</td>
             					</tr>  
                 				<tr>
-                					<td><strong>Updated date - </strong>{{$plan['UPDATE']}}</td>
-                					<td></td>
+                					<td class="text-left" colspan="2"><strong>Notes - </strong>{{$plan['COMMENTS']}}</td>
             					</tr> 
             				</table>
             				<table class="table table-sm text-center table-bordered small">

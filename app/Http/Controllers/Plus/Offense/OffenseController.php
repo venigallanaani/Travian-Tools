@@ -24,7 +24,7 @@ class OffenseController extends Controller
         $ops = null;
         $plans = OPSPlan::where('server_id',$request->session()->get('server.id'))
                         ->where('plus_id',$request->session()->get('plus.plus_id'))
-                        ->where('status','<>','DRAFT')->where('status','<>','ARCHIVE')->get();
+                        ->where('status','PUBLISH')->get();
         
         if(count($plans)>0){            
             $account=Account::where('server_id',$request->session()->get('server.id'))
@@ -49,22 +49,10 @@ class OffenseController extends Controller
                         $waves[$i]['name']=$units[$wave['unit']]['name'];
                         $waves[$i]['timer']=0;
                         
-                        $village = Troops::where('server_id',$request->session()->get('server.id'))->where('account_id',$account->account_id)
-                                        ->where('x',$wave['a_x'])->where('y',$wave['a_y'])->first();
+                        $waves[$i]['starttime']=Carbon::parse($wave['starttime'])->format($request->session()->get('dateFormat'));                        
+                        $waves[$i]['landtime'] =Carbon::parse($wave['landtime'])->format($request->session()->get('dateFormat'));
                         
-                        date_default_timezone_set($request->session()->get('timezone'));
-                        $now = strtotime(Carbon::now());
-                        $time = (strtotime($wave['landtime']) - $now)/3600;
-                        
-                        $dist = (($wave['a_x']-$wave['d_x'])**2+($wave['a_y']-$wave['d_y'])**2)**0.5;                        
-                        if($village->Tsq > 0 && $dist > 20){
-                            $dist = 20 + ($dist-20)/(1+0.1*$village->Tsq*$request->session()->get('server.tsq'));
-                        }                        
-                        $dist = $dist/$village->arty;
-                        $sTime=strtotime($wave['landtime'])-($dist/($units[$wave['unit']]['speed']*$request->session()->get('server.speed')))*3600;                        
-                        $waves[$i]['starttime']=Carbon::createFromTimestamp(floor($sTime))->format($request->session()->get('dateFormat'));
-                        $waves[$i]['landtime'] =Carbon::createFromTimestamp(strtotime($wave['landtime']))->format($request->session()->get('dateFormat'));
-                        if($sTime < $now){
+                        if(strtotime($wave['starttime']) < strtotime(Carbon::now())){
                             $waves[$i]['timer']=1;
                         }
                         

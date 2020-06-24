@@ -36,13 +36,13 @@
 						</thead>
 						@foreach($plans as $plan)
     						<tr class="small">
-    							<td class="align-middle"><strong>{{$plan->name}}</strong></td>
-    							<td class="align-middle">{{$plan->attackers}}</td>
-    							<td class="align-middle">{{$plan->targets}}</td>
-    							<td class="align-middle"><strong><span class="text-danger">{{$plan->real}}</span> | <span class="text-primary">{{$plan->fake}}</span> | <span class="text-dark">{{$plan->other}}</span></strong></td>    							
-    							<td class="align-middle"><a href="/plus/member/{{$plan->create_by}}">{{$plan->create_by}}</a></td>   
-    							<td class="align-middle">{{explode(' ',$plan->updated_at)[0]}}</td> 							
-    							<td class="align-middle"><a class="btn btn-outline-secondary btn-sm" href="/offense/archive/{{$plan->id}}">
+    							<td class="align-middle py-1"><strong>{{$plan['name']}}</strong></td>
+    							<td class="align-middle py-1">{{$plan['attackers']}}</td>
+    							<td class="align-middle py-1">{{$plan['targets']}}</td>
+    							<td class="align-middle py-1"><strong><span class="text-danger">{{$plan['real']}}</span> | <span class="text-primary">{{$plan['fake']}}</span> | <span class="text-dark">{{$plan['other']}}</span></strong></td>    							
+    							<td class="align-middle py-1"><a href="/plus/member/{{$plan['create_by']}}">{{$plan['create_by']}}</a></td>   
+    							<td class="align-middle py-1">{{explode(' ',$plan['updated_at'])[0]}}</td> 							
+    							<td class="align-middle py-1"><a class="btn btn-outline-secondary btn-sm" href="/offense/archive/{{$plan['id']}}">
     								<i class="fa fa-angle-double-right"></i> Details</a>
     							</td>
     						</tr>
