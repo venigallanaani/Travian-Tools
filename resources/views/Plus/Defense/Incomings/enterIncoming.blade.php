@@ -12,6 +12,50 @@
         </div>
     @endif
 @endforeach
+	<div class="my-2 mx-5">
+		<div class="card card-header text-center h6 btn btn-block collapsed bg-info shadow" data-toggle="collapse" href="#task" aria-expanded="false" aria-controls="task">
+    		<p class="p-0 m-0 text-white">
+        		<i class="fa fa-plus"></i> <span class=""><strong>Enter Incomings Manually</strong></span>
+		 	</p>
+		</div>
+		<div class="collapse" id="task" style="font-size:0.9em">
+  			<div class="card card-body shadow">
+				<form action="/plus/incoming" method="POST" class="text-center" autocomplete="off">
+					{{ csrf_field() }}
+					<table class="col-md-10 mx-auto table table-bordered">
+						<tr class="h6">
+							<td class="table-success">Your Details</td>
+							<td class="table-danger">Attacker Information</td>
+						</tr>
+						<tr>
+							<td class="align-middle">
+								<p class="h6 pb-0">
+									<select name="village" style="width:10em; font-size:0.9em">
+										<option value="">--Select Village--</option>
+									@foreach($villages as $village)
+										<option value="{{$village['vid']}}">{{$village['village']}}</option>
+									@endforeach
+									</select>
+								</p>
+								<p class="py-0 h6" style="font-size:0.9em"><input type="text" name="form" value="true" hidden>or</p>
+								<p class="h6 pt-0">X: <input type="number" style="width:4em" name="t_x"> | Y: <input type="number" style="width:4em" name="t_y"></p>
+								<p class="h6 py-1">Waves: <input type="number" style="width:3em" name="waves" min=1 value=1></p>
+							</td>
+							<td class="align-middle">
+								<p class="h6">X: <input type="number" style="width:4em" name="a_x" required> | Y: <input type="number" style="width:4em" name="a_y" required></p>
+								<p class="h6">Land Time: <input type="text" name="targetTime" size="20" class="dateTimePicker"></p>
+								<p class="h6">Comments: <textarea rows="3" cols="20" name="comments"></textarea></p>
+							</td>
+						</tr>
+					</table>					
+					<p class="my-1 h6">
+						<button class="btn btn-info px-4"><strong>Enter Incomings</strong></button>
+					</p> 						
+				</form>
+  			</div>
+		</div>	
+	</div>
+        		
 	<div class="card-text my-3">
 		<div class="col-md-10 mx-auto rounded pt-2 mb-2" style="background-color:#dbeef4;">
 			<form method="post" action="/plus/incoming">
@@ -28,7 +72,8 @@
 							<textarea rows="3" cols="40" name="incStr" required></textarea>							
     					</td>
     					<td class="align-top px-2">
-    						<p class="h6"><input type="checkbox" name="scout"> Scout Artifact</p>
+    						<span class="h6"><input type="text" name="form" value="false" hidden></span>
+    						<p class="h6"><input type="checkbox" name="scout"> Active Scout Artifact</p>
     						<p class=""><button class="btn btn-primary" type="submit">Enter Incomings</button></p>
     					</td>
     				</tr>			
@@ -198,4 +243,15 @@
     });
 
 </script>
+<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
+<script type="text/javascript">
+    $(".dateTimePicker").datetimepicker({
+        format: "yyyy-mm-dd hh:ii:ss",
+        showSecond:true
+    });
+</script> 
+@endpush
+@push('extensions')
+	<link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+	<meta name="timezone" content="{{ Session::get('timezone') }}" />
 @endpush

@@ -15,8 +15,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {   //Loads data of the current servers and process them
         $schedule->command('Load:Servers')
-            ->dailyAt('00:00')
-            //->everyminute()
+            //->dailyAt('00:00')
+            ->everyminute()
             ->appendOutputTo(storage_path('logs/LoadServers.log'));
         
          

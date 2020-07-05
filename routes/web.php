@@ -78,6 +78,10 @@ Route::post('/calculators/raid','Calculators\RaidCalculateController@calculateRa
 Route::get('/calculators/trade','Calculators\TradeCalculateController@display')->name('calcTrade');      // Displays the merchant routes calculation
 Route::post('/calculators/trade','Calculators\TradeCalculateController@calculateTrade');  //Displays result for merchant routes calculations
 
+/* ------------------------------- Buildings NPC calculator ------------------------------*/
+Route::get('/calculators/npc','Calculators\NPCCalculateController@display')->name('calcNPC');      // Displays the merchant routes calculation
+Route::post('/calculators/npc','Calculators\NPCCalculateController@calculateNPC');  //Displays result for merchant routes calculations
+
 /*----------------------------------------------------------------------------------*/
 /* ------------------------- Controllers for Account Page ------------------------- */
 /*----------------------------------------------------------------------------------*/

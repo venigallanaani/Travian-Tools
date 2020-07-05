@@ -37,6 +37,7 @@ class CreateIncomingsTable extends Migration
             $table->string('att_vid');
             $table->string('att_x');
             $table->string('att_y');
+            $table->enum('entry',['MANUAL','AUTO'])->default('AUTO');
             
             $table->string('landTime');
             $table->string('noticeTime');
@@ -53,6 +54,7 @@ class CreateIncomingsTable extends Migration
             $table->enum('hero',['No','No Change','Change','Other']);
             $table->string('deleteTime');
             
+            $table->enum('scout',['YES','NO'])->default('NO');
             $table->integer('tsq')->default(0);
             $table->integer('unit')->default(3);
             $table->enum('ldr_sts',['NEW','SCOUT','THINKING','DEFEND','ARTEFACT','SNIPE','FAKE','OTHER']);

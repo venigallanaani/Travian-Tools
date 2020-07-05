@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         //$this->call(UnitsSeeder::class);
         //$this->call(serversSeeder::class);
         //$this->call(ArtifactsSeeder::class);
-        $this->call(ItemsSeeder::class);
+        //$this->call(ItemsSeeder::class);
+        $this->call(BuildingsSeeder::class);
     }
 }

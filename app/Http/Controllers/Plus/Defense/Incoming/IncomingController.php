@@ -17,6 +17,7 @@ use App\IncTrack;
 use App\Players;
 use App\TrackTroops;
 
+
 class IncomingController extends Controller
 {
 // 
@@ -31,12 +32,19 @@ class IncomingController extends Controller
         $uid=$account->uid;
         $account_id=$account->account_id;
         
+        $rows = Diff::where('server_id',$request->session()->get('server.id'))
+                        ->where('uid',$uid)->get();
+        foreach($rows as $i=>$row){
+            $villages[$i]['vid']=$row->vid;
+            $villages[$i]['village']=$row->village;
+        }
+        
         $waves=Incomings::where('server_id',$request->session()->get('server.id'))
                             ->where('plus_id',$request->session()->get('plus.plus_id'))
                             ->where('uid',$account->uid)
                             ->where('landTime','>',Carbon::now()->format('Y-m-d H:i:s'))
-                            ->where('status','SAVED')->orderBy('landTime','asc')->get();                        
-//dd($waves);
+                            ->where('status','SAVED')->orderBy('landTime','asc')->get();  
+        
         foreach($waves as $wave){
             $wave->landTime=Carbon::parse($wave->landTime)->format($request->session()->get('dateFormat'));
             $wave->noticeTime=Carbon::parse($wave->noticeTime)->format($request->session()->get('dateFormat'));
@@ -47,7 +55,7 @@ class IncomingController extends Controller
             }
         }
         
-        return view("Plus.Defense.Incomings.enterIncoming")
+        return view("Plus.Defense.Incomings.enterIncoming")->with(['villages'=>$villages])
                         ->with(['owaves'=>$owaves])->with(['swaves'=>$swaves]);
         
     }
@@ -56,8 +64,45 @@ class IncomingController extends Controller
     public function processIncoming(Request $request){        
         session(['title'=>'Plus']);
         
-        $drafts=null; $saves=null; $waves = 0;  $time=null;
-        $incList=ParseIncoming(Input::get('incStr'));
+        $drafts=null;   $saves=null;    $waves = 0;     $time=null;     $comments=null;     $scout='NO';
+        date_default_timezone_set($request->session()->get('timezone')); 
+        
+        if(Input::get('form')=='true'){
+            $entry = 'MANUAL';
+        }else{  $entry = 'AUTO';     }
+        
+        if($entry=='AUTO'){
+            $incList=ParseIncoming(Input::get('incStr'));
+            if(Input::has('scout')){
+                $scout = 'YES';
+            }
+        }else{            
+            $incList[0]['type']='ATTACK';
+            $incList[0]['wave']=Input::get('waves');
+            $incList[0]['a_coords'][0]=Input::get('a_x');
+            $incList[0]['a_coords'][1]=Input::get('a_y');            
+            $incList[0]['targetTime']=Input::get('targetTime');
+            $incList[0]['d_village']=Input::get('village');
+            $incList[0]['d_coords'][0]=Input::get('t_x');
+            $incList[0]['d_coords'][1]=Input::get('t_y');
+            $comments=Input::get('comments');            
+            
+            $incList[0]['restTime'] = strtotime(Carbon::parse($incList[0]['targetTime']))-strtotime(Carbon::now());
+            $incList[0]['landTime'] = Carbon::parse($incList[0]['targetTime'])->format('H:i:s');
+            $incList[0]['troops'] = null;
+            
+            if($incList[0]['restTime'] <= 0){
+                Session::flash('danger','Please check the landing time.');      
+                return Redirect::To('/plus/incoming'); 
+            }else{
+                $hours = floor($incList[0]['restTime']/3600);   if($hours<10){  $hours="0".$hours;  }
+                $mins = floor(($incList[0]['restTime']%3600)/60);   if($mins<10){  $mins="0".$mins;  }
+                $secs = floor($incList[0]['restTime']%60);   if($secs<10){  $secs="0".$secs;  }
+                
+                $incList[0]['restTime']= $hours.":".$mins.":".$secs;
+            }
+            
+        }
 //dd($incList);        
         
         if($incList==null){
@@ -66,23 +111,33 @@ class IncomingController extends Controller
         }else{
         // Data is retrived from the string.
             foreach($incList as $inc){
-//dd($inc);
                 $waves += $inc['wave'];
             // Get requestors details
                 $uid = Account::where('server_id',$request->session()->get('server.id'))
-                                ->where('user_id',Auth::user()->id)
-                                ->pluck('uid')->first();
+                                ->where('user_id',Auth::user()->id)->pluck('uid')->first();
 
             // get Attackers details
                 $att = Diff::where('server_id',$request->session()->get('server.id'))
                                 ->where('x',$inc['a_coords'][0])->where('y',$inc['a_coords'][1])->first();
-//dd($att);
-            // Get Defenders details
-                $def = Diff::where('server_id',$request->session()->get('server.id'))
-                                ->where('x',$inc['d_coords'][0])->where('y',$inc['d_coords'][1])->first();
                 
-            // Determine land time of the attack
-                date_default_timezone_set($request->session()->get('timezone'));                
+                if($att == null){
+                    Session::flash('danger','Attacker village not found at given coordinates');
+                    return Redirect::To('/plus/incoming'); 
+                }
+            // Get Defenders details
+                if($inc['d_coords'][0]==null || $inc['d_coords'][1]==null){
+                    $def = Diff::where('server_id',$request->session()->get('server.id'))
+                            ->where('vid',$inc['d_village'])->first();
+                }else{
+                    $def = Diff::where('server_id',$request->session()->get('server.id'))
+                            ->where('x',$inc['d_coords'][0])->where('y',$inc['d_coords'][1])->first();
+                }
+                
+                if($def == null){
+                    Session::flash('danger','Defender village not found at given coordinates');
+                    return Redirect::To('/plus/incoming');
+                }
+                
                 
                 if(Carbon::now()->format('H:i:s')>$inc['landTime']){ 
                     $landTime=new Carbon(Carbon::tomorrow()->format('Y-m-d').$inc['landTime']);
@@ -168,6 +223,7 @@ class IncomingController extends Controller
                     $wave->att_vid=$att->vid;
                     $wave->att_x=$att->x;
                     $wave->att_y=$att->y;
+                    $wave->entry=$entry;
                     $wave->landTime=$landTime;
                     $wave->noticeTime=$noticeTime;
                     $wave->status='SAVED';
@@ -177,12 +233,13 @@ class IncomingController extends Controller
                     $wave->ldr_nts = $notes;
                     $wave->hero_boots = "0";
                     $wave->hero_art = $art;
+                    $wave->comments = $comments;
                     $wave->tsq = $tsq;
                     $wave->unit = 3;
                     
                     $wave->save();                    
                 }else{
-                    if($incoming->waves<$inc['wave']){
+                    if($incoming->waves<$inc['wave'] || ($incoming->scout!=$scout && $scout=='NO')){
                         $wave=new Incomings;
                         
                         $wave->incid=$incId;
@@ -206,6 +263,7 @@ class IncomingController extends Controller
                         $wave->att_vid=$att->vid;
                         $wave->att_x=$att->x;
                         $wave->att_y=$att->y;
+                        $wave->entry=$entry;
                         $wave->landTime=$landTime;
                         $wave->noticeTime=$noticeTime;
                         $wave->status='SAVED';
@@ -215,6 +273,7 @@ class IncomingController extends Controller
                         $wave->ldr_nts = $notes;
                         $wave->hero_boots = "0";
                         $wave->hero_art = $art;
+                        $wave->comments = $comments;
                         $wave->tsq = $tsq;
                         $wave->unit = 3;
                         
@@ -240,7 +299,7 @@ class IncomingController extends Controller
             }
             
         }                        
-        return Redirect::To('/plus/incoming');           
+        return Redirect::To('/plus/incoming');
     }
     
     public function updateIncoming(Request $request){

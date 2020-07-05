@@ -104,13 +104,11 @@ if(!function_exists('ParseIncoming')){
                 for($z=$x+1;$z<count($incStrs);$z++){ 
                     //if(strtoupper($d_village)==strtoupper(trim($incStrs[$z]))){
                     if(strpos(strtoupper(trim($incStrs[$z])),strtoupper($d_village))!==FALSE){
-                        
                         if(strlen(trim($incStrs[$z]))>strlen(trim($d_village))){
                             $dCoords = GetCoords(trim(explode(' ',$incStrs[$z])[1]));
                         }else{
                             $dCoords = GetCoords(trim($incStrs[$z+1]));
                         }
-
                         $z=count($incStrs);
                    }
                }

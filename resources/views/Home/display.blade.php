@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="card shadow">
-                <p class="card-header h5 text-success font-weight-bold">Finders</p>
+                <p class="card-header h5"><a href="{{route('finders')}}" class="text-success font-weight-bold">Finders</a></p>
                 <div class="card-body">                 
                     <p>Finders help you search the Travian to find different objects you need.</p>
                     <table style="font-size:1em">
@@ -43,32 +43,33 @@
                 </div>
             </div>
             <div class="card shadow">
-                <p class="card-header h5 text-primary font-weight-bold">Calculators</p>
+                <p class="card-header h5"><a href="{{route('calculators')}}" class="text-primary font-weight-bold">Calculators</a></p>
                 <div class="card-body">                 
                     <p>Calculators to help with different aspects of the game</p>
                     <table>
                         <tr><td><a href="{{route('cropper')}}" class="text-primary font-weight-bold">Cropper Development</a></td></tr>
                         <tr><td><a href="{{route('wheatScout')}}" class="text-primary font-weight-bold">Wheat Scout</a></td></tr>
+                        <tr><td><a href="{{route('wheatScout')}}" class="text-primary font-weight-bold">Trade Routes</a></td></tr>
                     </table>
                 </div>
             </div>
             <div class="card shadow">
-                <p class="card-header h5 text-warning font-weight-bold">Account</p>
+                <p class="card-header h5"><a href="{{route('account')}}" class="text-warning font-weight-bold">Account</a></p>
                 <div class="card-body">
                 	@guest
                     	<p><a href="/login"><strong>Sign In</strong></a> to access you account details.</p>
                     @endguest
                     <p>Account Details can be displayed here.</p>
                     <table>
-                        <tr><td><a href="/account" class="text-warning font-weight-bold">Account Overview</a></td></tr>
                         <tr><td><a href="/account/troops" class="text-warning font-weight-bold">Troops Details</a></td></tr>
-                        <tr><td><a href="/account/hero" class="text-warning font-weight-bold">Hero Details</a></td></tr>
+                        <tr><td><a href="/account/villages" class="text-warning font-weight-bold">Villages</a></td></tr>
+                        <tr><td><a href="/account/timings" class="text-warning font-weight-bold">Online Timings</a></td></tr>                        
                         <tr><td><a href="/account/alliance" class="text-warning font-weight-bold">Alliance Overview</a></td></tr>
                     </table>
                 </div>
             </div>  
             <div class="card shadow">
-                <p class="card-header h5 text-info font-weight-bold">Plus</p>
+                <p class="card-header h5"><a href="{{route('plus')}}" class="text-info font-weight-bold">Plus</a></p>
                 <div class="card-body">
                    	@guest
                     	<p><a href="/login"><strong>Sign In</strong></a> to access the Plus group</p>

@@ -63,9 +63,12 @@ class PlusController extends Controller
 
                 $res = ResTask::where('plus_id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))
+                        ->where('target_time','>',Carbon::now()->format('Y-m-d H:i:s'))
                         ->where('status','ACTIVE')->get()->count();
+                
                 $def = CFDTask::where('plus_id',$plus->plus_id)
                         ->where('server_id',$request->session()->get('server.id'))
+                        ->where('target_time','>',Carbon::now()->format('Y-m-d H:i:s'))
                         ->where('status','ACTIVE')->get()->count();               
                 
                 $sqlStr = "SELECT count(*) as count FROM offensewaves a, offenseplans b ".
