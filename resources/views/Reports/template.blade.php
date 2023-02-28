@@ -18,7 +18,10 @@
         </div> 
         @endif
     @endforeach	
-
+	<div class="mx-auto col-8">
+		<p class="h4 bg-warning">Travian-tools will be shut down on April 01, 2023. Please take backup of your reports. Thank you for the support.</p>
+	
+	</div>
 	<div class="mx-auto col-8">
 		@yield('report')
 		<div class="card col-12 p-1 my-2 shadow">
